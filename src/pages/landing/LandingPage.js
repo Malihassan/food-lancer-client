@@ -37,7 +37,7 @@ const LandingPage = () => {
 							Craving for a Delicious home-made Dish?
 						</p>
 						<p
-							className="lh-base fs-3 fw-light"
+							className="lh-base fs-2 fw-light"
 							style={{
 								fontFamily: "'Cabin Sketch', cursive",
 							}}

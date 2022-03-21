@@ -45,18 +45,16 @@ const LandingPage = () => {
 						className="col-md-7 col-lg-5 text-light"
 						style={{ height: "200px", position: "absolute", top: "25%" }}
 					>
-						{/* <div className="lh-base fs-4 ">
-						Want to sell your freshly home made dishes online?
-					</div> */}
-						<div className="lh-base">
+						<div className="lh-base d-flex flex-column align-items-center">
 							<p
-								className="lh-base display-5"
+								className="lh-base display-5 ms-5 text-center "
 								style={{
 									color: "#F0A500",
 									fontFamily: " 'El Messiri', sans-serif",
 								}}
 							>
 								{text}
+								<hr />
 							</p>
 							<p
 								className="lh-base fs-2 fw-light"
@@ -66,15 +64,15 @@ const LandingPage = () => {
 							>
 								Try FoodLancer
 							</p>
+							<br /> <br />
+							<Link
+								to="/dishes"
+								type="button"
+								className="btn btn-lg btn-outline-light  "
+							>
+								<strong>View Dishes</strong>
+							</Link>
 						</div>
-						<br /> <br />
-						<Link
-							to="/dishes"
-							type="button"
-							className="btn btn-lg btn-outline-light"
-						>
-							<strong>View Dishes</strong>
-						</Link>
 					</div>
 				</div>
 			</div>

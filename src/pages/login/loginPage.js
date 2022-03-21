@@ -1,7 +1,7 @@
 import Login from "../../components/auth/seller/loginComponent/Login";
 import React from 'react'
 
-function loginPage() {
+function LoginPage() {
   return (
     <>
     <div>loginPage</div>
@@ -10,4 +10,4 @@ function loginPage() {
   )
 }
 
-export default loginPage
+export default LoginPage

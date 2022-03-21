@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ bg, buttons }) => {
 	return (
@@ -7,9 +8,14 @@ const Navbar = ({ bg, buttons }) => {
 				<div className="navbar-brand text-light">FoodLancer</div>
 				<div className="navbar-brand text-light">
 					{buttons.login && (
-						<button type="button" className="btn btn-outline-light mx-2">
-							Log in
-						</button>
+				
+              <Link
+								to="/login"
+								type="button" className="btn btn-outline-light mx-2"
+							>
+									Log in
+							</Link>
+				
 					)}
 
 					{buttons.signup && (

@@ -8,14 +8,13 @@ const Navbar = ({ bg, buttons }) => {
 				<div className="navbar-brand text-light">FoodLancer</div>
 				<div className="navbar-brand text-light">
 					{buttons.login && (
-				
               <Link
 								to="/login"
 								type="button" className="btn btn-outline-light mx-2"
 							>
 									Log in
 							</Link>
-				
+
 					)}
 
 					{buttons.signup && (

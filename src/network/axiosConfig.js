@@ -1,13 +1,11 @@
 import axios from "axios";
 
-export const axiosBuyerInstance = axios.create({
+export const axiosInstance = axios.create({
 	baseURL: "",
-
-	params: {},
 });
 
 // Add a request interceptor
-axiosBuyerInstance.interceptors.request.use(
+axiosInstance.interceptors.request.use(
 	function (config) {
 		// Do something before request is sent
 		console.log(config);
@@ -22,7 +20,7 @@ axiosBuyerInstance.interceptors.request.use(
 );
 
 // Add a response interceptor
-axiosBuyerInstance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
 	function (response) {
 		// Any status code that lie within the range of 2xx cause this function to trigger
 		// Do something with response data

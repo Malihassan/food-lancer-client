@@ -1,15 +1,15 @@
-//import logo from './logo.svg';
-
-import './App.css';
-//import './App.scss';
-import Login from './components/auth/loginComponent/Login';
+import "./App.css";
+import LandingPage from "./pages/landing/LandingPage";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-     blaaaaaah
-     <Login></Login>
-    </div>
-  );
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<Navigate replace to="/welcome" />} />
+				<Route path="/welcome" element={<LandingPage />} />
+			</Routes>
+		</div>
+	);
 }
 export default App;

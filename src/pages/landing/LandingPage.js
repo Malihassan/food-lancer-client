@@ -21,7 +21,7 @@ const LandingPage = () => {
 				<Navbar bg="bg-transparent" />
 				<div className="row">
 					<div
-						className="col-5 text-light"
+						className="col-md-7 col-lg-5 text-light"
 						style={{ height: "200px", position: "absolute", top: "25%" }}
 					>
 						{/* <div className="lh-base fs-4 ">

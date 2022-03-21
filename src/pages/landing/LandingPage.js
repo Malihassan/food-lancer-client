@@ -28,6 +28,7 @@ const LandingPage = () => {
 		}, 4000);
 		return () => clearInterval(timer);
 	}, [text]);
+
 	return (
 		<>
 			<div
@@ -37,7 +38,7 @@ const LandingPage = () => {
 				className={`container-fluid ${classes.bgImg} `}
 			>
 				<Navbar bg="bg-transparent" buttons={buttons} />
-				<div class={classes.overLay}></div>
+				<div className={`d-lg-block d-none ${classes.overLay}`}></div>
 				<div className="row">
 					<div
 						className="col-md-7 col-lg-5 text-light"

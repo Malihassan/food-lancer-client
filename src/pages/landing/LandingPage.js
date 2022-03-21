@@ -27,6 +27,7 @@ const LandingPage = () => {
 				setImg(pageArr[0].img);
 			}
 		}, 4000);
+
 		return () => clearInterval(timer);
 	}, [text]);
 
@@ -46,7 +47,7 @@ const LandingPage = () => {
 						style={{ height: "200px", position: "absolute", top: "25%" }}
 					>
 						<div className="lh-base d-flex flex-column align-items-center">
-							<p
+							<div
 								className="lh-base display-5 ms-5 text-center "
 								style={{
 									color: "#F0A500",
@@ -55,7 +56,7 @@ const LandingPage = () => {
 							>
 								{text}
 								<hr />
-							</p>
+							</div>
 							<p
 								className="lh-base fs-2 fw-light"
 								style={{
@@ -64,11 +65,11 @@ const LandingPage = () => {
 							>
 								Try FoodLancer
 							</p>
-							<br /> <br />
+							<br />
 							<Link
 								to="/dishes"
 								type="button"
-								className="btn btn-lg btn-outline-light  "
+								className="btn btn-lg btn-outline-light mt-4  "
 							>
 								<strong>View Dishes</strong>
 							</Link>

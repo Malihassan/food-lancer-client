@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Navbar = ({ bg, buttons }) => {
 	return (
@@ -8,6 +8,7 @@ const Navbar = ({ bg, buttons }) => {
 				<div className="navbar-brand text-light">FoodLancer</div>
 				<div className="navbar-brand text-light">
 					{buttons.login && (
+<<<<<<< HEAD
               <Link
 								to="/login"
 								type="button" className="btn btn-outline-light mx-2"
@@ -15,6 +16,15 @@ const Navbar = ({ bg, buttons }) => {
 									Log in
 							</Link>
 
+=======
+						<Link
+							to="/login"
+							type="button"
+							className="btn btn-outline-light mx-2"
+						>
+							Log in
+						</Link>
+>>>>>>> 61a0057d0f943807f0576bd323d17df18b7dd145
 					)}
 
 					{buttons.signup && (

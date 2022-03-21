@@ -1,3 +1,28 @@
-body{
-background-color: aqua;
+
+.forgit-link{
+  text-decoration: none !important;
+  color: white !important;
+}
+.forgit-link:hover{
+  text-decoration: none !important;
+  color: #ffc107 !important;
+}
+.icon-container{
+  background-color: #212529 !important;
+}
+.icon-container svg{
+  color: white !important;
+}
+h3, label{
+  color: white !important;
+}
+.btn-submit {
+  background-color: transparent !important;
+  color: white !important;
+  border: 1px white solid !important;
+}
+.btn-submit:hover {
+  background-color: transparent !important;
+  color: #ffc107 !important;
+  border: 1px #ffc107 solid !important;
 }

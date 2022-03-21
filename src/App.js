@@ -8,6 +8,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Navigate replace to="/welcome" />} />
 				<Route path="/welcome" element={<LandingPage />} />
+        <Route path="/login" />
 			</Routes>
 		</div>
 	);

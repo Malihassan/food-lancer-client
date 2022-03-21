@@ -14,23 +14,6 @@ function Login() {
   });
   useEffect(() => {
     console.log(userForm);
-    fetch("http://localhost:3000/seller/account/login")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result);
-          //setIsLoaded(true);
-          //setItems(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          console.log(error);
-         // setIsLoaded(true);
-         // setError(error);
-        }
-      )
   }, [userForm]);
    const handleFormChange = (e) => {
     console.log(e.target.value, e.target.id);

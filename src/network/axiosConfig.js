@@ -1,15 +1,13 @@
 import axios from "axios";
 
-export const axiosInstance = axios.create({
-	baseURL: "https://fakestoreapi.com",
+export const axiosBuyerInstance = axios.create({
+	baseURL: "",
 
-	params: {
-		api_key: "dasdjad54a5sd",
-	},
+	params: {},
 });
 
 // Add a request interceptor
-axiosInstance.interceptors.request.use(
+axiosBuyerInstance.interceptors.request.use(
 	function (config) {
 		// Do something before request is sent
 		console.log(config);
@@ -24,7 +22,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Add a response interceptor
-axiosInstance.interceptors.response.use(
+axiosBuyerInstance.interceptors.response.use(
 	function (response) {
 		// Any status code that lie within the range of 2xx cause this function to trigger
 		// Do something with response data

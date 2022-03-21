@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import img1 from "../../assets/imgs/landing page/bg-1.jpeg";
 import img2 from "../../assets/imgs/landing page/bg-2.jpeg";
 import Navbar from "../../components/shared/Navbar";
@@ -67,12 +68,13 @@ const LandingPage = () => {
 							</p>
 						</div>
 						<br /> <br />
-						<button
+						<Link
+							to="/dishes"
 							type="button"
 							className="btn btn-lg btn-outline-light"
 						>
 							<strong>View Dishes</strong>
-						</button>
+						</Link>
 					</div>
 				</div>
 			</div>

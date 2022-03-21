@@ -1,0 +1,17 @@
+.bgImg{
+  background-color: rgba(0, 0, 0, 0.1);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
+  background-position-x: 100%;
+  background-position-y: 65%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.overLay{
+  border-radius: 2%;
+  width: 45%;
+  height: 80%;
+  background-color: rgba(0, 0, 0, 0.7);
+}

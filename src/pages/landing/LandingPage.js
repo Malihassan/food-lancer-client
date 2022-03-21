@@ -1,33 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../../assets/imgs/landing page/bg-1.jpeg";
+import img2 from "../../assets/imgs/landing page/bg-2.jpeg";
 import Navbar from "../../components/shared/Navbar";
+import classes from "./landingsStyle.module.css";
+
 const LandingPage = () => {
+	const buttons = {
+		signup: true,
+		login: true,
+	};
+	const pageArr = [
+		{ text: "Craving a Delicious home-made Dish?", img: img1 },
+		{ text: "Want to sell your freshly home-made dishes online?", img: img2 },
+	];
+	const [text, setText] = useState(pageArr[0].text);
+	const [img, setImg] = useState(pageArr[0].img);
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			if (text === pageArr[0].text) {
+				setText(pageArr[1].text);
+				setImg(pageArr[1].img);
+			} else {
+				setText(pageArr[0].text);
+				setImg(pageArr[0].img);
+			}
+		}, 4000);
+		return () => clearInterval(timer);
+	}, [text]);
 	return (
 		<>
 			<div
 				style={{
-					backgroundImage: `url(${img1})`,
-					backgroundRepeat: "no-repeat",
-					backgroundPosition: "100% 100%",
-					backgroundSize: "cover",
-					backgroundPositionX: "100%",
-					backgroundPositionY: "65%",
-					width: "100vw",
-					height: "100vh",
-					overflow: "hidden",
+					backgroundImage: `url(${img})`,
 				}}
-				className="container-fluid"
+				className={`container-fluid ${classes.bgImg} `}
 			>
-				<Navbar bg="bg-transparent" />
+				<Navbar bg="bg-transparent" buttons={buttons} />
+				<div class={classes.overLay}></div>
 				<div className="row">
 					<div
 						className="col-md-7 col-lg-5 text-light"
 						style={{ height: "200px", position: "absolute", top: "25%" }}
 					>
 						{/* <div className="lh-base fs-4 ">
-						Food Lancer is a platform for home cooks who desire to sell
-						their dishes online to individuals and furnish freshly home
-						made food, Want to enjoy a home-made meal ?
+						Want to sell your freshly home made dishes online?
 					</div> */}
 						<div className="lh-base">
 							<p
@@ -37,7 +54,7 @@ const LandingPage = () => {
 									fontFamily: " 'El Messiri', sans-serif",
 								}}
 							>
-								Craving for a Delicious home-made Dish?
+								{text}
 							</p>
 							<p
 								className="lh-base fs-2 fw-light"
@@ -45,7 +62,7 @@ const LandingPage = () => {
 									fontFamily: "'Cabin Sketch', cursive",
 								}}
 							>
-								Find a FoodLancer Now!
+								Try FoodLancer
 							</p>
 						</div>
 						<br /> <br />

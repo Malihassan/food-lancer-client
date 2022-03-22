@@ -2,6 +2,7 @@ import "./App.css";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
+import SignupPage from './pages/signup/SignupPage';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				}
 			/>
 			<Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
 		</Routes>
 	);
 }

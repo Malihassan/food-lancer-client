@@ -1,8 +1,8 @@
-import "./Login.css";
+import "./LoginSeller.css";
 import { useState, useEffect } from "react";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from 'react-router-dom';
-function Login() {
+function LogiSeller() {
   const emailReg = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
   const passReg = new RegExp(
     "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
@@ -50,20 +50,19 @@ function Login() {
       });
     }
   };
-  const handleSubmit = (e) => {
+  const handleLoginSellerSubmit = (e) => {
     e.preventDefault();
     console.log(userForm);
   };
   return (
     <>
       <div className="w-75 m-auto text-center ">
-        <h3 className="my-4">Login Form</h3>
+        <h3 className="my-4 login-header">Login Form</h3>
         <form
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={(e) => handleLoginSellerSubmit(e)}
         >
           <div className="">
             <div className="mb-3 ">
-             
               <div className="input-group flex-nowrap my-2 ">
                 <span className="input-group-text icon-container" id="emailHelp">
                   <svg
@@ -135,4 +134,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LogiSeller;

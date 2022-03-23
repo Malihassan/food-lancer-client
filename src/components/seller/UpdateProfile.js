@@ -38,9 +38,8 @@ function UpdateProfile() {
 	const onSubmit = (values) => {
 		(async () => {
 			const res = await axiosInstance.patch(`seller/account/editProfile`, {
-				body: values,
+				...values,
 			});
-			console.log(res);
 			setUpdateRes(res.data);
 		})();
 	};
@@ -134,7 +133,7 @@ function UpdateProfile() {
 							>
 								Submit
 							</button>
-							<button
+							{/* <button
 								type="button"
 								onClick={(e) => {
 									fillData();
@@ -142,7 +141,7 @@ function UpdateProfile() {
 								className="btn btn-outline-light mx-2 mt-4"
 							>
 								Cancel Changes
-							</button>
+							</button> */}
 						</Form>
 					</Formik>
 					<div

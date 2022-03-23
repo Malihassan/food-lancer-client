@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/pages/login/loginPage.js
 import Login from "../../components/auth/seller/loginComponent/Login";
 import React from "react";
 import "./LoginPage.css";
@@ -6,6 +7,14 @@ import './LoginPage.scss';
 function LoginPage() {
   return (
     <>    
+=======
+import React from 'react'
+import SignupSeller from './../../components/auth/seller/signupComponent/SignupSeller';
+import "./SignupPage.css"
+function SignupPage() {
+  return (
+    <>
+>>>>>>> 43ddfcd1617941a94c5906edee0f4602c05cbe32:src/pages/signup/SignupPage.js
       <div className="d-flex row p-5 align-items-center ">
       <div className="col-xl-4 login ">
         <nav className="">
@@ -20,7 +29,7 @@ function LoginPage() {
               aria-controls="nav-home"
               aria-selected="true"
             >
-              Login as Seller
+              Signup as Seller
             </button>
             <button
               className="nav-link"
@@ -32,7 +41,7 @@ function LoginPage() {
               aria-controls="nav-profile"
               aria-selected="false"
             >
-              Login as Buyer
+              Signup as Buyer
             </button>
           </div>
         </nav>
@@ -43,7 +52,7 @@ function LoginPage() {
             role="tabpanel"
             aria-labelledby="nav-home-tab"
           >
-            <Login></Login>
+            <SignupSeller></SignupSeller>
           </div>
           <div
             className="tab-pane fade"
@@ -57,6 +66,8 @@ function LoginPage() {
       </div>
       </div>
     </>
-  );
+
+  )
 }
-export default LoginPage;
+
+export default SignupPage

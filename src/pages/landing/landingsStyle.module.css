@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-.bgImg{
-  background-color: rgba(0, 0, 0, 0.1);
-  background-repeat: no-repeat;
-  background-position: 100% 100%;
-  background-size: cover;
-  background-position-x: 100%;
-  background-position-y: 65%;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-=======
 .bgImg {
 	background-color: rgba(0, 0, 0, 0.1);
 	background-repeat: no-repeat;
@@ -20,7 +8,6 @@
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
->>>>>>> 43ddfcd1617941a94c5906edee0f4602c05cbe32
 }
 .overLay {
 	border-radius: 2%;

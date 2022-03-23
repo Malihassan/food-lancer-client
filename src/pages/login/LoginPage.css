@@ -1,18 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap");
 /* body {
-<<<<<<< HEAD
-  background-image: url("./../../assets/imgs/landing page/bg-1.jpeg");
-  background-repeat: no-repeat;
-  background-position: 100% 100%;
-  background-size: cover;
-  background-position-x: 100%;
-  background-position-y: 65%;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  font-family: 'Source Serif Pro', serif !important;
-} */
-=======
 	background-image: url("./../../assets/imgs/landing page/bg-1.jpeg");
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
@@ -24,7 +11,6 @@
 	overflow: hidden;
 	font-family: "Source Serif Pro", serif !important;
 }
->>>>>>> 43ddfcd1617941a94c5906edee0f4602c05cbe32
 
 .nav-link {
 	color: white !important;

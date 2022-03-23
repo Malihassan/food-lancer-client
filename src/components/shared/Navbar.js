@@ -16,7 +16,6 @@ const Navbar = ({ bg, buttons }) => {
 							Profile
 						</Link>
 					)}
-
 					{buttons.login && (
 						<Link
 							to="/login"
@@ -28,9 +27,13 @@ const Navbar = ({ bg, buttons }) => {
 					)}
 
 					{buttons.signup && (
-						<button type="button" className="btn btn-warning mx-2">
+						<Link
+							to="/signup"
+							type="button"
+							className="btn btn-outline-light mx-2"
+						>
 							Sign up
-						</button>
+						</Link>
 					)}
 				</div>
 			</div>

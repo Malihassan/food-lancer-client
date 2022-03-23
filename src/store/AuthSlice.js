@@ -1,29 +1,50 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../network/axiosConfig";
 
-// First, create the thunk
-// const login = createAsyncThunk(
-// 	"users/fetchByIdStatus",
-// 	async (userId, thunkAPI) => {
-// 		const response = await userAPI.fetchById(userId);
-// 		return response.data;
-// 	}
-// );
+export const login = createAsyncThunk(
+	"acount/login",
+	async (formData, { rejectWithValue }) => {
+		try {
+			const res = await axiosInstance.post("seller/account/login", {
+				email: formData.userEmail,
+				password: formData.userPassword,
+			});
+			return res.data;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	}
+);
 
 const authSlice = createSlice({
-	name: "authenticated",
+	name: "acount",
 	initialState: {
 		authenticated: false,
+		resErrorMes: "",
+		loading: false,
 	},
 	reducers: {
-		login: (state) => {
-			state.authenticated = true;
+		// login: (state) => {
+		//   state.authenticated = true;
+		// },
+		// logout: (state) => {
+		//   state.authenticated = false;
+		// },
+	},
+	extraReducers: {
+		[login.pending]: (state) => {
+			state.loading = true;
 		},
-		logout: (state) => {
-			state.authenticated = false;
+		[login.fulfilled]: (state, { payload }) => {
+			state.loading = false;
+			state.authenticated = true;
+			console.log("=token=>", payload);
+		},
+		[login.rejected]: (state, { payload }) => {
+			state.loading = false;
+			state.resErrorMes = payload.error;
 		},
 	},
-	extraReducers: {},
 });
 
 export const authActions = authSlice.actions;

@@ -12,7 +12,7 @@ function ProductInfo(){
 
     return (
         <>
-            <div className="row justify-content-between mx-2 bg-light">
+            <div className="row justify-content-between text-dark p-2">
                 <div id="carouselExampleIndicators" className="carousel slide col-5" data-bs-ride="carousel">
                     <div className="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -24,7 +24,7 @@ function ProductInfo(){
                         <img src="../../assets/imgs/landing page/bg-1.jpeg" className="d-block w-100" alt="..."/>
                         </div>
                         <div className="carousel-item">
-                        <img src="../../assets/imgs/landing page/bg-2.jpeg" className="d-block w-100" alt="..."/>
+                        <img src="../../assets/imgs/1.jpeg" className="d-block w-100" alt="..."/>
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -39,17 +39,42 @@ function ProductInfo(){
                 <div className="col-6">
                     <p className='display-5'>ProductName</p>
                     <div className='d-flex'>
-                        <StarRatings className="me-2" starDimension="1rem" starSpacing="0.05rem" rating={rating} starRatedColor="orange"/>
-                        <p className='m-1'>{rating} / 5</p>
+                        <StarRatings starDimension="1rem" starSpacing="0.05rem" rating={rating} starRatedColor="orange"/>
+                        <p className='m-1 ms-2'>{rating} / 5</p>
                     </div>
-                    <div className='mt-3 ms-2'>
+                    <div className='mt-3'>
                         <p>SellerName</p>
                         <p>Price</p>
                         <p>Category</p>
                         <p>Status</p>
                     </div>
+                    <div className='d-flex mt-3'>
+                        <p className='col-2'>Serves</p>
+                        <div className='col-8 d-flex'>
+                            <div className='mx-1'>
+                                <input type="radio" className="btn-check" name="options-outlined" id="one" autoComplete="off"/>
+                                <label className="p-1 text-center small btn-serve" htmlFor="one">1</label>
+                            </div>
+                            <div className='mx-1'>
+                                <input type="radio" className="btn-check" name="options-outlined" id="two" autoComplete="off"/>
+                                <label className="p-1 text-center small btn-serve" htmlFor="two">2</label>
+                            </div>
+                            <div className='mx-1'>
+                                <input type="radio" className="btn-check" name="options-outlined" id="three" autoComplete="off"/>
+                                <label className="p-1 text-center small btn-serve" htmlFor="three">3</label>
+                            </div>
+                            <div className='mx-1'>
+                                <input type="radio" className="btn-check" name="options-outlined" id="four" autoComplete="off"/>
+                                <label className="p-1 text-center small btn-serve" htmlFor="four">4</label>
+                            </div>
+                            <div className='mx-1'>
+                                <input type="radio" className="btn-check" name="options-outlined" id="five-plus" autoComplete="off"/>
+                                <label className="p-1 text-center small btn-serve" htmlFor="five-plus">+5</label>
+                            </div>
+                        </div>
+                    </div>
                     <div className='col-12 d-flex justify-content-center'>
-                        <button className='btn shadow maroon text-light text-font w-75 m-1'>Add To Cart</button>
+                        <button className='btn shadow maroon text-light text-font w-100 me-1 my-1'>Add To Cart</button>
                     </div>
                 </div>
             </div>

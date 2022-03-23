@@ -1,9 +1,9 @@
-.forgit-link {
+.forget-link {
   text-decoration: none !important;
   color: white !important;
 }
 
-.forgit-link:hover {
+.forget-link:hover {
   text-decoration: none !important;
   color: #ffc107 !important;
 }
@@ -16,7 +16,7 @@
   color: white !important;
 }
 
-h3, label {
+.login-header {
   color: white !important;
 }
 
@@ -31,4 +31,4 @@ h3, label {
   color: #ffc107 !important;
   border: 1px #ffc107 solid !important;
 }
-/*# sourceMappingURL=Login.css.map */
+/*# sourceMappingURL=LoginSeller.css.map */

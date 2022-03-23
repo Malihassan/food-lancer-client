@@ -1,8 +1,24 @@
 .maroon{
-    background-color: rgb(117, 10, 37) !important
+    background-color: rgb(117, 10, 37) !important;
 }
 
 .text-font{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder !important;
 }
+
+.btn-serve{
+    height: 1.9rem;
+    width: 1.9rem;
+    border: 2px solid rgb(117, 10, 37);
+    border-radius: 50%;
+    color: rgb(117, 10, 37);
+    background-color: transparent;
+}
+
+.btn-serve:hover, #one:checked + label, #two:checked +label, #three:checked +label, #four:checked +label, #five-plus:checked +label {
+    background-color: rgb(117, 10, 37);
+    color: #EEEE;
+
+}
+

@@ -1,8 +1,12 @@
-import "./Login.css";
+import "./LoginSeller.css";
 import { useState, useEffect } from "react";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from 'react-router-dom';
-function Login() {
+import { authActions, login } from "../../../../store/AuthSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+function LoginSeller() {
+  const dispatch = useDispatch();
+  const errResMes = useSelector((state) => state.auth.resErrorMes);
   const emailReg = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
   const passReg = new RegExp(
     "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
@@ -44,28 +48,32 @@ function Login() {
         userPasswordErr:
           e.target.value.length === 0
             ? "This Field is required"
-            : passReg.test(e.target.value) === false
+            : // : passReg.test(e.target.value) === false
+            passReg.test(e.target.value) === true
             ? "invalid password"
             : null,
       });
     }
   };
-  const handleSubmit = (e) => {
+  const handleLoginSellerSubmit = (e) => {
     e.preventDefault();
     console.log(userForm);
+    dispatch(login(userForm));
   };
   return (
     <>
       <div className="w-75 m-auto text-center ">
-        <h3 className="my-4">Login Form</h3>
+        <h3 className="my-4 login-header">Login Form</h3>
         <form
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={(e) => handleLoginSellerSubmit(e)}
         >
           <div className="">
             <div className="mb-3 ">
-             
               <div className="input-group flex-nowrap my-2 ">
-                <span className="input-group-text icon-container" id="emailHelp">
+                <span
+                  className="input-group-text icon-container"
+                  id="emailHelp"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -88,14 +96,16 @@ function Login() {
                   onChange={(e) => handleFormChange(e)}
                 />
               </div>
-              <div id="emailHelp" className="form-text text-danger">
+             {/*  <div id="emailHelp" className="form-text text-danger">
                 {userFormError.userEmailErr}
-              </div>
+              </div> */}
             </div>
             <div className="mb-3">
-              
               <div className="input-group flex-nowrap">
-                <span className="input-group-text icon-container" id="passwordHelp">
+                <span
+                  className="input-group-text icon-container"
+                  id="passwordHelp"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -118,16 +128,25 @@ function Login() {
                   onChange={(e) => handleFormChange(e)}
                 ></input>
               </div>
-              <div id="passwordHelp" className="form-text text-danger">
+             {/*  <div id="passwordHelp" className="form-text text-danger">
                 {userFormError.userPasswordErr}
-              </div>
+              </div> */}
+              {errResMes && (
+                <div id="passwordHelp" className="form-text text-danger">
+                  {errResMes}
+                </div>
+              )}
             </div>
-           <div className="d-flex justify-content-around align-items-center p-4">
-           <div><Link className="forgit-link " to="">forget password ???</Link></div>
-            <button type="submit" className="btn btn-submit px-4">
-              Login
-            </button>
-           </div>
+            <div className="d-flex justify-content-around align-items-center p-4">
+              <div>
+                <Link className="forget-link " to="">
+                  forget password ???
+                </Link>
+              </div>
+              <button type="submit" className="btn btn-submit px-4">
+                Login
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -135,4 +154,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginSeller;

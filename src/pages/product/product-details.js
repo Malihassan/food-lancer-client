@@ -3,8 +3,8 @@ import "./product-details.css"
 
 function ProductDetails(){
     return (
-        <div className="bg-yellow g-0">
-            <div className="card m-2">
+        <div className="container-fluid bg-yellow p-3 g-0">
+            <div className="card">
                 <ProductInfo />
             </div>
         </div>

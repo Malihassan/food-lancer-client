@@ -5,9 +5,9 @@
   background-size: cover;
   background-position-x: 100%;
   background-position-y: 65%;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  /* width: 100vw; */
+  /* height: 100vh; */
+  /* overflow: hidden; */
 }
 .overLay{
   border-radius: 2%;

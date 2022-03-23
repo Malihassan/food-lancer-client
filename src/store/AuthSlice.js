@@ -1,4 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosInstance } from "../network/axiosConfig";
+
+// First, create the thunk
+// const login = createAsyncThunk(
+// 	"users/fetchByIdStatus",
+// 	async (userId, thunkAPI) => {
+// 		const response = await userAPI.fetchById(userId);
+// 		return response.data;
+// 	}
+// );
 
 const authSlice = createSlice({
 	name: "authenticated",

@@ -9,6 +9,7 @@ const LandingPage = () => {
 	const buttons = {
 		signup: true,
 		login: true,
+		buyerProfile: true,
 	};
 	const pageArr = [
 		{ text: "Craving a Delicious home-made Dish?", img: img1 },

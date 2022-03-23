@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
+import { axiosInstance } from "../../network/axiosConfig";
 
-const initialValues = {
+let initialValues = {
 	firstName: "",
 	lastName: "",
-	phoneNumber: "",
-};
-
-const onSubmit = (values) => {
-	console.log(values);
+	phone: "",
+	coverageArea: "0",
 };
 
 const validate = (values) => {
@@ -23,13 +21,46 @@ const validate = (values) => {
 		errors.lastName = "Name length must be between 3 and 20";
 	}
 
-	if (!values.phoneNumber) {
-		errors.phoneNumber = "Required";
+	if (
+		!values?.phone.toString().match(/^01[0125]\d{1,8}/g) ||
+		values?.phone.length !== 11
+	) {
+		errors.phone = "Please enter a correct valid phone number";
 	}
 	return errors;
 };
 
 function UpdateProfile() {
+	const [update, setUpdate] = useState(false);
+	const [areas, setAreas] = useState([]);
+	const [updateRes, setUpdateRes] = useState("");
+
+	const onSubmit = (values) => {
+		(async () => {
+			const res = await axiosInstance.patch(`seller/account/editProfile`, {
+				body: values,
+			});
+			console.log(res);
+			setUpdateRes(res.data);
+		})();
+	};
+
+	const fillData = async () => {
+		const res = await axiosInstance.get(`seller/account/coverageArea`);
+		const resAreas = res.data;
+		setAreas(resAreas);
+		const { data } = await axiosInstance.get(`seller/account/info`);
+
+		initialValues.firstName = data.firstName;
+		initialValues.lastName = data.lastName;
+		initialValues.phone = data.phone;
+		initialValues.coverageArea = data.coverageArea._id;
+		setUpdate(!update);
+	};
+
+	useEffect(() => {
+		fillData();
+	}, []);
 	return (
 		<div className={`${classes.backColor} container-fluid`}>
 			<div
@@ -61,7 +92,7 @@ function UpdateProfile() {
 								name="firstName"
 								placeholder="First Name"
 							/>
-							<div className="mx-3 my-1 fw-light text-danger">
+							<div className="mx-3 my-1 fw-light text-warning">
 								<ErrorMessage name="firstName" />
 							</div>
 							<Field
@@ -70,30 +101,31 @@ function UpdateProfile() {
 								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
 								placeholder="Last Name"
 							/>
-							<div className="mx-3  fw-light text-danger">
+							<div className="mx-3  fw-light text-warning">
 								<ErrorMessage name="lastName" />
 							</div>
 							<Field
-								id="phoneNumber"
-								name="phoneNumber"
+								id="phone"
+								name="phone"
 								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
 								placeholder="Phone Number"
-								type="number"
+								type="text"
 							/>
-							<div className="mx-3  fw-light text-danger">
-								<ErrorMessage name="phoneNumber" />
+							<div className="mx-3  fw-light text-warning">
+								<ErrorMessage name="phone" />
 							</div>
 							<Field
 								as="select"
 								name="coverageArea"
 								className={`form-select mt-3 ms-2  ${classes.inputWidth}`}
-								value="0"
 								aria-label="Default select example"
 							>
 								<option value="0">Select Coverage Area</option>
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+								{areas.map((area) => (
+									<option key={area?._id} value={area?._id}>
+										{area?.governorateName} - {area?.regionName}
+									</option>
+								))}
 							</Field>
 
 							<button
@@ -102,11 +134,25 @@ function UpdateProfile() {
 							>
 								Submit
 							</button>
-							<button className="btn btn-outline-light mx-2 mt-4">
+							<button
+								type="button"
+								onClick={(e) => {
+									fillData();
+								}}
+								className="btn btn-outline-light mx-2 mt-4"
+							>
 								Cancel Changes
 							</button>
 						</Form>
 					</Formik>
+					<div
+						className="fs-3 mt-5 ms-1 "
+						style={{
+							fontFamily: " 'El Messiri', sans-serif",
+						}}
+					>
+						{updateRes}
+					</div>
 				</div>
 			</div>
 		</div>

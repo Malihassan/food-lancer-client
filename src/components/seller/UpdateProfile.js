@@ -35,13 +35,20 @@ function UpdateProfile() {
 			<div
 				className={`container shadow-lg p-0 row mt-5 ${classes.centerDiv} 
       ${classes.borderParent}`}
-				style={{ height: "75vh", width: "50vw" }}
+				style={{ height: "75vh", width: "53vw" }}
 			>
 				<div className={`col-5 d-none d-lg-block ${classes.bgImg}`}></div>
 				<div
 					className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
 				>
-					<div className="display-6 my-2 ms-1 ">Update Information</div>
+					<div
+						className="fs-1 my-2 ms-1 "
+						style={{
+							fontFamily: " 'El Messiri', sans-serif",
+						}}
+					>
+						Update Information
+					</div>
 					<Formik
 						initialValues={initialValues}
 						validate={validate}
@@ -95,8 +102,8 @@ function UpdateProfile() {
 							>
 								Submit
 							</button>
-							<button className="btn btn-outline-danger mx-2 mt-4">
-								Restore
+							<button className="btn btn-outline-light mx-2 mt-4">
+								Cancel Changes
 							</button>
 						</Form>
 					</Formik>

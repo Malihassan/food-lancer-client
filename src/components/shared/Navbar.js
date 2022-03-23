@@ -7,9 +7,9 @@ const Navbar = ({ bg, buttons }) => {
 			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">
 				<div className="navbar-brand text-light">FoodLancer</div>
 				<div className="navbar-brand text-light">
-					{buttons.buyerProfile && (
+					{buttons.sellerProfile && (
 						<Link
-							to="/login"
+							to="/seller/updateProfile"
 							type="button"
 							className="lead text-light mx-2"
 						>
@@ -30,7 +30,7 @@ const Navbar = ({ bg, buttons }) => {
 						<Link
 							to="/signup"
 							type="button"
-							className="btn btn-outline-light mx-2"
+							className="btn btn-outline-warning mx-2"
 						>
 							Sign up
 						</Link>

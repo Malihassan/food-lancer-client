@@ -1,10 +1,11 @@
 .backColor {
-	background-color: rgba(211, 20, 13, 0.884);
+	background-color: #fcf0c8;
 	width: 100vw;
 	height: 100vh;
 }
 .backColors {
-	background-color: white;
+	background-color: #911f27;
+	color: #fcf0c8;
 }
 
 .borderLeft {
@@ -28,7 +29,7 @@
 
 .centerDiv {
 	position: absolute;
-	background-color: rgba(211, 20, 13, 0.884);
+	background-color: transparent;
 	left: 25%;
 	top: 44%;
 	transform: translate(0, -50%);

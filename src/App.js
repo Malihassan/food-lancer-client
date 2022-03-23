@@ -11,21 +11,15 @@ function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<Navigate replace to="/welcome" />} />
-			<Route path="/welcome" element={<LandingPage />} />
-			<Route path="/login" element={<LoginPage />} />
-			<Route
-				path="/dishes"
-				element={
-					<h1>
-						HIII! <br />
-						My name is Dishes
-					</h1>
-				}
-			/>
-			<Route path="/login" element={<LoginPage />} />
-			<Route path="/seller/updateProfile" element={<UpdateProfile />} />
-			<Route path="/signup" element={<SignupPage />} />
-			<Route path="/product" element={<ProductList />} />
+			<Route path="welcome" element={<LandingPage />} />
+			<Route path="login" element={<LoginPage />} />
+			{/*
+				dynamic routing example
+			<Route path="users" element={<Users users={users} />} /> */}
+			<Route path="login" element={<LoginPage />} />
+			<Route path="updateProfile" element={<UpdateProfile />} />
+			<Route path="signup" element={<SignupPage />} />
+			<Route path="product" element={<ProductList />} />
 		</Routes>
 	);
 }

@@ -10,7 +10,6 @@ function App() {
 		<Routes>
 			<Route path="/" element={<Navigate replace to="/welcome" />} />
 			<Route path="/welcome" element={<LandingPage />} />
-			<Route path="/login" element={<LoginPage />} />
 			<Route
 				path="/dishes"
 				element={
@@ -20,7 +19,8 @@ function App() {
 					</h1>
 				}
 			/>
-			<Route path="/login" element={<ProductList />} />
+			<Route path="/login" element={<LoginPage />} />
+			<Route path="/myProducts" element={<ProductList />} />
 		</Routes>
 	);
 }

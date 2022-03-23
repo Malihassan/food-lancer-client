@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-	// baseURL: "https://food-lancer.herokuapp.com/",
-	baseURL:"http://localhost:3000/"
+	baseURL: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbGlIYXNzYW4iLCJpZCI6IjYyMGMxYzVlMWVlZmZlODhjYzUxOTJkNiIsImlhdCI6MTY0ODAzNzA1NywiZXhwIjoxNjQ4MTIzNDU3fQ.lPdW2BA4-_GUupsqm84zGroWzJGF4JojVmRIckOFjW8",
+	// baseURL:"http://localhost:3000/"
 });
 
 // Add a request interceptor		

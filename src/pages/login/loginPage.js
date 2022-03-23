@@ -1,11 +1,11 @@
 import Login from "../../components/auth/seller/loginComponent/Login";
 import React from "react";
 import "./LoginPage.css";
+import './LoginPage.scss';
 //import { Link } from 'react-router-dom';
 function LoginPage() {
   return (
-    <>
-      
+    <>    
       <div className="d-flex row p-5 align-items-center ">
       <div className="col-xl-4 login ">
         <nav className="">

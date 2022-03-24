@@ -5,6 +5,7 @@ import {getProducts} from '../../../store/ProductSlice';
 import ReactPaginate from "react-paginate";
 
 import "./product-list.scss";
+import { Link } from "react-router-dom";
 
 export default function ProductList() {
   const [page, setPage] = useState(1);
@@ -21,6 +22,7 @@ export default function ProductList() {
   const totoalDocs=useSelector((state)=>state.product.totoalDocs);
   return (
     <div className="container-fluid">
+    <Link to="addProduct" className="btn btn-dark text-white bg-dark mt-2">Add Product</Link>    
       <div className="row bg-transparent">
           {products.map((prd) => {
               return(

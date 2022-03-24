@@ -25,6 +25,7 @@ export default function ProductCard(props) {
   };
   console.log(product.avgRate, "Avg Rate");
   return (
+
     <div className={`${classes.cardColor} shadow-sm`}>
       <div className="position-relative">
         <div

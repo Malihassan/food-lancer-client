@@ -6,6 +6,7 @@ import SignupPage from "./pages/signup/SignupPage";
 import ProductCard from "./components/shared/product-card/Product-Card";
 import ProductList from "./components/product/product-list/ProductList";
 import UpdateProfile from "./components/seller/UpdateProfile";
+import ProductForm from "./components/product/product-form/ProductForm";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 			<Route path="/myProducts" element={<ProductList />} />
 			<Route path="welcome" element={<LandingPage />} />
 			<Route path="login" element={<LoginPage />} />
+			<Route path="/myProducts/addProduct" element={<ProductForm/>} />
 			{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}

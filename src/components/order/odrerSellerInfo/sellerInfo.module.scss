@@ -1,0 +1,80 @@
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+@mixin responsive($size) {
+  $phone: 568px;
+  $tablet: 768px;
+  @if ($size == small) {
+    @media screen and (max-width: $phone) {
+      @content;
+    }
+  }
+  @if ($size == medium) {
+    @media screen and (max-width: $tablet) {
+      @content;
+    }
+  }
+}
+.sellerInfContainer {
+  height: 20vh;
+  @include flex-row();
+  justify-content: space-around;
+  align-items: center;
+  @include responsive(small) {
+    @include flex-col();
+    align-items: flex-start;
+    height: auto;
+  }
+  img {
+    height: 100%;
+  }
+  .textDark {
+    color: rgb(19, 19, 19) !important;
+  }
+  label {
+    color: black !important;
+  }
+  .nameContainer {
+    padding: 10px;
+    align-self: center;
+    > label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding-bottom: 7px;
+    }
+    div {
+      @include flex-row();
+      justify-content: space-between;
+    }
+    div label {
+      color: gray !important;
+      font-size: 0.8rem;
+    }
+  }
+  .cardInfo {
+    padding: 10px;
+    @include flex-row();
+    align-items: center;
+    .icon {
+      margin-right: 8px;
+      font-size: 35px;
+      color: #154d6b;
+    }
+    > div {
+      @include flex-col();
+      align-items: center;
+    }
+    label {
+      color: gray !important;
+      font-size: 1rem;
+    }
+    h3 {
+      color: rgb(19, 19, 19) !important;
+    }
+  }
+}

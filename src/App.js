@@ -26,11 +26,11 @@ function App() {
 			<Route path="/myProducts" element={<ProductList />} />
 			<Route path="welcome" element={<LandingPage />} />
 			<Route path="login" element={<LoginPage />} />
-			<Route path="/myProducts/addProduct" element={<ProductForm/>} />
+			<Route path="/myProducts/addProduct" element={<ProductForm />} />
 			{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-			<Route path="updateProfile" element={<UpdateProfile />} />
+			<Route path="/updateProfile" element={<UpdateProfile />} />
 			<Route path="signup" element={<SignupPage />} />
 		</Routes>
 	);

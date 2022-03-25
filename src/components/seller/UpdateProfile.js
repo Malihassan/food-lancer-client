@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
 import { axiosInstance } from "../../network/axiosConfig";
+import Navbar from "../shared/Navbar";
+import { useNavigate } from "react-router-dom";
 
 let initialValues = {
 	firstName: "",
@@ -31,17 +33,48 @@ const validate = (values) => {
 };
 
 function UpdateProfile() {
+	let navigate = useNavigate();
 	const [update, setUpdate] = useState(false);
 	const [areas, setAreas] = useState([]);
 	const [updateRes, setUpdateRes] = useState("");
+	const [image, setImage] = useState({ image: "" });
+	const [selectedImage, setSelectedImage] = useState("");
 
 	const onSubmit = (values) => {
+		console.log(image.image);
+		let formData = new FormData();
+		formData.append("image", image.image);
+		formData.append("firstName", values.firstName);
+		formData.append("lastName", values.lastName);
+		formData.append("phone", values.phone);
+		formData.append("coverageArea", values.coverageArea);
+
 		(async () => {
-			const res = await axiosInstance.patch(`seller/account/editProfile`, {
-				...values,
-			});
+			const res = await axiosInstance.patch(
+				`seller/account/editProfile`,
+				formData,
+				{ headers: { "Content-Type": "multipart/form-data" } }
+			);
 			setUpdateRes(res.data);
 		})();
+	};
+
+	const uploadImage = (files) => {
+		console.log(files);
+		const formData = new FormData();
+		formData.append("file", files[0]);
+		// formData.append("upload_preset", "");
+		// formData.append("cloud_name", "");
+		console.log(formData);
+		console.log(files[0]);
+		const temp = files[0];
+		setImage({ ...image, image: temp });
+
+		// axiosInstance.post("http://", formData);
+	};
+
+	const previewFile = (file) => {
+		const reader = new FileReader();
 	};
 
 	const fillData = async () => {
@@ -49,6 +82,8 @@ function UpdateProfile() {
 		const resAreas = res.data;
 		setAreas(resAreas);
 		const { data } = await axiosInstance.get(`seller/account/info`);
+		console.log(data);
+		setImage(data.image);
 
 		initialValues.firstName = data.firstName;
 		initialValues.lastName = data.lastName;
@@ -60,80 +95,108 @@ function UpdateProfile() {
 	useEffect(() => {
 		fillData();
 	}, []);
+	const buttons = {
+		signup: true,
+		login: true,
+		sellerProfile: true,
+	};
 	return (
-		<div className={`${classes.backColor} container-fluid`}>
-			<div
-				className={`container shadow-lg p-0 row mt-5 ${classes.centerDiv} 
-      ${classes.borderParent}`}
-				style={{ height: "75vh", width: "53vw" }}
-			>
-				<div className={`col-5 d-none d-lg-block ${classes.bgImg}`}></div>
+		<>
+			<Navbar bg="bg-dark" buttons={buttons} />
+			<div className={`${classes.backColor} container-fluid`}>
 				<div
-					className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
+					className={`container shadow-lg p-0 row mt-5 ${classes.centerDiv} 
+      ${classes.borderParent}`}
+					style={{ height: "80vh", width: "53vw" }}
 				>
 					<div
-						className="fs-1 my-2 ms-1 "
-						style={{
-							fontFamily: " 'El Messiri', sans-serif",
-						}}
+						className={`col-5 d-none d-lg-block ${classes.bgImg}`}
+					></div>
+					<div
+						className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
 					>
-						Update Information
-					</div>
-					<Formik
-						initialValues={initialValues}
-						validate={validate}
-						onSubmit={onSubmit}
-					>
-						<Form>
-							<Field
-								className={`form-control mt-3 ms-2 ${classes.inputWidth}`}
-								id="firstName"
-								name="firstName"
-								placeholder="First Name"
-							/>
-							<div className="mx-3 my-1 fw-light text-warning">
-								<ErrorMessage name="firstName" />
-							</div>
-							<Field
-								id="lastName"
-								name="lastName"
-								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-								placeholder="Last Name"
-							/>
-							<div className="mx-3  fw-light text-warning">
-								<ErrorMessage name="lastName" />
-							</div>
-							<Field
-								id="phone"
-								name="phone"
-								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-								placeholder="Phone Number"
-								type="text"
-							/>
-							<div className="mx-3  fw-light text-warning">
-								<ErrorMessage name="phone" />
-							</div>
-							<Field
-								as="select"
-								name="coverageArea"
-								className={`form-select mt-3 ms-2  ${classes.inputWidth}`}
-								aria-label="Default select example"
-							>
-								<option value="0">Select Coverage Area</option>
-								{areas.map((area) => (
-									<option key={area?._id} value={area?._id}>
-										{area?.governorateName} - {area?.regionName}
-									</option>
-								))}
-							</Field>
+						<div
+							className="fs-1 my-2 ms-1 "
+							style={{
+								fontFamily: " 'El Messiri', sans-serif",
+							}}
+						>
+							Update Information
+						</div>
+						<Formik
+							initialValues={initialValues}
+							validate={validate}
+							onSubmit={onSubmit}
+						>
+							<Form>
+								{/* <img
+								src={image.url}
+								alt=".."
+								className="ms-5"
+								style={{
+									width: "150px",
+									height: "150px",
+									borderRadius: "50%",
+								}}
+							/> */}
 
-							<button
-								type="submit"
-								className="btn btn-outline-success ms-5 mx-2 mt-4"
-							>
-								Submit
-							</button>
-							{/* <button
+								<Field
+									className={`form-control mt-3 ms-2 ${classes.inputWidth}`}
+									id="firstName"
+									name="firstName"
+									placeholder="First Name"
+								/>
+								<div className="mx-3 my-1 fw-light text-warning">
+									<ErrorMessage name="firstName" />
+								</div>
+								<Field
+									id="lastName"
+									name="lastName"
+									className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
+									placeholder="Last Name"
+								/>
+								<div className="mx-3  fw-light text-warning">
+									<ErrorMessage name="lastName" />
+								</div>
+								<Field
+									id="phone"
+									name="phone"
+									className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
+									placeholder="Phone Number"
+									type="text"
+								/>
+								<div className="mx-3  fw-light text-warning">
+									<ErrorMessage name="phone" />
+								</div>
+								<Field
+									as="select"
+									name="coverageArea"
+									className={`form-select mt-3 ms-2  ${classes.inputWidth}`}
+									aria-label="Default select example"
+								>
+									<option value="0">Select Coverage Area</option>
+									{areas.map((area) => (
+										<option key={area?._id} value={area?._id}>
+											{area?.governorateName} - {area?.regionName}
+										</option>
+									))}
+								</Field>
+
+								<input
+									type="file"
+									className={`mt-3 ms-2 form-control ${classes.inputWidth} `}
+									onChange={(e) => {
+										uploadImage(e.target.files);
+									}}
+								/>
+
+								<button
+									type="submit"
+									className="btn btn-outline-success ms-5 mx-2 mt-4"
+								>
+									Submit
+								</button>
+								{/* <button
 								type="button"
 								onClick={(e) => {
 									fillData();
@@ -142,19 +205,20 @@ function UpdateProfile() {
 							>
 								Cancel Changes
 							</button> */}
-						</Form>
-					</Formik>
-					<div
-						className="fs-3 mt-5 ms-1 "
-						style={{
-							fontFamily: " 'El Messiri', sans-serif",
-						}}
-					>
-						{updateRes}
+							</Form>
+						</Formik>
+						<div
+							className="fs-3 mt-5 ms-1 "
+							style={{
+								fontFamily: " 'El Messiri', sans-serif",
+							}}
+						>
+							{updateRes}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

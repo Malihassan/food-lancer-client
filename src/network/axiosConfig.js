@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
 		// Do something before request is sent
 		// console.log(config);
 		config.headers["token"] =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbGlIYXNzYW4iLCJpZCI6IjYyMGMxYzVlMWVlZmZlODhjYzUxOTJkNiIsImlhdCI6MTY0ODAzOTQ4OSwiZXhwIjoxNjQ4MTI1ODg5fQ.PPZyzSxCq6t24npCYN21jWVkyXvSnjh0dEEETpfa_Sk";
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbGlIYXNzYW4iLCJpZCI6IjYyMGMxYzVlMWVlZmZlODhjYzUxOTJkNiIsImlhdCI6MTY0ODIwOTAzMiwiZXhwIjoxNjQ4Mjk1NDMyfQ.MDtAw5CO7ZbdwMfGbIn9nwJHol61T-1i3mx85Njbx78";
 		// config.params["test"] = "test";
 		return config;
 	},

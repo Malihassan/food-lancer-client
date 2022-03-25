@@ -7,7 +7,7 @@ function LoginPage() {
   return (
     <>
       
-      <div className="d-flex row p-5 align-items-center ">
+      <div className=" p-5  d-flex justify-content-start align-items-center vh-100 loginpage-container">
       <div className="col-xl-4 login ">
         <nav className="">
           <div className="nav nav-tabs" id="nav-tab" role="tablist">

@@ -1,25 +1,28 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
+  
 	// baseURL: "https://food-lancer.herokuapp.com/",
-	baseURL:"http://localhost:3000/"
+	baseURL:"http://localhost:3001/"
 });
 
-// Add a request interceptor		
-// axiosInstance.interceptors.request.use(
-// 	function (config) {
-// 		// Do something before request is sent
-// 		// console.log(config);
-// 		// config.headers["Authorization"] = "djsad5s4a3d/543sd4as5da6sd4";
-// 		// config.params["test"] = "test";
-// 		return config;
-// 	},
-// 	function (error) {
-// 		// Do something with request error
-// 		return Promise.reject(error);
-// 	}
-// );
-
+ //Add a request interceptor		
+ axiosInstance.interceptors.request.use(
+	function (config) {
+    const x = document.cookie;
+    //console.log(x);
+		// Do something before request is sent
+ 		// console.log(config);
+		 config.headers["token"] = x;
+		 //config.params["test"] = "test";
+		return config;
+	},
+	function (error) {
+	// Do something with request error
+ 		return Promise.reject(error);
+	}
+ );
+ 
 // // Add a response interceptor
 // axiosInstance.interceptors.response.use(
 // 	function (response) {

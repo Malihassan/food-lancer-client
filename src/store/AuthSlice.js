@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../network/axiosConfig";
-
 export const login = createAsyncThunk(
   "acount/login",
   async (formData, { rejectWithValue }) => {
@@ -39,6 +38,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.authenticated = true;
       console.log("=token=>", payload);
+      document.cookie =`token=${payload.token}`;
     },
     [login.rejected]: (state, { payload }) => {
       state.loading = false;

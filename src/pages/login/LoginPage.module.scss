@@ -1,5 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap");
-body {
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap');
+
+/*  .loginpage-container{
   background-image: url("./../../assets/imgs/landing page/bg-1.jpeg") !important;
   background-repeat: no-repeat;
   background-position: 100% 100%;
@@ -10,29 +12,30 @@ body {
   height: 100vh;
   overflow: hidden;
   font-family: 'Source Serif Pro', serif !important;
+  
 }
-
 .nav-link {
   color: white !important;
 }
-
-.nav-link:hover {
+.nav-link:hover{
   color: #ffc107 !important;
 }
-
-.nav-tabs {
+// .nav-link:hover .nav-tabs{
+//  background-color: transparent;
+//} 
+.nav-tabs{
   background-color: transparent !important;
+  //color: antiquewhite;
 }
-
-.active {
+.active{
   color: #212529 !important;
 }
-
-.login {
+ .login{
+  //border-bottom: white 1px solid !important;
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
-}
-/*# sourceMappingURL=LoginPage.css.map */
+ // box-shadow: 0 .125rem .25rem rgba(white, 1);
+}  */

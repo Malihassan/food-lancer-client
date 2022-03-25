@@ -27,7 +27,7 @@ const authSlice = createSlice({
     // login: (state) => {
     //   state.authenticated = true;
     // },
-    // logout: (state) => {
+    // logout: (state,action) => {
     //   state.authenticated = false;
     // },
   },
@@ -48,5 +48,6 @@ const authSlice = createSlice({
 });
 
 export const authActions = authSlice.actions;
-
 export default authSlice.reducer;
+
+

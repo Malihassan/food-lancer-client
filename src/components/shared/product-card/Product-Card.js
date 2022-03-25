@@ -23,7 +23,6 @@ export default function ProductCard(props) {
   const handleRating = (rate) => {
     setRatingValue(rate);
   };
-  console.log(product.avgRate, "Avg Rate");
   return (
 
     <div className={`${classes.cardColor} shadow-sm`}>
@@ -33,7 +32,7 @@ export default function ProductCard(props) {
           onMouseOut={() => setMousedOver(false)}
           className={`${classes.imageContainer}`}
         >
-          <img src={images[count].url} style={{ height: "365px", width: "100%"}} />
+          <img src={images[count]?.url} style={{ height: "365px", width: "100%"}} />
         </div>
       </div>
       <div className="d-flex justify-content-between">

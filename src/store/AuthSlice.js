@@ -2,18 +2,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../network/axiosConfig";
 
 export const login = createAsyncThunk(
-  "acount/login",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const res = await axiosInstance.post("seller/account/login", {
-        email: formData.userEmail,
-        password: formData.userPassword,
-      });
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
+	"acount/login",
+	async (formData, { rejectWithValue }) => {
+		try {
+			const res = await axiosInstance.post("seller/account/login", {
+				email: formData.userEmail,
+				password: formData.userPassword,
+			});
+			return res.data;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	}
 );
 
 const authSlice = createSlice({

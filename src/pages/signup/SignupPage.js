@@ -1,11 +1,9 @@
-import Login from "../../components/auth/seller/loginComponent/Login";
-import React from "react";
-import "./LoginPage.css";
-//import { Link } from 'react-router-dom';
-function LoginPage() {
+import React from 'react'
+import SignupSeller from './../../components/auth/seller/signupComponent/SignupSeller';
+import "./SignupPage.css"
+function SignupPage() {
   return (
     <>
-      
       <div className="d-flex row p-5 align-items-center ">
       <div className="col-xl-4 login ">
         <nav className="">
@@ -20,7 +18,7 @@ function LoginPage() {
               aria-controls="nav-home"
               aria-selected="true"
             >
-              Login as Seller
+              Signup as Seller
             </button>
             <button
               className="nav-link"
@@ -32,7 +30,7 @@ function LoginPage() {
               aria-controls="nav-profile"
               aria-selected="false"
             >
-              Login as Buyer
+              Signup as Buyer
             </button>
           </div>
         </nav>
@@ -43,7 +41,7 @@ function LoginPage() {
             role="tabpanel"
             aria-labelledby="nav-home-tab"
           >
-            <Login></Login>
+            <SignupSeller></SignupSeller>
           </div>
           <div
             className="tab-pane fade"
@@ -57,6 +55,8 @@ function LoginPage() {
       </div>
       </div>
     </>
-  );
+
+  )
 }
-export default LoginPage;
+
+export default SignupPage

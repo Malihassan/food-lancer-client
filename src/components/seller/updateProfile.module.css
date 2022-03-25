@@ -1,0 +1,36 @@
+.backColor {
+	background-color: #fcf0c8;
+	width: 100vw;
+	height: 100vh;
+}
+.backColors {
+	background-color: #911f27;
+	color: #fcf0c8;
+}
+
+.borderLeft {
+	border-radius: 0px 20px 20px 0px;
+}
+.borderParent {
+	border-radius: 20px 20px 20px 20px;
+}
+.bgImg {
+	/* background: url(./assets/bg-heading-02.jpg) no-repeat center center fixed; */
+	border-radius: 20px 0px 0px 20px;
+	max-width: 50px;
+	background-image: url(../../assets/imgs/update\ profile/left-img.jpg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.inputWidth {
+	max-width: 20rem;
+}
+
+.centerDiv {
+	position: absolute;
+	background-color: transparent;
+	left: 25%;
+	top: 44%;
+	transform: translate(0, -50%);
+}

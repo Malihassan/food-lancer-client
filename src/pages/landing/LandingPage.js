@@ -9,6 +9,7 @@ const LandingPage = () => {
 	const buttons = {
 		signup: true,
 		login: true,
+		sellerProfile: true,
 	};
 	const pageArr = [
 		{ text: "Craving a Delicious home-made Dish?", img: img1 },
@@ -37,7 +38,7 @@ const LandingPage = () => {
 				style={{
 					backgroundImage: `url(${img})`,
 				}}
-				className={`container-fluid ${classes.bgImg} `}
+				className={`container-fluid  ${classes.bgImg} `}
 			>
 				<Navbar bg="bg-transparent" buttons={buttons} />
 				<div className={`d-lg-block d-none ${classes.overLay}`}></div>

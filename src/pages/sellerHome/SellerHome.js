@@ -23,7 +23,7 @@ function SellerHome(params) {
       <section>
         <OrderList listOfOrders={listOfOrders} />
         <OffCanvas
-          className={classes.OffCanvasWidth}
+          className={classes.OffCanvas}
           placement={"end"}
           name={"end"}
           title="Details Order"

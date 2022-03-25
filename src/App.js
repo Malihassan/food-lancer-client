@@ -7,6 +7,7 @@ import ProductCard from "./components/shared/product-card/Product-Card";
 import ProductList from "./components/product/product-list/ProductList";
 import UpdateProfile from "./components/seller/UpdateProfile";
 import ProductForm from "./components/product/product-form/ProductForm";
+import SellerHome from "./pages/sellerHome/SellerHome";
 
 function App() {
 	return (
@@ -27,12 +28,12 @@ function App() {
 			<Route path="welcome" element={<LandingPage />} />
 			<Route path="login" element={<LoginPage />} />
 			<Route path="/myProducts/addProduct" element={<ProductForm/>} />
+      <Route path="/seller/home" element={<SellerHome/>}/>
 			{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
 			<Route path="updateProfile" element={<UpdateProfile />} />
 			<Route path="signup" element={<SignupPage />} />
-      <Route path="/seller/home" element={<SellerHome/>}/>
 		</Routes>
 	);
 }

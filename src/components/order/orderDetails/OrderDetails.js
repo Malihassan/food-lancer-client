@@ -1,4 +1,4 @@
-
+import classes from './orderDetails.module.scss'
 export default function OrderDetails(props) {
   return (
     <div>

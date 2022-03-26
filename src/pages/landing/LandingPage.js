@@ -41,7 +41,7 @@ const LandingPage = () => {
 				className={`container-fluid  ${classes.bgImg} `}
 			>
 				<Navbar bg="bg-transparent" buttons={buttons} />
-				<div className={`d-lg-block d-none ${classes.overLay}`}></div>
+				<div className={`d-lg-block d-none mt-2 ${classes.overLay}`}></div>
 				<div className="row">
 					<div
 						className="col-md-7 col-lg-5 text-light"

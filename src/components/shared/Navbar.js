@@ -6,8 +6,12 @@ const Navbar = ({ bg, buttons }) => {
 
 	return (
 		<nav
-			className={"navbar p-0 ms-0 " + bg}
-			style={{ height: "7vh", width: "" }}
+			className={"navbar p-0 ms-0 "}
+			style={{
+				height: "7vh",
+				width: "100vw",
+				backgroundColor: "rgba(0, 0, 0, 0.5)",
+			}}
 		>
 			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">
 				<div className="navbar-brand text-light">FoodLancer</div>
@@ -36,6 +40,14 @@ const Navbar = ({ bg, buttons }) => {
 								className="lead text-light mx-2"
 							>
 								Profile
+							</Link>
+
+							<Link
+								to="/signup"
+								type="button"
+								className="btn btn-outline-warning mx-2"
+							>
+								Sign Out
 							</Link>
 						</>
 					)}

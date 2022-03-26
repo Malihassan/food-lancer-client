@@ -1,14 +1,14 @@
+import "./product-edit-panel.scss";
 import React, { useState, useEffect } from 'react'
 import StarRatings from 'react-star-ratings';
-import "./product-info.scss"
 import firstImg from "../../../assets/imgs/landing page/bg-1.jpeg"
 
-function ProductInfo(props){
+function ProductEditPanel(props){
 
-    const {data} = props;
-
+    const {data} = props
     const [rating, setRating] = useState(0);
     const [extra, setExtra] = useState(false);
+    const [editBtns, setEditBtns] = useState(false)
 
     useEffect(()=>{
         setRating(data.avgRate);
@@ -22,8 +22,15 @@ function ProductInfo(props){
         setExtra(false);
     }
 
+    const viewEditBtns = () => {
+        setEditBtns(!editBtns);
+    }
+
     return (
         <>
+            <div className="row justify-content-end p-2">
+                <button className="col-1 btn btn-dark" onClick={()=>viewEditBtns()}><i class="fa-regular fa-pen-to-square"></i></button>
+            </div>
             <div className="row flex-xl-row flex-column justify-content-between text-dark p-2">
                 <div id="carouselExampleIndicators" className="carousel slide col-xl-6 col-12 pt-xl-2" data-bs-ride="carousel">
                     <div className="carousel-indicators">
@@ -103,4 +110,4 @@ function ProductInfo(props){
     )
 }
 
-export default ProductInfo
+export default ProductEditPanel

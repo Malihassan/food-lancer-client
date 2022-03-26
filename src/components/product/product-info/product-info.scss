@@ -14,7 +14,6 @@
 
 .maroon:hover{
     background-color: rgb(83, 8, 27) !important;
-    color: rgba(211, 211, 211, 0.933) !important;
 }
 
 .text-font{
@@ -42,25 +41,21 @@
     }
 }
 
-.carousel-h{
-    height: 70vh;
-    width: 100vh;
-}
-
 .smaller{
     font-size: 0.7rem;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (min-width: 1200px) {
     .carousel-h{
-        height: 50vh;
-        width: 60vh;
+        height: 32vw;
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1300px) {
     .carousel-h{
-        height: 50vh;
-        width: 115vh;
+        height: 28.5vw;
     }
 }
+
+
+

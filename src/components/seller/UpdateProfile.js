@@ -74,7 +74,7 @@ function UpdateProfile() {
 		const resAreas = res.data;
 		setAreas(resAreas);
 		const { data } = await axiosInstance.get(`seller/account/info`);
-		console.log(data);
+
 		setImage(data.image);
 
 		initialValues.image = data.image.url;

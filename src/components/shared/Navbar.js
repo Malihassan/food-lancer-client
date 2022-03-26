@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ bg, buttons }) => {
+	const logged = "seller";
+
 	return (
 		<nav
 			className={"navbar p-0 ms-0 " + bg}
@@ -10,16 +12,37 @@ const Navbar = ({ bg, buttons }) => {
 			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">
 				<div className="navbar-brand text-light">FoodLancer</div>
 				<div className="navbar-brand text-light">
-					{buttons?.sellerProfile && (
-						<Link
-							to="/updateProfile"
-							type="button"
-							className="lead text-light mx-2"
-						>
-							Profile
-						</Link>
+					{logged === "seller" && (
+						<>
+							<Link
+								to="/"
+								type="button"
+								className="lead text-light mx-2"
+							>
+								home
+							</Link>
+
+							<Link
+								to="/myProducts"
+								type="button"
+								className="lead text-light mx-2"
+							>
+								myProducts
+							</Link>
+
+							<Link
+								to="/updateProfile"
+								type="button"
+								className="lead text-light mx-2"
+							>
+								Profile
+							</Link>
+						</>
 					)}
-					{buttons?.login && (
+					{/* {buttons?.sellerProfile && (
+					
+					)} */}
+					{/* {buttons?.login && (
 						<Link
 							to="/login"
 							type="button"
@@ -37,7 +60,7 @@ const Navbar = ({ bg, buttons }) => {
 						>
 							Sign up
 						</Link>
-					)}
+					)} */}
 				</div>
 			</div>
 		</nav>

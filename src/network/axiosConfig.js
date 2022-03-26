@@ -18,10 +18,8 @@ function getCookie(cName) {
 axiosInstance.interceptors.request.use(
 	function (config) {
 		const token = getCookie("token");
-		console.log(token);
 
 		config.headers["token"] = token;
-		console.log(config);
 
 		return config;
 	},

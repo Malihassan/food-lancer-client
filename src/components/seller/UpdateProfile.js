@@ -3,7 +3,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
 import { axiosInstance } from "../../network/axiosConfig";
 import Navbar from "../shared/Navbar";
-import { useNavigate } from "react-router-dom";
 
 let initialValues = {
 	firstName: "",
@@ -33,7 +32,6 @@ const validate = (values) => {
 };
 
 function UpdateProfile() {
-	let navigate = useNavigate();
 	const [update, setUpdate] = useState(false);
 	const [areas, setAreas] = useState([]);
 	const [updateRes, setUpdateRes] = useState("");
@@ -41,13 +39,13 @@ function UpdateProfile() {
 	const [selectedImage, setSelectedImage] = useState("");
 
 	const onSubmit = (values) => {
-		console.log(image.image);
 		let formData = new FormData();
 		formData.append("image", image.image);
 		formData.append("firstName", values.firstName);
 		formData.append("lastName", values.lastName);
 		formData.append("phone", values.phone);
 		formData.append("coverageArea", values.coverageArea);
+		formData.append("imageId", image._id);
 
 		(async () => {
 			const res = await axiosInstance.patch(
@@ -56,25 +54,16 @@ function UpdateProfile() {
 				{ headers: { "Content-Type": "multipart/form-data" } }
 			);
 			setUpdateRes(res.data);
+			console.log(res);
 		})();
 	};
 
 	const uploadImage = (files) => {
-		console.log(files);
 		const formData = new FormData();
 		formData.append("file", files[0]);
-		// formData.append("upload_preset", "");
-		// formData.append("cloud_name", "");
-		console.log(formData);
-		console.log(files[0]);
+
 		const temp = files[0];
 		setImage({ ...image, image: temp });
-
-		// axiosInstance.post("http://", formData);
-	};
-
-	const previewFile = (file) => {
-		const reader = new FileReader();
 	};
 
 	const fillData = async () => {
@@ -82,7 +71,7 @@ function UpdateProfile() {
 		const resAreas = res.data;
 		setAreas(resAreas);
 		const { data } = await axiosInstance.get(`seller/account/info`);
-		console.log(data);
+
 		setImage(data.image);
 
 		initialValues.firstName = data.firstName;
@@ -130,15 +119,15 @@ function UpdateProfile() {
 						>
 							<Form>
 								{/* <img
-								src={image.url}
-								alt=".."
-								className="ms-5"
-								style={{
-									width: "150px",
-									height: "150px",
-									borderRadius: "50%",
-								}}
-							/> */}
+									src={image.url}
+									alt=".."
+									className="ms-5"
+									style={{
+										width: "150px",
+										height: "150px",
+										borderRadius: "50%",
+									}}
+								/> */}
 
 								<Field
 									className={`form-control mt-3 ms-2 ${classes.inputWidth}`}

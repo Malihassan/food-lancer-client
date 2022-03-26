@@ -4,15 +4,25 @@ export const axiosInstance = axios.create({
 	// baseURL: "https://food-lancer.herokuapp.com/",
 	baseURL: "http://localhost:3000/",
 });
-
-// Add a request interceptor
+function getCookie(cName) {
+	const name = cName + "=";
+	const cDecoded = decodeURIComponent(document.cookie); //to be careful
+	const cArr = cDecoded.split("; ");
+	let res;
+	cArr.forEach((val) => {
+		if (val.indexOf(name) === 0) res = val.substring(name.length);
+	});
+	return res;
+}
+//Add a request interceptor
 axiosInstance.interceptors.request.use(
 	function (config) {
-		// Do something before request is sent
-		// console.log(config);
-		config.headers["token"] =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbGlIYXNzYW4iLCJpZCI6IjYyMGMxYzVlMWVlZmZlODhjYzUxOTJkNiIsImlhdCI6MTY0ODIwOTAzMiwiZXhwIjoxNjQ4Mjk1NDMyfQ.MDtAw5CO7ZbdwMfGbIn9nwJHol61T-1i3mx85Njbx78";
-		// config.params["test"] = "test";
+		const token = getCookie("token");
+		console.log(token);
+
+		config.headers["token"] = token;
+		console.log(config);
+
 		return config;
 	},
 	function (error) {

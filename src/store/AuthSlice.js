@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../network/axiosConfig";
-
 export const login = createAsyncThunk(
 	"acount/login",
 	async (formData, { rejectWithValue }) => {
@@ -17,36 +16,38 @@ export const login = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-	name: "acount",
-	initialState: {
-		authenticated: false,
-		resErrorMes: "",
-		loading: false,
-	},
-	reducers: {
-		// login: (state) => {
-		//   state.authenticated = true;
-		// },
-		// logout: (state) => {
-		//   state.authenticated = false;
-		// },
-	},
-	extraReducers: {
-		[login.pending]: (state) => {
-			state.loading = true;
-		},
-		[login.fulfilled]: (state, { payload }) => {
-			state.loading = false;
-			state.authenticated = true;
-			console.log("=token=>", payload);
-		},
-		[login.rejected]: (state, { payload }) => {
-			state.loading = false;
-			state.resErrorMes = payload.error;
-		},
-	},
+  name: "acount",
+  initialState: {
+    authenticated: false,
+    resErrorMes: "",
+    loading: false,
+  },
+  reducers: {
+    // login: (state) => {
+    //   state.authenticated = true;
+    // },
+    // logout: (state,action) => {
+    //   state.authenticated = false;
+    // },
+  },
+  extraReducers: {
+    [login.pending]: (state) => {
+      state.loading = true;
+    },
+    [login.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.authenticated = true;
+      console.log("=token=>", payload);
+      document.cookie =`token=${payload.token}`;
+    },
+    [login.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.resErrorMes = payload.error;
+    },
+  },
 });
 
 export const authActions = authSlice.actions;
-
 export default authSlice.reducer;
+
+

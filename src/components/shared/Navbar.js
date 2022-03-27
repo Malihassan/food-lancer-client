@@ -3,8 +3,10 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 import React from "react";
 import { Link } from "react-router-dom";
+
+import { getCookie } from "../../network/axiosConfig";
 const Navbar = ({ bg, buttons }) => {
-	const logged = "seller";
+	const logged = getCookie("userType");
 
 	return (
 		<nav
@@ -31,7 +33,7 @@ const Navbar = ({ bg, buttons }) => {
 					{logged === "seller" && (
 						<>
 							<Link
-								to="/seller/home"
+								to="/home"
 								type="button"
 								className="lead text-light mx-4 text-decoration-none"
 								style={{
@@ -78,25 +80,24 @@ const Navbar = ({ bg, buttons }) => {
 					{/* {buttons?.sellerProfile && (
 					
 					)} */}
-					{/* {buttons?.login && (
-						<Link
-							to="/login"
-							type="button"
-							className="btn btn-outline-light mx-2"
-						>
-							Log in
-						</Link>
+					{logged === "viewer" && (
+						<>
+							<Link
+								to="/login"
+								type="button"
+								className="btn btn-outline-light mx-2"
+							>
+								Log in
+							</Link>
+							<Link
+								to="/signup"
+								type="button"
+								className="btn btn-outline-warning mx-2"
+							>
+								Sign up
+							</Link>
+						</>
 					)}
-
-					{buttons?.signup && (
-						<Link
-							to="/signup"
-							type="button"
-							className="btn btn-outline-warning mx-2"
-						>
-							Sign up
-						</Link>
-					)} */}
 				</div>
 			</div>
 		</nav>

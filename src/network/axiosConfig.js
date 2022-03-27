@@ -3,7 +3,7 @@ export const axiosInstance = axios.create({
 	baseURL: "https://food-lancer.herokuapp.com/",
 	// baseURL:"http://localhost:3300/"
 });
-function getCookie(cName) {
+export function getCookie(cName) {
 	const name = cName + "=";
 	const cDecoded = decodeURIComponent(document.cookie); //to be careful
 	const cArr = cDecoded.split("; ");

@@ -11,37 +11,48 @@ import UpdateProfile from "./components/seller/UpdateProfile";
 import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 import NotFound from "./components/shared/not-found-page/NotFound";
-
 import SellerHome from "./pages/sellerHome/SellerHome";
 
+import { getCookie } from "./network/axiosConfig";
+
 function App() {
+	const logged = getCookie("userType") || "viewer";
+	console.log(logged);
+
 	return (
 		<>
 			<Loader />
 			<Routes>
-				<Route path="/" element={<Navigate replace to="/welcome" />} />
-				<Route path="/welcome" element={<LandingPage />} />
-				<Route
-					path="/dishes"
-					element={
-						<h1>
-							HIII! <br />
-							My name is Dishes
-						</h1>
-					}
-				/>
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/myProducts" element={<ProductList />} />
+				{logged === "viewer" && (
+					<>
+						<Route path="/home" element={<Navigate replace to="/" />} />
+						<Route path="/" element={<LandingPage />} />
+						<Route path="/login" element={<LoginPage />} />
+						<Route path="/signup" element={<SignupPage />} />
+					</>
+				)}
+
+				{logged === "seller" && (
+					<>
+						<Route path="/" element={<Navigate replace to="/home" />} />
+						<Route path="/home" element={<SellerHome />} />
+						<Route path="/myProducts" element={<ProductList />} />
+						<Route
+							path="/myProducts/addProduct"
+							element={<ProductForm />}
+						/>
+						{/* // todo: product details + edit product */}
+						<Route path="/updateProfile" element={<UpdateProfile />} />
+					</>
+				)}
+
 				{/* <Route path="login" element={<LoginPage />} /> */}
-				<Route path="loader" element={<Loader />} />
-				<Route path="/myProducts/addProduct" element={<ProductForm />} />
-				<Route path="/seller/home" element={<SellerHome />} />
+
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
 				{/* <Route path="updateProfile" element={<UpdateProfile />} /> */}
-				<Route path="/updateProfile" element={<UpdateProfile />} />
-				<Route path="signup" element={<SignupPage />} />
+
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</>

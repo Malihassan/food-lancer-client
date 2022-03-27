@@ -9,7 +9,7 @@ const Navbar = ({ bg, buttons }) => {
 			className={"navbar p-0 ms-0 "}
 			style={{
 				height: "7vh",
-				width: "100vw",
+				width: "100%",
 				backgroundColor: "rgba(0, 0, 0, 0.5)",
 			}}
 		>
@@ -21,27 +21,39 @@ const Navbar = ({ bg, buttons }) => {
 							<Link
 								to="/"
 								type="button"
-								className="lead text-light mx-2"
+								className="lead  mx-2 text-decoration-none"
+								style={{
+									color: "#DAB88B",
+									fontFamily: " 'El Messiri', sans-serif",
+								}}
 							>
 								home
+								{/** my orders */}
 							</Link>
 
 							<Link
 								to="/myProducts"
 								type="button"
-								className="lead text-light mx-2"
+								className="lead  mx-2 text-decoration-none"
+								style={{
+									color: "#DAB88B",
+									fontFamily: " 'El Messiri', sans-serif",
+								}}
 							>
-								myProducts
+								My Products
 							</Link>
 
 							<Link
 								to="/updateProfile"
 								type="button"
-								className="lead text-light mx-2"
+								className="lead  mx-2 text-decoration-none"
+								style={{
+									color: "#DAB88B",
+									fontFamily: " 'El Messiri', sans-serif",
+								}}
 							>
 								Profile
 							</Link>
-
 							<Link
 								to="/signup"
 								type="button"

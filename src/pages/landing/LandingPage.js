@@ -5,16 +5,17 @@ import img2 from "../../assets/imgs/landing page/bg-2_ccexpress.jpeg";
 import Navbar from "../../components/shared/Navbar";
 import classes from "./landingsStyle.module.css";
 
+const pageArr = [
+	{ text: "Craving a Delicious home-made Dish?", img: img1 },
+	{ text: "Want to sell your freshly home-made dishes online?", img: img2 },
+];
 const LandingPage = () => {
 	const buttons = {
 		signup: true,
 		login: true,
 		sellerProfile: true,
 	};
-	const pageArr = [
-		{ text: "Craving a Delicious home-made Dish?", img: img1 },
-		{ text: "Want to sell your freshly home-made dishes online?", img: img2 },
-	];
+
 	const [text, setText] = useState(pageArr[0].text);
 	const [img, setImg] = useState(pageArr[0].img);
 
@@ -40,7 +41,10 @@ const LandingPage = () => {
 				}}
 				className={`container-fluid  ${classes.bgImg} `}
 			>
-				<Navbar bg="bg-transparent" buttons={buttons} />
+				<div style={{ width: "100vw" }}>
+					<Navbar bg="bg-transparent" buttons={buttons} />
+				</div>
+
 				<div className={`d-lg-block d-none mt-2 ${classes.overLay}`}></div>
 				<div className="row">
 					<div

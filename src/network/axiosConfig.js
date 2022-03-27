@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-	// baseURL: "https://food-lancer.herokuapp.com/",
-	baseURL:"http://localhost:3300/"
+	baseURL: "https://food-lancer.herokuapp.com/",
+	// baseURL:"http://localhost:3300/"
 });
 
 // Add a request interceptor		
@@ -10,7 +10,7 @@ axiosInstance.interceptors.request.use(
 	function (config) {
 		// Do something before request is sent
 		// console.log(config);
-		config.headers["token"] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1vbWVuIiwiaWQiOiI2MjBiYmFlNjI5MGZmNjU3NjFmMDhiZWMiLCJpYXQiOjE2NDgyMTU0OTUsImV4cCI6MTY0ODMwMTg5NX0.sSqRtOIkgULHbu-s4y8R2yoMPBuqLD98n1t0rMcl-S8";
+		config.headers["token"] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1vbWVuIiwiaWQiOiI2MjBiYmFlNjI5MGZmNjU3NjFmMDhiZWMiLCJpYXQiOjE2NDgzOTg5NDQsImV4cCI6MTY0ODQ4NTM0NH0.ByClG40VGRhUuBF5pxXbHcnCurdIbtUUmF0j5i2f9Z0";
 		// config.params["test"] = "test";
 		return config;
 	},

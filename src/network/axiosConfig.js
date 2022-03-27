@@ -1,24 +1,27 @@
 import axios from "axios";
-
 export const axiosInstance = axios.create({
-	// baseURL: "https://food-lancer.herokuapp.com/",
-	baseURL: "http://localhost:3000/",
+  baseURL: "https://food-lancer.herokuapp.com/",
+  // baseURL: "http://localhost:3000/",
 });
 
 // Add a request interceptor
+// const dispatch =useDispatch();
 axiosInstance.interceptors.request.use(
-	function (config) {
-		// Do something before request is sent
-		// console.log(config);
-		config.headers["token"] =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbGlIYXNzYW4iLCJpZCI6IjYyMGMxYzVlMWVlZmZlODhjYzUxOTJkNiIsImlhdCI6MTY0ODIwODg1OSwiZXhwIjoxNjQ4Mjk1MjU5fQ.1ojbdF-PcswLvnP8HwiplNfw1BFPL-fjCW4-VssVmEc";
-		// config.params["test"] = "test";
-		return config;
-	},
-	function (error) {
-		// Do something with request error
-		return Promise.reject(error);
-	}
+  function (config) {
+    // Do something before request is sent
+    // const loading=useSelector((state)=>state.loader.loading);
+    // dispatch(loadings(true))
+    // dispatch(loadings(false))
+    console.log("loading");
+    config.headers["token"] =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbGlIYXNzYW4iLCJpZCI6IjYyMGMxYzVlMWVlZmZlODhjYzUxOTJkNiIsImlhdCI6MTY0ODMzMTI4MCwiZXhwIjoxNjQ4NDE3NjgwfQ.rRdcWtLw-NRROznV6MhtI7NvsJUuecAF8CRhVtf1qps";
+    // config.params["test"] = "test";
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
 );
 
 // // Add a response interceptor

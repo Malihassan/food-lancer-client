@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Rating } from "react-simple-star-rating";
+import { axiosInstance } from "../../../network/axiosConfig";
 import classes from "./product-card.module.scss";
+
 
 export default function ProductCard(props) {
   const { product } = props;
@@ -19,7 +21,11 @@ export default function ProductCard(props) {
       setCount(0);
     }
   }, [mousedOver]);
-
+  const deleteProduct=async (prdID)=>{
+    console.log(prdID);
+    const res = await axiosInstance.delete(`seller/product/${prdID}`);
+    console.log(res,"res");
+  }
   const handleRating = (rate) => {
     setRatingValue(rate);
   };
@@ -32,6 +38,8 @@ export default function ProductCard(props) {
           onMouseOut={() => setMousedOver(false)}
           className={`${classes.imageContainer}`}
         >
+          <i className="fa-solid fa-trash "></i>
+          <button onClick={()=>{deleteProduct(product._id)}} className={`btn btn-danger text-dark ${classes.btnDelete}`}>delete</button>
           <img src={images[count]?.url} style={{ height: "365px", width: "100%"}} />
         </div>
       </div>

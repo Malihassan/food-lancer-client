@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import classes from "./product-form.module.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { axiosInstance } from "../../../network/axiosConfig";
-
+import { loadActions } from "../../../store/LoadingSlice";
+import { useDispatch } from "react-redux";
 const initialValues = {
   name: "",
   description: "",
@@ -12,9 +13,12 @@ const initialValues = {
 };
 
 export default function ProductForm() {
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
   const fillSelectMenu = async () => {
+    dispatch(loadActions.toggelLoader());
     const res = await axiosInstance.get(`seller/category/allCategories`);
+    dispatch(loadActions.toggelLoader());
     const categories = res.data;
     initialValues.categoryId = categories._id;
     setCategories(categories);
@@ -37,11 +41,14 @@ export default function ProductForm() {
     console.log(typeof values.categoryId, "categoryId");
     (async () => {
       console.log("RESULT");
+    dispatch(loadActions.toggelLoader());
       const res = await axiosInstance.post(
         "seller/product/addProduct",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
+    dispatch(loadActions.toggelLoader());
+      
       console.log(res, "RESULT");
     })();
   };
@@ -153,7 +160,7 @@ export default function ProductForm() {
                 className={`form-select mt-3 ms-2  ${classes.inputWidth}`}
                 aria-label="Default select example"
               >
-                <option value="0">Select Coverage Area</option>
+                <option value="0">Select Category</option>
                 {categories.map((category) => (
                   <option key={category?._id} value={category?._id}>
                     {category?.name}

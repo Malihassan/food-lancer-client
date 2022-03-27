@@ -8,7 +8,10 @@ function Footer() {
 		<footer className="container-fluid bg-dark text-light">
 			<div className="container-fluid">
 				<div className="row  justify-content-center">
-					<div className="col-md-12 text-center mt-5  d-flex flex-column justify-content-start">
+					<div
+						className="col-md-12 text-center mt-5  d-flex flex-column 
+					justify-content-center align-items-center"
+					>
 						<h2
 							style={{
 								color: "#F0A500",
@@ -18,15 +21,20 @@ function Footer() {
 						>
 							FoodLancer.com
 						</h2>
-						{/* <div className="menu d-flex mt-4 flex-row justify-content-center">
-							<p className="mx-2 text-muted fs-5">Home</p>
+						<div className="menu d-flex mt-4 flex-row justify-content-center w-25 ">
+							{/* <p className="mx-2 text-muted fs-5">Home</p>
 							<p className="mx-2 text-muted fs-5">Agent</p>
 							<p className="mx-2 text-muted fs-5">About</p>
 							<p className="mx-2 text-muted fs-5">Listing</p>
 							<p className="mx-2 text-muted fs-5">Blog</p>
-							<p className="mx-2 text-muted fs-5">Contact</p>
-						</div> */}
-						<div className="my-5 d-flex justify-content-center">
+							<p className="mx-2 text-muted fs-5">Contact</p> */}
+							<p className="text-muted fw-lighter">
+								FoodLancer is a platform made for home cooks and
+								home-cooked food lovers, Our goal is to connect both by
+								creating a market place specified for home-made dishes
+							</p>
+						</div>
+						<div className="mb-5 mt-3 d-flex justify-content-center">
 							<Facebook
 								className="mx-4"
 								height={"35px"}

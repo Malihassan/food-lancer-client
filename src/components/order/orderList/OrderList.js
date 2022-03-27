@@ -2,12 +2,18 @@ import classes from "./orderList.module.scss";
 import img from "../../../assets/imgs/landing page/cheif.png";
 import { useDispatch } from "react-redux";
 import { orderActions } from "../../../store/orderSlice";
+import ReactPaginate from "react-paginate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+	faCircleArrowLeft,
+	faCircleArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 function OrderList(props) {
 	const dispatch = useDispatch();
 	return (
-		<section className={`container mt-3 py-3 shadow `}>
-			<h4>Order List</h4>
+		<section className={`container mt-3 mb-5 py-3 shadow `}>
+			<h4 style={{ color: "black" }}>Order List</h4>
 			<table
 				className={`table table-responsive w-100 d-block d-sm-table ${classes.Ordertable}`}
 			>
@@ -21,10 +27,11 @@ function OrderList(props) {
 					</tr>
 				</thead>
 				<tbody className="border-0 border-top">
-					{props.listOfOrders?.map((order) => (
+					{props.listOfOrders.map((order) => (
 						<tr
 							key={order._id}
 							onClick={() => {
+								props.toggleCanvasHandler();
 								dispatch(
 									orderActions.toggleDetailsOrder([
 										{
@@ -76,6 +83,26 @@ function OrderList(props) {
 					))}
 				</tbody>
 			</table>
+
+			<ReactPaginate
+				previousLabel={<FontAwesomeIcon icon={faCircleArrowLeft} />}
+				nextLabel={<FontAwesomeIcon icon={faCircleArrowRight} />}
+				breakLabel={"..."}
+				pageCount={props.totalPages}
+				marginPagesDisplayed={2}
+				pageRangeDisplayed={3}
+				onPageChange={props.onPageChange}
+				containerClassName={`pagination justify-content-center`}
+				pageClassName={`page-item px-3 py-1`}
+				pageLinkClassName={`page-link ${classes.pageLink}`}
+				previousClassName={"page-item"}
+				previousLinkClassName={"page-link"}
+				nextClassName={"page-item"}
+				nextLinkClassName={"page-link"}
+				breakClassName={"page-item"}
+				breakLinkClassName={"page-link"}
+				activeClassName={`${classes.active}`}
+			/>
 		</section>
 	);
 }

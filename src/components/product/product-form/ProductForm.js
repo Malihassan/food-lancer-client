@@ -29,7 +29,6 @@ export default function ProductForm() {
 
   const [image, setImage] = useState("");
   const onSubmit = (values) => {
-    console.log(typeof values.categoryId);
     let formData = new FormData();
     for (const img of image) {
       formData.append("image", img);
@@ -48,7 +47,7 @@ export default function ProductForm() {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
     dispatch(loadActions.toggelLoader());
-      
+    console.log("teeeeeeeeest");
       console.log(res, "RESULT");
     })();
   };

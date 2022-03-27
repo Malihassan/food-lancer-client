@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,IAAI,CAAA;EACF,gBAAgB,EAAE,eAAe;CAClC",
+    "mappings": "AAAA;;IAEI",
     "sources": [
         "SignupPage.scss"
     ],

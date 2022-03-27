@@ -53,5 +53,10 @@
 }
 .btnDelete{
   position: absolute;
-  left: 412px;
+  left: 440px;
+  margin-top: 10px;
+  font-size: xx-large;
+  &:hover{
+    cursor: pointer;
+  }
 }

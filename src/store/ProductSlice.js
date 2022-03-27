@@ -22,9 +22,14 @@ const productSlice = createSlice({
     // resErrorMes: "",
     pageCount: 1,
     totoalDocs: 0,
+    isDeleted:false,
     status: null,
   },
-  reducers: {},
+  reducers: {
+    deleted(state){
+      state.isDeleted= ! state.isDeleted;
+    }
+  },
   extraReducers: {
     [getProducts.pending]: (state, action) => {
       state.status = "loading";

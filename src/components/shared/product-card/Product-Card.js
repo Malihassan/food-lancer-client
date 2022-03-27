@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Rating } from "react-simple-star-rating";
 import { axiosInstance } from "../../../network/axiosConfig";
 import classes from "./product-card.module.scss";
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import { productActions } from "../../../store/ProductSlice";
+import { useDispatch } from "react-redux";
 export default function ProductCard(props) {
   const { product } = props;
   const [ratingValue, setRatingValue] = useState(0);
   const [count, setCount] = useState(0);
   const [mousedOver, setMousedOver] = useState(false);
   const images = product.image;
-
+  const dispatch=useDispatch();
   useEffect(() => {
     if (mousedOver) {
       const timer = setInterval(() => {
@@ -22,8 +24,8 @@ export default function ProductCard(props) {
     }
   }, [mousedOver]);
   const deleteProduct=async (prdID)=>{
-    console.log(prdID);
     const res = await axiosInstance.delete(`seller/product/${prdID}`);
+    dispatch(productActions.deleted())
     console.log(res,"res");
   }
   const handleRating = (rate) => {
@@ -38,8 +40,8 @@ export default function ProductCard(props) {
           onMouseOut={() => setMousedOver(false)}
           className={`${classes.imageContainer}`}
         >
-          <i className="fa-solid fa-trash "></i>
-          <button onClick={()=>{deleteProduct(product._id)}} className={`btn btn-danger text-dark ${classes.btnDelete}`}>delete</button>
+          <FontAwesomeIcon onClick={()=>{deleteProduct(product._id)}} icon={faTrash} className={`text-danger ${classes.btnDelete}`} />
+          {/* <button onClick={()=>{deleteProduct(product._id)}} className={`btn btn-danger text-dark ${classes.btnDelete}`}>delete</button> */}
           <img src={images[count]?.url} style={{ height: "365px", width: "100%"}} />
         </div>
       </div>

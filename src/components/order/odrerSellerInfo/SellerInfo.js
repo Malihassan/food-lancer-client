@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleCheck,
-  faLock,
-  faHouseUser,
-  faCartShopping,
-  faExclamationCircle,
-  faCartArrowDown,
-  faStar,
+	faCircleCheck,
+	faLock,
+	faHouseUser,
+	faCartShopping,
+	faExclamationCircle,
+	faCartArrowDown,
+	faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./sellerInfo.module.scss";

@@ -1,17 +1,16 @@
 import React from "react";
 import "./SignupSeller.css";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-const axios = require("axios");
-//import { Link } from 'react-router-dom';
+//import { Link } from "react-router-dom";
+import { axiosInstance } from "../../../../network/axiosConfig";
 function SignupSeller() {
   const emailReg = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
   const nameReg = new RegExp("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
   const phoneReg = new RegExp("^01[1,2,5,0][0-9]{8}$");
-  const passReg = new RegExp(
-    "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
-  );
-  const [coverageAreas, setCoverageAreas] = useState([]);
+  //const passReg = new RegExp(
+  // "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
+  //);
+  const [coverageAreas, setCoverageAreas] = useState();
   const [userForm, setUserForm] = useState({
     userName: "",
     firstName: "",
@@ -34,20 +33,17 @@ function SignupSeller() {
     genderErr: null,
   });
   useEffect(() => {
-    return axios
-      .get("http://localhost:3001/seller/account/coverageArea")
+    return axiosInstance
+      .get("seller/account/coverageArea")
       .then((response) => {
-        setCoverageAreas(response.data.coverageAreas);
+        //console.log(response.data);
+        setCoverageAreas(response.data);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       });
-
-    //console.log(userForm);
   }, [userForm]);
   const handleFormChange = (e) => {
-    console.log(e.target.checked);
     console.log(e.target.value);
     console.log(e.target.id);
     switch (e.target.name) {
@@ -106,9 +102,9 @@ function SignupSeller() {
           passwordErr:
             e.target.value.length === 0
               ? "This Field is required"
-              : passReg.test(e.target.value) === false
-              ? "invalid Password"
-              : null,
+              : //: passReg.test(e.target.value) === false
+                //? "invalid Password"
+                null,
         });
         break;
       case "sellerPhone":
@@ -146,26 +142,45 @@ function SignupSeller() {
           ...userForm,
           gender: e.target.value,
         });
-        setUserFormError({
+        /* setUserFormError({
           ...userFormError,
           genderErr:
             e.target.checked !== true ? "This Field is required" : null,
-        });
+        }); */
         break;
-
+      case "sellerCoverageArea":
+        setUserForm({
+          ...userForm,
+          coverageArea: e.target.value,
+        });
+        /*  setUserFormError({
+            ...userFormError,
+            genderErr:
+              e.target.checked !== true ? "This Field is required" : null,
+          }); */
+        break;
       default:
         break;
     }
   };
-  const handleSignupSellerSubmit = (e) => {
+  const handleSignupSellerSubmit = async (e) => {
     //console.log(coverageAreas);
     console.log(e);
     e.preventDefault();
-    console.log(userForm);
+    console.log(userForm.userName);
     console.log(userFormError);
-    axios
-      .post("http://localhost:3001/seller/account/signup", {
-        ...userForm,
+    axiosInstance
+      .post("seller/account/signup", {
+        //...userForm.
+        userName: userForm.userName,
+        firstName: userForm.firstName,
+        lastName: userForm.lastName,
+        //image:"",
+        password: userForm.password,
+        phone: userForm.phone,
+        email: userForm.email,
+        gender: userForm.gender,
+        coverageArea: userForm.coverageArea,
       })
       .then((response) => {
         console.log(response);
@@ -473,26 +488,29 @@ function SignupSeller() {
                 </div>
               </div>
               <div className="mb-3 ">
-                <select onChange={(e) => handleFormChange(e)} className="form-select" aria-label="Default select example">
-                  {coverageAreas.map((coverageArea) => {
+                <select
+                  onChange={(e) => handleFormChange(e)}
+                  className="form-select"
+                  aria-label="Default select example"
+                >
+                  {coverageAreas?.map((coverageArea) => {
                     return (
                       <option
-                        key={coverageArea._id}
-                        value={coverageArea.regionName}
-                        
+                        key={coverageArea?._id}
+                        value={coverageArea?._id}
+                        name="sellerCoverageArea"
                       >
-                        {coverageArea.regionName}
+                        {coverageArea?.regionName}
                       </option>
                     );
                   })}
                 </select>
                 {/*   <div id="sellerEmailHelp" className="form-text text-warning">
                 {userFormError.emailErr}
-              </div> */}
+              </div>  */}
               </div>
             </div>
-
-            <button type="submit" className="btn btn-submit px-4">
+            <button type="submit" className="btn btn-submit px-4" >
               Signup
             </button>
           </div>

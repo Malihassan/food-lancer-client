@@ -1,12 +1,13 @@
 import "./LoginSeller.css";
 import { useState, useEffect } from "react";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { authActions, login } from "../../../../store/AuthSlice";
+import { login } from "../../../../store/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function LoginSeller() {
+	let navigate = useNavigate();
 	const dispatch = useDispatch();
 	const errResMes = useSelector((state) => state.auth.resErrorMes);
+	//const auth = useSelector((state) => state.auth.authenticated);
 	const emailReg = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
 	const passReg = new RegExp(
 		"(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
@@ -15,13 +16,15 @@ function LoginSeller() {
 		userEmail: "",
 		userPassword: "",
 	});
+	//const[sellerState,setSellerState]=useState(false)
 	const [userFormError, setUserFormError] = useState({
 		userEmailErr: null,
 		userPasswordErr: null,
 	});
 	useEffect(() => {
-		console.log(userForm);
-	}, [userForm]);
+		//console.log(sellerState);
+	}, [userForm, userFormError]);
+
 	const handleFormChange = (e) => {
 		console.log(e.target.value, e.target.id);
 		if (e.target.id === "userEmail") {
@@ -57,8 +60,11 @@ function LoginSeller() {
 	};
 	const handleLoginSellerSubmit = (e) => {
 		e.preventDefault();
-		console.log(userForm);
-		dispatch(login(userForm));
+		dispatch(login(userForm)).then((res) => {
+			if (res.meta.requestStatus === "fulfilled") {
+				navigate("/");
+			}
+		});
 	};
 	return (
 		<>
@@ -77,7 +83,7 @@ function LoginSeller() {
 										width="16"
 										height="16"
 										fill="currentColor"
-										class="bi bi-person"
+										className="bi bi-person"
 										viewBox="0 0 16 16"
 									>
 										<path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
@@ -94,9 +100,12 @@ function LoginSeller() {
 									onChange={(e) => handleFormChange(e)}
 								/>
 							</div>
-							{/*  <div id="emailHelp" className="form-text text-danger">
-                {userFormError.userEmailErr}
-              </div> */}
+							<div
+								id="sellerEmailHelp"
+								className="form-text text-warning"
+							>
+								{userFormError.userEmailErr}
+							</div>
 						</div>
 						<div className="mb-3">
 							<div className="input-group flex-nowrap">
@@ -109,7 +118,7 @@ function LoginSeller() {
 										width="16"
 										height="16"
 										fill="currentColor"
-										class="bi bi-lock"
+										className="bi bi-lock"
 										viewBox="0 0 16 16"
 									>
 										<path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
@@ -126,21 +135,15 @@ function LoginSeller() {
 									onChange={(e) => handleFormChange(e)}
 								></input>
 							</div>
-							{/*  <div id="passwordHelp" className="form-text text-danger">
-                {userFormError.userPasswordErr}
-              </div> */}
 							{errResMes && (
-								<div
-									id="passwordHelp"
-									className="form-text text-danger"
-								>
+								<div className="form-text text-warning">
 									{errResMes}
 								</div>
 							)}
 						</div>
 						<div className="d-flex justify-content-around align-items-center p-4">
 							<div>
-								<Link className="forget-link " to="">
+								<Link className="forget-link " to="/forgetpassword">
 									forget password ???
 								</Link>
 							</div>

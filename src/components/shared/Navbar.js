@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
 import React from "react";
 import { Link } from "react-router-dom";
 const Navbar = ({ bg, buttons }) => {
@@ -13,14 +16,24 @@ const Navbar = ({ bg, buttons }) => {
 			}}
 		>
 			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">
-				<div className="navbar-brand text-light">FoodLancer</div>
+				<Link
+					to="/seller/home"
+					type="button"
+					className="navbar-brand text-light fs-3"
+					style={{
+						fontFamily: "Monoton",
+						color: "#F0A500",
+					}}
+				>
+					FoodLancer
+				</Link>
 				<div className="navbar-brand text-light">
 					{logged === "seller" && (
 						<>
 							<Link
-								to="/"
+								to="/seller/home"
 								type="button"
-								className="lead  mx-2 text-decoration-none"
+								className="lead text-light mx-4 text-decoration-none"
 								style={{
 									color: "#DAB88B",
 									fontFamily: " 'El Messiri', sans-serif",
@@ -33,7 +46,7 @@ const Navbar = ({ bg, buttons }) => {
 							<Link
 								to="/myProducts"
 								type="button"
-								className="lead  mx-2 text-decoration-none"
+								className="lead text-light mx-4 text-decoration-none"
 								style={{
 									color: "#DAB88B",
 									fontFamily: " 'El Messiri', sans-serif",
@@ -45,7 +58,7 @@ const Navbar = ({ bg, buttons }) => {
 							<Link
 								to="/updateProfile"
 								type="button"
-								className="lead  mx-2 text-decoration-none"
+								className="lead text-light mx-4 text-decoration-none"
 								style={{
 									color: "#DAB88B",
 									fontFamily: " 'El Messiri', sans-serif",
@@ -56,9 +69,9 @@ const Navbar = ({ bg, buttons }) => {
 							<Link
 								to="/signup"
 								type="button"
-								className="btn btn-outline-warning mx-2"
+								className="btn btn-outline-warning ms-5 me-3"
 							>
-								Sign Out
+								<FontAwesomeIcon icon={faArrowRightFromBracket} />
 							</Link>
 						</>
 					)}

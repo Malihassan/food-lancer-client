@@ -32,10 +32,10 @@ function App() {
 				/>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/myProducts" element={<ProductList />} />
-				<Route path="welcome" element={<LandingPage />} />
 				{/* <Route path="login" element={<LoginPage />} /> */}
 				<Route path="loader" element={<Loader />} />
 				<Route path="/myProducts/addProduct" element={<ProductForm />} />
+				<Route path="/seller/home" element={<SellerHome />} />
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}

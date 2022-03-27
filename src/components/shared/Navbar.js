@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { getCookie } from "../../network/axiosConfig";
 const Navbar = ({ bg, buttons }) => {
-	const logged = getCookie("userType");
+	const logged = getCookie("userType") || "viewer";
 
 	return (
 		<nav

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const axiosInstance = axios.create({
 	baseURL: "https://food-lancer.herokuapp.com/",
 	// baseURL:"http://localhost:3300/"
@@ -23,6 +24,14 @@ axiosInstance.interceptors.request.use(
 		return config;
 	},
 	function (error) {
+		if (axios.isAxiosError(error)) {
+			if (error.response) {
+				if (error.response.status === 401) {
+					window.location.reload();
+				}
+			}
+		}
+
 		// Do something with request error
 		return Promise.reject(error);
 	}

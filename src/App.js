@@ -14,6 +14,7 @@ import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
 
 import { getCookie } from "./network/axiosConfig";
+import Footer from "./components/shared/Footer";
 
 function App() {
 	const logged = getCookie("userType") || "viewer";
@@ -55,6 +56,7 @@ function App() {
 
 				<Route path="*" element={<NotFound />} />
 			</Routes>
+			<Footer />
 		</>
 	);
 }

@@ -9,7 +9,7 @@ function Footer() {
 			<div className="container-fluid">
 				<div className="row  justify-content-center">
 					<div
-						className="col-md-12 text-center mt-5  d-flex flex-column 
+						className="col-md-12 text-center mt-3  d-flex flex-column 
 					justify-content-center align-items-center"
 					>
 						<h2
@@ -58,7 +58,7 @@ function Footer() {
 					</div>
 				</div>
 				<div className="row mt-3">
-					<div className="col-md-12 text-center mb-5">
+					<div className="col-md-12 text-center mb-3">
 						<p className="copyright">
 							Copyright All rights reserved @2022 |
 							<span

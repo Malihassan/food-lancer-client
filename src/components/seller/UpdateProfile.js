@@ -207,7 +207,6 @@ function UpdateProfile() {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</>
 	);
 }

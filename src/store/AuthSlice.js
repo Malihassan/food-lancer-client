@@ -21,6 +21,7 @@ const authSlice = createSlice({
 		authenticated: false,
 		resErrorMes: "",
 		loading: false,
+		reload: false,
 	},
 	reducers: {
 		// login: (state) => {
@@ -40,6 +41,7 @@ const authSlice = createSlice({
 			console.log("=token=>", payload);
 			document.cookie = `token=${payload.token}`;
 			document.cookie = "userType=seller";
+			state.reload = !state.reload;
 		},
 		[login.rejected]: (state, { payload }) => {
 			state.loading = false;

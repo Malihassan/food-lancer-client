@@ -63,7 +63,7 @@ function LoginSeller() {
 		dispatch(login(userForm)).then((res) => {
 			if (res.meta.requestStatus === "fulfilled") {
 				navigate("/");
-				window.location.reload();
+				// window.location.reload();
 			}
 		});
 	};

@@ -15,10 +15,16 @@ import SellerHome from "./pages/sellerHome/SellerHome";
 
 import { getCookie } from "./network/axiosConfig";
 import Footer from "./components/shared/Footer";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
+	const reload = useSelector((state) => state.auth.reload);
 	const logged = getCookie("userType") || "viewer";
 	console.log(logged);
+	useEffect(() => {
+		console.log(reload);
+	}, [reload]);
 
 	return (
 		<>

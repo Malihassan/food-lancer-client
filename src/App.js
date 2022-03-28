@@ -10,6 +10,12 @@ import ResetPassword from './pages/resetPassword/ResetPassword';
 import UpdateProfile from "./components/seller/UpdateProfile";
 import ProductForm from "./components/product/product-form/ProductForm";
 import SellerHome from "./pages/sellerHome/SellerHome";
+///import ReactDOM from 'react-dom'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee, fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add( fab,fas,faCheckSquare, faCoffee)
 
 function App() {
   return (

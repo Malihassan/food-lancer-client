@@ -1,4 +1,40 @@
-/* body {
+/* body{
   background-color: aqua !important;
 } */
+.signuppage-container {
+  background-image: url("./../../assets/imgs/landing page/bg-1.jpeg") !important;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
+  background-position-x: 100%;
+  background-position-y: 65%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Source Serif Pro', serif !important;
+}
+
+.nav-button {
+  color: white !important;
+}
+
+.nav-button:hover {
+  color: #ffc107 !important;
+}
+
+.tabs-button {
+  background-color: transparent !important;
+}
+
+.active {
+  color: #212529 !important;
+}
+
+.signup {
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
 /*# sourceMappingURL=SignupPage.css.map */

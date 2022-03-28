@@ -51,8 +51,12 @@
   color: #000000 !important;
 }
 
-.test {
+.stars {
   margin-top: 25px;
   margin-left: 20px;
+}
+
+.rating {
+  padding-top: 28px;
 }
 /*# sourceMappingURL=product-card.module.css.map */

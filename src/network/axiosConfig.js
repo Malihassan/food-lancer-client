@@ -10,7 +10,7 @@ export const axiosInstance = axios.create({
  axiosInstance.interceptors.request.use(
 	function (config) {
     const x = document.cookie;
-    //console.log(x);
+    console.log(x);
 		// Do something before request is sent
  		// console.log(config);
 		 config.headers["token"] = x;

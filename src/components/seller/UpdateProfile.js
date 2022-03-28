@@ -3,32 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
 import { axiosInstance } from "../../network/axiosConfig";
 import Navbar from "../shared/Navbar";
+import Footer from "../shared/Footer";
 
 let initialValues = {
 	firstName: "",
 	lastName: "",
 	phone: "",
 	coverageArea: "0",
-};
-
-const validate = (values) => {
-	let errors = {};
-
-	if (values.firstName.length < 3 || values.firstName.length > 20) {
-		errors.firstName = "Name length must be between 3 and 20";
-	}
-
-	if (values.lastName.length < 3 || values.lastName.length > 20) {
-		errors.lastName = "Name length must be between 3 and 20";
-	}
-
-	if (
-		!values?.phone.toString().match(/^01[0125]\d{1,8}/g) ||
-		values?.phone.length !== 11
-	) {
-		errors.phone = "Please enter a correct valid phone number";
-	}
-	return errors;
+	image: "",
 };
 
 function UpdateProfile() {
@@ -36,7 +18,30 @@ function UpdateProfile() {
 	const [areas, setAreas] = useState([]);
 	const [updateRes, setUpdateRes] = useState("");
 	const [image, setImage] = useState({ image: "" });
-	const [selectedImage, setSelectedImage] = useState("");
+
+	const validate = (values) => {
+		let errors = {};
+
+		if (values.firstName.length < 3 || values.firstName.length > 20) {
+			errors.firstName = "Name length must be between 3 and 20";
+		}
+
+		if (values.lastName.length < 3 || values.lastName.length > 20) {
+			errors.lastName = "Name length must be between 3 and 20";
+		}
+
+		if (
+			!values?.phone.toString().match(/^01[0125]\d{1,8}/g) ||
+			values?.phone.length !== 11
+		) {
+			errors.phone = "Please enter a correct valid phone number";
+		}
+		if (image.size > 100000) {
+			errors.image = "the maximum size for every image is 100 Kb";
+		}
+
+		return errors;
+	};
 
 	const onSubmit = (values) => {
 		let formData = new FormData();
@@ -54,7 +59,6 @@ function UpdateProfile() {
 				{ headers: { "Content-Type": "multipart/form-data" } }
 			);
 			setUpdateRes(res.data);
-			console.log(res);
 		})();
 	};
 
@@ -74,6 +78,7 @@ function UpdateProfile() {
 
 		setImage(data.image);
 
+		initialValues.image = data.image.url;
 		initialValues.firstName = data.firstName;
 		initialValues.lastName = data.lastName;
 		initialValues.phone = data.phone;
@@ -173,11 +178,15 @@ function UpdateProfile() {
 
 								<input
 									type="file"
+									name="image"
 									className={`mt-3 ms-2 form-control ${classes.inputWidth} `}
 									onChange={(e) => {
 										uploadImage(e.target.files);
 									}}
 								/>
+								<div className="mx-3  fw-light text-warning">
+									<ErrorMessage name="image" />
+								</div>
 
 								<button
 									type="submit"
@@ -185,15 +194,6 @@ function UpdateProfile() {
 								>
 									Submit
 								</button>
-								{/* <button
-								type="button"
-								onClick={(e) => {
-									fillData();
-								}}
-								className="btn btn-outline-light mx-2 mt-4"
-							>
-								Cancel Changes
-							</button> */}
 							</Form>
 						</Formik>
 						<div

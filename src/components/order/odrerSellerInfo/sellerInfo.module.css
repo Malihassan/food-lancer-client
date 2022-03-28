@@ -1,0 +1,117 @@
+.sellerInfContainer {
+  height: 20vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (max-width: 568px) {
+  .sellerInfContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    height: auto;
+  }
+}
+
+.sellerInfContainer img {
+  height: 100%;
+}
+
+.sellerInfContainer .textDark {
+  color: #131313 !important;
+}
+
+.sellerInfContainer label {
+  color: black !important;
+}
+
+.sellerInfContainer .nameContainer {
+  padding: 10px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.sellerInfContainer .nameContainer > label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-bottom: 7px;
+}
+
+.sellerInfContainer .nameContainer div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.sellerInfContainer .nameContainer div label {
+  color: gray !important;
+  font-size: 0.8rem;
+}
+
+.sellerInfContainer .cardInfo {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.sellerInfContainer .cardInfo .icon {
+  margin-right: 8px;
+  font-size: 35px;
+  color: #154d6b;
+}
+
+.sellerInfContainer .cardInfo > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.sellerInfContainer .cardInfo label {
+  color: gray !important;
+  font-size: 1rem;
+}
+
+.sellerInfContainer .cardInfo h3 {
+  color: #131313 !important;
+}
+/*# sourceMappingURL=sellerInfo.module.css.map */

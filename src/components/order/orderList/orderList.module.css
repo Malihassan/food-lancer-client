@@ -1,0 +1,27 @@
+.Ordertable th {
+  color: gray !important;
+  font-size: 0.9rem;
+}
+
+.Ordertable tbody tr {
+  border: 0px solid transparent;
+}
+
+.Ordertable tbody tr:hover {
+  background-color: aliceblue;
+}
+
+.Ordertable tbody tr td {
+  height: 50px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.Ordertable tbody tr td label {
+  color: black !important;
+}
+
+.Ordertable tbody tr td span {
+  width: 70px;
+}
+/*# sourceMappingURL=orderList.module.css.map */

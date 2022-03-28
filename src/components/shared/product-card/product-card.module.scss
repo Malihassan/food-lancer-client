@@ -51,3 +51,12 @@
 .rating{
   padding-top: 28px;
 }
+.btnDelete{
+  position: absolute;
+  left: 440px;
+  margin-top: 10px;
+  font-size: xx-large;
+  &:hover{
+    cursor: pointer;
+  }
+}

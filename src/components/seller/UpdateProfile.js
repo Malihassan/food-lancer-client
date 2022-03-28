@@ -89,14 +89,9 @@ function UpdateProfile() {
 	useEffect(() => {
 		fillData();
 	}, []);
-	const buttons = {
-		signup: true,
-		login: true,
-		sellerProfile: true,
-	};
+
 	return (
 		<>
-			<Navbar bg="bg-dark" buttons={buttons} />
 			<div className={`${classes.backColor} container-fluid`}>
 				<div
 					className={`container shadow-lg p-0 row mt-5 ${classes.centerDiv} 
@@ -110,7 +105,7 @@ function UpdateProfile() {
 						className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
 					>
 						<div
-							className="fs-1 my-2 ms-1 "
+							className="fs-1 text-dark my-2 ms-1 "
 							style={{
 								fontFamily: " 'El Messiri', sans-serif",
 							}}
@@ -168,9 +163,15 @@ function UpdateProfile() {
 									className={`form-select mt-3 ms-2  ${classes.inputWidth}`}
 									aria-label="Default select example"
 								>
-									<option value="0">Select Coverage Area</option>
+									<option className={`${classes.option}`} value="0">
+										Select Coverage Area
+									</option>
 									{areas.map((area) => (
-										<option key={area?._id} value={area?._id}>
+										<option
+											className={`${classes.option}`}
+											key={area?._id}
+											value={area?._id}
+										>
 											{area?.governorateName} - {area?.regionName}
 										</option>
 									))}

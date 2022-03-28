@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  showDetailsOrder: false,
   selectedOrderProducts: [],
   totalPrice: 0,
   createdAt: "",
@@ -11,14 +10,6 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     toggleDetailsOrder(state, { payload }) {
-      state.showDetailsOrder = !state.showDetailsOrder;
-      //   state.showDetailsOrder
-      //     ? state.selectedOrder.push(payload)
-      //     : (state.selectedOrder = []);
-      if (!state.showDetailsOrder) {
-        state.initialState = initialState;
-        return;
-      }
       state.selectedOrderProducts = payload[0].products;
       state.totalPrice = payload[0].totalPrice;
       state.createdAt = payload[0].createdAt;

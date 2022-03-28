@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import Dropzone from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 import classes from "./product-form.module.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { axiosInstance } from "../../../network/axiosConfig";
+import { loadActions } from "../../../store/LoadingSlice";
+import { useDispatch } from "react-redux";
+import { RiFolderOpenFill } from "react-icons/ri";
+import { isRejected } from "@reduxjs/toolkit";
 
 const initialValues = {
   name: "",
@@ -12,9 +18,16 @@ const initialValues = {
 };
 
 export default function ProductForm() {
+  const onDrop = useCallback((acceptedFiles) => {
+    console.log(acceptedFiles, "acceptedFiles");
+  }, []);
+  const { getInputProps, getRootProps } = useDropzone({ onDrop });
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
   const fillSelectMenu = async () => {
+    dispatch(loadActions.toggelLoader());
     const res = await axiosInstance.get(`seller/category/allCategories`);
+    dispatch(loadActions.toggelLoader());
     const categories = res.data;
     initialValues.categoryId = categories._id;
     setCategories(categories);
@@ -23,10 +36,11 @@ export default function ProductForm() {
     fillSelectMenu();
   }, []);
 
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState([]);
   const onSubmit = (values) => {
-    console.log(typeof values.categoryId);
+    console.log("tessssssst");
     let formData = new FormData();
+    console.log(image.length, "length");
     for (const img of image) {
       formData.append("image", img);
     }
@@ -37,17 +51,19 @@ export default function ProductForm() {
     console.log(typeof values.categoryId, "categoryId");
     (async () => {
       console.log("RESULT");
+      dispatch(loadActions.toggelLoader());
       const res = await axiosInstance.post(
         "seller/product/addProduct",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
+      dispatch(loadActions.toggelLoader());
+      console.log("teeeeeeeeest");
       console.log(res, "RESULT");
     })();
   };
   const validate = (values) => {
     let errors = {};
-
     if (values.name.length < 1) {
       errors.name = "this feild is required";
     }
@@ -70,7 +86,7 @@ export default function ProductForm() {
       errors.image = "the maximum for images is 5 pictures";
     }
     for (let img of image) {
-      if (img.size > 100000) {
+      if (img.size > 1000000) {
         errors.image = "the maximum size for every image is 100 Kb";
       }
     }
@@ -84,97 +100,126 @@ export default function ProductForm() {
   return (
     <div className={`${classes.backColor} container-fluid`}>
       <div
-        className={`container shadow-lg p-0 row mt-5 ${classes.centerDiv} 
-      ${classes.borderParent}`}
-        style={{ height: "75vh", width: "53vw" }}
+        className={`col-lg-7 shadow my-4 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
       >
-        <div className={`col-5 d-none d-lg-block ${classes.bgImg}`}></div>
         <div
-          className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
+          className="fs-1 mt-2 ms-1 text-center"
+          style={{
+            fontFamily: " 'El Messiri', sans-serif",
+          }}
         >
-          <div
-            className="fs-1 my-2 ms-1 "
-            style={{
-              fontFamily: " 'El Messiri', sans-serif",
-            }}
-          >
-            Add Product
-          </div>
-          <Formik
-            initialValues={initialValues}
-            validate={validate}
-            onSubmit={onSubmit}
-          >
-            <Form>
-              <Field
-                className={`form-control mt-3 ms-2 ${classes.inputWidth}`}
-                id="name"
-                name="name"
-                placeholder="Name Of Product"
-              />
-              <div className="mx-3 my-1 fw-light text-danger">
-                <ErrorMessage name="name" />
-              </div>
-              <Field
-                id="description"
-                name="description"
-                as="textarea"
-                className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-                placeholder="Description"
-              />
-              <div className="mx-3  fw-light text-danger">
-                <ErrorMessage name="description" />
-              </div>
-              <Field
-                id="price"
-                name="price"
-                className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-                placeholder="price"
-                type="number"
-              />
-              <div className="mx-3  fw-light text-danger">
-                <ErrorMessage name="price" />
-              </div>
-              <input
-                id="image"
-                name="image"
-                multiple
-                onChange={(event) => handelFileInputChange(event.target.files)}
-                className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-                type="file"
-                accept="image/*"
-              />
-              <div className="mx-3  fw-light text-danger">
-                <ErrorMessage name="image" />
-              </div>
-              <Field
-                as="select"
-                name="categoryId"
-                className={`form-select mt-3 ms-2  ${classes.inputWidth}`}
-                aria-label="Default select example"
-              >
-                <option value="0">Select Coverage Area</option>
-                {categories.map((category) => (
-                  <option key={category?._id} value={category?._id}>
-                    {category?.name}
-                  </option>
-                ))}
-              </Field>
-              <div className="mx-3  fw-light text-danger">
-                <ErrorMessage name="categoryId" />
-              </div>
-              <button
-                type="submit"
-                className="btn btn-outline-success ms-5 mx-2 mt-4"
-              >
-                Submit
-              </button>
-              {/* <button className="btn btn-outline-light mx-2 mt-4">
-                Cancel Changes
-              </button> */}
-            </Form>
-          </Formik>
+          Add Product
         </div>
+        <hr className="mb-3" />
+        <Formik
+          initialValues={initialValues}
+          validate={validate}
+          onSubmit={onSubmit}
+        >
+          <Form>
+            <Field
+              className={`form-control ${classes.inputWidth}`}
+              id="name"
+              name="name"
+              placeholder="Name Of Product"
+            />
+            <div className="fw-light text-danger">
+              <ErrorMessage name="name" />
+            </div>
+            <Field
+              id="description"
+              name="description"
+              as="textarea"
+              className={`form-control mt-4 ${classes.inputWidth}`}
+              placeholder="Description"
+            />
+            <div className=" fw-light text-danger">
+              <ErrorMessage name="description" />
+            </div>
+            <Field
+              id="price"
+              name="price"
+              className={`form-control mt-4 ${classes.inputWidth}`}
+              placeholder="price"
+              type="number"
+            />
+            <div className="fw-light text-danger">
+              <ErrorMessage name="price" />
+            </div>
+            <Field
+              as="select"
+              name="categoryId"
+              className={`form-select mt-4 ${classes.inputWidth}`}
+              aria-label="Default select example"
+            >
+              <option className={`${classes.option}`} value="0">Select Category</option>
+              {categories.map((category) => (
+                <option className={`${classes.option}`} key={category?._id} value={category?._id}>
+                  {category?.name}
+                </option>
+              ))}
+            </Field>
+            <div className="fw-light text-danger">
+              <ErrorMessage name="categoryId" />
+            </div>
+            {/* <input
+              id="image"
+              name="image"
+              multiple
+              onChange={(event) => handelFileInputChange(event.target.files)}
+              className={`form-control mt-4 ${classes.inputWidth}`}
+              type="file"
+              accept="image/*"
+            /> */}
+            {/* <div className="fw-light text-danger">
+              <ErrorMessage name="image" />
+            </div> */}
+            <p className="text-center h5 pt-3">Image Upload</p>
+            <hr className="mb-4" />
+            <div className={`${classes.dropZone}`}>
+              <Dropzone
+                name="image"
+                id="image"
+                accept="image/*"
+                onDrop={(acceptedFiles) => {
+                  console.log(acceptedFiles[0].path, "Files");
+                  setImage(acceptedFiles);
+                }}
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <RiFolderOpenFill className="text-warning fs-1 mt-3" />
+                      <p>Drag & Drop Files Here</p>
+                      <div className="row col-12 text-start ps-5">
+                        {image.map((img) => {
+                          return (
+                            <small
+                              key={image.indexOf(img)}
+                              className="col-12"
+                            >
+                              {image.indexOf(img) + 1} - {img.name} - size :   {img.size}
+                            </small>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+            </div>
+            <div className="fw-light text-danger">
+              <ErrorMessage name="image" />
+            </div>
+            <button
+              type="submit"
+              className={`btn bg-primary text-white ${classes.btnSubmit}`}
+            >
+              Create New Product
+            </button>
+          </Form>
+        </Formik>
       </div>
     </div>
   );

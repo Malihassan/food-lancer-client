@@ -1,28 +1,42 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  
-	// baseURL: "https://food-lancer.herokuapp.com/",
-	baseURL:"http://localhost:3001/"
+	baseURL: "https://food-lancer.herokuapp.com/",
+	// baseURL:"http://localhost:3300/"
 });
-
- //Add a request interceptor		
- axiosInstance.interceptors.request.use(
+export function getCookie(cName) {
+	const name = cName + "=";
+	const cDecoded = decodeURIComponent(document.cookie); //to be careful
+	const cArr = cDecoded.split("; ");
+	let res;
+	cArr.forEach((val) => {
+		if (val.indexOf(name) === 0) res = val.substring(name.length);
+	});
+	return res;
+}
+//Add a request interceptor
+axiosInstance.interceptors.request.use(
 	function (config) {
-    const x = document.cookie;
-    console.log(x);
-		// Do something before request is sent
- 		// console.log(config);
-		 config.headers["token"] = x;
-		 //config.params["test"] = "test";
+		const token = getCookie("token");
+
+		config.headers["token"] = token;
+
 		return config;
 	},
 	function (error) {
-	// Do something with request error
- 		return Promise.reject(error);
+		if (axios.isAxiosError(error)) {
+			if (error.response) {
+				if (error.response.status === 401) {
+					window.location.reload();
+				}
+			}
+		}
+
+		// Do something with request error
+		return Promise.reject(error);
 	}
- );
- 
+);
+
 // // Add a response interceptor
 // axiosInstance.interceptors.response.use(
 // 	function (response) {

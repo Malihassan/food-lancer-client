@@ -40,7 +40,7 @@ export default function ProductForm() {
   const onSubmit = (values) => {
     console.log("tessssssst");
     let formData = new FormData();
-    console.log(image.length,"length");
+    console.log(image.length, "length");
     for (const img of image) {
       formData.append("image", img);
     }
@@ -49,18 +49,18 @@ export default function ProductForm() {
     formData.append("description", values.description);
     formData.append("categoryId", values.categoryId);
     console.log(typeof values.categoryId, "categoryId");
-    // (async () => {
-    //   console.log("RESULT");
-    //   dispatch(loadActions.toggelLoader());
-    //   const res = await axiosInstance.post(
-    //     "seller/product/addProduct",
-    //     formData,
-    //     { headers: { "Content-Type": "multipart/form-data" } }
-    //   );
-    //   dispatch(loadActions.toggelLoader());
-    //   console.log("teeeeeeeeest");
-    //   console.log(res, "RESULT");
-    // })();
+    (async () => {
+      console.log("RESULT");
+      dispatch(loadActions.toggelLoader());
+      const res = await axiosInstance.post(
+        "seller/product/addProduct",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      dispatch(loadActions.toggelLoader());
+      console.log("teeeeeeeeest");
+      console.log(res, "RESULT");
+    })();
   };
   const validate = (values) => {
     let errors = {};
@@ -100,7 +100,7 @@ export default function ProductForm() {
   return (
     <div className={`${classes.backColor} container-fluid`}>
       <div
-        className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
+        className={`col-lg-7 shadow my-4 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
       >
         <div
           className="fs-1 mt-2 ms-1 text-center"
@@ -152,9 +152,9 @@ export default function ProductForm() {
               className={`form-select mt-4 ${classes.inputWidth}`}
               aria-label="Default select example"
             >
-              <option value="0">Select Category</option>
+              <option className={`${classes.option}`} value="0">Select Category</option>
               {categories.map((category) => (
-                <option key={category?._id} value={category?._id}>
+                <option className={`${classes.option}`} key={category?._id} value={category?._id}>
                   {category?.name}
                 </option>
               ))}
@@ -174,26 +174,35 @@ export default function ProductForm() {
             {/* <div className="fw-light text-danger">
               <ErrorMessage name="image" />
             </div> */}
+            <p className="text-center h5 pt-3">Image Upload</p>
+            <hr className="mb-4" />
             <div className={`${classes.dropZone}`}>
               <Dropzone
                 name="image"
                 id="image"
                 accept="image/*"
                 onDrop={(acceptedFiles) => {
-                  console.log(acceptedFiles[0].path,"Files");
+                  console.log(acceptedFiles[0].path, "Files");
                   setImage(acceptedFiles);
                 }}
               >
                 {({ getRootProps, getInputProps }) => (
                   <section>
-                    <div {...getRootProps()} className="w-100">
+                    <div {...getRootProps()}>
                       <input {...getInputProps()} />
                       <RiFolderOpenFill className="text-warning fs-1 mt-3" />
                       <p>Drag & Drop Files Here</p>
-                      <div className="row col-12 ">
-                      {image.map((img) => {
-                        return <small key={image.indexOf(img)} className="col-6 m-0 p-0">{image.indexOf(img)+1} - {img.name}</small>
-                      })}
+                      <div className="row col-12 text-start ps-5">
+                        {image.map((img) => {
+                          return (
+                            <small
+                              key={image.indexOf(img)}
+                              className="col-12"
+                            >
+                              {image.indexOf(img) + 1} - {img.name} - size :   {img.size}
+                            </small>
+                          );
+                        })}
                       </div>
                     </div>
                   </section>

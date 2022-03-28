@@ -12,6 +12,12 @@ import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
+///import ReactDOM from 'react-dom'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee, fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add( fab,fas,faCheckSquare, faCoffee)
 
 import { getCookie } from "./network/axiosConfig";
 import Footer from "./components/shared/Footer";

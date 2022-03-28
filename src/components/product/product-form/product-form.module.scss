@@ -1,7 +1,7 @@
 .backColor {
 	background-color: white;
 	width: 100vw;
-	height: 100vh;
+	height: auto;
 }
 .backColors {
 	// background-color: black;
@@ -39,16 +39,20 @@
 	transform: translate(0, -50%);
 }
 .btnSubmit{
-	margin-left: 23.5rem;
-	margin-top: 3rem;
+	margin: 3rem 0 3rem 23.5rem;
 	border-radius: 0px !important;
 }
 .dropZone{
 	background-color: #F6F6F6;
 	color: black;
 	margin: 10px 160px;
-	border-radius: 20px;
+	padding-bottom: 1rem;
+	border-radius: 10px;
 	text-align: center;
-	height: 180px;
+	height: auto;
 	border: 2px dashed #b9b9b9;
+}
+.option:checked
+{
+	background-color: #F6F6F6 !important;
 }

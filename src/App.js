@@ -1,22 +1,33 @@
 import "./App.scss";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import LoginPage from "./pages/login/loginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 //import ProductCard from "./components/shared/product-card/Product-Card";
 import UpdateProfile from "./components/seller/UpdateProfile";
+import ProductDetails from "./pages/product/product-details/product-details";
 import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
-
+///import ReactDOM from 'react-dom'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import {
+	faCheckSquare,
+	faCoffee,
+	fas,
+} from "@fortawesome/free-solid-svg-icons";
 import { getCookie } from "./network/axiosConfig";
 import Footer from "./components/shared/Footer";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import Navbar from "./components/shared/Navbar";
+
+library.add(fab, fas, faCheckSquare, faCoffee);
 
 function App() {
 	const reload = useSelector((state) => state.auth.reload);
@@ -29,6 +40,8 @@ function App() {
 	return (
 		<>
 			<Loader />
+
+			<Navbar bg="bg-transparent" />
 			<Routes>
 				{logged === "viewer" && (
 					<>
@@ -50,6 +63,7 @@ function App() {
 						/>
 						{/* // todo: product details + edit product */}
 						<Route path="/updateProfile" element={<UpdateProfile />} />
+						<Route path="/myProducts/:id" element={<ProductDetails />} />
 					</>
 				)}
 
@@ -60,7 +74,7 @@ function App() {
 			<Route path="users" element={<Users users={users} />} /> */}
 				{/* <Route path="updateProfile" element={<UpdateProfile />} /> */}
 
-				<Route path="*" element={<NotFound />} />
+				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>
 			<Footer />
 		</>

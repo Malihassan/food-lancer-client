@@ -14,7 +14,8 @@ const Navbar = ({ bg, buttons }) => {
 			style={{
 				height: "100%",
 				width: "100%",
-				backgroundColor: "rgba(0, 0, 0, 0.5)",
+				backgroundColor: "#13334C",
+				overflow: "hidden",
 			}}
 		>
 			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">

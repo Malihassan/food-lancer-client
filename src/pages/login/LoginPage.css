@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap");
-/* body {
+.loginpage-container {
 	background-image: url("./../../assets/imgs/landing page/bg-1.jpeg");
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
@@ -12,15 +11,18 @@
 	font-family: "Source Serif Pro", serif !important;
 }
 
-.nav-link {
+.nav-button {
 	color: white !important;
 }
 
-.nav-link:hover {
+.nav-button:hover {
 	color: #ffc107 !important;
 }
 
-.nav-tabs {
+/* .nav-tabs {
+	background-color: transparent !important;
+} */
+.tabs-button {
 	background-color: transparent !important;
 }
 
@@ -34,5 +36,5 @@
 	-moz-border-radius: 2px;
 	-ms-border-radius: 2px;
 	-o-border-radius: 2px;
-} */
+}
 /*# sourceMappingURL=LoginPage.css.map */

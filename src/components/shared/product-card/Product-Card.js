@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { productActions } from "../../../store/ProductSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 export default function ProductCard(props) {
   const { product } = props;
   const [ratingValue, setRatingValue] = useState(0);
@@ -106,11 +107,12 @@ export default function ProductCard(props) {
             >
               Delete
             </button> */}
-            <button
+            <Link
               className={`${classes.prdButton} card-link btn btn-outline-dark my-2`}
+              to={`${product._id}`}
             >
               Detailes
-            </button>
+            </Link>
           </div>
         </div>
       </div>

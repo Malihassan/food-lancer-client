@@ -7,6 +7,7 @@ import classes from "./sellerHome.module.scss";
 import { useSelector } from "react-redux";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
 import OrderFilter from "../../components/order/orderFilter/OrderFilter";
+import Empty from "../../components/shared/emptyData/Empty";
 function SellerHome(params) {
   const selectedOrderProducts = useSelector(
     (state) => state.order.selectedOrderProducts
@@ -57,32 +58,38 @@ function SellerHome(params) {
     setCheckboxSelected({ ...checkboxSelected });
   };
   useEffect(async () => {
-    let res = await axiosInstance.get("seller/order/myOrders", {
+    let api_getOrders_Promise = axiosInstance.get("seller/order/myOrders", {
       params: { page, orderStatus },
     });
-    console.log(res);
+    let api_getSeller_info = axiosInstance.get("seller/account/info")
+   const res= await Promise.all([api_getOrders_Promise,api_getSeller_info])
+   console.log(res);
+    // let res = await axiosInstance.get("seller/order/myOrders", {
+    //   params: { page, orderStatus },
+    // });
+    // console.log(res);
     setUserInfo({
       img:'',
-      name:res.data.docs[0].sellerId.firstName+' '+res.data.docs[0].sellerId.lastName,
+      name:res[1].data.seller.firstName+' '+res[1].data.seller.lastName,
       coverageArea:
-        res.data.docs[0].sellerId.coverageArea.governorateName +
+        res[1].data.seller.coverageArea.governorateName +
         "," +
-        res.data.docs[0].sellerId.coverageArea.regionName,
-      status: res.data.docs[0].sellerId.status,
-      rate: res.data.docs[0].sellerId.rate,
-      countDeliverOrder: res.data.countDeliverOrder,
-      inprogressDeliver: res.data.inprogressDeliverOrder,
+        res[1].data.seller.coverageArea.regionName,
+      status: res[1].data.seller.status,
+      rate: res[1].data.seller.rate,
+      countDeliverOrder: res[1].data.countDeliverOrder,
+      inprogressDeliver: res[1].data.countInprogressOrder,
     });
     setPaginateData({
-      totalPages: res.data.totalPages,
-      totalDocs: res.data.totalDocs,
+      totalPages: res[0].data.totalPages,
+      totalDocs: res[0].data.totalDocs,
     });
-    setListOfOrders(res.data.docs);
+    setListOfOrders(res[0].data.docs);
   }, [page, checkboxSelected]);
   return (
     <>
       <SellerInfo userInfo={userInfo} />
-      <section>
+      {listOfOrders.length != 0 && <section>
         <OrderFilter
           checkboxSelected={checkboxSelected}
           sellerFilterSelection={sellerFilterSelection}
@@ -136,7 +143,8 @@ function SellerHome(params) {
             )}
           </div>
         </OffCanvas>
-      </section>
+      </section>}
+      {listOfOrders.length == 0 && <Empty message="Not Order Yet"/>}
     </>
   );
 }

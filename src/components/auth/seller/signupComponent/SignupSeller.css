@@ -1,34 +1,32 @@
-/* body{
-  color: white !important;
+.signup-form {
+  /*  input :checked{
+  background-color: black  !important;
+}  */
 }
- */
-.form-check-label {
+
+.signup-form .form-check-label {
   color: white  !important;
 }
 
-:checked {
-  background-color: black  !important;
-}
-
-.icon-container {
+.signup-form .icon-container {
   background-color: #212529 !important;
 }
 
-.icon-container svg {
+.signup-form .icon-container svg {
   color: white !important;
 }
 
-.login-header {
+.signup-form .login-header {
   color: white !important;
 }
 
-.btn-submit {
+.signup-form .btn-submit {
   background-color: transparent !important;
   color: white !important;
   border: 1px white solid !important;
 }
 
-.btn-submit:hover {
+.signup-form .btn-submit:hover {
   background-color: transparent !important;
   color: #ffc107 !important;
   border: 1px #ffc107 solid !important;

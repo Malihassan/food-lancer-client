@@ -1,15 +1,15 @@
+import "./SignupPage.css"
 import React from 'react'
 import SignupSeller from './../../components/auth/seller/signupComponent/SignupSeller';
-import "./SignupPage.css"
 function SignupPage() {
   return (
     <>
-      <div className="d-flex row p-5 align-items-center ">
+      <div className="d-flex row p-5 align-items-center signuppage-container">
       <div className="col-xl-4 login ">
         <nav className="">
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
+          <div className="nav nav-tabs tabs-button" id="nav-tab" role="tablist">
             <button
-              className="nav-link active"
+              className="nav-link nav-button  active"
               id="nav-home-tab"
               data-bs-toggle="tab"
               data-bs-target="#nav-home"
@@ -21,7 +21,7 @@ function SignupPage() {
               Signup as Seller
             </button>
             <button
-              className="nav-link"
+              className="nav-link nav-button "
               id="nav-profile-tab"
               data-bs-toggle="tab"
               data-bs-target="#nav-profile"

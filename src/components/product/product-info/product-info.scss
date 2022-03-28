@@ -1,0 +1,61 @@
+@mixin pressed {
+    background-color: rgb(117, 10, 37) !important;
+    color: #EEEE !important;
+}
+
+.maroon{
+    @include pressed()
+}
+
+.maroon:active:hover{
+    background-color: rgb(65, 6, 21) !important;
+    color: rgba(211, 211, 211, 0.933) !important;
+}
+
+.maroon:hover{
+    background-color: rgb(83, 8, 27) !important;
+}
+
+.text-font{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder !important;
+}
+
+.btn-serve{
+    height: 1.8rem;
+    width: 1.8rem;
+    border: 2px solid rgb(117, 10, 37);
+    border-radius: 50%;
+    color: rgb(117, 10, 37);
+    background-color: transparent;
+}
+
+.btn-serve:hover {
+    @include pressed()
+
+}
+
+@for $i from 1 through 5 {
+    #inp-#{$i}:checked + label {
+        @include pressed()
+    }
+}
+
+.smaller{
+    font-size: 0.7rem;
+}
+
+@media screen and (min-width: 1200px) {
+    .carousel-h{
+        height: 32vw;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .carousel-h{
+        height: 28.5vw;
+    }
+}
+
+
+

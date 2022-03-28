@@ -38,51 +38,69 @@ const LandingPage = () => {
 			<div
 				style={{
 					backgroundImage: `url(${img})`,
+					maxWidth: "100vw",
 				}}
-				className={`container-fluid ms-0 pe-5 ps-0 ${classes.bgImg} `}
+				className={`container-fluid ms-0 ${classes.bgImg} `}
 			>
-				<div style={{ width: "100vw", height: "4rem" }}>
-					<Navbar bg="bg-transparent ms-3" buttons={buttons} />
-				</div>
-
 				<div
-					className={`d-lg-block d-none mt-5  ms-5 ${classes.overLay}`}
-				></div>
-				<div className="row ms-5 me-5 pe-5 ">
+					style={{ position: "absolute", top: "30%", right: "12%" }}
+					className="d-md-none d-flex ms-3 flex-column d-block"
+				>
 					<div
-						className="col-md-7 me-5 pe-5 col-lg-5 text-light"
+						className="lh-base display-5 ms-5 text-center "
 						style={{
-							height: "200px",
-							position: "absolute",
-							top: "25%",
+							color: "#F0A500",
+							fontFamily: " 'El Messiri', sans-serif",
 						}}
 					>
-						<div className="lh-base d-flex flex-column align-items-center">
-							<div
-								className="lh-base display-5 ms-5 text-center "
-								style={{
-									color: "#F0A500",
-									fontFamily: " 'El Messiri', sans-serif",
-								}}
-							>
-								{text}
-								<hr />
+						{text}
+						<hr />
+					</div>
+					<Link
+						to="/dishes"
+						type="button"
+						className="btn btn-lg btn-outline-warning mt-1 ms-5  "
+					>
+						<strong>View Dishes</strong>
+					</Link>
+				</div>
+				<div className={`d-md-block d-none mt-5 ms-5 ${classes.overLay}`}>
+					<div className="row">
+						<div
+							className="col-md-7 me-5 pe-5 col-lg-5 text-light"
+							style={{
+								height: "200px",
+								position: "absolute",
+								top: "25%",
+							}}
+						>
+							<div className="lh-base d-flex flex-column align-items-center">
+								<div
+									className="lh-base display-5 ms-5 text-center "
+									style={{
+										color: "#F0A500",
+										fontFamily: " 'El Messiri', sans-serif",
+									}}
+								>
+									{text}
+									<hr />
+								</div>
+								<p
+									className="lh-base fs-2 fw-light"
+									style={{
+										fontFamily: "'Cabin Sketch', cursive",
+									}}
+								>
+									Try FoodLancer
+								</p>
+								<Link
+									to="/dishes"
+									type="button"
+									className="btn btn-lg btn-outline-light mt-1  "
+								>
+									<strong>View Dishes</strong>
+								</Link>
 							</div>
-							<p
-								className="lh-base fs-2 fw-light"
-								style={{
-									fontFamily: "'Cabin Sketch', cursive",
-								}}
-							>
-								Try FoodLancer
-							</p>
-							<Link
-								to="/dishes"
-								type="button"
-								className="btn btn-lg btn-outline-light mt-1  "
-							>
-								<strong>View Dishes</strong>
-							</Link>
 						</div>
 					</div>
 				</div>

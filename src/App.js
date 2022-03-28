@@ -17,6 +17,7 @@ import { getCookie } from "./network/axiosConfig";
 import Footer from "./components/shared/Footer";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import Navbar from "./components/shared/Navbar";
 
 function App() {
 	const reload = useSelector((state) => state.auth.reload);
@@ -29,6 +30,10 @@ function App() {
 	return (
 		<>
 			<Loader />
+			{(logged === "seller" || logged === "buyer") && (
+				<Navbar bg="bg-transparent ms-3" />
+			)}
+			<Navbar bg="bg-transparent ms-3" />
 			<Routes>
 				{logged === "viewer" && (
 					<>
@@ -60,7 +65,7 @@ function App() {
 			<Route path="users" element={<Users users={users} />} /> */}
 				{/* <Route path="updateProfile" element={<UpdateProfile />} /> */}
 
-				<Route path="*" element={<NotFound />} />
+				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>
 			<Footer />
 		</>

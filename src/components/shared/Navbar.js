@@ -12,7 +12,7 @@ const Navbar = ({ bg, buttons }) => {
 		<nav
 			className={"navbar p-0 ms-0 "}
 			style={{
-				height: "7vh",
+				height: "100%",
 				width: "100%",
 				backgroundColor: "rgba(0, 0, 0, 0.5)",
 			}}

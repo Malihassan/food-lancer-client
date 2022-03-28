@@ -3,7 +3,7 @@ import { Rating } from "react-simple-star-rating";
 import { axiosInstance } from "../../../network/axiosConfig";
 import classes from "./product-card.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { productActions } from "../../../store/ProductSlice";
 import { useDispatch } from "react-redux";
 export default function ProductCard(props) {
@@ -12,7 +12,7 @@ export default function ProductCard(props) {
   const [count, setCount] = useState(0);
   const [mousedOver, setMousedOver] = useState(false);
   const images = product.image;
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     if (mousedOver) {
       const timer = setInterval(() => {
@@ -23,16 +23,15 @@ export default function ProductCard(props) {
       setCount(0);
     }
   }, [mousedOver]);
-  const deleteProduct=async (prdID)=>{
+  const deleteProduct = async (prdID) => {
     const res = await axiosInstance.delete(`seller/product/${prdID}`);
-    dispatch(productActions.deleted())
-    console.log(res,"res");
-  }
+    dispatch(productActions.deleted());
+    console.log(res, "res");
+  };
   const handleRating = (rate) => {
     setRatingValue(rate);
   };
   return (
-
     <div className={`${classes.cardColor} shadow-sm`}>
       <div className="position-relative">
         <div
@@ -40,9 +39,18 @@ export default function ProductCard(props) {
           onMouseOut={() => setMousedOver(false)}
           className={`${classes.imageContainer}`}
         >
-          <FontAwesomeIcon onClick={()=>{deleteProduct(product._id)}} icon={faTrash} className={`text-danger ${classes.btnDelete}`} />
+          {/* <FontAwesomeIcon
+            onClick={() => {
+              deleteProduct(product._id);
+            }}
+            icon={faTrash}
+            className={`text-danger ${classes.btnDelete}`}
+          /> */}
           {/* <button onClick={()=>{deleteProduct(product._id)}} className={`btn btn-danger text-dark ${classes.btnDelete}`}>delete</button> */}
-          <img src={images[count]?.url} style={{ height: "365px", width: "100%"}} />
+          <img
+            src={images[count]?.url}
+            style={{ height: "365px", width: "100%" }}
+          />
         </div>
       </div>
       <div className="d-flex justify-content-between">
@@ -68,7 +76,9 @@ export default function ProductCard(props) {
             "yellow",
           ]}
         />
-        <h5 className={`${classes.rating} ps-2 col-2 text-danger`} >{product.avgRate} / 5</h5>
+        <h5 className={`${classes.rating} ps-2 col-2 text-danger`}>
+          {product.avgRate} / 5
+        </h5>
       </div>
       <div className="card-body">
         <h5 className={`${classes.prdh5} ${classes.productName} card-title`}>
@@ -87,11 +97,21 @@ export default function ProductCard(props) {
           <span className={`${classes.prdSpan} ${classes.productPrice}`}>
             EGP {product.price}
           </span>
-          <button
-            className={`${classes.prdButton} card-link btn btn-outline-dark my-2`}
-          >
-            Detailes
-          </button>
+          <div>
+            {/* <button
+              className={`${classes.prdButton} card-link btn btn-outline-dark my-2 text-danger`}
+              onClick={() => {
+                deleteProduct(product._id);
+              }}
+            >
+              Delete
+            </button> */}
+            <button
+              className={`${classes.prdButton} card-link btn btn-outline-dark my-2`}
+            >
+              Detailes
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -39,17 +39,23 @@ const LandingPage = () => {
 				style={{
 					backgroundImage: `url(${img})`,
 				}}
-				className={`container-fluid  ${classes.bgImg} `}
+				className={`container-fluid ms-0 pe-5 ps-0 ${classes.bgImg} `}
 			>
-				<div style={{ width: "100vw" }}>
-					<Navbar bg="bg-transparent" buttons={buttons} />
+				<div style={{ width: "100vw", height: "4rem" }}>
+					<Navbar bg="bg-transparent ms-3" buttons={buttons} />
 				</div>
 
-				<div className={`d-lg-block d-none mt-2 ${classes.overLay}`}></div>
-				<div className="row">
+				<div
+					className={`d-lg-block d-none mt-5  ms-5 ${classes.overLay}`}
+				></div>
+				<div className="row ms-5 me-5 pe-5 ">
 					<div
-						className="col-md-7 col-lg-5 text-light"
-						style={{ height: "200px", position: "absolute", top: "25%" }}
+						className="col-md-7 me-5 pe-5 col-lg-5 text-light"
+						style={{
+							height: "200px",
+							position: "absolute",
+							top: "25%",
+						}}
 					>
 						<div className="lh-base d-flex flex-column align-items-center">
 							<div
@@ -70,11 +76,10 @@ const LandingPage = () => {
 							>
 								Try FoodLancer
 							</p>
-							<br />
 							<Link
 								to="/dishes"
 								type="button"
-								className="btn btn-lg btn-outline-light mt-4  "
+								className="btn btn-lg btn-outline-light mt-1  "
 							>
 								<strong>View Dishes</strong>
 							</Link>

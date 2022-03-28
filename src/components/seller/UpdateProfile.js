@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
 import { axiosInstance } from "../../network/axiosConfig";
 import Navbar from "../shared/Navbar";
+import Footer from "../shared/Footer";
 
 let initialValues = {
 	firstName: "",

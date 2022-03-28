@@ -1,18 +1,13 @@
-import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { orderActions } from "../../store/orderSlice";
 function OffCanvas({ name, ...props }) {
-  const dispatch = useDispatch();
-  const showDetailsOrder = useSelector((state) => state.order.showDetailsOrder);
   const handleClose = () => {
-    dispatch(orderActions.toggleDetailsOrder());
+    props.toggleCanvasHandler()
   };
   return (
     <>
       <Offcanvas
         className={`${props.className}`}
-        show={showDetailsOrder}
+        show={props.toggleCanvas}
         onHide={handleClose}
         {...props}
       >

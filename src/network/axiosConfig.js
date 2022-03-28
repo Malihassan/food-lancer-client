@@ -1,9 +1,10 @@
 import axios from "axios";
+
 export const axiosInstance = axios.create({
-  baseURL: "https://food-lancer.herokuapp.com/",
-  // baseURL: "http://localhost:3000/",
+	baseURL: "https://food-lancer.herokuapp.com/",
+	// baseURL:"http://localhost:3300/"
 });
-function getCookie(cName) {
+export function getCookie(cName) {
 	const name = cName + "=";
 	const cDecoded = decodeURIComponent(document.cookie); //to be careful
 	const cArr = cDecoded.split("; ");
@@ -23,6 +24,14 @@ axiosInstance.interceptors.request.use(
 		return config;
 	},
 	function (error) {
+		if (axios.isAxiosError(error)) {
+			if (error.response) {
+				if (error.response.status === 401) {
+					window.location.reload();
+				}
+			}
+		}
+
 		// Do something with request error
 		return Promise.reject(error);
 	}

@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Rating } from "react-simple-star-rating";
 import classes from "./product-card.module.scss";
-import jpg from "../../../assets/imgs/landing page/prdImg.PNG";
-import jpg1 from "../../../assets/imgs/landing page/bg-1.jpeg";
-import jpg2 from "../../../assets/imgs/landing page/bg-2.jpeg";
 
 export default function ProductCard(props) {
   const { product } = props;
   const [ratingValue, setRatingValue] = useState(0);
   const [count, setCount] = useState(0);
   const [mousedOver, setMousedOver] = useState(false);
-  const images = [jpg, jpg1, jpg2];
+  const images = product.image;
 
   useEffect(() => {
     if (mousedOver) {
       const timer = setInterval(() => {
-        setCount((prevCount) => (prevCount + 1) % 3);
+        setCount((prevCount) => (prevCount + 1) % images.length);
       }, 1000);
       return () => clearInterval(timer);
     } else {
@@ -26,21 +23,8 @@ export default function ProductCard(props) {
   const handleRating = (rate) => {
     setRatingValue(rate);
   };
-  const handelChangePhotos = (ev) => {
-    const childs = ev.currentTarget.children;
-    for (let index = 0; index < childs.length; index++) {
-      if (childs[index].className.split(" ").includes("active")) {
-        childs[index].classList.remove("active");
-        childs[1].classList.add("active");
-      }
-      // else
-      // {
-      //   childs[index].classList.add('active')
-      // }
-    }
-  };
-  console.log(product.avgRate, "Avg Rate");
   return (
+
     <div className={`${classes.cardColor} shadow-sm`}>
       <div className="position-relative">
         <div
@@ -48,7 +32,7 @@ export default function ProductCard(props) {
           onMouseOut={() => setMousedOver(false)}
           className={`${classes.imageContainer}`}
         >
-          <img src={images[count]} style={{ height: "365px", width: "100%"}} />
+          <img src={images[count]?.url} style={{ height: "365px", width: "100%"}} />
         </div>
       </div>
       <div className="d-flex justify-content-between">
@@ -56,7 +40,7 @@ export default function ProductCard(props) {
           className={`${classes.stars}`}
           transition
           readonly
-          onClick={handleRating}
+          // onClick={handleRating}
           ratingValue={product.avgRate * 20}
           allowHalfIcon
           size={20}
@@ -74,7 +58,7 @@ export default function ProductCard(props) {
             "yellow",
           ]}
         />
-        <h5 className={`${classes.rating} ps-2 col-2`} >{product.avgRate} / 5</h5>
+        <h5 className={`${classes.rating} ps-2 col-2 text-danger`} >{product.avgRate} / 5</h5>
       </div>
       <div className="card-body">
         <h5 className={`${classes.prdh5} ${classes.productName} card-title`}>

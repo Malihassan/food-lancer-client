@@ -1,0 +1,58 @@
+.cardColor {
+  background-color: #FAF9F8 !important;
+  border-radius: .5em;
+  -webkit-border-radius: .5em;
+  -moz-border-radius: .5em;
+  -ms-border-radius: .5em;
+  -o-border-radius: .5em;
+}
+
+.imageContainer {
+  padding-top: 1rem;
+}
+
+.prdh5 {
+  font-size: 1.25rem;
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.prdh6 {
+  font-size: 1.25rem;
+  color: #333333;
+  font-weight: 500;
+}
+
+.prdP {
+  font-weight: 400;
+  font-size: 1rem;
+  color: #a3a3a3;
+}
+
+.prdButton {
+  font-size: small;
+  font-weight: 500;
+}
+
+.prdSpan {
+  font-size: large;
+  font-weight: 500;
+}
+
+.productPrice {
+  color: #DC3545 !important;
+}
+
+.userName {
+  color: #333333;
+}
+
+.productName {
+  color: #000000 !important;
+}
+
+.test {
+  margin-top: 25px;
+  margin-left: 20px;
+}
+/*# sourceMappingURL=product-card.module.css.map */

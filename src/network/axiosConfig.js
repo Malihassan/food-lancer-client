@@ -1,24 +1,35 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
+	// baseURL: "https://food-lancer.herokuapp.com/",
 	baseURL: "http://localhost:3000/",
-	// baseURL:"http://localhost:3000/"
 });
+function getCookie(cName) {
+	const name = cName + "=";
+	const cDecoded = decodeURIComponent(document.cookie); //to be careful
+	const cArr = cDecoded.split("; ");
+	let res;
+	cArr.forEach((val) => {
+		if (val.indexOf(name) === 0) res = val.substring(name.length);
+	});
+	return res;
+}
+//Add a request interceptor
+axiosInstance.interceptors.request.use(
+	function (config) {
+		const token = getCookie("token");
+		console.log(token);
 
-// Add a request interceptor		
-// axiosInstance.interceptors.request.use(
-// 	function (config) {
-// 		// Do something before request is sent
-// 		// console.log(config);
-// 		// config.headers["Authorization"] = "djsad5s4a3d/543sd4as5da6sd4";
-// 		// config.params["test"] = "test";
-// 		return config;
-// 	},
-// 	function (error) {
-// 		// Do something with request error
-// 		return Promise.reject(error);
-// 	}
-// );
+		config.headers["token"] = token;
+		console.log(config);
+
+		return config;
+	},
+	function (error) {
+		// Do something with request error
+		return Promise.reject(error);
+	}
+);
 
 // // Add a response interceptor
 // axiosInstance.interceptors.response.use(

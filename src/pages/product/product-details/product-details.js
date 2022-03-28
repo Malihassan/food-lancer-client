@@ -1,4 +1,3 @@
-import ProductInfo from "../../../components/product/product-info/product-info";
 import ProductTabs from "../../../components/product/product-tabs.js/product-tabs";
 import React, { useState, useEffect } from 'react'
 import { axiosInstance } from '../../../network/axiosConfig';

@@ -3,20 +3,23 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ bg, buttons }) => {
 	return (
-		<nav className={"navbar " + bg} style={{ height: "7vh" }}>
+		<nav
+			className={"navbar p-0 ms-0 " + bg}
+			style={{ height: "7vh", width: "" }}
+		>
 			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">
 				<div className="navbar-brand text-light">FoodLancer</div>
 				<div className="navbar-brand text-light">
-					{buttons.sellerProfile && (
+					{buttons?.sellerProfile && (
 						<Link
-							to="/seller/updateProfile"
+							to="/updateProfile"
 							type="button"
 							className="lead text-light mx-2"
 						>
 							Profile
 						</Link>
 					)}
-					{buttons.login && (
+					{buttons?.login && (
 						<Link
 							to="/login"
 							type="button"
@@ -26,7 +29,7 @@ const Navbar = ({ bg, buttons }) => {
 						</Link>
 					)}
 
-					{buttons.signup && (
+					{buttons?.signup && (
 						<Link
 							to="/signup"
 							type="button"

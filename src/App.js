@@ -13,17 +13,20 @@ import Loader from "./components/shared/loader/Loader";
 import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
 ///import ReactDOM from 'react-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee, fas } from '@fortawesome/free-solid-svg-icons'
-
-library.add( fab,fas,faCheckSquare, faCoffee)
-
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import {
+	faCheckSquare,
+	faCoffee,
+	fas,
+} from "@fortawesome/free-solid-svg-icons";
 import { getCookie } from "./network/axiosConfig";
 import Footer from "./components/shared/Footer";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
+
+library.add(fab, fas, faCheckSquare, faCoffee);
 
 function App() {
 	const reload = useSelector((state) => state.auth.reload);
@@ -36,10 +39,8 @@ function App() {
 	return (
 		<>
 			<Loader />
-			{(logged === "seller" || logged === "buyer") && (
-				<Navbar bg="bg-transparent ms-3" />
-			)}
-			<Navbar bg="bg-transparent ms-3" />
+
+			<Navbar bg="bg-transparent" />
 			<Routes>
 				{logged === "viewer" && (
 					<>

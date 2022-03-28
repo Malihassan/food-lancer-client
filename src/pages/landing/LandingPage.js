@@ -86,7 +86,7 @@ const LandingPage = () => {
 									<hr />
 								</div>
 								<p
-									className="lh-base fs-2 fw-light"
+									className="lh-base fs-2 ms-3 fw-light"
 									style={{
 										fontFamily: "'Cabin Sketch', cursive",
 									}}
@@ -96,7 +96,7 @@ const LandingPage = () => {
 								<Link
 									to="/dishes"
 									type="button"
-									className="btn btn-lg btn-outline-light mt-1  "
+									className="btn btn-lg btn-outline-light mt-1 ms-3 "
 								>
 									<strong>View Dishes</strong>
 								</Link>

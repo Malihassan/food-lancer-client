@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap');
 
-/*  .loginpage-container{
+ .loginpage-container{
   background-image: url("./../../assets/imgs/landing page/bg-1.jpeg") !important;
   background-repeat: no-repeat;
   background-position: 100% 100%;
@@ -12,17 +12,17 @@
   overflow: hidden;
   font-family: 'Source Serif Pro', serif !important;
   
-// }
-.nav-link {
+ }
+.nav-button {
   color: white !important;
 }
-.nav-link:hover{
+.nav-button:hover{
   color: #ffc107 !important;
 }
-// .nav-link:hover .nav-tabs{
+// .nav-button:hover .nav-tabs{
 //  background-color: transparent;
 //} 
-.nav-tabs{
+.tabs-button{
   background-color: transparent !important;
   //color: antiquewhite;
 }
@@ -37,4 +37,4 @@
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
  // box-shadow: 0 .125rem .25rem rgba(white, 1);
-}  */
+}  

@@ -31,7 +31,7 @@ export default function ProductList() {
       <Link to="addProduct" className="btn btn-dark text-white bg-dark mt-2">
         Add Product
       </Link>
-      {products.length==0 && <Empty />}
+      {products.length==0 && <Empty message ="Not Product Yet"/>}
      {products.length!=0  &&
       <div className="row bg-transparent">
         {products.map((prd) => {

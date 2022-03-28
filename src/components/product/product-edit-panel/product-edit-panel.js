@@ -74,6 +74,8 @@ function ProductEditPanel(props) {
 				});
 
 				break;
+			default:
+				return;
 		}
 	};
 

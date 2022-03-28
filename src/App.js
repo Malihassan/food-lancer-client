@@ -32,16 +32,12 @@ library.add(fab, fas, faCheckSquare, faCoffee);
 function App() {
 	const reload = useSelector((state) => state.auth.reload);
 	const logged = getCookie("userType") || "viewer";
-	console.log(logged);
-	useEffect(() => {
-		console.log(reload);
-	}, [reload]);
+	useEffect(() => {}, [reload]);
 
 	return (
 		<>
 			<Loader />
-
-			<Navbar bg="bg-transparent" />
+			<Navbar />
 			<Routes>
 				{logged === "viewer" && (
 					<>
@@ -57,22 +53,19 @@ function App() {
 						<Route path="/" element={<Navigate replace to="/home" />} />
 						<Route path="/home" element={<SellerHome />} />
 						<Route path="/myProducts" element={<ProductList />} />
+						<Route path="/myProducts/:id" element={<ProductDetails />} />
 						<Route
 							path="/myProducts/addProduct"
 							element={<ProductForm />}
 						/>
 						{/* // todo: product details + edit product */}
 						<Route path="/updateProfile" element={<UpdateProfile />} />
-						<Route path="/myProducts/:id" element={<ProductDetails />} />
 					</>
 				)}
-
-				{/* <Route path="login" element={<LoginPage />} /> */}
 
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-				{/* <Route path="updateProfile" element={<UpdateProfile />} /> */}
 
 				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>

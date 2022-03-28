@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
 import { axiosInstance } from "../../network/axiosConfig";
-import Navbar from "../shared/Navbar";
-import Footer from "../shared/Footer";
+import { RiFolderOpenFill } from "react-icons/ri";
+import Dropzone from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
 
 let initialValues = {
 	firstName: "",
@@ -36,10 +37,6 @@ function UpdateProfile() {
 		) {
 			errors.phone = "Please enter a correct valid phone number";
 		}
-		if (image.size > 100000) {
-			errors.image = "the maximum size for every image is 100 Kb";
-		}
-
 		return errors;
 	};
 
@@ -70,48 +67,49 @@ function UpdateProfile() {
 		setImage({ ...image, image: temp });
 	};
 
-	const fillData = async () => {
-		const res = await axiosInstance.get(`seller/account/coverageArea`);
-		const resAreas = res.data;
-		setAreas(resAreas);
-		const { data } = await axiosInstance.get(`seller/account/info`);
-
-		setImage(data.image);
-
-		initialValues.image = data.image.url;
-		initialValues.firstName = data.firstName;
-		initialValues.lastName = data.lastName;
-		initialValues.phone = data.phone;
-		initialValues.coverageArea = data.coverageArea._id;
-		setUpdate(!update);
-	};
-
 	useEffect(() => {
+		const fillData = async () => {
+			const res = await axiosInstance.get(`seller/account/coverageArea`);
+
+			const resAreas = res.data;
+			setAreas(resAreas);
+			const { data } = await axiosInstance.get(`seller/account/info`);
+
+			setImage(data.seller.image);
+
+			initialValues.image = data.seller.image?.url;
+			initialValues.firstName = data.seller?.firstName;
+			initialValues.lastName = data.seller?.lastName;
+			initialValues.phone = data.seller?.phone;
+			initialValues.coverageArea = data.seller?.coverageArea?._id;
+			setUpdate(!update);
+		};
 		fillData();
-	}, []);
+	}, [update]);
 
 	return (
 		<>
-			<div className={`${classes.backColor} container-fluid`}>
+			<div className={`${classes.backColor} mb-5 container-fluid`}>
 				<div
-					className={`container shadow-lg p-0 row mt-5 ${classes.centerDiv} 
+					className={`container shadow-lg p-0  row mt-0 ${classes.centerDiv} 
       ${classes.borderParent}`}
 					style={{ height: "80vh", width: "53vw" }}
 				>
-					<div
+					{/* <div
 						className={`col-5 d-none d-lg-block ${classes.bgImg}`}
-					></div>
+					></div> */}
 					<div
-						className={`col-lg-7 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
+						className={` container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
 					>
 						<div
-							className="fs-1 text-dark my-2 ms-1 "
+							className="fs-1 text-dark my-2 ms-1 mt-0 text-center "
 							style={{
 								fontFamily: " 'El Messiri', sans-serif",
 							}}
 						>
 							Update Information
 						</div>
+						<hr className="mb-3" />
 						<Formik
 							initialValues={initialValues}
 							validate={validate}
@@ -177,21 +175,45 @@ function UpdateProfile() {
 									))}
 								</Field>
 
-								<input
-									type="file"
-									name="image"
-									className={`mt-3 ms-2 form-control ${classes.inputWidth} `}
-									onChange={(e) => {
-										uploadImage(e.target.files);
-									}}
-								/>
+								<p className="text-center h5 pt-3">
+									Image Upload{" "}
+									<small className="text-muted">(optional)</small>
+								</p>
+								<hr className="mb-4" />
+								<div className={`${classes.dropZone}`}>
+									<Dropzone
+										name="image"
+										id="image"
+										accept="image/*"
+										onDrop={(e) => {
+											uploadImage(e);
+										}}
+									>
+										{({ getRootProps, getInputProps }) => (
+											<section>
+												<div {...getRootProps()}>
+													<input
+														{...getInputProps()}
+														onChange={(e) => {
+															uploadImage(e.target.files);
+														}}
+													/>
+													<RiFolderOpenFill className="text-warning fs-1 mt-3" />
+													<p>Drag & Drop Files Here</p>
+													<div className="row col-12 text-start ps-5"></div>
+												</div>
+											</section>
+										)}
+									</Dropzone>
+								</div>
+
 								<div className="mx-3  fw-light text-warning">
 									<ErrorMessage name="image" />
 								</div>
 
 								<button
 									type="submit"
-									className="btn btn-outline-success ms-5 mx-2 mt-4"
+									className="btn btn-outline-success mx-2 float-end mt-4"
 								>
 									Submit
 								</button>

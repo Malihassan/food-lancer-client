@@ -8,6 +8,7 @@ import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 //import ProductCard from "./components/shared/product-card/Product-Card";
 import UpdateProfile from "./components/seller/UpdateProfile";
+import ProductDetails from "./pages/product/product-details/product-details";
 import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 import NotFound from "./components/shared/not-found-page/NotFound";
@@ -62,6 +63,7 @@ function App() {
 						/>
 						{/* // todo: product details + edit product */}
 						<Route path="/updateProfile" element={<UpdateProfile />} />
+						<Route path="/myProducts/:id" element={<ProductDetails />} />
 					</>
 				)}
 

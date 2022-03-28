@@ -1,14 +1,13 @@
 .loginpage-container {
-	background-image: url("./../../assets/imgs/landing page/bg-1.jpeg") !important;
+	background-image: url("./../../assets/imgs/landing page/bg-1.jpeg");
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
 	background-size: cover;
 	background-position-x: 100%;
 	background-position-y: 65%;
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
-	overflow-x: hidden;
 	font-family: "Source Serif Pro", serif !important;
 }
 
@@ -20,6 +19,9 @@
 	color: #ffc107 !important;
 }
 
+/* .nav-tabs {
+	background-color: transparent !important;
+} */
 .tabs-button {
 	background-color: transparent !important;
 }

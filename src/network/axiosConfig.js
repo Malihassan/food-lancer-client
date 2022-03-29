@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-	// baseURL: "https://food-lancer.herokuapp.com/",
 	baseURL: "https://food-lancer.herokuapp.com/",
+	// baseURL: "https://localhost:3000",
 });
 export function getCookie(cName) {
 	const name = cName + "=";
@@ -13,6 +13,16 @@ export function getCookie(cName) {
 		if (val.indexOf(name) === 0) res = val.substring(name.length);
 	});
 	return res;
+}
+export function deleteCookie(name, path, domain) {
+	if (getCookie(name)) {
+		document.cookie =
+			name +
+			"=" +
+			(path ? ";path=" + path : "") +
+			(domain ? ";domain=" + domain : "") +
+			";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+	}
 }
 //Add a request interceptor
 axiosInstance.interceptors.request.use(

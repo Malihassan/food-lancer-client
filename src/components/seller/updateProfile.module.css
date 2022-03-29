@@ -31,14 +31,6 @@
 	max-width: 100%;
 }
 
-.centerDiv {
-	position: absolute;
-	background-color: transparent;
-	left: 25%;
-	top: 50%;
-	transform: translate(0, -50%);
-}
-
 .option:checked {
 	background-color: #f6f6f6 !important;
 }

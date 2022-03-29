@@ -1,11 +1,30 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+	deleteCookie,
+	getCookie,
+	axiosInstance,
+} from "../../network/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { getCookie } from "../../network/axiosConfig";
 const Navbar = ({ bg, buttons }) => {
+	let navigate = useNavigate();
+	const reload = useSelector((state) => state.auth.reload);
+	useEffect(() => {}, [reload]);
+	const logout = async () => {
+		const res = await axiosInstance.get(`seller/account/logout`);
+		if (res) {
+			window.location.reload();
+			deleteCookie("userType");
+			deleteCookie("token");
+			navigate("/");
+			document.cookie = "userType=viewer;";
+		}
+	};
 	const logged = getCookie("userType") || "viewer";
 
 	return (
@@ -70,7 +89,8 @@ const Navbar = ({ bg, buttons }) => {
 								Profile
 							</Link>
 							<Link
-								to="/signup"
+								to="/"
+								onClick={logout}
 								type="button"
 								className="btn btn-outline-warning ms-5 me-3"
 							>

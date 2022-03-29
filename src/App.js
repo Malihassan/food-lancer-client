@@ -15,14 +15,19 @@ import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
 import Footer from "./components/shared/Footer";
 ///import ReactDOM from 'react-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee, fas } from '@fortawesome/free-solid-svg-icons'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import {
+	faCheckSquare,
+	faCoffee,
+	fas,
+} from "@fortawesome/free-solid-svg-icons";
 import { getCookie } from "./network/axiosConfig";
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
+import BuyerProfile from "./components/buyer/BuyerProfile";
 
 library.add(fab, fas, faCheckSquare, faCoffee);
 
@@ -30,8 +35,7 @@ function App() {
 	const loading = useSelector((state) => state.loader.loading);
 	const reload = useSelector((state) => state.auth.reload);
 	const logged = getCookie("userType") || "viewer";
-	useEffect(() => {
-	}, [reload]);
+	useEffect(() => {}, [reload]);
 
 	return (
 		<>
@@ -42,8 +46,8 @@ function App() {
 					<>
 						<Route path="/home" element={<Navigate replace to="/" />} />
 						<Route path="/" element={<LandingPage />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
+						<Route path="/resetPassword" element={<ResetPassword />} />
+						<Route path="/forgetPassword" element={<ForgetPassword />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/signup" element={<SignupPage />} />
 					</>
@@ -69,7 +73,7 @@ function App() {
 						<Route path="/updateProfile" element={<UpdateProfile />} />
 					</>
 				)}
-
+				<Route path="/buyer/profile/edit" element={<BuyerProfile />} />
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}

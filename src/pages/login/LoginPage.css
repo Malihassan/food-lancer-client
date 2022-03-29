@@ -12,26 +12,29 @@
 }
 
 .nav-button {
-  color: white !important;
+	color: white !important;
 }
 
 .nav-button:hover {
-  color: #ffc107 !important;
+	color: #ffc107 !important;
 }
 
+/* .nav-tabs {
+	background-color: transparent !important;
+} */
 .tabs-button {
-  background-color: transparent !important;
+	background-color: transparent !important;
 }
 
 .active {
-  color: #212529 !important;
+	color: #212529 !important;
 }
 
 .login {
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
 }
 /*# sourceMappingURL=LoginPage.css.map */

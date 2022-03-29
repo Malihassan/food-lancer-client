@@ -11,10 +11,11 @@
 }
 .overLay {
 	border-radius: 2%;
+	min-width: 30rem;
 	width: 45%;
 	height: 70%;
-	left: 20px;
 	background-color: rgba(0, 0, 0, 0.7);
+	overflow: hidden;
 }
 
 .text {

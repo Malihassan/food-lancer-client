@@ -7,6 +7,8 @@ import classes from "./sellerHome.module.scss";
 import { useSelector } from "react-redux";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
 import OrderFilter from "../../components/order/orderFilter/OrderFilter";
+import Empty from "../../components/shared/emptyData/Empty";
+import useFetch from "../../hooks/useFetch";
 function SellerHome(params) {
   const selectedOrderProducts = useSelector(
     (state) => state.order.selectedOrderProducts
@@ -21,8 +23,8 @@ function SellerHome(params) {
     setToggleCanvas(!toggleCanvas);
   };
   const [userInfo, setUserInfo] = useState({
-    img:'',
-    name:"",
+    img: "",
+    name: "",
     coverageArea: "",
     status: "",
     rate: "",
@@ -56,87 +58,108 @@ function SellerHome(params) {
     checkboxSelected[type] = !checkboxSelected[type];
     setCheckboxSelected({ ...checkboxSelected });
   };
-  useEffect(async () => {
-    let res = await axiosInstance.get("seller/order/myOrders", {
-      params: { page, orderStatus },
-    });
+  const { sendRequest } = useFetch();
+
+  async function sellerInfoDataHandler(res) {
     console.log(res);
-    setUserInfo({
-      img:'',
-      name:res.data.docs[0].sellerId.firstName+' '+res.data.docs[0].sellerId.lastName,
-      coverageArea:
-        res.data.docs[0].sellerId.coverageArea.governorateName +
-        "," +
-        res.data.docs[0].sellerId.coverageArea.regionName,
-      status: res.data.docs[0].sellerId.status,
-      rate: res.data.docs[0].sellerId.rate,
-      countDeliverOrder: res.data.countDeliverOrder,
-      inprogressDeliver: res.data.inprogressDeliverOrder,
-    });
-    setPaginateData({
-      totalPages: res.data.totalPages,
-      totalDocs: res.data.totalDocs,
-    });
-    setListOfOrders(res.data.docs);
+    if (res.statusText == "OK") {
+      setUserInfo({
+        img: "",
+        name: res.data.seller.firstName + " " + res.data.seller.lastName,
+        coverageArea:
+          res.data.seller.coverageArea.governorateName +
+          "," +
+          res.data.seller.coverageArea.regionName,
+        status: res.data.seller.status,
+        rate: res.data.seller.rate,
+        countDeliverOrder: res.data.countDeliverOrder,
+        inprogressDeliver: res.data.countInprogressOrder,
+      });
+    }
+  }
+  async function sellerOrdersDataHandler(res) {
+    if (res.statusText == "OK") {
+      setPaginateData({
+        totalPages: res.data.totalPages,
+        totalDocs: res.data.totalDocs,
+      });
+      setListOfOrders(res.data.docs);
+    }
+  }
+  useEffect(async () => {
+    const api_getSeller_info = sendRequest({
+      method: "GET",
+      url: "seller/account/info",
+    },sellerInfoDataHandler);
+    const api_getOrders_Promise = sendRequest({
+      method: "GET",
+      url: "seller/order/myOrders",
+      params: { page, orderStatus },
+    },sellerOrdersDataHandler);
+
+    const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
   }, [page, checkboxSelected]);
   return (
     <>
       <SellerInfo userInfo={userInfo} />
-      <section>
-        <OrderFilter
-          checkboxSelected={checkboxSelected}
-          sellerFilterSelection={sellerFilterSelection}
-        />
-        <OrderList
-          toggleCanvasHandler={toggleCanvasHandler}
-          listOfOrders={listOfOrders}
-          totalDocs={paginateData.totalDocs}
-          totalPages={paginateData.totalPages}
-          onPageChange={onPageChange}
-        />
-        <OffCanvas
-          className={classes.OffCanvas}
-          placement={"end"}
-          name={"end"}
-          title="Details Order"
-          toggleCanvas={toggleCanvas}
-          toggleCanvasHandler={toggleCanvasHandler}
-        >
-          <div className="card-body d-flex flex-column justify-content-between">
-            <small className="fw-bold mb-3">
-              {createdAt.toLocaleDateString(undefined, {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </small>
-            {selectedOrderProducts.map((item, index) => (
-              <OrderDetails key={index} order={item} />
-            ))}
-            <div className={`col-12 d-flex justify-content-between`}>
-              <h4>Total</h4>
-              <h4>EGP {totalPrice.toFixed(2)}</h4>
-            </div>
-            {status == "in progress" && (
-              <div className="d-flex justify-content-end my-3">
-                <div
-                  class="btn-group"
-                  role="group"
-                  aria-label="Basic mixed styles example"
-                >
-                  <button type="button" class="btn btn-danger">
-                    Rejected
-                  </button>
-                  <button type="button" class="btn btn-success">
-                    Accepted
-                  </button>
-                </div>
+      {listOfOrders.length != 0 && (
+        <section>
+          <OrderFilter
+            checkboxSelected={checkboxSelected}
+            sellerFilterSelection={sellerFilterSelection}
+          />
+          <OrderList
+            toggleCanvasHandler={toggleCanvasHandler}
+            listOfOrders={listOfOrders}
+            totalDocs={paginateData.totalDocs}
+            totalPages={paginateData.totalPages}
+            onPageChange={onPageChange}
+          />
+          <OffCanvas
+            className={classes.OffCanvas}
+            placement={"end"}
+            name={"end"}
+            title="Details Order"
+            toggleCanvas={toggleCanvas}
+            toggleCanvasHandler={toggleCanvasHandler}
+          >
+            <div className="card-body d-flex flex-column justify-content-between">
+              <small className="fw-bold mb-3">
+                {createdAt.toLocaleDateString(undefined, {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </small>
+              {selectedOrderProducts.map((item, index) => (
+                <OrderDetails key={index} order={item} />
+              ))}
+              <div className={`col-12 d-flex justify-content-between`}>
+                <h4>Total</h4>
+                <h4>EGP {totalPrice.toFixed(2)}</h4>
               </div>
-            )}
-          </div>
-        </OffCanvas>
-      </section>
+              {status == "in progress" && (
+                <div className="d-flex justify-content-end my-3">
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic mixed styles example"
+                  >
+                    <button type="button" class="btn btn-danger">
+                      Rejected
+                    </button>
+                    <button type="button" class="btn btn-success">
+                      Accepted
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </OffCanvas>
+        </section>
+      )}
+      {listOfOrders.length == 0 && <Empty message="Not Order Yet" />}
     </>
   );
 }

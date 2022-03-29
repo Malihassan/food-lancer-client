@@ -5,7 +5,10 @@ import { ReactComponent as Instagram } from "../../assets/svgs/instagram-brands.
 
 function Footer() {
 	return (
-		<footer className="container-fluid bg-dark text-light">
+		<footer
+			className="container-fluid text-light"
+			style={{ backgroundColor: "#13334C" }}
+		>
 			<div className="container-fluid">
 				<div className="row  justify-content-center">
 					<div
@@ -17,25 +20,27 @@ function Footer() {
 								color: "#F0A500",
 								fontFamily: " 'El Messiri', sans-serif",
 							}}
-							className="display-5 my-3 fw-bold"
+							className="display-5 fst-italic mt-3  fw-bold"
 						>
-							FoodLancer.com
+							FoodLancer
 						</h2>
-						<div className="menu d-flex mt-4 flex-row justify-content-center w-25 ">
+						<div className="menu d-flex  flex-row justify-content-center w-50 ">
 							{/* <p className="mx-2 text-muted fs-5">Home</p>
 							<p className="mx-2 text-muted fs-5">Agent</p>
 							<p className="mx-2 text-muted fs-5">About</p>
 							<p className="mx-2 text-muted fs-5">Listing</p>
 							<p className="mx-2 text-muted fs-5">Blog</p>
 							<p className="mx-2 text-muted fs-5">Contact</p> */}
-							<p className="text-muted fw-lighter">
+							<p className=" fw-lighter">
 								FoodLancer is a platform made for home cooks and
-								home-cooked food lovers, Our goal is to connect both by
-								creating a market place specified for home-made dishes
+								home-cooked food lovers, Our goal is to connect both
+								sides by creating an online market place specified for
+								home-made dishes
 							</p>
 						</div>
-						<div className="mb-5 mt-3 d-flex justify-content-center">
+						<div className="mb-4 mt-3 d-flex justify-content-center">
 							<Facebook
+								role="button"
 								className="mx-4"
 								height={"35px"}
 								width={"35px"}
@@ -43,12 +48,14 @@ function Footer() {
 							/>
 
 							<Linkedin
+								role="button"
 								className="mx-4"
 								height={"35px"}
 								width={"35px"}
 								fill={"#F0A500"}
 							/>
 							<Instagram
+								role="button"
 								className="mx-4"
 								height={"35px"}
 								width={"35px"}
@@ -57,7 +64,7 @@ function Footer() {
 						</div>
 					</div>
 				</div>
-				<div className="row mt-3">
+				<div className="row fst-italic  mt-1">
 					<div className="col-md-12 text-center mb-3">
 						<p className="copyright">
 							Copyright All rights reserved @2022 |
@@ -66,7 +73,8 @@ function Footer() {
 									color: "#F0A500",
 									fontFamily: " 'El Messiri', sans-serif",
 								}}
-								className="ms-2 fw-light"
+								role="button"
+								className="ms-2 fw-light text-decoration-underline"
 							>
 								FoodLancer.com
 							</span>

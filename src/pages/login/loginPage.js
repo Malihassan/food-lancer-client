@@ -9,7 +9,11 @@ function LoginPage() {
 			<div className="d-flex p-5 align-items-center loginpage-container">
 				<div className="col-xl-4 signup ">
 					<nav className="">
-						<div className="nav nav-tabs tabs-button" id="nav-tab" role="tablist">
+						<div
+							className="nav nav-tabs tabs-button"
+							id="nav-tab"
+							role="tablist"
+						>
 							<button
 								className="nav-link nav-button active"
 								id="nav-home-tab"

@@ -4,8 +4,8 @@ import SignupSeller from './../../components/auth/seller/signupComponent/SignupS
 function SignupPage() {
   return (
     <>
-      <div className="d-flex row p-5 align-items-center signuppage-container">
-      <div className="col-xl-4 login ">
+      <div className="d-flex  p-5 align-items-center signuppage-container ">
+      <div className="col-xl-4 signup ">
         <nav className="">
           <div className="nav nav-tabs tabs-button" id="nav-tab" role="tablist">
             <button

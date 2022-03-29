@@ -12,17 +12,18 @@ import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
+import Footer from "./components/shared/Footer";
 ///import ReactDOM from 'react-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faCheckSquare, faCoffee, fas } from '@fortawesome/free-solid-svg-icons'
-
-library.add( fab,fas,faCheckSquare, faCoffee)
-
 import { getCookie } from "./network/axiosConfig";
-import Footer from "./components/shared/Footer";
+
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+library.add( fab,fas,faCheckSquare, faCoffee)
+
+
 
 function App() {
 	const reload = useSelector((state) => state.auth.reload);
@@ -40,6 +41,8 @@ function App() {
 					<>
 						<Route path="/home" element={<Navigate replace to="/" />} />
 						<Route path="/" element={<LandingPage />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/forgetPassword" element={<ForgetPassword />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/signup" element={<SignupPage />} />
 					</>

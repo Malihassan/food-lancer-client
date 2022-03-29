@@ -62,7 +62,7 @@ function LoginSeller() {
 		e.preventDefault();
 		dispatch(login(userForm)).then((res) => {
 			if (res.meta.requestStatus === "fulfilled") {
-				navigate("/");
+				navigate("/seller/home");
 				// window.location.reload();
 			}
 		});

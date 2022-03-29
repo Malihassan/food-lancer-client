@@ -1,6 +1,4 @@
-/* body{
-  //background-color: $background-color !important;
-  font-family: $fontFamily!important;
-  font-size: 1rem !important;
-} */
+body {
+  font-family: "Source Serif Pro", serif !important;
+}
 /*# sourceMappingURL=variables.css.map */

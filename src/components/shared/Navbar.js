@@ -1,3 +1,4 @@
+import "../../variables.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -33,7 +34,7 @@ const Navbar = ({ bg, buttons }) => {
 			style={{
 				height: "100%",
 				width: "100%",
-				backgroundColor: "#13334C",
+				backgroundColor: "#0b2a3a"/* "#13334C" */,
 				overflow: "hidden",
 			}}
 		>

@@ -8,14 +8,15 @@ const axios = require("axios");
 function SignupSeller() {
   let navigate = useNavigate();
   const [coverageAreas, setCoverageAreas] = useState();
- const [emailErr, setEmailErr] = useState()
- const [userNameErr, setUserNameErr] = useState()
- const [phoneErr, setPhoneErr] = useState()
-  
+  //const { setError, formState: { errors } } = useForm();
+ const [serverMessage, setServerMessage] = useState();
+   /* const [userNameErr, setUserNameErr] = useState("");
+  const [phoneErr, setPhoneErr] = useState(""); */
   const {
     register,
     handleSubmit,
     watch,
+    setError,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -35,39 +36,49 @@ function SignupSeller() {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        if (response.status===200) {
-          //setServerMessage(response.data.message);
+        if (response.status === 200) {
+          setServerMessage(response.data.message);
           setTimeout(() => {
             navigate("/login");
           }, 5000);
-          return
+          return;
         }
       })
       .catch(function (error) {
-        const valErr = error.response.data.errors
+        const valErr = error.response.data.errors;
         if (valErr) {
           for (let key in valErr) {
-            console.log(key);
-            console.log(valErr);
-           switch (key) {
-             case "userName":
-              setUserNameErr(`${valErr.userName.value} already exist`)
-               break;
-               case "email":
-                setEmailErr(`${valErr.email.value} already exist`)
-                 break;
-                 case "phone":
-                  setPhoneErr(`${valErr.phone.value} already exist`)
-                 break;
-             default:
-               break;
-           }
+            switch (key) {
+              case "userName":
+                setError("userName", {
+                  type: "manual",
+                  message: `${key} already exist`,
+                });
+                break;
+              case "email":
+                console.log("errrrrrror");
+                setError("email", {
+                  type: "manual",
+                  message: `${key} already exist`,
+                });
+                break;
+              case "phone":
+                setError("phone", {
+                type: "manual",
+                message: `${key} already exist`,
+              });
+                break;
+              default:
+                break;
+            }
           }
+          return
         }
+setServerMessage(error.response.data)
       });
   };
   const password = useRef({});
-  password.current = watch("password","");
+  password.current = watch("password", "");
   useEffect(() => {
     return axios
       .get("http://localhost:3001/seller/account/coverageArea")
@@ -76,13 +87,13 @@ function SignupSeller() {
         setCoverageAreas(response.data);
       })
       .catch(function (error) {
-        console.log(error.response.data);
-
+        console.log(error);
+        //setServerMessage(error)
       });
   }, []);
   return (
     <>
-      <div className="w-75 m-auto text-center signup-form ">
+      <div className="w-75 m-auto text-center signup-form  bg-black">
         <h3 className="my-4 login-header">Signup Form</h3>
         <div className="d-flex justify-content-around">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -116,14 +127,7 @@ function SignupSeller() {
                   render={({ message }) => (
                     <small className="form-text text-warning">{message}</small>
                   )}
-
                 />
-									{userNameErr && (
-								<div className="form-text text-warning">
-									{userNameErr}
-								</div>
-							)}
-						
               </div>
             </div>
             <div className="mb-3 ">
@@ -276,13 +280,7 @@ function SignupSeller() {
                   name="phone"
                   render={({ message }) => <small>{message}</small>}
                 />
-                 
-                
-								<div className="form-text text-warning">
-									{phoneErr}
-								</div>
-						
-						
+ {/* {errors.phone && <p className="text-danger">{errors.phone.message}</p>} */}
               </div>
             </div>
             <div className="mb-3 ">
@@ -310,14 +308,11 @@ function SignupSeller() {
               <div className="form-text text-warning">
                 <ErrorMessage
                   errors={errors}
-                  name="sellerEmail"
-                  render={({ message }) => <small>{message}</small>}
+                  name="email"
+                  render={({ message }) => (
+                    <small className="form-text text-warning">{message}</small>
+                  )}
                 />
-               
-								<div className="form-text text-warning">
-									{emailErr}
-								</div>
-					
               </div>
             </div>
             <div className="mb-3 ">
@@ -413,9 +408,14 @@ function SignupSeller() {
                 </div>
               </div>
             </div>
+            {serverMessage && (
+								<div className="form-text text-warning">
+									{serverMessage}
+								</div>
+							)}
             <button type="submit" className="btn btn-submit px-4">
               Signup
-            </button> 
+            </button>
           </form>
         </div>
       </div>

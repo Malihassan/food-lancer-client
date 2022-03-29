@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-
+import "./ResetPassword.css";
 import { useParams } from "react-router-dom";
 const axios = require("axios");
 function ResetPassword() {
   let { token } = useParams();
-  //document.cookie =`token=${token}`;
   console.log(token);
   const passReg = new RegExp(
     "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
@@ -50,8 +49,6 @@ function ResetPassword() {
     }
   };
   const handlePasswordSubmit = (e) => {
-    console.log(newPassword);
-    console.log(token);
     e.preventDefault();
     axios
       .patch(
@@ -63,16 +60,17 @@ function ResetPassword() {
       )
       .then((response) => {
         console.log(response);
+        
         //setMessage(response.data.response)
       })
       .catch(function (err) {
-        console.log(err);
+        console.log(err.response.data.message);
         //setMessage(err.response.data.error)
       });
   };
   return (
     <>
-      <div className="container d-flex m-0 align-items-center vh-100  text-center ">
+      <div className=" d-flex m-0 align-items-center vh-100 text-center resetPassword-container">
         <div className=" shadow-sm">
           <div className="p-5">
             <h4 className="text-light my-3">Reset Password</h4>
@@ -101,7 +99,7 @@ function ResetPassword() {
               <input
                 to=""
                 type={"submit"}
-                className="btn btn-outline-light my-3 "
+                className="btn btn-submit my-3 "
               ></input>
             </form>
           </div>

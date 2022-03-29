@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-	// baseURL: "https://food-lancer.herokuapp.com/",
-	baseURL:"http://localhost:3001/"
+	baseURL: "https://food-lancer.herokuapp.com/",
+	// baseURL: "http://localhost:3000/",
 });
 export function getCookie(cName) {
 	const name = cName + "=";

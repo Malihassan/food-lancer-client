@@ -3,8 +3,15 @@ import "./SignupSeller.css";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const axios = require('axios');
+import { useNavigate } from "react-router-dom";
+const axios = require("axios");
 function SignupSeller() {
+  let navigate = useNavigate();
+  const [coverageAreas, setCoverageAreas] = useState();
+ const [emailErr, setEmailErr] = useState()
+ const [userNameErr, setUserNameErr] = useState()
+ const [phoneErr, setPhoneErr] = useState()
+  
   const {
     register,
     handleSubmit,
@@ -12,50 +19,56 @@ function SignupSeller() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const formData = new FormData();
-    //const image = data.image[0]
-      formData.append("image", data.image[0]);
-      formData.append("userName", data.userName);
-      formData.append("firstName", data.firstName);
-      formData.append("lastName", data.lastName);
-      formData.append("password", data.password);
-      formData.append("phone", data.phone);
-      formData.append("gender", data.gender);
-      formData.append("email", data.email);
-      formData.append("coverageArea", data.coverageArea);
-    console.log(formData);
+    let formData = new FormData();
+    const image = data.image[0];
+    formData.append("image", image);
+    formData.append("userName", data.userName);
+    formData.append("firstName", data.firstName);
+    formData.append("lastName", data.lastName);
+    formData.append("password", data.password);
+    formData.append("phone", data.phone);
+    formData.append("gender", data.gender);
+    formData.append("email", data.email);
+    formData.append("coverageArea", data.coverageArea);
     axios
-    .post("http://localhost:3001/seller/account/signup", formData/* {
-      userName: data.userName,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      password: data.password,
-      phone: data.phone,
-      email: data.email,
-      gender: data.gender,
-      coverageArea: data.coverageArea
-    },{headers: {
-     // "image": image
-    }
-  } */
-     )
-     /* 
-     
-headers: { "Content-Type": "multipart/form-data" }}) */
-    .then((response) => {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-  const [coverageAreas, setCoverageAreas] = useState();
+      .post("http://localhost:3001/seller/account/signup", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        if (response.status===200) {
+          //setServerMessage(response.data.message);
+          setTimeout(() => {
+            navigate("/login");
+          }, 5000);
+          return
+        }
+      })
+      .catch(function (error) {
+        const valErr = error.response.data.errors
+        if (valErr) {
+          for (let key in valErr) {
+            console.log(key);
+            console.log(valErr);
+           switch (key) {
+             case "userName":
+              setUserNameErr(`${valErr.userName.value} already exist`)
+               break;
+               case "email":
+                setEmailErr(`${valErr.email.value} already exist`)
+                 break;
+                 case "phone":
+                  setPhoneErr(`${valErr.phone.value} already exist`)
+                 break;
+             default:
+               break;
+           }
+          }
+        }
+      });
+  };
   const password = useRef({});
   password.current = watch("password","");
-  
-  console.log(password);
   useEffect(() => {
-    
     return axios
       .get("http://localhost:3001/seller/account/coverageArea")
       .then((response) => {
@@ -63,18 +76,16 @@ headers: { "Content-Type": "multipart/form-data" }}) */
         setCoverageAreas(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response.data);
+
       });
   }, []);
-
   return (
     <>
-      <div className="w-75 m-auto text-center signup-form">
+      <div className="w-75 m-auto text-center signup-form ">
         <h3 className="my-4 login-header">Signup Form</h3>
         <div className="d-flex justify-content-around">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3 ">
               <div className="input-group flex-nowrap my-2 ">
                 <span
@@ -91,6 +102,7 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                       message: `user input is invalid`,
                     },
                   })}
+                  name="userName"
                   type="text"
                   className="form-control "
                   id="userName"
@@ -104,7 +116,14 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                   render={({ message }) => (
                     <small className="form-text text-warning">{message}</small>
                   )}
+
                 />
+									{userNameErr && (
+								<div className="form-text text-warning">
+									{userNameErr}
+								</div>
+							)}
+						
               </div>
             </div>
             <div className="mb-3 ">
@@ -257,6 +276,13 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                   name="phone"
                   render={({ message }) => <small>{message}</small>}
                 />
+                 
+                
+								<div className="form-text text-warning">
+									{phoneErr}
+								</div>
+						
+						
               </div>
             </div>
             <div className="mb-3 ">
@@ -271,7 +297,7 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                   {...register("email", {
                     required: "this field is required",
                     pattern: {
-                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      value: /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                       message: `email input is invalid`,
                     },
                   })}
@@ -287,33 +313,38 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                   name="sellerEmail"
                   render={({ message }) => <small>{message}</small>}
                 />
+               
+								<div className="form-text text-warning">
+									{emailErr}
+								</div>
+					
               </div>
             </div>
             <div className="mb-3 ">
-             <div className="input-group flex-nowrap my-2">
-             <select
-                {...register("coverageArea", {
-                  required: "this field is required",
-                })}
-                className="form-select"
-                aria-label="Default select example"
-              >
-                <option value="" name="coverageArea">
-                  Select Coverage Area
-                </option>
-                {coverageAreas?.map((coverageArea) => {
-                  return (
-                    <option
-                      key={coverageArea?._id}
-                      value={coverageArea?._id}
-                      name="coverageArea"
-                    >
-                      {coverageArea?.regionName}
-                    </option>
-                  );
-                })}
-              </select>
-             </div>
+              <div className="input-group flex-nowrap my-2">
+                <select
+                  {...register("coverageArea", {
+                    required: "this field is required",
+                  })}
+                  className="form-select"
+                  aria-label="Default select example"
+                >
+                  <option value="" name="coverageArea">
+                    Select Coverage Area
+                  </option>
+                  {coverageAreas?.map((coverageArea) => {
+                    return (
+                      <option
+                        key={coverageArea?._id}
+                        value={coverageArea?._id}
+                        name="coverageArea"
+                      >
+                        {coverageArea?.regionName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
               <div className="form-text text-warning">
                 <ErrorMessage
                   errors={errors}
@@ -324,21 +355,29 @@ headers: { "Content-Type": "multipart/form-data" }}) */
             </div>
             <div className="mb-3 ">
               <div className="input-group d-flex justify-content-start my-2">
-              <div><label className="form-check-label mx-3">Female</label>
-              <input
-                {...register("gender", { required: "this field is required" })}
-                type="radio"
-                value="female"
-              /></div>
-              <div><label className="form-check-label mx-3">Male</label>
-              <input
-                {...register("gender", { required: "this field is required" })}
-                type="radio"
-                value="male"
-              /></div>
+                <div>
+                  <label className="form-check-label mx-3">Female</label>
+                  <input
+                    {...register("gender", {
+                      required: "this field is required",
+                    })}
+                    type="radio"
+                    value="female"
+                  />
+                </div>
+                <div>
+                  <label className="form-check-label mx-3">Male</label>
+                  <input
+                    {...register("gender", {
+                      required: "this field is required",
+                    })}
+                    type="radio"
+                    value="male"
+                  />
+                </div>
               </div>
 
-                <div className="form-text text-warning">
+              <div className="form-text text-warning">
                 <ErrorMessage
                   errors={errors}
                   name="gender"
@@ -352,11 +391,11 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                   className="input-group-text icon-container"
                   id="imageHelp"
                 >
-                 <FontAwesomeIcon icon="fa-solid fa-image" />
+                  <FontAwesomeIcon icon="fa-solid fa-image" />
                 </span>
                 <input
                   {...register("image", {
-                    required: "this field is required"
+                    required: "this field is required",
                   })}
                   type="file"
                   className="form-control"
@@ -368,7 +407,7 @@ headers: { "Content-Type": "multipart/form-data" }}) */
                 <div className="form-text text-warning">
                   <ErrorMessage
                     errors={errors}
-                    name="confirmPassword"
+                    name="image"
                     render={({ message }) => <small>{message}</small>}
                   />
                 </div>
@@ -376,7 +415,7 @@ headers: { "Content-Type": "multipart/form-data" }}) */
             </div>
             <button type="submit" className="btn btn-submit px-4">
               Signup
-            </button>
+            </button> 
           </form>
         </div>
       </div>

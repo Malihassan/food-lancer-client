@@ -10,18 +10,9 @@ const override = css`
 `;
 
 export default function Loader() {
-	const loading = useSelector((state) => state.loader.loading);
-
-	const dispatch = useDispatch();
-	let [color, setColor] = useState("#6E767D");
-	return (
-		<div className={`sweet-loading ${classes.fix}`}>
-			<PuffLoader color={color} loading={loading} css={override} size={80} />
-			{loading && (
-				<p style={{ fontSize: 30, color: "black" }} className="text-center">
-					Loading...
-				</p>
-			)}
-		</div>
-	);
+  return (
+      <div className={`${classes.fix}`}>
+        <PuffLoader color="#ffa500" css={override} size={100} />
+      </div>
+  );
 }

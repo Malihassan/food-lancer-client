@@ -22,6 +22,7 @@ import Footer from "./components/shared/Footer";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
+import CartOffCanvas from "./components/cart/cart-offcanvas/cart-offcanvas";
 
 library.add( fab,fas,faCheckSquare, faCoffee)
 
@@ -72,7 +73,7 @@ function App() {
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
 				{/* <Route path="updateProfile" element={<UpdateProfile />} /> */}
-
+				<Route path="canvas" element={<CartOffCanvas/>}/>
 				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>
 			<Footer />

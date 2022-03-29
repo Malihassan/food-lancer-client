@@ -1,11 +1,15 @@
 import "./product-edit-panel.scss";
 import React, { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen,faTrash } from "@fortawesome/free-solid-svg-icons";
+import { productActions } from "../../../store/ProductSlice";
+
 import { axiosInstance } from "../../../network/axiosConfig";
 
 function ProductEditPanel(props) {
+	const dispatch = useDispatch();
 	const { data } = props;
 	const [rating, setRating] = useState(0);
 	const [editForm, setEditForm] = useState({
@@ -14,7 +18,11 @@ function ProductEditPanel(props) {
 		descriptionField: "",
 		imagesField: [],
 	});
-
+	const deleteProduct = async () => {
+		const res = await axiosInstance.delete(`seller/product/${data._id}`);
+		dispatch(productActions.deleted());
+		window.history.back();
+	  };
 	const [editFormErr, setEditFormErr] = useState({
 		nameFieldErr: "",
 		priceFieldErr: "",
@@ -335,6 +343,15 @@ function ProductEditPanel(props) {
 				</div>
 				<div className="col-xl-6 col-12 mt-4 mt-xl-0">
 					<div className="d-flex justify-content-end ">
+					<button
+							type="button"
+							class="btn btn-dark rounded-circle me-3"
+							onClick={() => {
+								deleteProduct();
+							  }}
+						>
+							<FontAwesomeIcon icon={faTrash} />
+						</button>
 						<button
 							type="button"
 							class="btn btn-dark rounded-circle"

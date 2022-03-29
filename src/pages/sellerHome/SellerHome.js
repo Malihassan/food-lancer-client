@@ -78,6 +78,7 @@ function SellerHome(params) {
     }
   }
   async function sellerOrdersDataHandler(res) {
+    console.log("res===>",res);
     if (res.statusText == "OK") {
       setPaginateData({
         totalPages: res.data.totalPages,
@@ -102,7 +103,7 @@ function SellerHome(params) {
   return (
     <>
       <SellerInfo userInfo={userInfo} />
-      {listOfOrders.length != 0 && (
+      {listOfOrders.length !== 0 && (
         <section>
           <OrderFilter
             checkboxSelected={checkboxSelected}

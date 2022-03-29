@@ -30,15 +30,13 @@ import Navbar from "./components/shared/Navbar";
 library.add(fab, fas, faCheckSquare, faCoffee);
 
 function App() {
-	const loading = useSelector((state) => state.loader.loading);
 	const reload = useSelector((state) => state.auth.reload);
 	const logged = getCookie("userType") || "viewer";
 	useEffect(() => {
 	}, [reload]);
-
 	return (
 		<>
-			{loading && <Loader />}
+			<Loader />
 			<Navbar />
 			<Routes>
 				{logged === "viewer" && (

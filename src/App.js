@@ -63,6 +63,12 @@ function App() {
 					</>
 				)}
 
+				{logged === "buyer" && (
+					<>
+						<Route path="/updateProfile" element={<UpdateProfile />} />
+					</>
+				)}
+
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}

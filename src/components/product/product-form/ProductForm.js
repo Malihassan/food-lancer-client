@@ -48,6 +48,7 @@ export default function ProductForm() {
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("categoryId", values.categoryId);
+    console.log(formData,"Form Data");
     console.log(typeof values.categoryId, "categoryId");
     (async () => {
       console.log("RESULT");

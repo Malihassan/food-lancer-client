@@ -126,6 +126,7 @@ function ProductInfo(props){
                         <Link to={{pathname: "/order", state: {id: data._id, serves: serves}}} className='btn shadow maroon text-light text-font w-100 me-1'>Add To Cart</Link>
                     </div>
                 </div>
+
             </div>
         </>
     )

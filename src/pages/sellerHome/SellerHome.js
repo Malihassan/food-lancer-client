@@ -61,7 +61,8 @@ function SellerHome(params) {
   const { sendRequest } = useFetch();
 
   async function sellerInfoDataHandler(res) {
-    if (res.statusText == 200) {
+    console.log(res);
+    if (res.statusText == "OK") {
       setUserInfo({
         img: "",
         name: res.data.seller.firstName + " " + res.data.seller.lastName,
@@ -77,7 +78,7 @@ function SellerHome(params) {
     }
   }
   async function sellerOrdersDataHandler(res) {
-    if (res.statusText == 200) {
+    if (res.statusText == "OK") {
       setPaginateData({
         totalPages: res.data.totalPages,
         totalDocs: res.data.totalDocs,

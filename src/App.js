@@ -39,7 +39,7 @@ function App() {
 	return (
 		<>
 			{loading && <Loader />}
-			<Navbar bg="bg-transparent" />
+			<Navbar />
 			<Routes>
 				{logged === "viewer" && (
 					<>
@@ -56,21 +56,18 @@ function App() {
 						<Route path="/home" element={<SellerHome />} />
 						<Route path="/updateProfile" element={<UpdateProfile />} />
 						<Route path="/myProducts" element={<ProductList />} />
+						<Route path="/myProducts/:id" element={<ProductDetails />} />
 						<Route
 							path="/myProducts/addProduct"
 							element={<ProductForm />}
 						/>
 						{/* // todo: product details + edit product */}
-						<Route path="/myProducts/:id" element={<ProductDetails />} />
 					</>
 				)}
-
-				{/* <Route path="login" element={<LoginPage />} /> */}
 
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-				{/* <Route path="updateProfile" element={<UpdateProfile />} /> */}
 
 				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>

@@ -31,7 +31,8 @@ const useFetch = () => {
         case "PATCH":
           respose = await axiosInstance.patch(
             requestConfig.url,
-            requestConfig.body ? requestConfig.body : null
+            requestConfig.body ? requestConfig.body : {},
+            requestConfig.headers ? requestConfig.headers : {}
           );
           break;
         case "DELETE":
@@ -47,7 +48,7 @@ const useFetch = () => {
       if (error.message === "Request failed with status code 401") {
         deleteCookie("token");
         deleteCookie("userType");
-        return navigate("/login");
+        navigate("/login");
       }
     }
     // setIsLoading(false);

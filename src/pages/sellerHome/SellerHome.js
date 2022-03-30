@@ -61,8 +61,7 @@ function SellerHome(params) {
   const { sendRequest } = useFetch();
 
   async function sellerInfoDataHandler(res) {
-    console.log(res);
-    if (res.statusText == "OK") {
+    if (res.statusText === "OK") {
       setUserInfo({
         img: "",
         name: res.data.seller.firstName + " " + res.data.seller.lastName,
@@ -77,14 +76,13 @@ function SellerHome(params) {
       });
     }
   }
-  async function sellerOrdersDataHandler(res) {
-    console.log("res===>",res);
-    if (res.statusText == "OK") {
+  function sellerOrdersDataHandler(res) {
+    if (res.status === 200) {
+      setListOfOrders(res.data.docs);
       setPaginateData({
         totalPages: res.data.totalPages,
         totalDocs: res.data.totalDocs,
       });
-      setListOfOrders(res.data.docs);
     }
   }
   useEffect(async () => {
@@ -99,7 +97,7 @@ function SellerHome(params) {
     },sellerOrdersDataHandler);
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
-  }, [page, checkboxSelected]);
+  }, [page,checkboxSelected]);
   return (
     <>
       <SellerInfo userInfo={userInfo} />
@@ -140,7 +138,7 @@ function SellerHome(params) {
                 <h4>Total</h4>
                 <h4>EGP {totalPrice.toFixed(2)}</h4>
               </div>
-              {status == "in progress" && (
+              {status === "in progress" && (
                 <div className="d-flex justify-content-end my-3">
                   <div
                     class="btn-group"
@@ -160,7 +158,7 @@ function SellerHome(params) {
           </OffCanvas>
         </section>
       )}
-      {listOfOrders.length == 0 && <Empty message="Not Order Yet" />}
+      {listOfOrders.length === 0 && <Empty message="Not Order Yet" />}
     </>
   );
 }

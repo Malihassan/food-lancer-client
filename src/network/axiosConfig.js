@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-//   baseURL: "https://food-lancer.herokuapp.com/",
-  baseURL:"http://localhost:3300/"
+//   withCredentials: true,
+  // baseURL: "https://food-lancer.herokuapp.com/",
+    baseURL:"http://localhost:3300/"
 });
 export function getCookie(cName) {
   const name = cName + "=";
@@ -29,7 +30,7 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const token = getCookie("token");
 
-    config.headers["token"] =token;
+    config.headers["token"] = token;
 
     return config;
   },
@@ -52,23 +53,22 @@ axiosInstance.interceptors.request.use(
 );
 
 // // Add a response interceptor
-axiosInstance.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    console.log("===>", response);
-    return response;
-  },
-  function (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        if (error.response.status === 401) {
-          console.log("hereeeeeeeeee");
-          //   window.location.reload();
-		//   window.location.replace('/home')
-        }
-      }
-    }
-    return Promise.reject(error);
-  }
-);
+// axiosInstance.interceptors.response.use(
+//   function (response) {
+//     // Any status code that lie within the range of 2xx cause this function to trigger
+//     // Do something with response data
+//     return response;
+//   },
+//   function (error) {
+//     if (axios.isAxiosError(error)) {
+//       if (error.response) {
+//         if (error.response.status === 401) {
+//           console.log("hereeeeeeeeee");
+//           //   window.location.reload();
+//           //   window.location.replace('/home')
+//         }
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );

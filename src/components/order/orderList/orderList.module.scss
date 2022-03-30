@@ -1,8 +1,7 @@
 .Ordertable {
-
   th {
     color: gray !important;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
   tbody {
     tr {
@@ -13,12 +12,14 @@
       td {
         height: 50px;
         font-weight: 500;
-        font-size: 0.8rem;
+        font-size: 1rem;
         label {
           color: black !important;
+          font-size: 1rem;
+
         }
         span {
-          width: 70px;
+          width: 75px;
         }
       }
     }

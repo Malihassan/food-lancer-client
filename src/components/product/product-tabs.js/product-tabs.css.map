@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,gBAAgB,CAAA;EACZ,KAAK,EAAE,OAAgB,CAAC,UAAU;CACrC;;AAED,AAAA,gBAAgB,AAAA,MAAM,EAAE,OAAO,CAAA;EAC3B,KAAK,EAAE,OAAc,CAAC,UAAU;CACnC",
+    "sources": [
+        "product-tabs.scss"
+    ],
+    "names": [],
+    "file": "product-tabs.css"
+}

@@ -1,0 +1,8 @@
+.custom-tab-font {
+  color: #750a25 !important;
+}
+
+.custom-tab-font:hover, .active {
+  color: #410615 !important;
+}
+/*# sourceMappingURL=product-tabs.css.map */

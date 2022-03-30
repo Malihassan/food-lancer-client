@@ -62,23 +62,23 @@ function SellerHome(params) {
 
   async function sellerInfoDataHandler(res) {
     console.log(res);
-    if (res.statusText == "OK") {
+    if (res.statusText === "OK") {
       setUserInfo({
         img: "",
-        name: res.data.seller.firstName + " " + res.data.seller.lastName,
+        name: res.data.firstName + " " + res.data.lastName,
         coverageArea:
-          res.data.seller.coverageArea.governorateName +
+          res.data.coverageArea.governorateName +
           "," +
-          res.data.seller.coverageArea.regionName,
-        status: res.data.seller.status,
-        rate: res.data.seller.rate,
+          res.data.coverageArea.regionName,
+        status: res.data.status,
+        rate: res.data.rate,
         countDeliverOrder: res.data.countDeliverOrder,
         inprogressDeliver: res.data.countInprogressOrder,
       });
     }
   }
   async function sellerOrdersDataHandler(res) {
-    if (res.statusText == "OK") {
+    if (res.statusText === "OK") {
       setPaginateData({
         totalPages: res.data.totalPages,
         totalDocs: res.data.totalDocs,
@@ -98,11 +98,11 @@ function SellerHome(params) {
     },sellerOrdersDataHandler);
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
-  }, [page, checkboxSelected]);
+  }, [page,checkboxSelected]);
   return (
     <>
       <SellerInfo userInfo={userInfo} />
-      {listOfOrders.length != 0 && (
+      {listOfOrders.length !== 0 && (
         <section>
           <OrderFilter
             checkboxSelected={checkboxSelected}
@@ -139,7 +139,7 @@ function SellerHome(params) {
                 <h4>Total</h4>
                 <h4>EGP {totalPrice.toFixed(2)}</h4>
               </div>
-              {status == "in progress" && (
+              {status === "in progress" && (
                 <div className="d-flex justify-content-end my-3">
                   <div
                     class="btn-group"
@@ -159,7 +159,7 @@ function SellerHome(params) {
           </OffCanvas>
         </section>
       )}
-      {listOfOrders.length == 0 && <Empty message="Not Order Yet" />}
+      {listOfOrders.length === 0 && <Empty message="Not Order Yet" />}
     </>
   );
 }

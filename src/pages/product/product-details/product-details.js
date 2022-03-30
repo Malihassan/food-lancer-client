@@ -10,28 +10,30 @@ function ProductDetails() {
   const { sendRequest } = useFetch();
   const [productData, setProductData] = useState({});
   const param = useParams();
-  const prdoductDataHandler = (res) => {
-      if (res.status === 200) {
-          console.log(res);
-          setProductData(res.data);
-      }
-  };
+  async function prdoductDataHandler(res) {
+    if (res.status === 200) {
+      console.log(res);
+      setProductData(res.data);
+    }
+  }
   useEffect(() => {
-    axiosInstance
-      .get(`buyer/product/${param.id}`)
-      .then((data) => {
-        console.log(data);
-        setProductData(data.data);
-      })
-      .catch((e) => console.log(e));
+    // axiosInstance
+    //   .get(`seller/product/${param.id}`)
+    //   .then((data) => {
+    //     console.log(data);
+    //     setProductData(data.data);
+    //   })
+    //   .catch((e) => console.log(e));
+
     sendRequest(
       {
         method: "GET",
-        url: `buyer/product/${param.id}`,
+        url: `seller/product/${param.id}`,
       },
       prdoductDataHandler
     );
   }, []);
+
   return (
     <div className="container-fluid bg-yellow p-1 g-0 d-flex justify-content-center align-items-center min-vh-100">
       <div className="card" style={{ width: "80rem" }}>

@@ -1,6 +1,3 @@
-/* body{
-  background-color: aqua !important;
-} */
 .signuppage-container {
   background-image: url("./../../assets/imgs/landing page/bg-1.jpeg") !important;
   background-repeat: no-repeat;
@@ -8,9 +5,9 @@
   background-size: cover;
   background-position-x: 100%;
   background-position-y: 65%;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  /* height: 100vh; */
+  /*   overflow: hidden; */
   font-family: 'Source Serif Pro', serif !important;
 }
 

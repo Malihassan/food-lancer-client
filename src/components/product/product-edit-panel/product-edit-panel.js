@@ -130,7 +130,7 @@ function ProductEditPanel(props) {
 				formData,
 				{ headers: { "Content-Type": "multipart/form-data" } }
 			);
-			console.log(res, "RESULT");
+			console.log(res, "RESULT===>");
 		})();
 
 		window.location.reload();

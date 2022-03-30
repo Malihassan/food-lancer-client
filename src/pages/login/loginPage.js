@@ -6,7 +6,7 @@ import LoginSeller from "../../components/auth/seller/loginComponent/LoginSeller
 function LoginPage() {
 	return (
 		<>
-			<div className="d-flex ps-5 align-items-center loginpage-container">
+			<div className="d-flex p-5 align-items-center loginpage-container">
 				<div className="col-xl-4 signup ">
 					<nav className="">
 						<div

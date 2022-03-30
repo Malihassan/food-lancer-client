@@ -11,27 +11,28 @@
   font-family: 'Source Serif Pro', serif !important;
 }
 
-.nav-button {
-  color: white !important;
+.signuppage-container .nav-button {
+  color: #f8f8f7 !important;
 }
 
-.nav-button:hover {
-  color: #ffc107 !important;
+.signuppage-container .nav-button:hover {
+  color: #f0a500 !important;
 }
 
-.tabs-button {
+.signuppage-container .tabs-button {
   background-color: transparent !important;
 }
 
-.active {
-  color: #212529 !important;
+.signuppage-container .active {
+  color: #091b29 !important;
 }
 
-.signup {
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
+.signuppage-container .signup {
+  background-color: rgba(9, 27, 41, 0.5) !important;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
 }
 /*# sourceMappingURL=SignupPage.css.map */

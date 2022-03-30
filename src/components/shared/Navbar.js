@@ -30,11 +30,11 @@ const Navbar = ({ bg, buttons }) => {
 
 	return (
 		<nav
-			className={"navbar p-0 ms-0 "}
+			className={"navbar px-0 py-2 ms-0 "}
 			style={{
 				height: "100%",
 				width: "100%",
-				backgroundColor: "#0b2a3a"/* "#13334C" */,
+				backgroundColor: "#091b29"/* "#13334C" */,
 				overflow: "hidden",
 			}}
 		>

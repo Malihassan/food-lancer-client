@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import OrderList from "../../components/order/orderList/OrderList";
 import SellerInfo from "../../components/order/odrerSellerInfo/SellerInfo";
-import { axiosInstance } from "../../network/axiosConfig";
+//import { axiosInstance } from "../../network/axiosConfig";
 import OffCanvas from "../../components/shared/OffCanvas";
 import classes from "./sellerHome.module.scss";
 import { useSelector } from "react-redux";
@@ -63,18 +63,35 @@ function SellerHome(params) {
   async function sellerInfoDataHandler(res) {
     console.log(res);
     if (res.statusText === "OK") {
-      setUserInfo({
-        img: "",
-        name: res.data.firstName + " " + res.data.lastName,
-        coverageArea:
-          res.data.coverageArea.governorateName +
-          "," +
-          res.data.coverageArea.regionName,
-        status: res.data.status,
-        rate: res.data.rate,
-        countDeliverOrder: res.data.countDeliverOrder,
-        inprogressDeliver: res.data.countInprogressOrder,
-      });
+      if (res.data.seller) {
+        setUserInfo({
+          img: "",
+          name: res.data.seller.firstName + " " + res.data.seller.lastName,
+          coverageArea:
+            res.data.seller.coverageArea?.governorateName +
+            "," +
+            res.data.seller.coverageArea?.regionName,
+          status: res.data.seller.status,
+          rate: res.data.seller.rate,
+          countDeliverOrder: res.data.seller.countDeliverOrder,
+          inprogressDeliver: res.data.seller.countInprogressOrder,
+        });
+        return
+      }else{
+        setUserInfo({
+          img: "",
+          name: res.data.firstName + " " + res.data.lastName,
+          coverageArea:
+            res.data.coverageArea?.governorateName +
+            "," +
+            res.data.coverageArea?.regionName,
+          status: res.data.status,
+          rate: res.data.rate,
+          countDeliverOrder: res.data.countDeliverOrder,
+          inprogressDeliver: res.data.countInprogressOrder,
+        });
+      }
+      
     }
   }
   async function sellerOrdersDataHandler(res) {

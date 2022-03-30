@@ -7,7 +7,7 @@ function Footer() {
 	return (
 		<footer
 			className="container-fluid text-light"
-			style={{ backgroundColor: "#13334C" }}
+			style={{ backgroundColor: "#091b29"/* "#13334C" */ }}
 		>
 			<div className="container-fluid">
 				<div className="row  justify-content-center">

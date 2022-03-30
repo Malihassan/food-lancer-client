@@ -77,7 +77,8 @@ function UpdateProfile() {
 			const { data } = await axiosInstance.get(`seller/account/info`);
 
 			setImages(data.seller.image);
-			initialValues.image = data.seller?.image?.url;
+
+			initialValues.image = data.seller.image?.url;
 			initialValues.firstName = data.seller?.firstName;
 			initialValues.lastName = data.seller?.lastName;
 			initialValues.phone = data.seller?.phone;
@@ -91,6 +92,7 @@ function UpdateProfile() {
 		<div className={`${classes.backColor} py-3 container-fluid`}>
 			<div
 				className={`col-lg-7 shadow mx-auto container-fluid ${classes.backColors} col-md-10 ${classes.borderLeft} d-flex flex-column`}
+
 			>
 					<div
 						className="fs-1 mt-2 ms-1 text-center "

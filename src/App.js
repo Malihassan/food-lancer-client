@@ -1,7 +1,7 @@
 import "./App.scss";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/loginPage";
+import LoginPage from "./pages/login/LoginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
 import BuyerProfile from "./components/buyer/BuyerProfile";
+import Favourites from "./components/buyer/Favourites";
 
 library.add(fab, fas, faCheckSquare, faCoffee);
 function App() {
@@ -44,8 +45,11 @@ function App() {
 					<>
 						<Route path="/home" element={<Navigate replace to="/" />} />
 						<Route path="/" element={<LandingPage />} />
-            <Route path="/seller/account/resetPassword/:token" element={<ResetPassword />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
+						<Route
+							path="/seller/account/resetPassword/:token"
+							element={<ResetPassword />}
+						/>
+						<Route path="/forgetPassword" element={<ForgetPassword />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/signup" element={<SignupPage />} />
 					</>
@@ -54,7 +58,7 @@ function App() {
 				{logged === "seller" && (
 					<>
 						<Route path="/" element={<Navigate replace to="/home" />} />
-            
+
 						<Route path="/home" element={<SellerHome />} />
 						<Route path="/updateProfile" element={<UpdateProfile />} />
 						<Route path="/myProducts" element={<ProductList />} />
@@ -69,7 +73,8 @@ function App() {
 
 				{logged === "buyer" && (
 					<>
-						<Route path="/updateProfile" element={<UpdateProfile />} />
+						<Route path="/updateProfile" element={<BuyerProfile />} />
+						<Route path="/favs" element={<Favourites />} />
 					</>
 				)}
 				<Route path="/buyer/profile/edit" element={<BuyerProfile />} />

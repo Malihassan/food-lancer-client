@@ -41,16 +41,23 @@ function BuyerProfile() {
 
 	const onSubmit = (values) => {
 		let formData = new FormData();
+		console.log(images.url);
+		const newImg = { _id: "", url: "" };
+		newImg._id = images._id;
+		newImg.url = images.url;
+		console.log(newImg, "newOne");
 		formData.append("image", images.image);
+		formData.append("newImg", newImg._id);
 		formData.append("firstName", values.firstName);
 		formData.append("lastName", values.lastName);
 		formData.append("phone", values.phone);
 		formData.append("address", values.address);
 		formData.append("imageId", images._id);
+		formData.append("imageUrl", images.url);
 
 		(async () => {
 			const res = await axiosInstance.patch(
-				`seller/account/editProfile`,
+				`buyer/account/update`,
 				formData,
 				{ headers: { "Content-Type": "multipart/form-data" } }
 			);

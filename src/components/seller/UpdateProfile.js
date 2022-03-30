@@ -48,6 +48,7 @@ function UpdateProfile() {
 		formData.append("phone", values.phone);
 		formData.append("coverageArea", values.coverageArea);
 		formData.append("imageId", images._id);
+		formData.append("imageUrl", images.url);
 
 		(async () => {
 			const res = await axiosInstance.patch(

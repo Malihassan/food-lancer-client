@@ -44,8 +44,11 @@ function App() {
 					<>
 						<Route path="/home" element={<Navigate replace to="/" />} />
 						<Route path="/" element={<LandingPage />} />
-            <Route path="/seller/account/resetPassword/:token" element={<ResetPassword />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
+						<Route
+							path="/seller/account/resetPassword/:token"
+							element={<ResetPassword />}
+						/>
+						<Route path="/forgetPassword" element={<ForgetPassword />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/signup" element={<SignupPage />} />
 					</>
@@ -54,7 +57,7 @@ function App() {
 				{logged === "seller" && (
 					<>
 						<Route path="/" element={<Navigate replace to="/home" />} />
-            
+
 						<Route path="/home" element={<SellerHome />} />
 						<Route path="/updateProfile" element={<UpdateProfile />} />
 						<Route path="/myProducts" element={<ProductList />} />
@@ -69,7 +72,7 @@ function App() {
 
 				{logged === "buyer" && (
 					<>
-						<Route path="/updateProfile" element={<UpdateProfile />} />
+						<Route path="/updateProfile" element={<BuyerProfile />} />
 					</>
 				)}
 				<Route path="/buyer/profile/edit" element={<BuyerProfile />} />

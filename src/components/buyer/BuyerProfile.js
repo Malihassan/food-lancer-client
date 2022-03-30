@@ -92,135 +92,137 @@ function BuyerProfile() {
 	}, []);
 
 	return (
-		<div className={`${classes.backColor} mb-5 container-fluid`}>
-			<div
-				className={`container shadow-lg p-0 mb-5 mt-4  
+		<div className="container-fluid mb-5" style={{ height: "120vh" }}>
+			<div className={`${classes.backColor} mb-5 container-fluid`}>
+				<div
+					className={`container shadow-lg p-0 mb-5 mt-4  
       ${classes.borderParent}`}
-				style={{ height: "100vh", width: "60vw" }}
-			>
-				{/* <div
+					style={{ height: "auto", width: "60vw" }}
+				>
+					{/* <div
 						className={`col-5 d-none d-lg-block ${classes.bgImg}`}
 					></div> */}
-				<div
-					className={` container-fluid ${classes.backColors} mt-3 mb-5 ${classes.borderLeft} d-flex flex-column`}
-				>
 					<div
-						className="fs-1 text-dark ms-1 mt-0 text-center "
-						style={{
-							fontFamily: " 'El Messiri', sans-serif",
-						}}
+						className={` container-fluid ${classes.backColors} mt-3 mb-5 ${classes.borderLeft} d-flex flex-column`}
 					>
-						Update Information
-						<br />
-						<img
-							src={images?.url}
-							alt=".."
+						<div
+							className="fs-1 text-dark ms-1 mt-0 text-center "
 							style={{
-								width: "100px",
-								height: "100px",
-								borderRadius: "50%",
+								fontFamily: " 'El Messiri', sans-serif",
 							}}
-						/>
-					</div>
+						>
+							Update Information
+							<br />
+							<img
+								src={images?.url}
+								alt=".."
+								style={{
+									width: "100px",
+									height: "100px",
+									borderRadius: "50%",
+								}}
+							/>
+						</div>
 
-					<hr className="mb-0" />
-					<Formik
-						initialValues={initialValues}
-						validate={validate}
-						onSubmit={onSubmit}
-					>
-						<Form>
-							<Field
-								className={`form-control mt-3 ms-2 ${classes.inputWidth}`}
-								id="firstName"
-								name="firstName"
-								placeholder="First Name"
-							/>
-							<div className="mx-3 my-1 fw-light text-danger">
-								<ErrorMessage name="firstName" />
-							</div>
-							<Field
-								id="lastName"
-								name="lastName"
-								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-								placeholder="Last Name"
-							/>
-							<div className="mx-3  fw-light text-danger">
-								<ErrorMessage name="lastName" />
-							</div>
-							<Field
-								id="phone"
-								name="phone"
-								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-								placeholder="Phone Number"
-								type="text"
-							/>
-							<div className="mx-3  fw-light text-danger">
-								<ErrorMessage name="phone" />
-							</div>
-							<Field
-								id="address"
-								name="address"
-								className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
-								placeholder="Your Address"
-								type="text"
-							/>
-							<div className="mx-3  fw-light text-danger">
-								<ErrorMessage name="address" />
-							</div>
+						<hr className="mb-0" />
+						<Formik
+							initialValues={initialValues}
+							validate={validate}
+							onSubmit={onSubmit}
+						>
+							<Form>
+								<Field
+									className={`form-control mt-3 ms-2 ${classes.inputWidth}`}
+									id="firstName"
+									name="firstName"
+									placeholder="First Name"
+								/>
+								<div className="mx-3 my-1 fw-light text-danger">
+									<ErrorMessage name="firstName" />
+								</div>
+								<Field
+									id="lastName"
+									name="lastName"
+									className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
+									placeholder="Last Name"
+								/>
+								<div className="mx-3  fw-light text-danger">
+									<ErrorMessage name="lastName" />
+								</div>
+								<Field
+									id="phone"
+									name="phone"
+									className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
+									placeholder="Phone Number"
+									type="text"
+								/>
+								<div className="mx-3  fw-light text-danger">
+									<ErrorMessage name="phone" />
+								</div>
+								<Field
+									id="address"
+									name="address"
+									className={`form-control mt-3 ms-2  ${classes.inputWidth}`}
+									placeholder="Your Address"
+									type="text"
+								/>
+								<div className="mx-3  fw-light text-danger">
+									<ErrorMessage name="address" />
+								</div>
 
-							<p className="text-center h5 pt-3">
-								Image Upload
-								<small className="text-muted">(optional)</small>
-							</p>
-							<hr className="mb-4" />
-							<div className={`${classes.dropZone}`}>
-								<Dropzone
-									name="image"
-									id="image"
-									accept="image/*"
-									onDrop={(e) => {
-										uploadImage(e);
+								<p className="text-center h5 pt-3">
+									Image Upload
+									<small className="text-muted">(optional)</small>
+								</p>
+								<hr className="mb-4" />
+								<div className={`${classes.dropZone}`}>
+									<Dropzone
+										name="image"
+										id="image"
+										accept="image/*"
+										onDrop={(e) => {
+											uploadImage(e);
+										}}
+									>
+										{({ getRootProps, getInputProps }) => (
+											<section>
+												<div {...getRootProps()}>
+													<input
+														{...getInputProps()}
+														onChange={(e) => {
+															uploadImage(e.target.files);
+														}}
+													/>
+													<RiFolderOpenFill className="text-warning fs-1 mt-3" />
+													<p>Drag & Drop Files Here</p>
+													<div className="row col-12 text-start ps-5"></div>
+												</div>
+											</section>
+										)}
+									</Dropzone>
+								</div>
+
+								<div className="mx-3 fw-light text-warning">
+									<ErrorMessage name="image" />
+								</div>
+
+								<button
+									type="submit"
+									style={{ height: "3rem" }}
+									className="btn btn-outline-success px-5 w-100  mt-4"
+								>
+									Submit
+								</button>
+								<div
+									className="fs-3 mt-5 mb-4 text-success ms-1 "
+									style={{
+										fontFamily: " 'El Messiri', sans-serif",
 									}}
 								>
-									{({ getRootProps, getInputProps }) => (
-										<section>
-											<div {...getRootProps()}>
-												<input
-													{...getInputProps()}
-													onChange={(e) => {
-														uploadImage(e.target.files);
-													}}
-												/>
-												<RiFolderOpenFill className="text-warning fs-1 mt-3" />
-												<p>Drag & Drop Files Here</p>
-												<div className="row col-12 text-start ps-5"></div>
-											</div>
-										</section>
-									)}
-								</Dropzone>
-							</div>
-
-							<div className="mx-3 fw-light text-warning">
-								<ErrorMessage name="image" />
-							</div>
-
-							<button
-								type="submit"
-								style={{ height: "3rem" }}
-								className="btn btn-outline-success px-5 w-100  mt-4"
-							>
-								Submit
-							</button>
-						</Form>
-					</Formik>
-					<div
-						className="fs-3 mt-5 ms-1 "
-						style={{
-							fontFamily: " 'El Messiri', sans-serif",
-						}}
-					>
-						{updateRes}
+									{updateRes}
+								</div>
+							</Form>
+						</Formik>
 					</div>
 				</div>
 			</div>

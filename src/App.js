@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
 import BuyerProfile from "./components/buyer/BuyerProfile";
+import Favourites from "./components/buyer/Favourites";
 
 library.add(fab, fas, faCheckSquare, faCoffee);
 function App() {
@@ -73,6 +74,7 @@ function App() {
 				{logged === "buyer" && (
 					<>
 						<Route path="/updateProfile" element={<BuyerProfile />} />
+						<Route path="/favs" element={<Favourites />} />
 					</>
 				)}
 				<Route path="/buyer/profile/edit" element={<BuyerProfile />} />

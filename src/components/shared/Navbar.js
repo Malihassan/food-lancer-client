@@ -1,4 +1,4 @@
-import "../../variables.scss"
+import "../../variables.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -19,11 +19,15 @@ const Navbar = ({ bg, buttons }) => {
 	const logout = async () => {
 		const res = await axiosInstance.get(`seller/account/logout`);
 		if (res) {
-			window.location.reload();
-			deleteCookie("userType");
-			deleteCookie("token");
-			navigate("/");
-			document.cookie = "userType=viewer;";
+			// window.location.reload();
+			(() => {
+				deleteCookie("userType");
+				deleteCookie("token");
+				document.cookie = "userType=viewer;";
+				return () => {
+					navigate("/");
+				};
+			})();
 		}
 	};
 	const logged = getCookie("userType") || "viewer";
@@ -34,7 +38,7 @@ const Navbar = ({ bg, buttons }) => {
 			style={{
 				height: "100%",
 				width: "100%",
-				backgroundColor: "#0b2a3a"/* "#13334C" */,
+				backgroundColor: "#0b2a3a" /* "#13334C" */,
 				overflow: "hidden",
 			}}
 		>

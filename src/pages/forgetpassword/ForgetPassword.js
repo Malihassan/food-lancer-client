@@ -52,7 +52,6 @@ function ForgetPassword() {
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
                 to=""
-                id="liveToastBtn"
                 type={"submit"}
                 className="btn btn-submit my-3 "
               ></input>
@@ -94,11 +93,6 @@ function ForgetPassword() {
               </div>
               {/* end of modal */}
             </form>
-            {/*  <div>
-        {message && (
-          <div className="form-text text-warning my-3">{message}</div> 
-              )}
-        </div>   */}
           </div>
         </div>
       </div>

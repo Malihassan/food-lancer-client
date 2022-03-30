@@ -10,30 +10,25 @@
   /* height: 100vh; */
 /*   overflow: hidden; */
   font-family: 'Source Serif Pro', serif !important;
-  
+  .nav-button {
+    color: #f8f8f7!important;
+  }
+  .nav-button:hover{
+    color: #f0a500 !important;
+  }
+  .tabs-button{
+    background-color: transparent !important;
+  }
+  .active{
+    color: #091b29 !important;
+  }
+   .signup{
+    background-color:rgba($color:#091b29,$alpha: .5) !important;;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }  
+
  }
-.nav-button {
-  color: white !important;
-}
-.nav-button:hover{
-  color: #ffc107 !important;
-}
-// .nav-button:hover .nav-tabs{
-//  background-color: transparent;
-//} 
-.tabs-button{
-  background-color: transparent !important;
-  //color: antiquewhite;
-}
-.active{
-  color: #212529 !important;
-}
- .signup{
-  //border-bottom: white 1px solid !important;
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
- // box-shadow: 0 .125rem .25rem rgba(white, 1);
-}  

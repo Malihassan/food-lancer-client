@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import StarRatings from 'react-star-ratings';
 import "./product-info.scss"
-import { Link } from 'react-router-dom';
+import CartOffCanvas from '../../cart/cart-offcanvas/cart-offcanvas';
+import { orderActions } from '../../../store/orderSlice';
+import store from "../../../store/index"
+import { useDispatch, useSelector } from 'react-redux';
 
 function ProductInfo(props){
 
     const {data} = props;
 
+    const [show, setShow] = useState(false);
     const [rating, setRating] = useState(0);
     const [extra, setExtra] = useState(false);
     const [serves, setServes] = useState(0);
+
+    let cartItems = useSelector((state)=> state.order);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         setRating(data.avgRate);
@@ -24,27 +31,57 @@ function ProductInfo(props){
     }
 
     const countServes = (e) => {
+        
         switch(e.target.id){
             case "inp-1":
                 setServes(1);
+                setExtra(false);
             break;
             case "inp-2":
-                setServes(2);   
+                setServes(2);
+                setExtra(false);
             break;
             case "inp-3":
                 setServes(3);
+                setExtra(false);
             break;
             case "inp-4":
                 setServes(4);
+                setExtra(false);
             break;
             case "inp-5":
                 setServes(5);
+                setExtra(false);
             break;
             case "extra":
                 setServes(parseInt(e.target.value));
             break;
         }
     }
+
+    const showCanvas = async () => {
+        console.log(cartItems);
+        const finder = cartItems.selectedOrderProducts.find((item)=> item._id === data._id)? 
+        cartItems.selectedOrderProducts.find((item)=> item._id === data._id) :
+        null
+        if(!finder){
+            await dispatch(orderActions.setCartItem({
+                    products: [...cartItems.selectedOrderProducts, {...data, serves}], 
+                    totalPrice: cartItems.totalPrice + (data.price * serves)
+                })
+            );
+        } else{
+            console.log(finder)
+            await dispatch(orderActions.setCartItem({
+                products: [...cartItems.selectedOrderProducts.filter((item)=> item._id !== finder._id), {...finder, serves}], 
+                totalPrice: cartItems.totalPrice + (data.price * serves)
+            }))
+        }
+        
+        console.log(store.getState().order);
+        setShow(true);
+        
+    };
 
     return (
         <>
@@ -53,7 +90,7 @@ function ProductInfo(props){
                     <div className="carousel-indicators">
                         {data?.image?.map((image, index) => {
                             return (
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className={`${index === 0 ? "active" : ""}`} aria-current={`${index === 0 ? "true" : ""}`} aria-label={`Slide ${index + 1}`}></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={`${index}`} className={`${index === 0 ? "active" : ""}`} aria-current={`${index === 0 ? "true" : ""}`} aria-label={`Slide ${index + 1}`} key={index}></button>
                             )
                         })}
                     </div>
@@ -123,9 +160,10 @@ function ProductInfo(props){
                         </div>
                     </div>
                     <div className={`col-12 d-flex justify-content-center align-self-bottom ${extra ? '' : 'mt-4'}`}>
-                        <Link to={{pathname: "/order", state: {id: data._id, serves: serves}}} className='btn shadow maroon text-light text-font w-100 me-1'>Add To Cart</Link>
+                        <button onClick={() => showCanvas()} className='btn shadow maroon text-light text-font w-100 me-1'>Add To Cart</button>
                     </div>
                 </div>
+                <CartOffCanvas showProps={{show, setShow}}/>
             </div>
         </>
     )

@@ -4,6 +4,7 @@ import { axiosInstance } from '../../../network/axiosConfig';
 import { useParams } from "react-router-dom";
 import "./product-details.scss"
 import ProductEditPanel from "../../../components/product/product-edit-panel/product-edit-panel";
+import ProductInfo from "../../../components/product/product-info/product-info";
 
 function ProductDetails(){
 
@@ -11,7 +12,7 @@ function ProductDetails(){
     const param = useParams();
 
     useEffect(()=>{
-        axiosInstance.get(`buyer/product/${param.id}`).then((data)=>{
+        axiosInstance.get(`seller/product/${param.id}`).then((data)=>{
             console.log(data);
             setProductData(data.data);
         }).catch((e)=> console.log(e));
@@ -21,7 +22,7 @@ function ProductDetails(){
         <div className="container-fluid bg-yellow p-1 g-0 d-flex justify-content-center align-items-center min-vh-100">
             <div className="card" style={{width:"80rem"}}>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item"><ProductEditPanel data={productData} /></li>
+                  <li className="list-group-item"><ProductInfo data={productData} /></li>
                   <li className="list-group-item"><ProductTabs data={productData} /></li> 
                 </ul>
             </div>

@@ -15,6 +15,11 @@ const orderSlice = createSlice({
       state.createdAt = payload[0].createdAt;
       state.status = payload[0].status
     },
+    setCartItem(state, {payload}){
+      state.selectedOrderProducts = payload.products;
+      state.totalPrice = payload.totalPrice;
+      console.log(state);
+    }
   },
 });
 

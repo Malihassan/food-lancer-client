@@ -5,30 +5,30 @@
 }
 
 .signup-form .form-check-label {
-  color: white  !important;
+  color: #f8f8f7  !important;
 }
 
 .signup-form .icon-container {
-  background-color: #212529 !important;
+  background-color: #091b29 !important;
 }
 
 .signup-form .icon-container svg {
-  color: white !important;
+  color: #f8f8f7 !important;
 }
 
 .signup-form .login-header {
-  color: white !important;
+  color: #f8f8f7 !important;
 }
 
 .signup-form .btn-submit {
   background-color: transparent !important;
-  color: white !important;
-  border: 1px white solid !important;
+  color: #f8f8f7 !important;
+  border: 1px #f8f8f7 solid !important;
 }
 
 .signup-form .btn-submit:hover {
   background-color: transparent !important;
-  color: #ffc107 !important;
-  border: 1px #ffc107 solid !important;
+  color: #f0a500 !important;
+  border: 1px #f0a500 solid !important;
 }
 /*# sourceMappingURL=SignupSeller.css.map */

@@ -24,4 +24,17 @@
 .Ordertable tbody tr td span {
   width: 70px;
 }
+
+.paginationContainer {
+  color: #0d6efd;
+  background-color: transparent !important;
+}
+
+.pageLink {
+  border: none !important;
+}
+
+.active {
+  border-bottom: 2px solid #0d6efd;
+}
 /*# sourceMappingURL=orderList.module.css.map */

@@ -1,6 +1,3 @@
-/* body{
-  background-color: aqua !important;
-} */
 .signuppage-container {
   background-image: url("./../../assets/imgs/landing page/bg-1.jpeg") !important;
   background-repeat: no-repeat;
@@ -8,33 +5,34 @@
   background-size: cover;
   background-position-x: 100%;
   background-position-y: 65%;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  /* height: 100vh; */
+  /*   overflow: hidden; */
   font-family: 'Source Serif Pro', serif !important;
 }
 
-.nav-button {
-  color: white !important;
+.signuppage-container .nav-button {
+  color: #f8f8f7 !important;
 }
 
-.nav-button:hover {
-  color: #ffc107 !important;
+.signuppage-container .nav-button:hover {
+  color: #f0a500 !important;
 }
 
-.tabs-button {
+.signuppage-container .tabs-button {
   background-color: transparent !important;
 }
 
-.active {
-  color: #212529 !important;
+.signuppage-container .active {
+  color: #091b29 !important;
 }
 
-.signup {
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
+.signuppage-container .signup {
+  background-color: rgba(9, 27, 41, 0.5) !important;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
 }
 /*# sourceMappingURL=SignupPage.css.map */

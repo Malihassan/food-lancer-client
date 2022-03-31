@@ -21,6 +21,7 @@
   }
 }
 .sellerInfContainer {
+  background-color: #f8f8f7;
   height: 20vh;
   @include flex-row();
   justify-content: space-around;
@@ -31,13 +32,19 @@
     height: auto;
   }
   img {
+    width: 100%;
     height: 100%;
-  }
+     border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%; 
+}
   .textDark {
-    color: rgb(19, 19, 19) !important;
+    color: #091b29 !important;
   }
   label {
-    color: black !important;
+    color: #091b29 !important;
   }
   .nameContainer {
     padding: 10px;
@@ -52,7 +59,7 @@
       justify-content: space-between;
     }
     div label {
-      color: gray !important;
+      color: #8f8f8f !important;
       font-size: 0.8rem;
     }
   }
@@ -63,18 +70,29 @@
     .icon {
       margin-right: 8px;
       font-size: 35px;
-      color: #154d6b;
+      color: #091b29;
     }
     > div {
       @include flex-col();
       align-items: center;
     }
     label {
-      color: gray !important;
+      color: #8f8f8f !important;
       font-size: 1rem;
     }
     h4 {
-      color: rgb(19, 19, 19) !important;
+      color: #091b29 !important;
     }
   }
+  .imgContainer{
+    border-radius: 50%;
+    border: 1px solid #091b29;
+    padding: 2px;
+    width: 6rem;
+    height:6rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
 }

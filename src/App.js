@@ -21,6 +21,13 @@ import Navbar from "./components/shared/Navbar";
 import OrderHistory from "./components/order/orderHistory/OrderHistory";
 import BuyerProfile from "./components/buyer/BuyerProfile";
 import Favourites from "./components/buyer/Favourites";
+import { library } from '@fortawesome/fontawesome-svg-core'
+  import { fab } from '@fortawesome/free-brands-svg-icons'
+  import {
+    fas
+  } from "@fortawesome/free-solid-svg-icons";
+  library.add(fab, fas)
+  //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
   const authenticated = useSelector((state) => state.auth.authenticated);

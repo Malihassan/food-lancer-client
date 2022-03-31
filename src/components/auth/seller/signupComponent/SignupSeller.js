@@ -1,14 +1,23 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./SignupSeller.css";
+import "./SignupSeller.scss";
 import { useForm } from "react-hook-form";
+import useFetch from "../../../../hooks/useFetch";
 import { ErrorMessage } from "@hookform/error-message";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faLock,
+  faMobile,
+  faAt,
+  faImage,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 const axios = require("axios");
 function SignupSeller() {
   let navigate = useNavigate();
   const [coverageAreas, setCoverageAreas] = useState();
- const [serverMessage, setServerMessage] = useState();
+  const [serverMessage, setServerMessage] = useState();
+  const { sendRequest, hasError } = useFetch();
   const {
     register,
     handleSubmit,
@@ -16,6 +25,37 @@ function SignupSeller() {
     setError,
     formState: { errors },
   } = useForm();
+
+  // if (hasError) {
+  //   (() => {
+  //     console.log(hasError);
+  //     for (let key in hasError) {
+  //       console.log(key,'=============<');
+  //       switch (key) {
+  //         case "userName":
+  //           setError("userName", {
+  //             type: "manual",
+  //             message: `${key} already exist`,
+  //           });
+  //           break;
+  //         case "email":
+  //           setError("email", {
+  //             type: "manual",
+  //             message: `${key} already exist`,
+  //           });
+  //           break;
+  //         case "phone":
+  //           setError("phone", {
+  //             type: "manual",
+  //             message: `${key} already exist`,
+  //           });
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   })();
+  // }
   const onSubmit = (data) => {
     let formData = new FormData();
     const image = data.image[0];
@@ -28,63 +68,43 @@ function SignupSeller() {
     formData.append("gender", data.gender);
     formData.append("email", data.email);
     formData.append("coverageArea", data.coverageArea);
-    axios
-      .post("http://localhost:3001/seller/account/signup", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setServerMessage(response.data.message);
-          setTimeout(() => {
-            navigate("/login");
-          }, 5000);
-          return;
-        }
-      })
-      .catch(function (error) {
-        const valErr = error.response.data.errors;
-        if (valErr) {
-          for (let key in valErr) {
-            switch (key) {
-              case "userName":
-                setError("userName", {
-                  type: "manual",
-                  message: `${key} already exist`,
-                });
-                break;
-              case "email":
-                setError("email", {
-                  type: "manual",
-                  message: `${key} already exist`,
-                });
-                break;
-              case "phone":
-                setError("phone", {
-                type: "manual",
-                message: `${key} already exist`,
-              });
-                break;
-              default:
-                break;
-            }
-          }
-          return
-        }
-setServerMessage(error.response.data)
-      });
+
+    function signupSellerProfilehandler(res) {
+      if (res.status === 200) {
+        setServerMessage(res.data.message);
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
+      }
+    }
+
+    sendRequest(
+      {
+        url: `seller/account/signup`,
+        method: "POST",
+        body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+      signupSellerProfilehandler
+    );
   };
   const password = useRef({});
   password.current = watch("password", "");
   useEffect(() => {
-    return axios
-      .get("http://localhost:3001/seller/account/coverageArea")
-      .then((response) => {
-        setCoverageAreas(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-       setServerMessage(error)
-      });
+    function coverageAreaHandler(res) {
+      if (res.status === 200) {
+        setCoverageAreas(res.data);
+      }
+    }
+    sendRequest(
+      {
+        url: "seller/account/coverageArea",
+        method: "GET",
+      },
+      coverageAreaHandler
+    );
   }, []);
   return (
     <>
@@ -98,7 +118,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="userNameHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-user" />
+                  <FontAwesomeIcon icon={faUser} />
                 </span>
                 <input
                   {...register("userName", {
@@ -131,7 +151,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="firstNameHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-user" />
+                  <FontAwesomeIcon icon={faUser} />
                 </span>
                 <input
                   {...register("firstName", {
@@ -161,7 +181,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="lastNameHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-user" />
+                  <FontAwesomeIcon icon={faUser} />
                 </span>
                 <input
                   {...register("lastName", {
@@ -191,7 +211,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="passwordHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-lock" />
+                  <FontAwesomeIcon icon={faLock} />
                 </span>
                 <input
                   {...register("password", {
@@ -222,7 +242,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="confirmPasswordHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-lock" />
+                  <FontAwesomeIcon icon={faLock} />
                 </span>
                 <input
                   {...register("confirmPassword", {
@@ -253,7 +273,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="phoneHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-mobile" />
+                  <FontAwesomeIcon icon={faMobile} />
                 </span>
                 <input
                   {...register("phone", {
@@ -275,7 +295,7 @@ setServerMessage(error.response.data)
                   name="phone"
                   render={({ message }) => <small>{message}</small>}
                 />
- {/* {errors.phone && <p className="text-danger">{errors.phone.message}</p>} */}
+                {/* {errors.phone && <p className="text-danger">{errors.phone.message}</p>} */}
               </div>
             </div>
             <div className="mb-3 ">
@@ -284,7 +304,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="emailHelp"
                 >
-                  <FontAwesomeIcon icon="fas fa-at" />
+                  <FontAwesomeIcon icon={faAt} />
                 </span>
                 <input
                   {...register("email", {
@@ -381,7 +401,7 @@ setServerMessage(error.response.data)
                   className="input-group-text icon-container"
                   id="imageHelp"
                 >
-                  <FontAwesomeIcon icon="fa-solid fa-image" />
+                  <FontAwesomeIcon icon={faImage} />
                 </span>
                 <input
                   {...register("image", {
@@ -403,9 +423,13 @@ setServerMessage(error.response.data)
                 </div>
               </div>
             </div>
-           
-            <button  data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop" type="submit" className="btn btn-submit px-4">
+
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              type="submit"
+              className="btn btn-submit px-4"
+            >
               Signup
             </button>
             {serverMessage && (
@@ -434,11 +458,12 @@ setServerMessage(error.response.data)
                   </div>
                 </div>
               </div> */
-              <div className="form-text text-warning">
-              {serverMessage}
-            </div>
-							)}
-              
+
+              <div className="form-text text-success">{serverMessage}</div>
+            )}
+            {hasError?.error && (
+              <div className="form-text text-warning">{hasError?.error}</div>
+            )}
           </form>
         </div>
       </div>

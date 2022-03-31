@@ -27,7 +27,7 @@ function App() {
   const loggedAs = useSelector((state) => state.auth.userType);
   console.log("here", loggedAs, authenticated);
 
-  useEffect(() => {}, [authenticated]);
+//   useEffect(() => {}, [authenticated]);
   return (
     <>
       <Loader />

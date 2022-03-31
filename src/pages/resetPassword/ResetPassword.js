@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./ResetPassword.css";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 const axios = require("axios");
+
 function ResetPassword() {
   let { token } = useParams();
-  console.log(token);
   const passReg = new RegExp(
     "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
   );
@@ -16,8 +17,10 @@ function ResetPassword() {
     passwordErr: null,
     confirmPasswordErr: null,
   });
+  const [serverMessage, setServerMessage] = useState(null);
+  const { sendRequest, hasError } = useFetch();
+
   const handleNewPasswordChange = (e) => {
-    console.log(e.target.value, e.target.name);
     if (e.target.name === "newPassword") {
       setNewPassword({
         ...newPassword,
@@ -48,38 +51,36 @@ function ResetPassword() {
       });
     }
   };
+  console.log(serverMessage);
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
-    axios
-      .patch(
-        `http://localhost:3001/seller/account/resetPassword`,
-        { ...newPassword },
-        {
-          headers: { token: `${token}` },
+    document.cookie = `token=${token}`;
+    sendRequest(
+      {
+        url: "seller/account/resetPassword",
+        method: "PATCH",
+        body: { ...newPassword },
+      },
+      (res) => {
+        if (res.status === 200) {
+          setServerMessage(res.data.response);
         }
-      )
-      .then((response) => {
-        console.log(response);
-        
-        //setMessage(response.data.response)
-      })
-      .catch(function (err) {
-        console.log(err.response.data.message);
-        //setMessage(err.response.data.error)
-      });
+      }
+    );
   };
+
   return (
     <>
       <div className=" d-flex m-0 align-items-center vh-100 text-center resetPassword-container">
         <div className=" shadow-sm">
           <div className="p-5">
             <h4 className="text-light my-3">Reset Password</h4>
-            <form onSubmit={(e) => handlePasswordSubmit(e)}>
+            <form onSubmit={handlePasswordSubmit}>
               <input
                 className="form-control"
                 name="newPassword"
                 type="password"
-                onChange={(e) => handleNewPasswordChange(e)}
+                onChange={handleNewPasswordChange}
               ></input>
               <div className="form-text text-warning">
                 {newPasswordError.passwordErr}
@@ -89,7 +90,7 @@ function ResetPassword() {
                 className="form-control"
                 name="confirmNewPassword"
                 type="password"
-                onChange={(e) => handleNewPasswordChange(e)}
+                onChange={handleNewPasswordChange}
               ></input>
               <div className="form-text text-warning">
                 {newPasswordError.confirmPasswordErr}
@@ -98,10 +99,11 @@ function ResetPassword() {
 
               <input
                 to=""
-                type={"submit"}
+                type="submit"
                 className="btn btn-submit my-3 "
               ></input>
             </form>
+            <label className="text-center text-light">{serverMessage}</label>
           </div>
         </div>
       </div>

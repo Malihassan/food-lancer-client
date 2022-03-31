@@ -43,6 +43,8 @@ function ProductInfo(props){
             case "extra":
                 setServes(parseInt(e.target.value));
             break;
+            default:
+              break;
         }
     }
 

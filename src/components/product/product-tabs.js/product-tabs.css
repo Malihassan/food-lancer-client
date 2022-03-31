@@ -1,8 +1,12 @@
-.custom-tab-font {
-  color: #750a25 !important;
+.productTabsContainer .custom-tab-font {
+  color: #f0a500  !important;
 }
 
-.custom-tab-font:hover, .active {
-  color: #410615 !important;
+.productTabsContainer .custom-tab-font:hover, .productTabsContainer .active {
+  color: #091b29 !important;
+}
+
+.productTabsContainer .tab-pane {
+  color: #8f8f8f !important;
 }
 /*# sourceMappingURL=product-tabs.css.map */

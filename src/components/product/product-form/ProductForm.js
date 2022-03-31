@@ -149,7 +149,7 @@ export default function ProductForm() {
               name="name"
               placeholder="Product Name"
             />
-            <div className="my-1 fw-light text-warning text-center">
+            <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="name" />
             </div>
             <Field
@@ -159,7 +159,7 @@ export default function ProductForm() {
               className={`form-control mt-4 ${classes.inputWidth}`}
               placeholder="Description"
             />
-            <div className=" my-1 fw-light text-warning text-center">
+            <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="description" />
             </div>
             <Field
@@ -169,7 +169,7 @@ export default function ProductForm() {
               placeholder="price"
               type="number"
             />
-            <div className="my-1 fw-light text-warning text-center">
+            <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="price" />
             </div>
             <Field
@@ -191,7 +191,7 @@ export default function ProductForm() {
                 </option>
               ))}
             </Field>
-            <div className="my-1 fw-light text-warning text-center">
+            <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="categoryId" />
             </div>
             {/* <input
@@ -242,7 +242,7 @@ export default function ProductForm() {
                 )}
               </Dropzone>
             </div>
-            <div className="my-1 fw-light text-warning text-center">
+            <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="image" />
             </div>
             <div className="d-flex justify-content-center mt-4 mb-4">

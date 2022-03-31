@@ -2,20 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import img1 from "../../assets/imgs/landing page/bg-1.jpeg";
 import img2 from "../../assets/imgs/landing page/bg-2_ccexpress.jpeg";
-import Navbar from "../../components/shared/Navbar";
 import classes from "./landingsStyle.module.css";
 
 const pageArr = [
 	{ text: "Craving a Delicious home-made Dish?", img: img1 },
-	{ text: "Want to sell your freshly home-made dishes online?", img: img2 },
+	{ text: "Want to sell your home-made dishes online?", img: img2 },
 ];
 const LandingPage = () => {
-	const buttons = {
-		signup: true,
-		login: true,
-		sellerProfile: true,
-	};
-
 	const [text, setText] = useState(pageArr[0].text);
 	const [img, setImg] = useState(pageArr[0].img);
 
@@ -40,66 +33,46 @@ const LandingPage = () => {
 					backgroundImage: `url(${img})`,
 					maxWidth: "100vw",
 				}}
-				className={`container-fluid ms-0 ${classes.bgImg} `}
+				className={`container-fluid d-flex justify-content-center justify-content-md-start ${classes.bgImg} `}
 			>
-				<div
-					style={{ position: "absolute", top: "30%", right: "12%" }}
-					className="d-md-none d-flex ms-3 flex-column d-block"
-				>
-					<div
-						className="lh-base display-5 ms-5 text-center "
-						style={{
-							color: "#F0A500",
-							fontFamily: " 'El Messiri', sans-serif",
-						}}
-					>
-						{text}
-						<hr />
-					</div>
-					<Link
-						to="/dishes"
-						type="button"
-						className="btn btn-lg btn-outline-warning mt-1 ms-5  "
-					>
-						<strong>View Dishes</strong>
-					</Link>
-				</div>
-				<div className={`d-md-block d-none mt-5 ms-5  ${classes.overLay} `}>
+				<div className={`row mt-5 ms-md-5  ${classes.overLay} `}>
 					<div className="row">
 						<div
-							className="col-md-7 col-md-12  me-5 pe-5 col-lg-5 text-light"
+							className=" col-sm-5 col-6 text-light  "
 							style={{
 								height: "200px",
 								position: "absolute",
 								top: "25%",
 							}}
 						>
-							<div className="lh-base d-flex flex-column align-items-center">
-								<div
-									className="lh-base display-5 ms-5 text-center "
-									style={{
-										color: "#F0A500",
-										fontFamily: " 'El Messiri', sans-serif",
-									}}
-								>
-									{text}
-									<hr />
+							<div className="lh-base d-flex flex-md-column  align-items-center">
+								<div className="lh-base  ms-5 text-center ">
+									<div
+										className="lh-base  display-5 ms-5 "
+										style={{
+											color: "#F0A500",
+											fontFamily: " 'El Messiri', sans-serif",
+										}}
+									>
+										{text}
+										<hr />
+									</div>
+									<p
+										className="lh-base fs-2 ms-3 fw-light"
+										style={{
+											fontFamily: "'Cabin Sketch', cursive",
+										}}
+									>
+										Try FoodLancer
+									</p>
+									<Link
+										to="/dishes"
+										type="button"
+										className="btn btn-lg btn-outline-light mt-1 ms-3 "
+									>
+										<strong>View Dishes</strong>
+									</Link>
 								</div>
-								<p
-									className="lh-base fs-2 ms-3 fw-light"
-									style={{
-										fontFamily: "'Cabin Sketch', cursive",
-									}}
-								>
-									Try FoodLancer
-								</p>
-								<Link
-									to="/dishes"
-									type="button"
-									className="btn btn-lg btn-outline-light mt-1 ms-3 "
-								>
-									<strong>View Dishes</strong>
-								</Link>
 							</div>
 						</div>
 					</div>

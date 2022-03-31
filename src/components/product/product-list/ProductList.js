@@ -41,12 +41,12 @@ export default function ProductList() {
       <div className="container">
       {products.length === 0 && <Empty />}
       {products.length !== 0 && (
-        <div className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center`}>
+        <div className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center `}>
           {products.map((prd) => {
             return (
               <div
                 key={prd._id}
-                className={`card col-lg-4 col-md-6 col-sm-8 py-3  ${classes.cardPrd} `}
+                className={`card col-lg-4 col-md-6 col-sm-8 col-xs-8 py-3  ${classes.cardPrd} `}
               >
                 <ProductCard product={prd} />
               </div>
@@ -55,11 +55,7 @@ export default function ProductList() {
         </div>
       )}
       {products.length !== 0 && (
-        <div className="row justify-content-around">
-          {/* <h5 className="col-2 text-dark">
-            Totoal &nbsp; &nbsp;&nbsp;&nbsp;{totoalDocs}
-          </h5> */}
-          <div className="col-5">
+        
             <ReactPaginate
               previousLabel={<FontAwesomeIcon icon={faCircleArrowLeft} />}
               nextLabel={<FontAwesomeIcon icon={faCircleArrowRight} />}
@@ -68,19 +64,19 @@ export default function ProductList() {
               marginPagesDisplayed={2}
               pageRangeDisplayed={3}
               onPageChange={handelPageClick}
-              containerClassName={"pagination justify-content-center"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
+              containerClassName={`${classes.paginationContainer} pagination justify-content-center`}
+              pageClassName={"page-item px-3 py-1"}
+              pageLinkClassName={`page-link ${classes.pageLink}`}
+              previousClassName={`page-item `}
+              previousLinkClassName={`page-link ${classes.pageItem}`}
               nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
+              nextLinkClassName={`page-link ${classes.pageItem}`}
               breakClassName={"page-item"}
               breakLinkClassName={"page-link"}
               activeClassName={`${classes.active1}`}
             />
-          </div>
-        </div>
+          
+        
       )}
       </div>
     </div>

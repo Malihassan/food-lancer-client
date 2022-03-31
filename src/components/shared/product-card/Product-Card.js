@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function ProductCard(props) {
+  const MAX_LENGTH = 125;
 	const { product } = props;
 	const [ratingValue, setRatingValue] = useState(0);
 	const [count, setCount] = useState(0);
@@ -86,12 +87,20 @@ export default function ProductCard(props) {
 				<h6 className={`${classes.prdh6} ${classes.userName} card-title`}>
 					{product?.sellerId.userName}
 				</h6>
-				<p
+			{/* 	<p
 					id={`${classes.productDescription}`}
 					className={`${classes.prdP} card-text my-2`}
 				>
 					{product?.description}
-				</p>
+				</p> */}
+          {product.description.length > MAX_LENGTH ?
+        (
+          <div className={`${classes.prdP } ${classes.productDescription} card-text my-2`}>
+            {`${product.description.substring(0, MAX_LENGTH)}...`}<Link  to={`${product?._id}`}>read more</Link>
+          </div>
+        ) :
+        <p >{product.description}</p>
+      }
 				<div className="d-flex justify-content-between align-items-center">
 					<span className={`${classes.prdSpan} ${classes.productPrice}`}>
 						EGP {product?.price}

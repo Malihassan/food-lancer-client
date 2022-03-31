@@ -92,13 +92,13 @@ function OrderList(props) {
 				marginPagesDisplayed={2}
 				pageRangeDisplayed={3}
 				onPageChange={props.onPageChange}
-				containerClassName={`pagination justify-content-center`}
+				containerClassName={`${classes.paginationContainer} pagination justify-content-center`}
 				pageClassName={`page-item px-3 py-1`}
 				pageLinkClassName={`page-link ${classes.pageLink}`}
 				previousClassName={"page-item"}
-				previousLinkClassName={"page-link"}
+				previousLinkClassName={`page-link ${classes.pageItem}`}
 				nextClassName={"page-item"}
-				nextLinkClassName={"page-link"}
+				nextLinkClassName={`page-link ${classes.pageItem}`}
 				breakClassName={"page-item"}
 				breakLinkClassName={"page-link"}
 				activeClassName={`${classes.active}`}

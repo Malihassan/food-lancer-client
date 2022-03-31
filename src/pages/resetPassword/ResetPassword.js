@@ -69,8 +69,8 @@ function ResetPassword() {
   };
   return (
     <>
-      <div className=" d-flex m-0 align-items-center vh-100 text-center resetPassword-container">
-        <div className=" shadow-sm">
+      <div className=" text-center d-flex p-5 align-items-start justify-content-xl-start justify-content-lg-center justify-content-md-center justify-content-sm-center  resetPassword-container">
+        <div className=" col-xl-4 col-lg-8 col-md-12 reset p-3 shadow-sm">
           <div className="p-5">
             <h4 className="text-light my-3">Reset Password</h4>
             <form onSubmit={(e) => handlePasswordSubmit(e)}>

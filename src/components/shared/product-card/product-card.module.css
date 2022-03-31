@@ -42,6 +42,14 @@
   font-weight: 400;
   font-size: 1rem;
   color: #8f8f8f;
+  height: 15vh !important;
+  background-color: #091b29 !important;
+}
+
+.prdP a {
+  color: #091b29 !important;
+  text-decoration: none !important;
+  -moz-text-decoration: none !important;
 }
 
 .prdButton {
@@ -106,6 +114,13 @@
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cardPrd {
+    margin: auto;
+    width: 80% !important;
   }
 }
 /*# sourceMappingURL=product-card.module.css.map */

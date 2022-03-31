@@ -39,6 +39,13 @@
   font-weight: 400;
   font-size: 1rem;
   color: #8f8f8f;
+  height: 15vh !important;
+  a{
+    color: #091b29 !important;
+    text-decoration:none !important;
+    -moz-text-decoration:none !important;
+}
+ background-color: #091b29 !important;
   
 }
 .prdButton{
@@ -58,7 +65,9 @@
   font-weight: 400;
 }
 .productPrice{
+  
   color: #9f0000 !important;
+ 
   
 }
 .userName{
@@ -98,3 +107,10 @@
     -o-border-radius: 2px;
   }
 }
+
+@media (max-width: 575.98px) { 
+  .cardPrd{
+    margin: auto;
+    width: 80% !important;
+  }
+ }

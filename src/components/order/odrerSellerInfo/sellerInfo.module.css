@@ -1,4 +1,5 @@
 .sellerInfContainer {
+  background-color: #f8f8f7;
   height: 20vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -31,15 +32,21 @@
 }
 
 .sellerInfContainer img {
+  width: 100%;
   height: 100%;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
 
 .sellerInfContainer .textDark {
-  color: #131313 !important;
+  color: #091b29 !important;
 }
 
 .sellerInfContainer label {
-  color: black !important;
+  color: #091b29 !important;
 }
 
 .sellerInfContainer .nameContainer {
@@ -69,7 +76,7 @@
 }
 
 .sellerInfContainer .nameContainer div label {
-  color: gray !important;
+  color: #8f8f8f !important;
   font-size: 0.8rem;
 }
 
@@ -90,7 +97,7 @@
 .sellerInfContainer .cardInfo .icon {
   margin-right: 8px;
   font-size: 35px;
-  color: #154d6b;
+  color: #091b29;
 }
 
 .sellerInfContainer .cardInfo > div {
@@ -107,11 +114,23 @@
 }
 
 .sellerInfContainer .cardInfo label {
-  color: gray !important;
+  color: #8f8f8f !important;
   font-size: 1rem;
 }
 
 .sellerInfContainer .cardInfo h4 {
-  color: #131313 !important;
+  color: #091b29 !important;
+}
+
+.sellerInfContainer .imgContainer {
+  border-radius: 50%;
+  border: 1px solid #091b29;
+  padding: 2px;
+  width: 6rem;
+  height: 6rem;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
 /*# sourceMappingURL=sellerInfo.module.css.map */

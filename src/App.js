@@ -31,17 +31,16 @@ import Favourites from "./components/buyer/Favourites";
 
 library.add(fab, fas, faCheckSquare, faCoffee);
 function App() {
-	const loading = useSelector((state) => state.loader.loading);
 	const reload = useSelector((state) => state.auth.reload);
+	const authenticated = useSelector((state) => state.auth.authenticated);
 	const logged = getCookie("userType") || "viewer";
 	useEffect(() => {}, [reload]);
-
 	return (
 		<>
-			{loading && <Loader />}
+			<Loader />
 			<Navbar />
 			<Routes>
-				{logged === "viewer" && (
+				{(logged === "viewer" || !authenticated) && (
 					<>
 						<Route path="/home" element={<Navigate replace to="/" />} />
 						<Route path="/" element={<LandingPage />} />
@@ -55,7 +54,7 @@ function App() {
 					</>
 				)}
 
-				{logged === "seller" && (
+				{logged === "seller" && authenticated && (
 					<>
 						<Route path="/" element={<Navigate replace to="/home" />} />
 
@@ -71,7 +70,7 @@ function App() {
 					</>
 				)}
 
-				{logged === "buyer" && (
+				{logged === "buyer" && authenticated && (
 					<>
 						<Route path="/updateProfile" element={<BuyerProfile />} />
 						<Route path="/favs" element={<Favourites />} />

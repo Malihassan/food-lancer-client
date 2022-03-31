@@ -3,7 +3,7 @@ import {
 	faCircleCheck,
 	faLock,
 	faHouseUser,
-	faCartShopping,
+	//faCartShopping,
 	faExclamationCircle,
 	faCartArrowDown,
 	faStar,
@@ -14,12 +14,16 @@ import img from "../../../assets/imgs/landing page/cheif.png";
 
 function SellerInfo(props) {
   return (
-    <section className={` ${classes.sellerInfContainer} mt-4  shadow bg-light`}>
-      <img
-        className="w-h-even rounded-circle d-none d-md-block"
+    <section className="py-2">
+     <div className={`${classes.sellerInfContainer} my-2 shadow `}>
+     <div className={`${classes.imgContainer} d-none d-md-block`} > 
+     <img
+      alt="SellerPhoto"
+        className="  "
         src={img}
       />
-      <div className={`${classes.nameContainer}`}>
+     </div>
+      <div className={`${classes.nameContainer} `}>
         <label className={`${classes.textDark}`}>{props.userInfo.name}</label>
         <div>
           <label>
@@ -66,6 +70,7 @@ function SellerInfo(props) {
           </div>
         </div>
       </div>
+     </div>
     </section>
   );
 }

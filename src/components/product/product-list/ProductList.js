@@ -4,6 +4,8 @@ import ProductCard from "../../shared/product-card/Product-Card";
 import { getProducts } from "../../../store/ProductSlice";
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { loadActions } from "../../../store/LoadingSlice";
+
 import {
   faCircleArrowLeft,
   faCircleArrowRight,
@@ -23,11 +25,11 @@ export default function ProductList() {
   const loading = useSelector((state) => state.loader.loading);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(loadActions.toggelLoader());
     dispatch(getProducts(page));
-  }, [page]);
-  useEffect(() => {
-    dispatch(getProducts(page));
-  }, [isDeleted]);
+    dispatch(loadActions.toggelLoader());
+  }, [page, isDeleted]);
+
   const products = useSelector((state) => state.product.products);
   const pageCount = useSelector((state) => state.product.pageCount);
   const totoalDocs = useSelector((state) => state.product.totoalDocs);
@@ -36,8 +38,8 @@ export default function ProductList() {
       <Link to="addProduct" className="btn btn-dark text-white bg-dark mt-2">
         Add Product
       </Link>
-      {products.length == 0 && <Empty />}
-      {products.length != 0 && (
+      {products.length === 0 && <Empty />}
+      {products.length !== 0 && (
         <div className="row bg-transparent">
           {products.map((prd) => {
             return (
@@ -75,7 +77,6 @@ export default function ProductList() {
               breakClassName={"page-item"}
               breakLinkClassName={"page-link"}
               activeClassName={`${classes.active1}`}
-              
             />
           </div>
         </div>

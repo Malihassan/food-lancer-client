@@ -7,27 +7,25 @@ import {
 	axiosInstance,
 } from "../../network/axiosConfig";
 import { useNavigate } from "react-router-dom";
-
+import { authActions } from "../../store/AuthSlice";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = ({ bg, buttons }) => {
 	let navigate = useNavigate();
+	const dispatch = useDispatch();
 	const reload = useSelector((state) => state.auth.reload);
 	useEffect(() => {}, [reload]);
 	const logout = async () => {
 		const res = await axiosInstance.get(`seller/account/logout`);
 		if (res) {
-			// window.location.reload();
-			(() => {
-				deleteCookie("userType");
-				deleteCookie("token");
-				document.cookie = "userType=viewer;";
-				return () => {
-					navigate("/");
-				};
-			})();
+			dispatch(authActions.logout);
+			window.location.reload();
+			deleteCookie("userType");
+			deleteCookie("token");
+			navigate("/");
+			document.cookie = "userType=viewer;";
 		}
 	};
 	const logged = getCookie("userType") || "viewer";

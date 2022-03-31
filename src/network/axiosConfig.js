@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
+	//   withCredentials: true,
 	// baseURL: "https://food-lancer.herokuapp.com/",
 	baseURL: "http://localhost:3000/",
 });
@@ -34,13 +35,17 @@ axiosInstance.interceptors.request.use(
 		return config;
 	},
 	function (error) {
-		if (axios.isAxiosError(error)) {
-			if (error.response) {
-				if (error.response.status === 401) {
-					window.location.reload();
-				}
-			}
-		}
+		console.log("error", error);
+		// if (axios.isAxiosError(error)) {
+		//   if (error.response) {
+		//     if (error.response.status === 401) {
+		//       //   window.location.reload();
+		//       deleteCookie("token");
+		//       deleteCookie("userType");
+		//       window.location.replace("./home");
+		//     }
+		//   }
+		// }
 
 		// Do something with request error
 		return Promise.reject(error);
@@ -49,16 +54,21 @@ axiosInstance.interceptors.request.use(
 
 // // Add a response interceptor
 // axiosInstance.interceptors.response.use(
-// 	function (response) {
-// 		// Any status code that lie within the range of 2xx cause this function to trigger
-// 		// Do something with response data
-// 		console.log(response);
-// 		return response;
-// 	},
-// 	function (error) {
-// 		// Any status codes that falls outside the range of 2xx cause this function to trigger
-// 		// Do something with response error
-// 		// Show ERROR Handler Message
-// 		return Promise.reject(error);
-// 	}
+//   function (response) {
+//     // Any status code that lie within the range of 2xx cause this function to trigger
+//     // Do something with response data
+//     return response;
+//   },
+//   function (error) {
+//     if (axios.isAxiosError(error)) {
+//       if (error.response) {
+//         if (error.response.status === 401) {
+//           console.log("hereeeeeeeeee");
+//           //   window.location.reload();
+//           //   window.location.replace('/home')
+//         }
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
 // );

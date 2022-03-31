@@ -8,10 +8,7 @@ const axios = require("axios");
 function SignupSeller() {
   let navigate = useNavigate();
   const [coverageAreas, setCoverageAreas] = useState();
-  //const { setError, formState: { errors } } = useForm();
  const [serverMessage, setServerMessage] = useState();
-   /* const [userNameErr, setUserNameErr] = useState("");
-  const [phoneErr, setPhoneErr] = useState(""); */
   const {
     register,
     handleSubmit,
@@ -56,7 +53,6 @@ function SignupSeller() {
                 });
                 break;
               case "email":
-                console.log("errrrrrror");
                 setError("email", {
                   type: "manual",
                   message: `${key} already exist`,
@@ -83,17 +79,16 @@ setServerMessage(error.response.data)
     return axios
       .get("http://localhost:3001/seller/account/coverageArea")
       .then((response) => {
-        console.log(response.data);
         setCoverageAreas(response.data);
       })
       .catch(function (error) {
         console.log(error);
-        //setServerMessage(error)
+       setServerMessage(error)
       });
   }, []);
   return (
     <>
-      <div className="w-75 m-auto text-center signup-form  bg-black">
+      <div className="w-75 m-auto text-center signup-form">
         <h3 className="my-4 login-header">Signup Form</h3>
         <div className="d-flex justify-content-around">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -408,14 +403,42 @@ setServerMessage(error.response.data)
                 </div>
               </div>
             </div>
-            {serverMessage && (
-								<div className="form-text text-warning">
-									{serverMessage}
-								</div>
-							)}
-            <button type="submit" className="btn btn-submit px-4">
+           
+            <button  data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop" type="submit" className="btn btn-submit px-4">
               Signup
             </button>
+            {serverMessage && (
+              /*   <div className="modal fade mt-5"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabIndex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog ">
+                  <div className="modal-content modal-container">
+                    <div className="modal-header border-0">
+                    </div>
+                    <div className="modal-body ">{serverMessage}</div>
+                    <div className="modal-footer border-0">
+                      <button
+                        type="button"
+                        className="btn btn-submit px-4"
+                        data-bs-dismiss="modal"
+                      >
+                        Ok!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div> */
+              <div className="form-text text-warning">
+              {serverMessage}
+            </div>
+							)}
+              
           </form>
         </div>
       </div>

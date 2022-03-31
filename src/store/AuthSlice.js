@@ -26,9 +26,9 @@ const authSlice = createSlice({
 		// login: (state) => {
 		//   state.authenticated = true;
 		// },
-		// logout: (state,action) => {
-		//   state.authenticated = false;
-		// },
+		logout: (state, action) => {
+			state.authenticated = false;
+		},
 	},
 	extraReducers: {
 		[login.pending]: (state) => {
@@ -37,7 +37,6 @@ const authSlice = createSlice({
 		[login.fulfilled]: (state, { payload }) => {
 			state.loading = false;
 			state.authenticated = true;
-			console.log("=token=>", payload);
 			document.cookie = `token=${payload.token}`;
 			document.cookie = "userType=seller";
 			state.reload = !state.reload;

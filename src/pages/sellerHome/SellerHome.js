@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import OrderList from "../../components/order/orderList/OrderList";
 import SellerInfo from "../../components/order/odrerSellerInfo/SellerInfo";
-import { axiosInstance } from "../../network/axiosConfig";
+//import { axiosInstance } from "../../network/axiosConfig";
 import OffCanvas from "../../components/shared/OffCanvas";
 import classes from "./sellerHome.module.scss";
 import { useSelector } from "react-redux";
@@ -61,29 +61,28 @@ function SellerHome(params) {
   const { sendRequest } = useFetch();
 
   async function sellerInfoDataHandler(res) {
-    console.log(res);
     if (res.statusText === "OK") {
       setUserInfo({
         img: "",
-        name: res.data.firstName + " " + res.data.lastName,
+        name: res.data.seller.firstName + " " + res.data.seller.lastName,
         coverageArea:
-          res.data.coverageArea.governorateName +
+          res.data.seller.coverageArea.governorateName +
           "," +
-          res.data.coverageArea.regionName,
-        status: res.data.status,
-        rate: res.data.rate,
+          res.data.seller.coverageArea.regionName,
+        status: res.data.seller.status,
+        rate: res.data.seller.rate,
         countDeliverOrder: res.data.countDeliverOrder,
         inprogressDeliver: res.data.countInprogressOrder,
       });
     }
   }
-  async function sellerOrdersDataHandler(res) {
-    if (res.statusText === "OK") {
+  function sellerOrdersDataHandler(res) {
+    if (res.status === 200) {
+      setListOfOrders(res.data.docs);
       setPaginateData({
         totalPages: res.data.totalPages,
         totalDocs: res.data.totalDocs,
       });
-      setListOfOrders(res.data.docs);
     }
   }
   useEffect(async () => {

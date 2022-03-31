@@ -1,23 +1,15 @@
 .backColor {
-  background-color: white;
+  background-color: #f8f8f7;
   width: 100vw;
   height: auto;
 }
 
 .backColors {
-  color: black;
-}
-
-.borderLeft {
-  border-radius: 20px 20px 20px 20px;
-}
-
-.borderParent {
-  border-radius: 20px 20px 20px 20px;
+  background-color: #f8f8f7;
+  color: #091b29;
 }
 
 .bgImg {
-  /* background: url(./assets/bg-heading-02.jpg) no-repeat center center fixed; */
   border-radius: 20px 0px 0px 20px;
   max-width: 50px;
   background-image: url("../../../assets/imgs/update profile/left-img.jpg");
@@ -26,10 +18,10 @@
 }
 
 .inputWidth {
+  background-color: #f8f8f7 !important;
   border-top: 0 !important;
   border-right: 0 !important;
-  border-radius: 0px !important;
-  height: 50px !important;
+  height: 40px !important;
 }
 
 .centerDiv {
@@ -42,22 +34,34 @@
 }
 
 .btnSubmit {
-  margin: 3rem 0 3rem 23.5rem;
-  border-radius: 0px !important;
+  background-color: transparent !important;
+  color: #091b29 !important;
+  border: 1px #091b29 solid !important;
+}
+
+.btnSubmit:hover {
+  background-color: transparent !important;
+  color: #f0a500 !important;
+  border: 1px #f0a500 solid !important;
 }
 
 .dropZone {
-  background-color: #F6F6F6;
-  color: black;
-  margin: 10px 160px;
-  padding-bottom: 1rem;
+  background-color: #f8f8f7;
+  color: #091b29;
+  margin-left: 7rem;
+  margin-right: 7rem;
   border-radius: 10px;
   text-align: center;
   height: auto;
-  border: 2px dashed #b9b9b9;
+  border: 1px dashed #8f8f8f;
 }
 
 .option:checked {
-  background-color: #F6F6F6 !important;
+  background-color: #f8f8f7 !important;
+}
+
+.text-warning {
+  color: #f0a500 !important;
+  text-align: center !important;
 }
 /*# sourceMappingURL=product-form.module.css.map */

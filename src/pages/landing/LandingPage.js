@@ -64,10 +64,10 @@ const LandingPage = () => {
 						<strong>View Dishes</strong>
 					</Link>
 				</div>
-				<div className={`d-md-block d-none mt-5 ms-5 ${classes.overLay}`}>
+				<div className={`d-md-block  mt-5 ms-5  ${classes.overLay} `}>
 					<div className="row">
 						<div
-							className="col-md-7 me-5 pe-5 col-lg-5 text-light"
+							className="col-md-7 col-md-12  me-5 pe-5 col-lg-5 text-light"
 							style={{
 								height: "200px",
 								position: "absolute",

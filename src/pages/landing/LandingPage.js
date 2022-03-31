@@ -47,7 +47,7 @@ const LandingPage = () => {
 						>
 							<div className="lh-base d-flex flex-md-column  align-items-center">
 								<div className="lh-base  ms-5 text-center ">
-									<p
+									<div
 										className="lh-base  display-5 ms-5 "
 										style={{
 											color: "#F0A500",
@@ -56,7 +56,7 @@ const LandingPage = () => {
 									>
 										{text}
 										<hr />
-									</p>
+									</div>
 									<p
 										className="lh-base fs-2 ms-3 fw-light"
 										style={{

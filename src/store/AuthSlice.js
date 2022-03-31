@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance } from "../network/axiosConfig";
+import { axiosInstance, deleteCookie } from "../network/axiosConfig";
+import { getCookie } from "../network/axiosConfig";
 export const login = createAsyncThunk(
 	"acount/login",
 	async (formData, { rejectWithValue }) => {
@@ -14,19 +15,24 @@ export const login = createAsyncThunk(
 		}
 	}
 );
+const authenticated = getCookie("token") ? true : false;
+const userType = getCookie("userType") ? getCookie("userType") : "viewer";
 const authSlice = createSlice({
 	name: "acount",
 	initialState: {
-		authenticated: false,
+		authenticated,
+		userType,
 		resErrorMes: "",
 		loading: false,
-		reload: false,
 	},
 	reducers: {
 		// login: (state) => {
 		//   state.authenticated = true;
 		// },
 		logout: (state, action) => {
+			deleteCookie("token");
+			deleteCookie("userType");
+			state.userType = "viewer";
 			state.authenticated = false;
 		},
 	},
@@ -37,9 +43,9 @@ const authSlice = createSlice({
 		[login.fulfilled]: (state, { payload }) => {
 			state.loading = false;
 			state.authenticated = true;
+			state.userType = "seller";
 			document.cookie = `token=${payload.token}`;
 			document.cookie = "userType=seller";
-			state.reload = !state.reload;
 		},
 		[login.rejected]: (state, { payload }) => {
 			state.loading = false;

@@ -141,14 +141,14 @@ function SellerHome(params) {
               {status === "in progress" && (
                 <div className="d-flex justify-content-end my-3">
                   <div
-                    class="btn-group"
+                    className="btn-group"
                     role="group"
                     aria-label="Basic mixed styles example"
                   >
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" className="btn btn-danger">
                       Rejected
                     </button>
-                    <button type="button" class="btn btn-success">
+                    <button type="button" className="btn btn-success">
                       Accepted
                     </button>
                   </div>

@@ -14,35 +14,28 @@ import Loader from "./components/shared/loader/Loader";
 //import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
 import Footer from "./components/shared/Footer";
-///import ReactDOM from 'react-dom'
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import {
-	faCheckSquare,
-	faCoffee,
-	fas,
-} from "@fortawesome/free-solid-svg-icons";
-import { getCookie } from "./network/axiosConfig";
+
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
 import BuyerProfile from "./components/buyer/BuyerProfile";
 import Favourites from "./components/buyer/Favourites";
 
-library.add(fab, fas, faCheckSquare, faCoffee);
 function App() {
-	const reload = useSelector((state) => state.auth.reload);
-	const logged = getCookie("userType") || "viewer";
+	const authenticated = useSelector((state) => state.auth.authenticated);
+	const loggedAs = useSelector((state) => state.auth.userType);
+	console.log('here',loggedAs,authenticated);
+
 	useEffect(() => {
-	}, [reload]);
+	}, [authenticated]);
 	return (
 		<>
 			<Loader />
 			<Navbar />
 			<Routes>
-				{logged === "viewer" && (
+				{(loggedAs === "viewer" && !authenticated) &&  (
 					<>
-						<Route path="/home" element={<Navigate replace to="/" />} />
+						{/* <Route path="/home" element={<Navigate replace to="/" />} /> */}
 						<Route path="/" element={<LandingPage />} />
 						<Route
 							path="/seller/account/resetPassword/:token"
@@ -54,7 +47,7 @@ function App() {
 					</>
 				)}
 
-				{logged === "seller" && (
+				{(loggedAs === "seller" && authenticated) &&(
 					<>
 						<Route path="/" element={<Navigate replace to="/home" />} />
 
@@ -70,7 +63,7 @@ function App() {
 					</>
 				)}
 
-				{logged === "buyer" && (
+				{loggedAs === "buyer" && (
 					<>
 						<Route path="/updateProfile" element={<BuyerProfile />} />
 						<Route path="/favs" element={<Favourites />} />
@@ -81,7 +74,7 @@ function App() {
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
 
-				<Route path="*" element={<Navigate replace to="/home" />} />
+				<Route path="*" element={<Navigate replace to="/" />} />
 			</Routes>
 			<Footer />
 		</>

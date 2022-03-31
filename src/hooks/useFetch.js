@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useH } from "react-router-dom";
 import { axiosInstance, deleteCookie } from "../network/axiosConfig";
+import { authActions } from "../store/AuthSlice";
 import { loadActions } from "../store/LoadingSlice";
 
 const useFetch = () => {
@@ -40,15 +41,9 @@ const useFetch = () => {
           break;
       }
       redirectionHandler(respose);
-      //   console.log("===>", respose);
     } catch (error) {
-      console.log("catchhhhhhhhhhhhhhhhh");
-      console.log(error);
-      //   setHasError(error.message);
       if (error.message === "Request failed with status code 401") {
-        deleteCookie("token");
-        deleteCookie("userType");
-        navigate("/login");
+        dispatch(authActions.logout())
       }
     }
     // setIsLoading(false);

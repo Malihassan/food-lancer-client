@@ -1,6 +1,6 @@
 import { useState } from "react";
 import OffCanvas from "../../shared/OffCanvas";
-
+import {IoFilterOutline}  from 'react-icons/io5'
 function OrderFilter(props) {
   const [toggleCanvas, setToggleCanvas] = useState(false);
   const toggleCanvasHandler = () => {
@@ -15,7 +15,7 @@ function OrderFilter(props) {
           onClick={toggleCanvasHandler}
           type="button"
         >
-          <i class="bi bi-filter"></i>
+          <IoFilterOutline className="me-3" style={{color:"white" ,fontSize:"25px"}}/>
           Filter
         </button>
       </div>

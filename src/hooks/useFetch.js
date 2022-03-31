@@ -1,10 +1,12 @@
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { axiosInstance } from "../network/axiosConfig";
+import { useNavigate, useH } from "react-router-dom";
+import { axiosInstance, deleteCookie } from "../network/axiosConfig";
 import { loadActions } from "../store/LoadingSlice";
 
 const useFetch = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(null);
 
@@ -29,7 +31,8 @@ const useFetch = () => {
         case "PATCH":
           respose = await axiosInstance.patch(
             requestConfig.url,
-            requestConfig.body ? requestConfig.body : null
+            requestConfig.body ? requestConfig.body : {},
+            requestConfig.headers ? requestConfig.headers : {}
           );
           break;
         case "DELETE":
@@ -39,9 +42,16 @@ const useFetch = () => {
       redirectionHandler(respose);
       //   console.log("===>", respose);
     } catch (error) {
-      setHasError(error.message);
+      console.log("catchhhhhhhhhhhhhhhhh");
+      console.log(error);
+      //   setHasError(error.message);
+      if (error.message === "Request failed with status code 401") {
+        deleteCookie("token");
+        deleteCookie("userType");
+        navigate("/login");
+      }
     }
-    setIsLoading(false);
+    // setIsLoading(false);
     dispatch(loadActions.toggelLoader());
   }, []);
   return {

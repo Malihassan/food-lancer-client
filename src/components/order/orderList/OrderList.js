@@ -15,7 +15,7 @@ function OrderList(props) {
 		<section className={`container mt-3 mb-5 py-3 shadow `}>
 			<h4 style={{ color: "black" }}>Order List</h4>
 			<table
-				className={`table table-responsive w-100 d-block d-sm-table ${classes.Ordertable}`}
+				className={`table table-responsive w-100  d-sm-table ${classes.Ordertable}`}
 			>
 				<thead>
 					<tr>

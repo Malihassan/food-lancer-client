@@ -60,7 +60,6 @@ function ResetPassword() {
       )
       .then((response) => {
         console.log(response);
-        
         //setMessage(response.data.response)
       })
       .catch(function (err) {

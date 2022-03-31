@@ -4,6 +4,8 @@ import ProductCard from "../../shared/product-card/Product-Card";
 import { getProducts } from "../../../store/ProductSlice";
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { loadActions } from "../../../store/LoadingSlice";
+
 import {
   faCircleArrowLeft,
   faCircleArrowRight,
@@ -23,11 +25,11 @@ export default function ProductList() {
   const loading = useSelector((state) => state.loader.loading);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(loadActions.toggelLoader());
     dispatch(getProducts(page));
-  }, [page]);
-  useEffect(() => {
-    dispatch(getProducts(page));
-  }, [isDeleted]);
+    dispatch(loadActions.toggelLoader());
+  }, [page, isDeleted]);
+
   const products = useSelector((state) => state.product.products);
   const pageCount = useSelector((state) => state.product.pageCount);
   const totoalDocs = useSelector((state) => state.product.totoalDocs);
@@ -54,9 +56,9 @@ export default function ProductList() {
       )}
       {products.length !== 0 && (
         <div className="row justify-content-around">
-          <h5 className="col-2 text-dark">
+          {/* <h5 className="col-2 text-dark">
             Totoal &nbsp; &nbsp;&nbsp;&nbsp;{totoalDocs}
-          </h5>
+          </h5> */}
           <div className="col-5">
             <ReactPaginate
               previousLabel={<FontAwesomeIcon icon={faCircleArrowLeft} />}
@@ -76,7 +78,6 @@ export default function ProductList() {
               breakClassName={"page-item"}
               breakLinkClassName={"page-link"}
               activeClassName={`${classes.active1}`}
-              
             />
           </div>
         </div>

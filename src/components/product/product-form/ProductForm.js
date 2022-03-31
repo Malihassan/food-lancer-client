@@ -8,6 +8,8 @@ import { loadActions } from "../../../store/LoadingSlice";
 import { useDispatch } from "react-redux";
 import { RiFolderOpenFill } from "react-icons/ri";
 import { isRejected } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
 
 const initialValues = {
   name: "",
@@ -23,14 +25,29 @@ export default function ProductForm() {
   }, []);
   const { getInputProps, getRootProps } = useDropzone({ onDrop });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const { sendRequest } = useFetch();
   const fillSelectMenu = async () => {
-    dispatch(loadActions.toggelLoader());
-    const res = await axiosInstance.get(`seller/category/allCategories`);
-    dispatch(loadActions.toggelLoader());
-    const categories = res.data;
-    initialValues.categoryId = categories._id;
-    setCategories(categories);
+    // dispatch(loadActions.toggelLoader());
+    // const res = await axiosInstance.get(`seller/category/allCategories`);
+    // dispatch(loadActions.toggelLoader());
+    // const categories = res.data;
+    // initialValues.categoryId = categories._id;
+    // setCategories(categories);
+    sendRequest(
+      {
+        url: `seller/category/allCategories`,
+        method: "GET",
+      },
+      (res) => {
+        if (res.status === 200) {
+          const categories = res.data;
+          initialValues.categoryId = categories._id;
+          setCategories(categories);
+        }
+      }
+    );
   };
   useEffect(() => {
     fillSelectMenu();
@@ -51,16 +68,24 @@ export default function ProductForm() {
     console.log(formData, "Form Data");
     console.log(typeof values.categoryId, "categoryId");
     (async () => {
-      console.log("RESULT");
-      dispatch(loadActions.toggelLoader());
-      const res = await axiosInstance.post(
-        "seller/product/addProduct",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+      // console.log("RESULT");
+      // dispatch(loadActions.toggelLoader());
+      // const res = await axiosInstance.post(
+      //   "seller/product/addProduct",
+      //   formData,
+      //   { headers: { "Content-Type": "multipart/form-data" } }
+      // );
+      // dispatch(loadActions.toggelLoader());
+      // navigate("/myProducts");
+      sendRequest(
+        { url: "seller/product/addProduct", method: "POST" ,body:formData},
+        (res) => {
+          if (res.status === 200) {
+            console.log(res);
+            navigate("/myProducts");
+          }
+        }
       );
-      dispatch(loadActions.toggelLoader());
-      console.log("teeeeeeeeest");
-      console.log(res, "RESULT");
     })();
   };
   const validate = (values) => {

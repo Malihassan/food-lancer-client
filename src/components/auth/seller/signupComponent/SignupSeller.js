@@ -83,7 +83,7 @@ setServerMessage(error.response.data)
       })
       .catch(function (error) {
         console.log(error);
-       setServerMessage(error)
+       //setServerMessage(error)
       });
   }, []);
   return (

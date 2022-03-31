@@ -138,7 +138,7 @@ function ProductEditPanel(props) {
 
 	return (
 		<>
-			<div className="row flex-xl-row flex-column justify-content-between text-dark p-2">
+			<div className="row flex-xl-row flex-column justify-content-around cardDetailes px-5 py-2 mb-4 ">
 				{/* <div className="d-flex justify-content-end">
                     <button type="button" class="btn btn-dark rounded-circle" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <FontAwesomeIcon icon={faPen} />
@@ -146,7 +146,7 @@ function ProductEditPanel(props) {
                 </div> */}
 
 				<div
-					class="modal fade"
+					className="modal fade "
 					id="staticBackdrop"
 					data-bs-backdrop="static"
 					data-bs-keyboard="false"
@@ -154,20 +154,20 @@ function ProductEditPanel(props) {
 					aria-labelledby="staticBackdropLabel"
 					aria-hidden="true"
 				>
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="staticBackdropLabel">
+					<div className="modal-dialog">
+						<div className="modal-content">
+							<div className="modal-header">
+								<h5 className="modal-title" id="staticBackdropLabel">
 									Edit Product Details
 								</h5>
 								<button
 									type="button"
-									class="btn-close"
+									className="btn-close"
 									data-bs-dismiss="modal"
 									aria-label="Close"
 								></button>
 							</div>
-							<div class="modal-body">
+							<div className="modal-body">
 								<form id="editForm" onSubmit={editDetails}>
 									<div className="my-4">
 										<label
@@ -279,9 +279,10 @@ function ProductEditPanel(props) {
 						</div>
 					</div>
 				</div>
+        {/* image */}
 				<div
 					id="carouselExampleIndicators"
-					className="carousel slide col-xl-6 col-12 pt-xl-2"
+					className="carousel slide col-xl-6 col-md-8 pt-xl-2 "
 					data-bs-ride="carousel"
 				>
 					<div className="carousel-indicators">
@@ -341,11 +342,12 @@ function ProductEditPanel(props) {
 						<span className="visually-hidden">Next</span>
 					</button>
 				</div>
-				<div className="col-xl-6 col-12 mt-4 mt-xl-0">
-					<div className="d-flex justify-content-end ">
+         {/* card */}
+				<div className="col-xl-6 col-md-8 mt-4 mt-xl-0 ">
+					<div className="d-flex justify-content-end mt-2">
 					<button
 							type="button"
-							class="btn btn-dark rounded-circle me-3"
+							className="btn btn-details rounded-circle me-3"
 							onClick={() => {
 								deleteProduct();
 							  }}
@@ -354,14 +356,14 @@ function ProductEditPanel(props) {
 						</button>
 						<button
 							type="button"
-							class="btn btn-dark rounded-circle"
+							className="btn btn-details rounded-circle"
 							data-bs-toggle="modal"
 							data-bs-target="#staticBackdrop"
 						>
 							<FontAwesomeIcon icon={faPen} />
 						</button>
 					</div>
-					<p className="display-5">{data.name}</p>
+					<h4 className="productName">{data.name}</h4>
 					<div className="d-flex">
 						<StarRatings
 							starDimension="1rem"
@@ -369,23 +371,23 @@ function ProductEditPanel(props) {
 							rating={rating}
 							starRatedColor="orange"
 						/>
-						<p className="m-1 ms-2">{rating || 0} / 5</p>
+						<p className="m-1 ms-2 productPrice">{rating || 0} / 5</p>
 					</div>
-					<div className="mt-3">
-						<p>Seller: {data.sellerId?.userName}</p>
-						<p>{data.price} EGP</p>
-						<p>Category: {data.categoryId?.name}</p>
+					<div className="mt-2">
+						<p className="sellerName ">Seller: {data.sellerId?.userName}</p>
+						<p className="productPrice">{data.price} EGP</p>
+						<p className="productCategory">Category: {data.categoryId?.name}</p>
 					</div>
-					<div className="my-5">
+					<div className="my-2">
 						<h5>
 							<span
-								class={`badge ${
+								className={`badge ${
 									data.status === "pending"
 										? "bg-warning"
 										: data.status === "active"
 										? "bg-success"
 										: "bg-danger"
-								}`}
+								} productStatus` }
 							>
 								{data.status}
 							</span>

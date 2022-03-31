@@ -32,18 +32,19 @@ export default function ProductList() {
   const pageCount = useSelector((state) => state.product.pageCount);
   const totoalDocs = useSelector((state) => state.product.totoalDocs);
   return (
-    <div className="container-fluid">
-      <Link to="addProduct" className="btn btn-dark text-white bg-dark mt-2">
+    <div className={`container-fluid ${classes.bgColor} `}>
+      <Link to="addProduct" className={`btn ${classes.addBtn}  my-2`}>
         Add Product
       </Link>
+      <div className="container">
       {products.length === 0 && <Empty />}
       {products.length !== 0 && (
-        <div className="row bg-transparent">
+        <div className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center`}>
           {products.map((prd) => {
             return (
               <div
                 key={prd._id}
-                className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
+                className={`card col-lg-4 col-md-6 col-sm-8 py-3  ${classes.cardPrd} `}
               >
                 <ProductCard product={prd} />
               </div>
@@ -51,7 +52,7 @@ export default function ProductList() {
           })}
         </div>
       )}
-      {products.length != 0 && (
+      {products.length !== 0 && (
         <div className="row justify-content-around">
           <h5 className="col-2 text-dark">
             Totoal &nbsp; &nbsp;&nbsp;&nbsp;{totoalDocs}
@@ -80,6 +81,7 @@ export default function ProductList() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

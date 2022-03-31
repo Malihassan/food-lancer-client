@@ -34,26 +34,20 @@ export default function ProductCard(props) {
 		setRatingValue(rate);
 	};
 	return (
-		<div className={`${classes.cardColor} shadow-sm`}>
+		<div className={`${classes.cardColor} shadow-sm `}>
 			<div className="position-relative">
 				<div
 					onMouseOver={() => setMousedOver(true)}
 					onMouseOut={() => setMousedOver(false)}
-					className={`${classes.imageContainer}`}
+					className={`${classes.imageContainer} p-2`}
 				>
-					{/* <FontAwesomeIcon
-            onClick={() => {
-              deleteProduct(product._id);
-            }}
-            icon={faTrash}
-            className={`text-danger ${classes.btnDelete}`}
-          /> */}
-					{/* <button onClick={()=>{deleteProduct(product._id)}} className={`btn btn-danger text-dark ${classes.btnDelete}`}>delete</button> */}
-					<img
+				
+        <img
 						src={images ? images[count].url : ""}
 						alt="..."
-						style={{ height: "365px", width: "100%" }}
+						style={{ height: "100%", width: "100%" }}
 					/>
+       
 				</div>
 			</div>
 			<div className="d-flex justify-content-between">
@@ -79,7 +73,7 @@ export default function ProductCard(props) {
 						"yellow",
 					]}
 				/>
-				<h5 className={`${classes?.rating} ps-2 col-2 text-danger`}>
+				<h5 className={`${classes?.rating} ps-2 col-2 `}>
 					{product?.avgRate} / 5
 				</h5>
 			</div>
@@ -112,7 +106,7 @@ export default function ProductCard(props) {
               Delete
             </button> */}
 						<Link
-							className={`${classes.prdButton} card-link btn btn-outline-dark my-2`}
+							className={`${classes.prdButton} card-link btn my-2`}
 							to={`${product?._id}`}
 						>
 							Detailes

@@ -26,6 +26,7 @@ import Footer from "./components/shared/Footer";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
+import OrderHistory from "./components/order/orderHistory/OrderHistory";
 
 library.add(fab, fas, faCheckSquare, faCoffee);
 
@@ -66,7 +67,7 @@ function App() {
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-
+						<Route path="/orderHistory" element={<OrderHistory />} />
 				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>
 			<Footer />

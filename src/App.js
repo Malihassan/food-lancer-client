@@ -26,6 +26,7 @@ import { getCookie } from "./network/axiosConfig";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/Navbar";
+import OrderHistory from "./components/order/orderHistory/OrderHistory";
 import BuyerProfile from "./components/buyer/BuyerProfile";
 import Favourites from "./components/buyer/Favourites";
 
@@ -80,7 +81,7 @@ function App() {
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-
+						<Route path="/orderHistory" element={<OrderHistory />} />
 				<Route path="*" element={<Navigate replace to="/home" />} />
 			</Routes>
 			<Footer />

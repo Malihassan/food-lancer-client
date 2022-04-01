@@ -93,7 +93,7 @@ function OrderList(props) {
 				pageRangeDisplayed={3}
 				onPageChange={props.onPageChange}
 				containerClassName={`${classes.paginationContainer} pagination justify-content-center`}
-				pageClassName={`page-item px-3 py-1`}
+				pageClassName={`page-item px-2 py-1`}
 				pageLinkClassName={`page-link ${classes.pageLink}`}
 				previousClassName={"page-item"}
 				previousLinkClassName={`page-link ${classes.pageItem}`}

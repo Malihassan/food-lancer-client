@@ -36,7 +36,13 @@ const Navbar = ({ bg, buttons }) => {
       >
         FoodLancer
       </Link>
-      <div className="py-2 mt-2 px-0 col-sm-7 col-12 d-flex justify-content-around align-items-center text-light">
+      <div
+        className={`text-light py-2 mt-2 px-0 col-sm-7 col-12 d-flex align-items-center ${
+          loggedAs == "viewer"
+            ? "justify-content-end"
+            : "justify-content-around"
+        } `}
+      >
         {loggedAs === "seller" && (
           <div className="col-12 d-flex justify-content-around">
             <Link
@@ -93,7 +99,7 @@ const Navbar = ({ bg, buttons }) => {
         )}
 
         {loggedAs === "viewer" && (
-          <div className="float-end">
+          <div>
             <Link
               to="/login"
               type="button"

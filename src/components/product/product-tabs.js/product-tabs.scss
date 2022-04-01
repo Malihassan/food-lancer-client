@@ -1,7 +1,14 @@
-.custom-tab-font{
-    color: rgb(117, 10, 37) !important;
+
+
+.productTabsContainer{
+  .custom-tab-font{
+    color: #f0a500  !important;
 }
 
 .custom-tab-font:hover, .active{
-    color: rgb(65, 6, 21) !important;
+    color: #091b29!important;
+}
+.tab-pane{
+  color: #8f8f8f !important;
+};
 }

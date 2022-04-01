@@ -47,7 +47,10 @@
 	height: auto;
 	border: 1px dashed #8f8f8f;
 }
-.text-warning{
+.textWarning{
   color:#f0a500 !important;
   text-align: center !important;
+  }
+  .textMuted{
+    color: #8f8f8f;
   }

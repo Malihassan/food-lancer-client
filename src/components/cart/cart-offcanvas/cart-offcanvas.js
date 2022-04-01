@@ -43,7 +43,7 @@ function CartOffCanvas(props){
                                                             <input type="number" min="1" className="border border-rounded-1 p-1 w-30"/>
                                                             <button className="btn btn-outline-secondary" type="button">-</button> 
                                                         </div>
-                                                        <div className="card-text smaller fw-bold">{item.price} EGP</div>
+                                                        <div className="card-text small fw-bold">{item.price} </div>
                                                     </div>
                                                     </li>
                                                 </ul>

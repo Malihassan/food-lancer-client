@@ -33,9 +33,9 @@ function ForgetPassword() {
   };
   return (
     <>
-      <div className=" d-flex m-0 align-items-center vh-100 text-center forgetPassword-container">
-        <div className=" shadow-sm">
-          <div className="p-5">
+      <div className=" text-center d-flex p-5 align-items-start justify-content-xl-start justify-content-lg-center justify-content-md-center justify-content-sm-center forgetPassword-container">
+        <div className="col-xl-4 col-lg-8 col-md-12 forget p-3 shadow-sm">
+          <div className="px-5">
             <h4 className="text-light my-3">Find Your Account</h4>
             <p className="text-light">
               Please enter your email address to search for your account.

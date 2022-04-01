@@ -16,38 +16,40 @@ function ProductDetails() {
       setProductData(res.data);
     }
   }
-  useEffect(() => {
-    // axiosInstance
-    //   .get(`seller/product/${param.id}`)
-    //   .then((data) => {
-    //     console.log(data);
-    //     setProductData(data.data);
-    //   })
-    //   .catch((e) => console.log(e));
 
-    sendRequest(
-      {
-        method: "GET",
-        url: `seller/product/${param.id}`,
-      },
-      prdoductDataHandler
-    );
-  }, []);
+	useEffect(() => {
+	/* 	axiosInstance
+			.get(`seller/product/${param.id}`)
+			.then((data) => {
+				console.log(data);
+				setProductData(data.data);
+			})
+			.catch((e) => console.log(e)); */
+      sendRequest(
+        {
+          method: "GET",
+          url: `seller/product/${param.id}`,
+        },
+        prdoductDataHandler
+      );
+    
+	}, []);
+	return (
+		<div className="container-fluid productDetailesContainer  px-5 p-1 g-0 d-flex justify-content-center align-items-center min-vh-100 ">
+			<div className="card border-0  bg-transparent" style={{ width: "80rem" }}>
+				<ul className="list-group list-group-flush ">
+					<li className="list-group-item mx-5">
+						<ProductEditPanel data={productData} />
+					</li>
+					<li className="list-group-item mx-5 ">
+						<ProductTabs data={productData} />
+					</li>
+				</ul>
+			</div>
+		</div>
+	);
+   
 
-  return (
-    <div className="container-fluid bg-yellow p-1 g-0 d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card" style={{ width: "80rem" }}>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <ProductInfo data={productData} />
-          </li>
-          <li className="list-group-item">
-            <ProductTabs data={productData} />
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
 }
 
 export default ProductDetails;

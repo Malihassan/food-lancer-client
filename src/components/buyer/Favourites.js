@@ -13,33 +13,44 @@ function Favourites() {
 				`http://localhost:3000/buyer/product/favs`
 			);
 			setProductsArr(res.data);
-			console.log(res);
-			console.log(productsArr[0]);
+			console.log(res.data);
 		})();
-	}, [productsArr]);
+	}, []);
+
+	const handleFavClick = (e) => {
+		(async () => {
+			const res = await axiosInstance.delete(
+				`http://localhost:3000/buyer/product/favs`,
+				{ data: { id: e._id } }
+			);
+			console.log(res);
+		})();
+		console.log("clicked", e, e._id);
+	};
+
+	const renderList = () => {
+		const renderedList = productsArr.map((prd) => {
+			return (
+				<div
+					key={prd._id}
+					className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
+				>
+					<ProductCard
+						product={prd}
+						userType={"buyer"}
+						handleFavClick={handleFavClick}
+					/>
+				</div>
+			);
+		});
+		return renderedList;
+	};
 	return (
 		<>
 			<div className="container-fluid">
-				<Link
-					to="addProduct"
-					className="btn btn-dark text-white bg-dark mt-2"
-				>
-					Add Product
-				</Link>
 				{productsArr.length === 0 && <Empty />}
 				{productsArr.length !== 0 && (
-					<div className="row bg-transparent">
-						{productsArr.map((prd) => {
-							return (
-								<div
-									key={prd._id}
-									className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
-								>
-									<ProductCard product={prd} />
-								</div>
-							);
-						})}
-					</div>
+					<div className="row bg-transparent">{renderList()}</div>
 				)}
 			</div>
 		</>

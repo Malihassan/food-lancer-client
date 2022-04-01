@@ -24,7 +24,7 @@ import Favourites from "./components/buyer/Favourites";
 
 function App() {
 	const authenticated = useSelector((state) => state.auth.authenticated);
-	const loggedAs = useSelector((state) => state.auth.userType);
+	const loggedAs = useSelector((state) => state.auth.userType) || "viewer";
 
 	useEffect(() => {}, [authenticated]);
 	return (

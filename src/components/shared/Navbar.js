@@ -1,3 +1,4 @@
+import "../../variables.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -9,31 +10,26 @@ import { useNavigate } from "react-router-dom";
 
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/AuthSlice";
 
 const Navbar = ({ bg, buttons }) => {
-	let navigate = useNavigate();
-	const reload = useSelector((state) => state.auth.reload);
-	useEffect(() => {}, [reload]);
+	const dispatch = useDispatch()
+	const loggedAs = useSelector((state) => state.auth.userType);
 	const logout = async () => {
 		const res = await axiosInstance.get(`seller/account/logout`);
 		if (res) {
-			window.location.reload();
-			deleteCookie("userType");
-			deleteCookie("token");
-			navigate("/");
-			document.cookie = "userType=viewer;";
+			dispatch(authActions.logout())
 		}
 	};
-	const logged = getCookie("userType") || "viewer";
 
 	return (
 		<nav
-			className={"navbar p-0 ms-0 "}
+			className={"navbar px-0 py-2 ms-0 "}
 			style={{
 				height: "100%",
 				width: "100%",
-				backgroundColor: "#13334C",
+				backgroundColor: "#091b29"/* "#13334C" */,
 				overflow: "hidden",
 			}}
 		>
@@ -50,7 +46,7 @@ const Navbar = ({ bg, buttons }) => {
 					FoodLancer
 				</Link>
 				<div className="navbar-brand text-light">
-					{logged === "seller" && (
+					{loggedAs === "seller" && (
 						<>
 							<Link
 								to="/home"
@@ -101,7 +97,7 @@ const Navbar = ({ bg, buttons }) => {
 					{/* {buttons?.sellerProfile && (
 					
 					)} */}
-					{logged === "viewer" && (
+					{loggedAs === "viewer" && (
 						<>
 							<Link
 								to="/login"

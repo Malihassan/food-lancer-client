@@ -22,11 +22,9 @@ function LoginSeller() {
 		userPasswordErr: null,
 	});
 	useEffect(() => {
-		//console.log(sellerState);
 	}, [userForm, userFormError]);
 
 	const handleFormChange = (e) => {
-		console.log(e.target.value, e.target.id);
 		if (e.target.id === "userEmail") {
 			setUserForm({
 				...userForm,
@@ -51,8 +49,7 @@ function LoginSeller() {
 				userPasswordErr:
 					e.target.value.length === 0
 						? "This Field is required"
-						: // : passReg.test(e.target.value) === false
-						passReg.test(e.target.value) === true
+						: passReg.test(e.target.value) === true
 						? "invalid password"
 						: null,
 			});
@@ -62,7 +59,7 @@ function LoginSeller() {
 		e.preventDefault();
 		dispatch(login(userForm)).then((res) => {
 			if (res.meta.requestStatus === "fulfilled") {
-				navigate("/");
+				navigate("/seller/home");
 				// window.location.reload();
 			}
 		});
@@ -142,13 +139,13 @@ function LoginSeller() {
 								</div>
 							)}
 						</div>
-						<div className="d-flex justify-content-around align-items-center p-4">
+						<div className="d-flex flex-xl-row flex-lg-column flex-md-column flex-sm-column justify-content-around align-items-center p-4">
 							<div>
 								<Link className="forget-link " to="/forgetpassword">
 									forget password ???
 								</Link>
 							</div>
-							<button type="submit" className="btn btn-submit px-4">
+							<button type="submit" className="btn btn-submit px-4 my-3">
 								Login
 							</button>
 						</div>

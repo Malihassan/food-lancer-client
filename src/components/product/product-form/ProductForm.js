@@ -8,6 +8,8 @@ import { loadActions } from "../../../store/LoadingSlice";
 import { useDispatch } from "react-redux";
 import { RiFolderOpenFill } from "react-icons/ri";
 import { isRejected } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
 
 const initialValues = {
   name: "",
@@ -23,14 +25,29 @@ export default function ProductForm() {
   }, []);
   const { getInputProps, getRootProps } = useDropzone({ onDrop });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const { sendRequest } = useFetch();
   const fillSelectMenu = async () => {
-    dispatch(loadActions.toggelLoader());
-    const res = await axiosInstance.get(`seller/category/allCategories`);
-    dispatch(loadActions.toggelLoader());
-    const categories = res.data;
-    initialValues.categoryId = categories._id;
-    setCategories(categories);
+    // dispatch(loadActions.toggelLoader());
+    // const res = await axiosInstance.get(`seller/category/allCategories`);
+    // dispatch(loadActions.toggelLoader());
+    // const categories = res.data;
+    // initialValues.categoryId = categories._id;
+    // setCategories(categories);
+    sendRequest(
+      {
+        url: `seller/category/allCategories`,
+        method: "GET",
+      },
+      (res) => {
+        if (res.status === 200) {
+          const categories = res.data;
+          initialValues.categoryId = categories._id;
+          setCategories(categories);
+        }
+      }
+    );
   };
   useEffect(() => {
     fillSelectMenu();
@@ -48,19 +65,27 @@ export default function ProductForm() {
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("categoryId", values.categoryId);
-    console.log(formData,"Form Data");
+    console.log(formData, "Form Data");
     console.log(typeof values.categoryId, "categoryId");
     (async () => {
-      console.log("RESULT");
-      dispatch(loadActions.toggelLoader());
-      const res = await axiosInstance.post(
-        "seller/product/addProduct",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+      // console.log("RESULT");
+      // dispatch(loadActions.toggelLoader());
+      // const res = await axiosInstance.post(
+      //   "seller/product/addProduct",
+      //   formData,
+      //   { headers: { "Content-Type": "multipart/form-data" } }
+      // );
+      // dispatch(loadActions.toggelLoader());
+      // navigate("/myProducts");
+      sendRequest(
+        { url: "seller/product/addProduct", method: "POST" ,body:formData},
+        (res) => {
+          if (res.status === 200) {
+            console.log(res);
+            navigate("/myProducts");
+          }
+        }
       );
-      dispatch(loadActions.toggelLoader());
-      console.log("teeeeeeeeest");
-      console.log(res, "RESULT");
     })();
   };
   const validate = (values) => {
@@ -77,7 +102,7 @@ export default function ProductForm() {
     if (parseInt(values.price) < 1) {
       errors.price = "the value of price must be positive";
     }
-    if (values.categoryId == undefined) {
+    if (values.categoryId === undefined) {
       errors.categoryId = "please select one of categories";
     }
     if (image.length === 0) {
@@ -99,32 +124,32 @@ export default function ProductForm() {
     setImage(files);
   };
   return (
-    <div className={`${classes.backColor} container-fluid`}>
+    <div className={`${classes.backColor} container-fluid  py-3`}>
       <div
-        className={`col-lg-7 shadow my-4 container-fluid ${classes.backColors} col-12 ${classes.borderLeft} d-flex flex-column`}
+        className={`col-lg-7 shadow mx-auto container-fluid ${classes.backColors} col-md-10 ${classes.borderLeft} d-flex flex-column `}
       >
         <div
           className="fs-1 mt-2 ms-1 text-center"
           style={{
-            fontFamily: " 'El Messiri', sans-serif",
+            fontFamily: "'El Messiri', sans-serif",
           }}
         >
           Add Product
         </div>
-        <hr className="mb-3" />
+        <hr className="mb-2" />
         <Formik
           initialValues={initialValues}
           validate={validate}
           onSubmit={onSubmit}
         >
-          <Form>
+          <Form className="">
             <Field
-              className={`form-control ${classes.inputWidth}`}
+              className={`form-control mt-4  ${classes.inputWidth}`}
               id="name"
               name="name"
-              placeholder="Name Of Product"
+              placeholder="Product Name"
             />
-            <div className="fw-light text-danger">
+            <div className="my-1 fw-light text-warning text-center">
               <ErrorMessage name="name" />
             </div>
             <Field
@@ -134,7 +159,7 @@ export default function ProductForm() {
               className={`form-control mt-4 ${classes.inputWidth}`}
               placeholder="Description"
             />
-            <div className=" fw-light text-danger">
+            <div className=" my-1 fw-light text-warning text-center">
               <ErrorMessage name="description" />
             </div>
             <Field
@@ -144,23 +169,29 @@ export default function ProductForm() {
               placeholder="price"
               type="number"
             />
-            <div className="fw-light text-danger">
+            <div className="my-1 fw-light text-warning text-center">
               <ErrorMessage name="price" />
             </div>
             <Field
               as="select"
               name="categoryId"
-              className={`form-select mt-4 ${classes.inputWidth}`}
+              className={`form-select mt-4  ${classes.inputWidth}`}
               aria-label="Default select example"
             >
-              <option className={`${classes.option}`} value="0">Select Category</option>
+              <option className={`${classes.option}`} value="0">
+                Select Category
+              </option>
               {categories.map((category) => (
-                <option className={`${classes.option}`} key={category?._id} value={category?._id}>
+                <option
+                  className={`${classes.option}`}
+                  key={category?._id}
+                  value={category?._id}
+                >
                   {category?.name}
                 </option>
               ))}
             </Field>
-            <div className="fw-light text-danger">
+            <div className="my-1 fw-light text-warning text-center">
               <ErrorMessage name="categoryId" />
             </div>
             {/* <input
@@ -177,7 +208,7 @@ export default function ProductForm() {
             </div> */}
             <p className="text-center h5 pt-3">Image Upload</p>
             <hr className="mb-4" />
-            <div className={`${classes.dropZone}`}>
+            <div className={`${classes.dropZone} mx-5 py-2`}>
               <Dropzone
                 name="image"
                 id="image"
@@ -191,16 +222,17 @@ export default function ProductForm() {
                   <section>
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <RiFolderOpenFill className="text-warning fs-1 mt-3" />
+                      <RiFolderOpenFill className="text-warning  fs-1 mt-3" />
                       <p>Drag & Drop Files Here</p>
-                      <div className="row col-12 text-start ps-5">
+                      <div className="row col-7 m-auto ">
                         {image.map((img) => {
                           return (
                             <small
                               key={image.indexOf(img)}
-                              className="col-12"
+                              className="col-12 text-center"
                             >
-                              {image.indexOf(img) + 1} - {img.name} - size :   {img.size}
+                              {image.indexOf(img) + 1} - {img.name} - size :{" "}
+                              {img.size}
                             </small>
                           );
                         })}
@@ -210,15 +242,14 @@ export default function ProductForm() {
                 )}
               </Dropzone>
             </div>
-            <div className="fw-light text-danger">
+            <div className="my-1 fw-light text-warning text-center">
               <ErrorMessage name="image" />
             </div>
-            <button
-              type="submit"
-              className={`btn bg-primary text-white ${classes.btnSubmit}`}
-            >
-              Create New Product
-            </button>
+            <div className="d-flex justify-content-center mt-4 mb-4">
+              <button type="submit" className={`btn ${classes.btnSubmit} `}>
+                Create New Product
+              </button>
+            </div>
           </Form>
         </Formik>
       </div>

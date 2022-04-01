@@ -1,0 +1,22 @@
+@mixin responsive($size) {
+  $phone: 576px;
+  $tablet: 768px;
+  @if ($size == small) {
+    @media screen and (max-width: $phone) {
+      @content;
+    }
+  }
+  @if ($size == medium) {
+    @media screen and (max-width: $tablet) {
+      @content;
+    }
+  }
+}
+html {
+  @include responsive(medium) {
+    font-size: 14px !important;
+  }
+  @include responsive(small) {
+    font-size: 12px !important;
+  }
+}

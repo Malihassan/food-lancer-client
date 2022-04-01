@@ -1,53 +1,57 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance } from "../network/axiosConfig";
+import { axiosInstance, deleteCookie } from "../network/axiosConfig";
+import { getCookie } from "../network/axiosConfig";
 export const login = createAsyncThunk(
-	"acount/login",
-	async (formData, { rejectWithValue }) => {
-		try {
-			const res = await axiosInstance.post("seller/account/login", {
-				email: formData.userEmail,
-				password: formData.userPassword,
-			});
-			return res.data;
-		} catch (err) {
-			return rejectWithValue(err.response.data);
-		}
-	}
+  "acount/login",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.post("seller/account/login", {
+        email: formData.userEmail,
+        password: formData.userPassword,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
 );
-
+const authenticated = getCookie("token") ? true : false;
+const userType = getCookie("userType") ? getCookie("userType") : 'viewer';
 const authSlice = createSlice({
-	name: "acount",
-	initialState: {
-		authenticated: false,
-		resErrorMes: "",
-		loading: false,
-		reload: false,
-	},
-	reducers: {
-		// login: (state) => {
-		//   state.authenticated = true;
-		// },
-		// logout: (state,action) => {
-		//   state.authenticated = false;
-		// },
-	},
-	extraReducers: {
-		[login.pending]: (state) => {
-			state.loading = true;
-		},
-		[login.fulfilled]: (state, { payload }) => {
-			state.loading = false;
-			state.authenticated = true;
-			console.log("=token=>", payload);
-			document.cookie = `token=${payload.token}`;
-			document.cookie = "userType=seller";
-			state.reload = !state.reload;
-		},
-		[login.rejected]: (state, { payload }) => {
-			state.loading = false;
-			state.resErrorMes = payload.error;
-		},
-	},
+  name: "acount",
+  initialState: {
+    authenticated,
+    userType,
+    resErrorMes: "",
+    loading: false,
+  },
+  reducers: {
+    // login: (state) => {
+    //   state.authenticated = true;
+    // },
+    logout: (state, action) => {
+      deleteCookie("token");
+      deleteCookie("userType");
+      state.userType ='viewer'
+      state.authenticated = false;
+    },
+  },
+  extraReducers: {
+    [login.pending]: (state) => {
+      state.loading = true;
+    },
+    [login.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.authenticated = true;
+      state.userType = "seller";
+      document.cookie = `token=${payload.token}`;
+      document.cookie = "userType=seller";
+    },
+    [login.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.resErrorMes = payload.error;
+    },
+  },
 });
 
 export const authActions = authSlice.actions;

@@ -23,10 +23,12 @@ function ProductInfo(props){
     }, [])
 
     const viewExtraInput = () =>{
+        setServes(0);
         setExtra(true);
     }
 
     const hideExtraInput = () => {
+        setServes(0);
         setExtra(false);
     }
 
@@ -36,6 +38,7 @@ function ProductInfo(props){
             case "inp-1":
                 setServes(1);
                 setExtra(false);
+
             break;
             case "inp-2":
                 setServes(2);
@@ -127,27 +130,27 @@ function ProductInfo(props){
                         <p className='col-2 mt-0 mt-md-4 mt-xl-3'>Serves</p>
                         <div className='col-8 d-flex align-items-center justify-content-center flex-wrap'>
                             <div className='mx-1'>
-                                <input type="radio" onClick={(e)=> countServes(e)} className="btn-check" name="options-outlined" id="inp-1" autoComplete="off"/>
+                                <input type="radio" onChange={(e)=> countServes(e)} className="btn-check" name="options-outlined" id="inp-1" checked={serves === 1} autoComplete="off"/>
                                 <label className="p-1 text-center smaller btn-serve" htmlFor="inp-1">1</label>
                             </div>
                             <div className='mx-1'>
-                                <input type="radio" onClick={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-2" autoComplete="off"/>
+                                <input type="radio" onChange={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-2" checked={serves === 2} autoComplete="off"/>
                                 <label className="p-1 text-center smaller btn-serve" htmlFor="inp-2">2</label>
                             </div>
                             <div className='mx-1'>
-                                <input type="radio" onClick={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-3" autoComplete="off"/>
+                                <input type="radio" onChange={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-3" checked={serves === 3} autoComplete="off"/>
                                 <label className="p-1 text-center smaller btn-serve" htmlFor="inp-3">3</label>
                             </div>
                             <div className='mx-1'>
-                                <input type="radio" onClick={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-4" autoComplete="off"/>
+                                <input type="radio" onChange={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-4" checked={serves === 4}  autoComplete="off"/>
                                 <label className="p-1 text-center smaller btn-serve" htmlFor="inp-4">4</label>
                             </div>
                             <div className='mx-1'>
-                                <input type="radio" onClick={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-5" autoComplete="off"/>
+                                <input type="radio" onChange={(e)=> countServes(e)}  className="btn-check" name="options-outlined" id="inp-5" checked={serves === 5} autoComplete="off"/>
                                 <label className="p-1 text-center smaller btn-serve" htmlFor="inp-5">5</label>
                             </div>
                             <div className='mx-1'>
-                                <input type="radio" onClick={()=> viewExtraInput()} className="btn-check" name="options-outlined" id="inp-plus" autoComplete="off"/>
+                                <input type="radio" onChange={()=> viewExtraInput()} className="btn-check" name="options-outlined" id="inp-plus" autoComplete="off"/>
                                 <label className="p-1 text-center smaller btn-serve" htmlFor="inp-plus">+</label>
                             </div>
                             {
@@ -163,7 +166,7 @@ function ProductInfo(props){
                         <button onClick={() => showCanvas()} className='btn shadow maroon text-light text-font w-100 me-1'>Add To Cart</button>
                     </div>
                 </div>
-                <CartOffCanvas showProps={{show, setShow}}/>
+                <CartOffCanvas controlProps={{show, setShow, extra, setExtra, serves, setServes}}/>
             </div>
         </>
     )

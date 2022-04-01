@@ -1,19 +1,25 @@
-$navbar-color: #154d6b;
-$background-color: #EEEEEE;
-$font-color:#008080;
-$tabel-header-color:#154d6b;
-$tabel-header-text-color:#fff;
-$fontFamily:'Source Serif Pro', serif;
-$paragraph-color:#a3a3a3;
-$date-color:#8f8f8f;
-$price-color:#9f0000;
-$user-color:#333333;
-$product-color:#000000;
-$card-color:#faf9f8;
-$charts-color:#154d6b;
+// navbar && footer
+$navbar-color: #091b29;
+/// text color
+//#f8f8f7
+//#f0a500
+//#8f8f8f
 
- /* body{
+$background-color: #eeeeee;
+$font-color: #008080;
+$tabel-header-color: #154d6b;
+$tabel-header-text-color: #fff;
+$fontFamily: /* "Source Serif Pro", serif */"'El Messiri', sans-serif";
+$paragraph-color: #a3a3a3;
+$date-color: #8f8f8f;
+$price-color: #9f0000;
+$user-color: #333333;
+$product-color: #000000;
+$card-color: #faf9f8;
+$charts-color: #154d6b;
+
+ body{
   //background-color: $background-color !important;
   font-family: $fontFamily!important;
-  font-size: 1rem !important;
-} */
+  //font-size: 1rem !important;
+}

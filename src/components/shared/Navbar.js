@@ -1,43 +1,41 @@
-import "../../variables.scss"
+import "../../variables.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import {
-	deleteCookie,
-	getCookie,
-	axiosInstance,
-} from "../../network/axiosConfig";
-import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../network/axiosConfig";
+import { ReactComponent as Home } from "../../assets/svgs/house-solid.svg";
+import { ReactComponent as Products } from "../../assets/svgs/utensils-solid.svg";
+import { ReactComponent as Profile } from "../../assets/svgs/user-solid.svg";
 
-import React, { useEffect } from "react";
+import { authActions } from "../../store/AuthSlice";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/AuthSlice";
 
 const Navbar = ({ bg, buttons }) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const loggedAs = useSelector((state) => state.auth.userType);
 	const logout = async () => {
 		const res = await axiosInstance.get(`seller/account/logout`);
 		if (res) {
-			dispatch(authActions.logout())
+			dispatch(authActions.logout());
 		}
 	};
 
 	return (
 		<nav
-			className={"navbar px-0 py-2 ms-0 "}
+			className={"navbar p-0 ms-0 "}
 			style={{
 				height: "100%",
 				width: "100%",
-				backgroundColor: "#091b29"/* "#13334C" */,
+				backgroundColor: "#0b2a3a" /* "#13334C" */,
 				overflow: "hidden",
 			}}
 		>
-			<div className="container-fluid d-flex flex-row flex-wrap justify-content-between">
+			<div className="container-fluid d-flex flex-row flex-wrap justify-content-lg-between justify-content-center">
 				<Link
 					to="/seller/home"
 					type="button"
-					className="navbar-brand text-light fs-3"
+					className="navbar-brand mx-5 my-3 text-light fs-3"
 					style={{
 						fontFamily: "Monoton",
 						color: "#F0A500",
@@ -45,7 +43,7 @@ const Navbar = ({ bg, buttons }) => {
 				>
 					FoodLancer
 				</Link>
-				<div className="navbar-brand text-light">
+				<div className="navbar-brand mt-2 d-flex flex-row text-light">
 					{loggedAs === "seller" && (
 						<>
 							<Link
@@ -57,8 +55,13 @@ const Navbar = ({ bg, buttons }) => {
 									fontFamily: " 'El Messiri', sans-serif",
 								}}
 							>
-								home
-								{/** my orders */}
+								<div className="d-lg-block d-none ">
+									<Home fill="white" width="25px" height="25px" />
+									<span className="mx-2 ">home</span>
+								</div>
+								<div className="d-lg-none d-block ">
+									<Home fill="white" width="25px" height="25px" />
+								</div>
 							</Link>
 
 							<Link
@@ -70,7 +73,13 @@ const Navbar = ({ bg, buttons }) => {
 									fontFamily: " 'El Messiri', sans-serif",
 								}}
 							>
-								My Products
+								<div className="d-lg-block d-none ">
+									<Products fill="white" width="25px" height="25px" />
+									<span className="mx-2  ">My Products</span>
+								</div>
+								<div className="d-lg-none d-block ">
+									<Products fill="white" width="25px" height="25px" />
+								</div>
 							</Link>
 
 							<Link
@@ -82,21 +91,25 @@ const Navbar = ({ bg, buttons }) => {
 									fontFamily: " 'El Messiri', sans-serif",
 								}}
 							>
-								Profile
+								<div className="d-lg-block d-none ">
+									<Profile fill="white" width="25px" height="25px" />
+									<span className="mx-2  ">Profile</span>
+								</div>
+								<div className="d-lg-none d-block ">
+									<Profile fill="white" width="25px" height="25px" />
+								</div>
 							</Link>
 							<Link
 								to="/"
 								onClick={logout}
 								type="button"
-								className="btn btn-outline-warning ms-5 me-3"
+								className="btn btn-outline-warning ms-3 me-3"
 							>
 								<FontAwesomeIcon icon={faArrowRightFromBracket} />
 							</Link>
 						</>
 					)}
-					{/* {buttons?.sellerProfile && (
-					
-					)} */}
+
 					{loggedAs === "viewer" && (
 						<>
 							<Link

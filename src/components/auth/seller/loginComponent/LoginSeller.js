@@ -139,15 +139,16 @@ function LoginSeller() {
 								</div>
 							)}
 						</div>
-						<div className="d-flex flex-xl-row flex-lg-column flex-md-column flex-sm-column justify-content-around align-items-center p-4">
-							<div>
-								<Link className="forget-link " to="/forgetpassword">
-									forget password ???
-								</Link>
-							</div>
-							<button type="submit" className="btn btn-submit px-4 my-3">
+						<div className="d-flex flex-xl-column flex-lg-column flex-md-column flex-sm-column justify-content-around align-items-center p-4">
+            <button type="submit" className="btn btn-submit px-4  mb-3">
 								Login
 							</button>
+              <div>
+								<Link className="forget-link " to="/forgetpassword">
+									forget password ?
+								</Link>
+							</div>
+						
 						</div>
 					</div>
 				</form>

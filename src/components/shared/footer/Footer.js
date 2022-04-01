@@ -1,7 +1,7 @@
 import React from "react";
-import { ReactComponent as Facebook } from "../../assets/svgs/facebook-brands.svg";
-import { ReactComponent as Linkedin } from "../../assets/svgs/linkedin-brands.svg";
-import { ReactComponent as Instagram } from "../../assets/svgs/instagram-brands.svg";
+import { ReactComponent as Facebook } from "../../../assets/svgs/facebook-brands.svg";
+import { ReactComponent as Linkedin } from "../../../assets/svgs/linkedin-brands.svg";
+import { ReactComponent as Instagram } from "../../../assets/svgs/instagram-brands.svg";
 
 function Footer() {
 	return (

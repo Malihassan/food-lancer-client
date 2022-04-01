@@ -1,23 +1,35 @@
 .bgImg {
-	background-color: rgba(0, 0, 0, 0.1);
-	background-repeat: no-repeat;
-	background-position: 100% 100%;
-	background-size: cover;
-	background-position-x: 100%;
-	background-position-y: 65%;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.1);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
+  background-position-x: 100%;
+  background-position-y: 65%;
+  height: 100vh;
+  overflow: hidden;
 }
 .overLay {
-	border-radius: 2%;
-	min-width: 30rem;
-	width: 45%;
-	height: 70%;
-	background-color: rgba(0, 0, 0, 0.7);
-	overflow: hidden;
+  border-radius: 2%;
+  width: 55%;
+  height: 70%;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+.overlay-text {
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .text {
-	text-align: justify;
+  text-align: justify;
 }
+
+@media screen and (max-width: 500px) {
+  .overLay {
+    width: 95%;
+    height: 60%;
+  }
+}
+

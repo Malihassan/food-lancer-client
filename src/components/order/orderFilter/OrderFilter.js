@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OffCanvas from "../../shared/OffCanvas";
+import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import {IoFilterOutline}  from 'react-icons/io5'
 function OrderFilter(props) {
   const [toggleCanvas, setToggleCanvas] = useState(false);

@@ -13,12 +13,11 @@ import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 //import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
-import Footer from "./components/shared/Footer";
+import Footer from "./components/shared/footer/Footer";
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Navbar from "./components/shared/Navbar";
-import CartOffCanvas from "./components/cart/cart-offcanvas/cart-offcanvas";
+import Navbar from "./components/shared/nav/Navbar";
 import OrderHistory from "./components/order/orderHistory/OrderHistory";
 import BuyerProfile from "./components/buyer/BuyerProfile";
 import Favourites from "./components/buyer/Favourites";

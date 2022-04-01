@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import OrderList from "../../components/order/orderList/OrderList";
 import SellerInfo from "../../components/order/odrerSellerInfo/SellerInfo";
 //import { axiosInstance } from "../../network/axiosConfig";
-import OffCanvas from "../../components/shared/OffCanvas";
+import OffCanvas from "../../components/shared/offCanvas/OffCanvas";
 import classes from "./sellerHome.module.scss";
 import { useSelector } from "react-redux";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";

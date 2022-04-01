@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,UAAU,CAAA;EACN,KAAK,EAAE,KAAK,CAAA,UAAU;EACtB,gBAAgB,EAAE,IAAI,CAAA,UAAU;EAChC,KAAK,EAAE,kBAAkB;CAC5B",
+    "mappings": "AACA,AAAA,UAAU,CAAA;EACN,KAAK,EAAE,KAAK,CAAA,UAAU;EACtB,gBAAgB,EAAE,IAAI,CAAA,UAAU;EAChC,KAAK,EAAE,kBAAkB;CAC5B",
     "sources": [
         "sellerHome.module.scss"
     ],

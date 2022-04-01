@@ -1,7 +1,7 @@
 import "./App.scss";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import LoginPage from "./pages/login/loginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -13,77 +13,72 @@ import ProductForm from "./components/product/product-form/ProductForm";
 import Loader from "./components/shared/loader/Loader";
 //import NotFound from "./components/shared/not-found-page/NotFound";
 import SellerHome from "./pages/sellerHome/SellerHome";
-import Footer from "./components/shared/Footer";
+import Footer from "./components/shared/footer/Footer";
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Navbar from "./components/shared/Navbar";
+import Navbar from "./components/shared/nav/Navbar";
 import OrderHistory from "./components/order/orderHistory/OrderHistory";
 import BuyerProfile from "./components/buyer/BuyerProfile";
 import Favourites from "./components/buyer/Favourites";
-import { library } from '@fortawesome/fontawesome-svg-core'
-  import { fab } from '@fortawesome/free-brands-svg-icons'
-  import {
-    fas
-  } from "@fortawesome/free-solid-svg-icons";
-  library.add(fab, fas)
-  //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fab, fas);
+//import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
-	const authenticated = useSelector((state) => state.auth.authenticated);
-	const loggedAs = useSelector((state) => state.auth.userType);
+  const authenticated = useSelector((state) => state.auth.authenticated);
+  const loggedAs = useSelector((state) => state.auth.userType);
 
-	useEffect(() => {}, [authenticated]);
-	return (
-		<>
-			<Loader />
-			<Navbar />
-			<Routes>
-				{loggedAs === "viewer" && !authenticated && (
-					<>
-						{/* <Route path="/home" element={<Navigate replace to="/" />} /> */}
-						<Route path="/" element={<LandingPage />} />
-						<Route
-							path="/seller/account/resetPassword/:token"
-							element={<ResetPassword />}
-						/>
-						<Route path="/forgetPassword" element={<ForgetPassword />} />
-						<Route path="/login" element={<LoginPage />} />
-						<Route path="/signup" element={<SignupPage />} />
-					</>
-				)}
+  //   useEffect(() => {}, [authenticated]);
+  return (
+    <>
+      <Loader />
+      <Navbar />
+      <Routes>
+        {loggedAs === "viewer" && !authenticated && (
+          <>
+            {/* <Route path="/home" element={<Navigate replace to="/" />} /> */}
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/seller/account/resetPassword/:token"
+              element={<ResetPassword />}
+            />
+            <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+          </>
+        )}
 
-				{loggedAs === "seller" && authenticated && (
-					<>
-						<Route path="/" element={<Navigate replace to="/home" />} />
+        {loggedAs === "seller" && authenticated && (
+          <>
+            <Route path="/" element={<Navigate replace to="/home" />} />
 
-						<Route path="/home" element={<SellerHome />} />
-						<Route path="/updateProfile" element={<UpdateProfile />} />
-						<Route path="/myProducts" element={<ProductList />} />
-						<Route path="/myProducts/:id" element={<ProductDetails />} />
-						<Route
-							path="/myProducts/addProduct"
-							element={<ProductForm />}
-						/>
-						{/* // todo: product details + edit product */}
-					</>
-				)}
+            <Route path="/home" element={<SellerHome />} />
+            <Route path="/updateProfile" element={<UpdateProfile />} />
+            <Route path="/myProducts" element={<ProductList />} />
+            <Route path="/myProducts/:id" element={<ProductDetails />} />
+            <Route path="/myProducts/addProduct" element={<ProductForm />} />
+            {/* // todo: product details + edit product */}
+          </>
+        )}
 
-				{loggedAs === "buyer" && (
-					<>
-						<Route path="/updateProfile" element={<BuyerProfile />} />
-						<Route path="/favs" element={<Favourites />} />
-					</>
-				)}
-				<Route path="/buyer/profile/edit" element={<BuyerProfile />} />
-				{/*
+        {loggedAs === "buyer" && (
+          <>
+            <Route path="/updateProfile" element={<BuyerProfile />} />
+            <Route path="/favs" element={<Favourites />} />
+          </>
+        )}
+        <Route path="/buyer/profile/edit" element={<BuyerProfile />} />
+        {/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-				<Route path="/orderHistory" element={<OrderHistory />} />
-				<Route path="*" element={<Navigate replace to="/" />} />
-			</Routes>
-			<Footer />
-		</>
-	);
+        <Route path="/orderHistory" element={<OrderHistory />} />
+        <Route path="*" element={<Navigate replace to="/" />} />
+      </Routes>
+      <Footer />
+    </>
+  );
 }
 export default App;

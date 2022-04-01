@@ -10,6 +10,10 @@ function CartOffCanvas(props){
 
     const handleClose = () => controlProps.setShow(false);
 
+    const addServes = (e) => {
+        controlProps.setServes(controlProps.serves + 1);
+    }
+
     return(
         <>
             <Offcanvas placement="end" show={controlProps.show} onHide={handleClose}>
@@ -39,8 +43,8 @@ function CartOffCanvas(props){
                                                     <li className="list-group-item">
                                                     <div className="d-flex justify-content-between">
                                                         <div className="input-group input-group-sm">
-                                                            <button className="btn btn-outline-secondary" type="button">+</button>
-                                                            <input type="number" min="1" className="border border-rounded-1 p-1 w-30"/>
+                                                            <button className="btn btn-outline-secondary" onClick={(e)=> addServes(e)} type="button">+</button>
+                                                            <input type="number" min="1" className="border border-rounded-1 p-1 w-30" readOnly/>
                                                             <button className="btn btn-outline-secondary" type="button">-</button> 
                                                         </div>
                                                         <div className="card-text small fw-bold">{item.price} </div>

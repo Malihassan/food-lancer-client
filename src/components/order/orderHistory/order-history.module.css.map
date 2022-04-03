@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CAAA;EACP,MAAM,EAAE,OAAO;CACd;;AACD,AAAA,YAAY,CAAA;EACR,YAAY,EAAE,GAAG,CAAC,MAAM,CAAC,OAAkB;CAC9C;;AACD,AAAA,UAAU,CAAA;EACV,aAAa,EAAE,eAAe;EAC9B,MAAM,EAAE,oBAAoB;CAC3B;;AACD,AAAA,UAAU,CAAA;EACN,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACf;;AACD,MAAM,EAAE,SAAS,EAAE,KAAK;EACpB,AAAA,YAAY,CAAC;IACT,MAAM,EAAE,cAAc;GACxB",
+    "sources": [
+        "order-history.module.scss"
+    ],
+    "names": [],
+    "file": "order-history.module.css"
+}

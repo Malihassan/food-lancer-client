@@ -42,5 +42,8 @@
         -ms-flex-pack: center;
             justify-content: center;
   }
+  .icon-container {
+    color: #f8f8f7;
+  }
 }
 /*# sourceMappingURL=LoginPage.css.map */

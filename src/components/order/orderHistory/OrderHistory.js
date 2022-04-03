@@ -80,17 +80,17 @@ export default function OrderHistory() {
               <div
                 className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-12 p-3 ${classes.divLeftCard}`}
               >
-                {order.status == "in progress" && (
+                {order.status === "in progress" && (
                   <span className="badge col-3 p-2 rounded-2 bg-warning">
                     {order.status}
                   </span>
                 )}
-                {order.status == "delivered" && (
+                {order.status === "delivered" && (
                   <span className="badge col-3 p-2 rounded-2 bg-success">
                     {order.status}
                   </span>
                 )}
-                {order.status == "canceled" && (
+                {order.status === "canceled" && (
                   <span className="badge col-3 p-2 rounded-2 bg-danger">
                     {order.status}
                   </span>

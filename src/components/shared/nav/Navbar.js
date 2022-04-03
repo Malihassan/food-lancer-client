@@ -116,6 +116,8 @@ const Navbar = ({ bg, buttons }) => {
             </Link>
           </div>
         )}
+
+        
       </div>
       {/* </div> */}
     </nav>

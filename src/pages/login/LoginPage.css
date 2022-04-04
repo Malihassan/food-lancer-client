@@ -35,4 +35,15 @@
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
 }
+
+@media screen and (max-width: 575.98px) {
+  .loginpage-container {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .icon-container {
+    color: #f8f8f7;
+  }
+}
 /*# sourceMappingURL=LoginPage.css.map */

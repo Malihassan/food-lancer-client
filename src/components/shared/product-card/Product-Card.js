@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function ProductCard(props) {
+  const MAX_LENGTH = 100;
 	const { product } = props;
 	const [ratingValue, setRatingValue] = useState(0);
 	const [count, setCount] = useState(0);
@@ -34,26 +35,20 @@ export default function ProductCard(props) {
 		setRatingValue(rate);
 	};
 	return (
-		<div className={`${classes.cardColor} shadow-sm`}>
+		<div className={`${classes.cardColor} shadow-sm `}>
 			<div className="position-relative">
 				<div
 					onMouseOver={() => setMousedOver(true)}
 					onMouseOut={() => setMousedOver(false)}
-					className={`${classes.imageContainer}`}
+					className={`${classes.imageContainer} p-2`}
 				>
-					{/* <FontAwesomeIcon
-            onClick={() => {
-              deleteProduct(product._id);
-            }}
-            icon={faTrash}
-            className={`text-danger ${classes.btnDelete}`}
-          /> */}
-					{/* <button onClick={()=>{deleteProduct(product._id)}} className={`btn btn-danger text-dark ${classes.btnDelete}`}>delete</button> */}
-					<img
+				
+        <img
 						src={images ? images[count].url : ""}
 						alt="..."
-						style={{ height: "365px", width: "100%" }}
+						style={{ height: "100%", width: "100%" }}
 					/>
+       
 				</div>
 			</div>
 			<div className="d-flex justify-content-between">
@@ -79,7 +74,7 @@ export default function ProductCard(props) {
 						"yellow",
 					]}
 				/>
-				<h5 className={`${classes?.rating} ps-2 col-2 text-danger`}>
+				<h5 className={`${classes?.rating} ps-2 col-2 `}>
 					{product?.avgRate} / 5
 				</h5>
 			</div>
@@ -89,18 +84,26 @@ export default function ProductCard(props) {
 				>
 					{product?.name}
 				</h5>
-				<h6 className={`${classes.prdh6} ${classes.userName} card-title`}>
+			{/* 	<h6 className={`${classes.prdh6} ${classes.userName} card-title`}>
 					{product?.sellerId.userName}
-				</h6>
-				<p
+				</h6> */}
+			{/* 	<p
 					id={`${classes.productDescription}`}
 					className={`${classes.prdP} card-text my-2`}
 				>
 					{product?.description}
-				</p>
+				</p> */}
+          {product.description.length > MAX_LENGTH ?
+        (
+          <div >
+            {`${product.description.substring(0, MAX_LENGTH)}...`}<Link  to={`${product?._id}`}>read more</Link>
+          </div>
+        ) :
+        <p className={`${classes.prdP } ${classes.productDescription} card-text my-2`}>{product.description}</p>
+      }
 				<div className="d-flex justify-content-between align-items-center">
 					<span className={`${classes.prdSpan} ${classes.productPrice}`}>
-						EGP {product?.price}
+						EGP {product?.price.toFixed(2)}
 					</span>
 					<div>
 						{/* <button
@@ -112,7 +115,7 @@ export default function ProductCard(props) {
               Delete
             </button> */}
 						<Link
-							className={`${classes.prdButton} card-link btn btn-outline-dark my-2`}
+							className={`${classes.prdButton} card-link btn my-2`}
 							to={`${product?._id}`}
 						>
 							Detailes

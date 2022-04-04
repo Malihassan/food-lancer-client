@@ -1,0 +1,33 @@
+.paginationContainer {
+  margin: 0 !important;
+  color: #091b29;
+  background-color: transparent !important;
+}
+
+.pageLink {
+  border: none !important;
+  background-color: #fff !important;
+  color: #091b29 !important;
+  font-size: larger !important;
+}
+
+.active {
+  border-bottom: 2px solid #091b29 !important;
+  color: #091b29 !important;
+}
+
+.pageItem {
+  background-color: #fff !important;
+  color: #091b29 !important;
+  border: 1px solid #091b29 !important;
+}
+
+.container {
+  background-image: linear-gradient(145deg, #9f0000 0%, #091b29 50%, #9f0000 100%);
+}
+
+.homeBody {
+  margin: 0 !important;
+  background-color: #fff !important;
+}
+/*# sourceMappingURL=buyerHome.module.css.map */

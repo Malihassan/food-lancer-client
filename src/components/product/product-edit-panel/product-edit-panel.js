@@ -29,7 +29,6 @@ function ProductEditPanel(props) {
       if (res.status === 200) {
         dispatch(productActions.deleted());
         navigate("/myProducts");
-
       }
     }
     sendRequest(
@@ -156,38 +155,23 @@ function ProductEditPanel(props) {
       updateProducthandler
     );
 
-    // await (async () => {
-    //   console.log("RESULT");
-    //   const res = await axiosInstance.patch(
-    //     `seller/product/${data._id}`,
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }
-    //   );
-    //   console.log(res, "RESULT===>");
-    // })();
-
-    // window.location.reload();
+   
   };
-
   return (
     <>
-      <div className="row flex-xl-row flex-column justify-content-between text-dark p-2">
+      <div className="row flex-xl-row flex-column justify-content-around cardDetailes px-5 py-2 mb-4 ">
         {/* <div className="d-flex justify-content-end">
-                    <button type="button" class="btn btn-dark rounded-circle" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <FontAwesomeIcon icon={faPen} />
-                    </button>
-                </div> */}
+                  <button type="button" class="btn btn-dark rounded-circle" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      <FontAwesomeIcon icon={faPen} />
+                  </button>
+              </div> */}
 
         <div
-          className="modal fade"
+          className="modal fade "
           id="staticBackdrop"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
-          tabIndex="-1"
+          tabindex="-1"
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
@@ -280,6 +264,7 @@ function ProductEditPanel(props) {
                       onChange={(e) => imageHandler(e.target.files)}
                       className="form-control"
                       id="exampleInputPassword1"
+                      required
                       multiple
                     />
                     <div className="text-danger">
@@ -288,10 +273,10 @@ function ProductEditPanel(props) {
                   </div>
                 </form>
               </div>
-              <div className="modal-footer">
+              <div class="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close
@@ -305,7 +290,7 @@ function ProductEditPanel(props) {
                     editFormErr.imagesFieldErr ||
                     editFormErr.descriptionFieldErr
                   }
-                  className="btn btn-dark"
+                  class="btn btn-dark"
                 >
                   Update
                 </button>
@@ -313,9 +298,10 @@ function ProductEditPanel(props) {
             </div>
           </div>
         </div>
+        {/* image */}
         <div
           id="carouselExampleIndicators"
-          className="carousel slide col-xl-6 col-12 pt-xl-2"
+          className="carousel slide col-xl-6 col-md-8 pt-xl-2 "
           data-bs-ride="carousel"
         >
           <div className="carousel-indicators">
@@ -373,11 +359,12 @@ function ProductEditPanel(props) {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
-        <div className="col-xl-6 col-12 mt-4 mt-xl-0">
-          <div className="d-flex justify-content-end ">
+        {/* card */}
+        <div className="col-xl-6 col-md-8 mt-4 mt-xl-0 ">
+          <div className="d-flex justify-content-end mt-2">
             <button
               type="button"
-              className="btn btn-dark rounded-circle me-3"
+              className="btn btn-details rounded-circle me-3"
               onClick={() => {
                 deleteProduct();
               }}
@@ -386,14 +373,14 @@ function ProductEditPanel(props) {
             </button>
             <button
               type="button"
-              className="btn btn-dark rounded-circle"
+              className="btn btn-details rounded-circle"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
             >
               <FontAwesomeIcon icon={faPen} />
             </button>
           </div>
-          <p className="display-5">{data.name}</p>
+          <h4 className="productName">{data.name}</h4>
           <div className="d-flex">
             <StarRatings
               starDimension="1rem"
@@ -401,14 +388,16 @@ function ProductEditPanel(props) {
               rating={rating}
               starRatedColor="orange"
             />
-            <p className="m-1 ms-2">{rating || 0} / 5</p>
+            <p className="m-1 ms-2 productPrice">{rating || 0} / 5</p>
           </div>
-          <div className="mt-3">
-            <p>Seller: {data.sellerId?.userName}</p>
-            <p>{data.price} EGP</p>
-            <p>Category: {data.categoryId?.name}</p>
+          <div className="mt-2">
+            <p className="sellerName ">Seller: {data.sellerId?.userName}</p>
+            <p className="productPrice">{data.price} EGP</p>
+            <p className="productCategory">
+              Category: {data.categoryId?.name}
+            </p>
           </div>
-          <div className="my-5">
+          <div className="my-2">
             <h5>
               <span
                 className={`badge ${
@@ -417,15 +406,15 @@ function ProductEditPanel(props) {
                     : data.status === "active"
                     ? "bg-success"
                     : "bg-danger"
-                }`}
+                } productStatus`}
               >
                 {data.status}
               </span>
             </h5>
           </div>
           {/* <div className={`col-12 d-flex justify-content-center align-self-bottom pt-2`}>
-                        <button className='btn shadow maroon text-light text-font w-100 me-1' data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit <FontAwesomeIcon icon={faPen} /></button>
-                    </div> */}
+                      <button className='btn shadow maroon text-light text-font w-100 me-1' data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit <FontAwesomeIcon icon={faPen} /></button>
+                  </div> */}
         </div>
       </div>
     </>

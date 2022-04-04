@@ -1,0 +1,24 @@
+.divPrd {
+  margin: 0 10rem;
+}
+
+.divLeftCard {
+  border-right: 2px dotted #dbdbdb;
+}
+
+.cardOrder {
+  border-radius: 20px !important;
+  margin: 20px 50px !important;
+}
+
+.imgSEller {
+  width: 4rem;
+  height: 4rem;
+}
+
+@media (max-width: 987px) {
+  .divLeftCard {
+    border: 0px !important;
+  }
+}
+/*# sourceMappingURL=order-history.module.css.map */

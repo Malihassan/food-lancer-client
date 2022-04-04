@@ -1,11 +1,12 @@
-import "./SignupPage.css"
+import "./SignupPage.scss"
 import React from 'react'
 import SignupSeller from './../../components/auth/seller/signupComponent/SignupSeller';
+import SignupBuyer from './../../components/auth/buyer/signupComponent/SignupBuyer';
 function SignupPage() {
   return (
     <>
       
-        <div className="d-flex p-5 align-items-start justify-content-xl-start justify-content-lg-center justify-content-md-center justify-content-sm-center signuppage-container ">
+        <div className=" signuppage-container  d-flex p-5 align-items-start justify-content-xl-start justify-content-lg-center justify-content-md-center  justify-content-sm-center">
      
       <div className="col-xl-4 col-lg-8 col-md-12 signup p-3 shadow-sm">
         <nav className="">
@@ -51,7 +52,7 @@ function SignupPage() {
             role="tabpanel"
             aria-labelledby="nav-profile-tab"
           >
-            blahhhhhhhh
+           <SignupBuyer></SignupBuyer>
           </div>
         </div>
       </div>

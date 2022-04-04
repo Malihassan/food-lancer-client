@@ -1,1 +1,46 @@
-/* No CSS *//*# sourceMappingURL=product-edit-panel.css.map */
+.cardDetailes {
+  background-color: #fff !important;
+  color: #091b29 !important;
+}
+
+.btn-details {
+  background-color: #091b29 !important;
+  color: #f8f8f7 !important;
+}
+
+.productPrice {
+  color: #9f0000;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.bg-warning {
+  color: #091b29  !important;
+  background-color: #f0a500;
+}
+
+.bg-success {
+  color: #f8f8f7  !important;
+  background-color: #1f00a4;
+}
+
+.sellerName {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.productCategory {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.productName {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.productStatus {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+/*# sourceMappingURL=product-edit-panel.css.map */

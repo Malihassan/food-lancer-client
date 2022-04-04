@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import OrderList from "../../components/order/orderList/OrderList";
 import SellerInfo from "../../components/order/odrerSellerInfo/SellerInfo";
 //import { axiosInstance } from "../../network/axiosConfig";
-import OffCanvas from "../../components/shared/OffCanvas";
+import OffCanvas from "../../components/shared/offCanvas/OffCanvas";
 import classes from "./sellerHome.module.scss";
 import { useSelector } from "react-redux";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
@@ -141,14 +141,14 @@ function SellerHome(params) {
               {status === "in progress" && (
                 <div className="d-flex justify-content-end my-3">
                   <div
-                    class="btn-group"
+                    className="btn-group"
                     role="group"
                     aria-label="Basic mixed styles example"
                   >
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" className="btn btn-danger">
                       Rejected
                     </button>
-                    <button type="button" class="btn btn-success">
+                    <button type="button" className="btn btn-success">
                       Accepted
                     </button>
                   </div>

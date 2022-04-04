@@ -33,7 +33,8 @@ function App() {
   const authenticated = useSelector((state) => state.auth.authenticated);
   const loggedAs = useSelector((state) => state.auth.userType);
 
-  //   useEffect(() => {}, [authenticated]);
+  console.log(authenticated, loggedAs);
+  useEffect(() => {}, [authenticated, loggedAs]);
   return (
     <>
       <Loader />
@@ -41,34 +42,32 @@ function App() {
       <Routes>
         {loggedAs === "viewer" && !authenticated && (
           <>
-            {/* <Route path="/home" element={<Navigate replace to="/" />} /> */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path="/test" element={<BuyerHome />} />
             <Route
               path="/seller/account/resetPassword/:token"
               element={<ResetPassword />}
             />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/test" element={<BuyerHome />} />
           </>
         )}
 
         {loggedAs === "seller" && authenticated && (
           <>
             <Route path="/" element={<Navigate replace to="/home" />} />
-
             <Route path="/home" element={<SellerHome />} />
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/myProducts" element={<ProductList />} />
             <Route path="/myProducts/:id" element={<ProductDetails />} />
             <Route path="/myProducts/addProduct" element={<ProductForm />} />
-            {/* // todo: product details + edit product */}
           </>
         )}
 
-        {loggedAs === "buyer" && (
+        {loggedAs === "buyer" && authenticated && (
           <>
+            <Route path="/" element={<LandingPage/>} />
             <Route path="/updateProfile" element={<BuyerProfile />} />
             <Route path="/favs" element={<Favourites />} />
           </>

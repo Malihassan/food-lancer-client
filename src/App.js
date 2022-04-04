@@ -31,8 +31,8 @@ function App() {
   const authenticated = useSelector((state) => state.auth.authenticated);
   const loggedAs = useSelector((state) => state.auth.userType);
 
-  console.log(authenticated, loggedAs);
-  useEffect(() => {}, [authenticated, loggedAs]);
+  // console.log(authenticated, loggedAs);
+  // useEffect(() => {}, [authenticated, loggedAs]);
   return (
     <>
       <Loader />
@@ -43,11 +43,10 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path="/forgetPassword/:userType" element={<ForgetPassword />} />
             <Route
-              path="/seller/account/resetPassword/:token"
-              element={<ResetPassword />}
-            />
+              path="/:userType/account/resetPassword/:token"
+              element={<ResetPassword />} />
           </>
         )}
 
@@ -67,13 +66,12 @@ function App() {
             <Route path="/" element={<LandingPage/>} />
             <Route path="/updateProfile" element={<BuyerProfile />} />
             <Route path="/favs" element={<Favourites />} />
+            <Route path="/orderHistory" element={<OrderHistory />} />
           </>
         )}
-        <Route path="/buyer/profile/edit" element={<BuyerProfile />} />
         {/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-        <Route path="/orderHistory" element={<OrderHistory />} />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
       <Footer />

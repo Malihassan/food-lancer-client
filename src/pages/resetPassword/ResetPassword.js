@@ -5,7 +5,7 @@ import useFetch from "../../hooks/useFetch";
 const axios = require("axios");
 
 function ResetPassword() {
-  let { token } = useParams();
+  let { token , userType} = useParams();
   const passReg = new RegExp(
     "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
   );
@@ -51,13 +51,12 @@ function ResetPassword() {
       });
     }
   };
-  console.log(serverMessage);
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
     document.cookie = `token=${token}`;
     sendRequest(
       {
-        url: "seller/account/resetPassword",
+        url: `${userType}/account/resetPassword`,
         method: "PATCH",
         body: { ...newPassword },
       },

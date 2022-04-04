@@ -38,7 +38,7 @@ const Navbar = ({ bg, buttons }) => {
       </Link>
       <div
         className={`text-light py-2 mt-2 px-0 col-sm-7 col-12 d-flex align-items-center ${
-          loggedAs == "viewer"
+          loggedAs === "viewer"
             ? "justify-content-end"
             : "justify-content-around"
         } `}

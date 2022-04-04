@@ -64,11 +64,11 @@ function LoginSeller() {
     dispatch(sellerLogin(userForm)).then((res) => {
 		console.log(res.payload._id);
       if (res.meta.requestStatus === "fulfilled") {
-        setSocket(	
-          io("http://localhost:3300", {
-            query: { type: "seller", id: res.payload._id },
-          })
-        );
+        // setSocket(	
+        //   io("http://localhost:3300", {
+        //     query: { type: "seller", id: res.payload._id },
+        //   })
+        // );
 
         // dispatch(socketActions.connect({type:'seller',id:'5252'}))
 

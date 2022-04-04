@@ -1,0 +1,102 @@
+.cardContainer {
+  background-color: #fff !important;
+  color: #091b29 !important;
+  font-Family: "Source Serif Pro", serif !important;
+  border-radius: 1rem !important;
+  -webkit-border-radius: 1rem !important;
+  -moz-border-radius: 1rem !important;
+  -ms-border-radius: 1rem !important;
+  -o-border-radius: 1rem !important;
+  border-top-left-radius: 5rem !important;
+}
+
+.cardContainer .cardInfo {
+  margin-top: 1rem;
+  padding-left: .5rem;
+}
+
+.cardContainer .imageContainer {
+  padding: .5rem;
+  height: 35vh !important;
+  border-radius: 1rem !important;
+  -webkit-border-radius: 1rem !important;
+  -moz-border-radius: 1rem !important;
+  -ms-border-radius: 1rem !important;
+  -o-border-radius: 1rem !important;
+  border-top-left-radius: 5rem !important;
+  border-bottom-right-radius: 5rem !important;
+}
+
+.cardContainer .imageContainer img {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem !important;
+  -webkit-border-radius: 1rem !important;
+  -moz-border-radius: 1rem !important;
+  -ms-border-radius: 1rem !important;
+  -o-border-radius: 1rem !important;
+  border-top-left-radius: 5rem !important;
+  border-bottom-right-radius: 5rem !important;
+}
+
+.cardContainer .iconContainerFav {
+  position: absolute !important;
+  bottom: 4rem !important;
+  right: 4rem !important;
+  font-size: larger !important;
+  background-color: transparent;
+  color: #9f0000;
+}
+
+.cardContainer .iconContainerCart {
+  position: absolute;
+  top: 2rem;
+  right: 4rem;
+  font-size: larger !important;
+  background-color: transparent;
+  color: #091b29;
+}
+
+.cardContainer .productName {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+}
+
+.cardContainer .productPrice {
+  color: #9f0000 !important;
+  font-size: larger !important;
+  font-weight: 500 !important;
+}
+
+.cardContainer .productDescription {
+  color: #8f8f8f !important;
+  height: 12vh !important;
+}
+
+.cardContainer .productDescription a {
+  color: #091b29 !important;
+  text-decoration: none !important;
+}
+
+.cardContainer .productSeller {
+  font-size: large !important;
+  font-weight: 500 !important;
+}
+
+.cardContainer .productCategory {
+  font-size: large !important;
+  font-weight: 400 !important;
+}
+
+.cardContainer .productButton {
+  border: 0;
+  background-image: linear-gradient(145deg, #f0a500 0%, #091b29 50%, #091b29 80%, #9f0000 100%);
+  color: #f8f8f7;
+}
+
+.cardContainer .productButton:hover {
+  border: 0;
+  background-image: linear-gradient(145deg, #f0a500 0%, #091b29 50%, #091b29 80%, #9f0000 100%);
+  color: #f0a500;
+}
+/*# sourceMappingURL=BuyerProduct.module.css.map */

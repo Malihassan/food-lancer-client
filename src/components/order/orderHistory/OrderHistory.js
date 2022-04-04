@@ -11,21 +11,26 @@ import { HiIdentification } from "react-icons/hi";
 import { BsCalendarDate } from "react-icons/bs";
 export default function OrderHistory() {
   const [ratingValue, setRatingValue] = useState(0);
+  const [isReviewd, setIsReviewd] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState({});
+  const [selectedProductId, setSelectedProductId] = useState("");
   const [reviewForm, setReviewForm] = useState({
     comment: "",
-    rate: 0,
+    select: "",
   });
   const [reviewFormErrors, setReviewFormErrors] = useState({
     commentError: null,
-    rateError: null,
+    selectError: null,
   });
   const handleRating = (rate) => {
+    setIsReviewd(false);
     setRatingValue(rate);
   };
   const handelFormChange = (ev) => {
     switch (ev.target.id) {
       case "comment":
         {
+          setIsReviewd(false);
           setReviewForm({
             ...reviewForm,
             comment: ev.target.value,
@@ -37,16 +42,12 @@ export default function OrderHistory() {
           });
         }
         break;
-      case "rate":
+      case "select":
         {
-          setReviewForm({
-            ...reviewForm,
-            rate: ev.target.value,
-          });
-
           setReviewFormErrors({
             ...reviewFormErrors,
-            rateError: ratingValue === 0 ? "this field is required" : null,
+            selectError:
+              selectedProductId == "select" ? "this field is required" : null,
           });
         }
         break;
@@ -55,11 +56,39 @@ export default function OrderHistory() {
     }
   };
   const onChangeHandler = (change) => {
-    console.log(change.target.options[2].selected);
+    const options = change.target.options;
+    setIsReviewd(false);
+    for (let index = 0; index < options.length; index++) {
+      if (options[index].selected) {
+        setSelectedProductId(options[index].id);
+      }
+    }
   };
-  const handelFormSubmit = (event) => {
-    console.log("tesssssssssst");
+  const handelFormSubmit = async (event) => {
     event.preventDefault();
+    console.log(selectedOrder, "order");
+    console.log(selectedOrder.buyerId, "buyerId");
+    console.log(selectedOrder.sellerId._id, "sellerId");
+    console.log(reviewForm.comment, "comment");
+    console.log(ratingValue / 20, "rate");
+    console.log(selectedProductId, "productId");
+    try {
+      const update = await axiosInstance.patch(
+        `buyer/product/updatedReview/${selectedProductId}`,
+        {
+          comments: reviewForm.comment,
+          rate: ratingValue / 20,
+          orderId: selectedOrder._id,
+          buyerId: selectedOrder.buyerId,
+          sellerId: selectedOrder.sellerId._id,
+        }
+      );
+      console.log(update, "updated");
+    } catch (err) {
+      if (err.message == "Request failed with status code 304") {
+        setIsReviewd(true);
+      }
+    }
   };
   const [orders, setOrder] = useState([]);
   useEffect(async () => {
@@ -81,7 +110,7 @@ export default function OrderHistory() {
                 className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-12 p-3 ${classes.divLeftCard}`}
               >
                 {order.status == "in progress" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-warning">
+                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
                     {order.status}
                   </span>
                 )}
@@ -151,6 +180,7 @@ export default function OrderHistory() {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
+                    onClick={()=>{console.log(order); setSelectedOrder(order)}}
                   >
                     add review
                   </button>
@@ -162,9 +192,9 @@ export default function OrderHistory() {
                     aria-hidden="true"
                   >
                     <div className="modal-dialog">
-                      <div className="modal-content">
+                      <div className="modal-content bg-light">
                         <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">
+                          <h5 className="modal-title text-secondary fw-light" id="exampleModalLabel">
                             Add Review
                           </h5>
                           <button
@@ -175,21 +205,27 @@ export default function OrderHistory() {
                           ></button>
                         </div>
                         <div className="modal-body">
-                          <form onSubmit={handelFormSubmit}>
+                          <form
+                            onSubmit={handelFormSubmit}
+                          >
                             <div className="mb-3">
-                              <label
-                                htmlFor="products"
+                              {/* <label
+                                htmlFor="select"
                                 className="col-form-label fw-bold fs-5"
                               >
-                                Select Product to give comment and rate
-                              </label>
+                                Select Product
+                              </label> */}
                               <select
-                                id="products"
+                                id="select"
                                 className="form-select form-select-sm"
                                 aria-label=".form-select-sm example"
                                 onChange={onChangeHandler}
                               >
-                                <option value="" name="products">
+                                <option
+                                  value=""
+                                  name="products"
+                                  aria-describedby="selectHelp"
+                                >
                                   Select Your Product
                                 </option>
 
@@ -198,6 +234,7 @@ export default function OrderHistory() {
                                     <option
                                       key={order.products.indexOf(product)}
                                       value={product._id.name}
+                                      id={product._id._id}
                                       name="products"
                                     >
                                       {product._id.name}
@@ -206,12 +243,13 @@ export default function OrderHistory() {
                                 })}
                               </select>
                               <div
-                                id="commentHelp"
+                                id="selectHelp"
                                 className="text-danger form-text"
                               >
-                                {reviewFormErrors.commentError}
+                                {reviewFormErrors.selectError}
                               </div>
                             </div>
+
                             <div className="mb-3">
                               <label
                                 htmlFor="comment"
@@ -243,21 +281,8 @@ export default function OrderHistory() {
                                 htmlFor="rate"
                                 className="form-label fw-bold fs-5"
                               >
-                                rate
+                                Rate
                               </label>
-                              {/* <input
-                                type="number"
-                                className={`form-control ${
-                                  reviewFormErrors.rateError
-                                    ? "border-danger"
-                                    : ""
-                                }`}
-                                id="rate"
-                                name="rate"
-                                aria-describedby="rateHelp"
-                                value={reviewForm.rate}
-                                onChange={(e) => handelFormChange(e)}
-                              /> */}
                               <br />
                               <div className="d-flex justify-content-between">
                                 <Rating
@@ -268,6 +293,7 @@ export default function OrderHistory() {
                                   onClick={handleRating}
                                   ratingValue={ratingValue}
                                   allowHalfIcon
+                                  allowHover
                                   size={20}
                                   fillColorArray={[
                                     "red",
@@ -291,6 +317,11 @@ export default function OrderHistory() {
                                 {reviewFormErrors.rateError}
                               </div>
                             </div>
+                            {isReviewd && (
+                              <h5 className="text-danger fw-light">
+                                this product already commented by your
+                              </h5>
+                            )}
                             <div className="modal-footer border-0">
                               <button
                                 type="button"
@@ -302,7 +333,7 @@ export default function OrderHistory() {
                               <button
                                 type="submit"
                                 disabled={
-                                  reviewForm.comment == "" || ratingValue == 0
+                                  reviewForm.comment == "" || ratingValue == 0 || selectedProductId==""
                                 }
                                 className="btn btn-primary"
                               >

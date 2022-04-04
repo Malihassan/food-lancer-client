@@ -9,8 +9,12 @@ import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
 import { BsCalendarDate } from "react-icons/bs";
+import useFetch from "../../../hooks/useFetch";
+// import { loadActions } from "../../../store/LoadingSlice";
 export default function OrderHistory() {
+  const { sendRequest, hasError } = useFetch();
   const [ratingValue, setRatingValue] = useState(0);
+  const [isAdded, setIsAdded] = useState(false);
   const [isReviewd, setIsReviewd] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -24,6 +28,7 @@ export default function OrderHistory() {
   });
   const handleRating = (rate) => {
     setIsReviewd(false);
+    setIsAdded(false);
     setRatingValue(rate);
   };
   const handelFormChange = (ev) => {
@@ -42,15 +47,6 @@ export default function OrderHistory() {
           });
         }
         break;
-      case "select":
-        {
-          setReviewFormErrors({
-            ...reviewFormErrors,
-            selectError:
-              selectedProductId == "select" ? "this field is required" : null,
-          });
-        }
-        break;
       default:
         return "No Match";
     }
@@ -58,6 +54,7 @@ export default function OrderHistory() {
   const onChangeHandler = (change) => {
     const options = change.target.options;
     setIsReviewd(false);
+    setIsAdded(false);
     for (let index = 0; index < options.length; index++) {
       if (options[index].selected) {
         setSelectedProductId(options[index].id);
@@ -66,36 +63,46 @@ export default function OrderHistory() {
   };
   const handelFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(selectedOrder, "order");
-    console.log(selectedOrder.buyerId, "buyerId");
-    console.log(selectedOrder.sellerId._id, "sellerId");
-    console.log(reviewForm.comment, "comment");
-    console.log(ratingValue / 20, "rate");
-    console.log(selectedProductId, "productId");
-    try {
-      const update = await axiosInstance.patch(
-        `buyer/product/updatedReview/${selectedProductId}`,
-        {
+    sendRequest(
+      {
+        url: `buyer/product/updatedReview/${selectedProductId}`,
+        method: "PATCH",
+        body: {
           comments: reviewForm.comment,
           rate: ratingValue / 20,
           orderId: selectedOrder._id,
           buyerId: selectedOrder.buyerId,
           sellerId: selectedOrder.sellerId._id,
+        },
+      },
+      (res) => {
+        if (res.status === 200) {
+          setIsReviewd(false);
+          setIsAdded(true);
         }
-      );
-      console.log(update, "updated");
-    } catch (err) {
-      if (err.message == "Request failed with status code 304") {
-        setIsReviewd(true);
       }
-    }
+    );
   };
+  useEffect(() => {
+    if (hasError?.error === "this product already have review !") {
+      setIsAdded(false);
+      setIsReviewd(true);
+    }
+  }, [hasError]);
   const [orders, setOrder] = useState([]);
   useEffect(async () => {
-    const allData = await axiosInstance.get(
-      `buyer/order/620c1e0a2cad1441278d57f9`
+    sendRequest(
+      {
+        url: `buyer/order/myOrders`,
+        method: "GET",
+      },
+      (res) => {
+        if (res.status === 200) {
+          const allData = res.data;
+          setOrder(allData);
+        }
+      }
     );
-    setOrder(allData.data);
   }, []);
   return (
     <div className="row justify-content-center bg-light mx-0">
@@ -180,7 +187,10 @@ export default function OrderHistory() {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
-                    onClick={()=>{console.log(order); setSelectedOrder(order)}}
+                    onClick={() => {
+                      console.log(order);
+                      setSelectedOrder(order);
+                    }}
                   >
                     add review
                   </button>
@@ -194,7 +204,10 @@ export default function OrderHistory() {
                     <div className="modal-dialog">
                       <div className="modal-content bg-light">
                         <div className="modal-header">
-                          <h5 className="modal-title text-secondary fw-light" id="exampleModalLabel">
+                          <h5
+                            className="modal-title text-secondary fw-light"
+                            id="exampleModalLabel"
+                          >
                             Add Review
                           </h5>
                           <button
@@ -205,9 +218,7 @@ export default function OrderHistory() {
                           ></button>
                         </div>
                         <div className="modal-body">
-                          <form
-                            onSubmit={handelFormSubmit}
-                          >
+                          <form onSubmit={handelFormSubmit}>
                             <div className="mb-3">
                               {/* <label
                                 htmlFor="select"
@@ -322,6 +333,11 @@ export default function OrderHistory() {
                                 this product already commented by your
                               </h5>
                             )}
+                            {isAdded && (
+                              <h5 className="text-success fw-light">
+                                Added Successfully
+                              </h5>
+                            )}
                             <div className="modal-footer border-0">
                               <button
                                 type="button"
@@ -333,7 +349,9 @@ export default function OrderHistory() {
                               <button
                                 type="submit"
                                 disabled={
-                                  reviewForm.comment == "" || ratingValue == 0 || selectedProductId==""
+                                  reviewForm.comment == "" ||
+                                  ratingValue == 0 ||
+                                  selectedProductId == ""
                                 }
                                 className="btn btn-primary"
                               >
@@ -386,6 +404,5 @@ export default function OrderHistory() {
         );
       })}
     </div>
-
   );
 }

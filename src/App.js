@@ -1,7 +1,7 @@
 import "./App.scss";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import LoginPage from "./pages/login/loginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -76,7 +76,7 @@ function App() {
         {/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-        <Route path="/orderHistory" element={<OrderHistory />} />
+        <Route path="/myOrders" element={<OrderHistory />} />
         <Route path="*" element={<Navigate replace to="/" />} />
         <Route path="/home" element={<BuyerHome />} />
       </Routes>

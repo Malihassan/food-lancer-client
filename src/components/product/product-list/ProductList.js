@@ -32,12 +32,14 @@ export default function ProductList() {
 
   const products = useSelector((state) => state.product.products);
   const pageCount = useSelector((state) => state.product.pageCount);
-  const totoalDocs = useSelector((state) => state.product.totoalDocs);
+  //const totoalDocs = useSelector((state) => state.product.totoalDocs);
   return (
     <div className={`container-fluid ${classes.bgColor} `}>
-      <Link to="addProduct" className={`btn ${classes.addBtn}  my-2`}>
+     <div className="d-flex justify-content-end">
+     <Link to="addProduct" className={`btn ${classes.addBtn}  my-2`}>
         Add Product
       </Link>
+     </div>
       <div className="container">
       {products.length === 0 && <Empty />}
       {products.length !== 0 && (
@@ -65,7 +67,7 @@ export default function ProductList() {
               pageRangeDisplayed={3}
               onPageChange={handelPageClick}
               containerClassName={`${classes.paginationContainer} pagination justify-content-center`}
-              pageClassName={"page-item px-3 py-1"}
+              pageClassName={"page-item px-2 py-1"}
               pageLinkClassName={`page-link ${classes.pageLink}`}
               previousClassName={`page-item `}
               previousLinkClassName={`page-link ${classes.pageItem}`}

@@ -61,7 +61,6 @@ function SellerHome(params) {
   const { sendRequest } = useFetch();
 
   async function sellerInfoDataHandler(res) {
-    console.log(res);
     if (res.statusText === "OK") {
       setUserInfo({
         img: "",

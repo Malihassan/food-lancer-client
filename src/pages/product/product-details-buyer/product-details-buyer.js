@@ -1,10 +1,11 @@
 import ProductTabs from "../../../components/product/product-tabs.js/product-tabs";
 import React, { useState, useEffect } from "react";
-import { axiosInstance } from "../../../network/axiosConfig";
 import { useParams } from "react-router-dom";
 import "./product-details-buyer.scss";
 import useFetch from "../../../hooks/useFetch";
 import ProductInfo from "../../../components/product/product-info/product-info"
+
+
 function ProductDetailsBuyer() {
   const { sendRequest } = useFetch();
   const [productData, setProductData] = useState({});

@@ -1,12 +1,38 @@
 import { useSelector, useDispatch } from "react-redux";
+import { orderActions } from "../../../store/orderSlice";
 import { useEffect, useState } from "react";
 import StarRatings from 'react-star-ratings';
-import "./buyer-order.scss"
+import "./buyer-order.scss";
+import useFetch from "../../../hooks/useFetch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+
 
 function BuyerOrder(){
+    const { sendRequest } = useFetch();
     const orderCards = useSelector((state) => state.order);
     const [sortedOrders, setSortedOrders] = useState({});
-    const [sellerOrderPrice, setSellerOrderPrice] = useState({})
+    const [sellerOrderPrice, setSellerOrderPrice] = useState({});
+    const [buyerData, setBuyerData] = useState({});
+    const dispatch = useDispatch();
+    async function buyerDataHandler(res) {
+        if (res.status === 200) {
+          console.log(res);
+          setBuyerData(res.data);
+        }
+      }
+
+    useEffect(()=>{
+
+        sendRequest(
+            {
+              method: "GET",
+              url: `buyer/account/info`,
+            },
+            buyerDataHandler
+        );
+
+    }, [])
 
     useEffect(()=>{
 
@@ -21,41 +47,75 @@ function BuyerOrder(){
     // },[sortedOrders]);
 
     const sortSellerOrders = () => {
-        for(let product of orderCards.selectedOrderProducts){
-            let seller = sortedOrders[product.sellerId._id]? true : false;
-            let sellerProduct = seller && sortedOrders[product.sellerId._id].find((item) => item._id === product._id)?
-            sortedOrders[product.sellerId._id].find((item) => item._id === product._id)
-            : null;
-            if(!seller){
-                console.log("no seller")
-                setSortedOrders({
-                    ...sortedOrders,
-                    [product.sellerId._id]: [product]
-                })
-                setSellerOrderPrice({
-                    [product.sellerId._id]: product.price * product.serves
-                })
-            } else if(seller && !sellerProduct){
-                console.log("seller yes, product no")
-                setSortedOrders({
-                    ...sortedOrders,
-                    [product.sellerId._id]: [...sortedOrders[product.sellerId._id], product]
-                })
-                setSellerOrderPrice({
-                    [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] + product.price * product.serves
-                })
-            }
 
-            console.log(sortedOrders);
+        if(orderCards.selectedOrderProducts){
+            for(let product of orderCards.selectedOrderProducts){
+
+                let seller = sortedOrders[product.sellerId._id]? true : false;
+    
+                let sellerProduct = seller && 
+                sortedOrders[product.sellerId._id].find((item) => item._id === product._id)?
+                sortedOrders[product.sellerId._id].find((item) => item._id === product._id)
+                : null;
+    
+                if(!seller){
+                    setSortedOrders({
+                        ...sortedOrders,
+                        [product.sellerId._id]: [product]
+                    })
+                    setSellerOrderPrice({
+                        [product.sellerId._id]: product.price * product.serves
+                    })
+                } else if(seller && !sellerProduct){
+                    setSortedOrders({
+                        ...sortedOrders,
+                        [product.sellerId._id]: [...sortedOrders[product.sellerId._id], product]
+                    })
+                    setSellerOrderPrice({
+                        [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] + product.price * product.serves
+                    })
+                }
+    
+                console.log(sortedOrders);
+            }
         }
+    }
+
+    const removeOrder = async (sellerProducts, seller) => {
+        let orderList = [...orderCards.selectedOrderProducts]
+        for(let product of sellerProducts){
+            orderList = orderList.filter((item) => item._id !== product._id);
+        }
+
+        await dispatch(orderActions.setCartItem({...orderCards, product: orderList}));
+
+        const filteredOrders = Object.keys(sortedOrders)
+            .filter(key => !key.includes(seller))
+            .reduce((obj, key) => {
+                obj[key] = sortedOrders[key];
+                return obj;
+        }, {});
+
+        setSortedOrders(filteredOrders);
+    }
+
+    const postOrder = () => {
+        // sendRequest({
+        //     method: "POST",
+        //     url: `buyer/order/add`,
+        //     body: {
+        //         
+        //     }
+        // })
     }
 
     return (
         <div className="p-4">
             {Object.keys(sortedOrders).map((seller, idx)=>{
                 return(
-                    <div className="card text-font" key={idx}>
-                        <div className="card-body p-4 d-flex justify-content-between">
+                    <div className="card d-flex flex-column text-font p-3" key={idx}>
+                        <button onClick={()=> removeOrder(sortedOrders[seller], seller)} className="btn btn-outline-danger w-2-5 align-self-end text-center d-flex"><FontAwesomeIcon className="Xmark-font align-self-center" icon={faXmark} /></button>
+                        <div className="card-body d-flex justify-content-between">
                             <div className="card col-6">
                                 <ul className="list-group list-group-flush">
                                     <li className="list-group-item">
@@ -84,9 +144,9 @@ function BuyerOrder(){
                                     <li className="list-group-item">
                                         <div className="fw-light">
                                             <p className="h5 mb-3">Buyer Details</p>
-                                            <div>Buyer: </div>
-                                            <div>Address: </div>
-                                            <div>Phone Number: </div>
+                                            <div>Buyer: {buyerData.firstName} {buyerData.lastName}</div>
+                                            <div>Address: {buyerData.address}</div>
+                                            <div>Phone Number: {buyerData.phone}</div>
                                         </div>
                                     </li>
                                     {/* <li className="list-group-item"></li> */}
@@ -124,7 +184,7 @@ function BuyerOrder(){
                                             <div className="h5">Total</div>
                                             <div className="display-6 mb-4">{sellerOrderPrice[seller]}$</div>
                                         </div>
-                                        <button className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
+                                        <button onClick={()=> postOrder()} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
                                     </li>
                                 </ul>
                             </div>

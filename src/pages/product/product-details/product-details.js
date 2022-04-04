@@ -6,6 +6,7 @@ import "./product-details.scss";
 import ProductEditPanel from "../../../components/product/product-edit-panel/product-edit-panel";
 import useFetch from "../../../hooks/useFetch";
 import ProductInfo from "../../../components/product/product-info/product-info";
+
 function ProductDetails() {
   const { sendRequest } = useFetch();
   const [productData, setProductData] = useState({});

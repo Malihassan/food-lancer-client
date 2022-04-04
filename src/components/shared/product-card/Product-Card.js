@@ -43,7 +43,7 @@ export default function ProductCard(props) {
 					className={`${classes.imageContainer} p-2`}
 				>
 					<img
-						src={images ? images[count].url : ""}
+						src={images ? images[count]?.url : ""}
 						alt="..."
 						style={{ height: "100%", width: "100%" }}
 					/>
@@ -82,9 +82,9 @@ export default function ProductCard(props) {
 				>
 					{product?.name}
 				</h5>
-				<h6 className={`${classes.prdh6} ${classes.userName} card-title`}>
+				{/* 	<h6 className={`${classes.prdh6} ${classes.userName} card-title`}>
 					{product?.sellerId.userName}
-				</h6>
+				</h6> */}
 				{/* 	<p
 					id={`${classes.productDescription}`}
 					className={`${classes.prdP} card-text my-2`}
@@ -92,18 +92,20 @@ export default function ProductCard(props) {
 					{product?.description}
 				</p> */}
 				{product.description.length > MAX_LENGTH ? (
-					<div
-						className={`${classes.prdP} ${classes.productDescription} card-text my-2`}
-					>
+					<div>
 						{`${product.description.substring(0, MAX_LENGTH)}...`}
 						<Link to={`${product?._id}`}>read more</Link>
 					</div>
 				) : (
-					<p>{product.description}</p>
+					<p
+						className={`${classes.prdP} ${classes.productDescription} card-text my-2`}
+					>
+						{product.description}
+					</p>
 				)}
 				<div className="d-flex justify-content-between align-items-center">
 					<span className={`${classes.prdSpan} ${classes.productPrice}`}>
-						EGP {product?.price}
+						EGP {product?.price.toFixed(2)}
 					</span>
 					<div>
 						{/* <button

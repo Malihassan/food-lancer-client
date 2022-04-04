@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OffCanvas from "../../shared/OffCanvas";
+import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import {IoFilterOutline}  from 'react-icons/io5'
 function OrderFilter(props) {
   const [toggleCanvas, setToggleCanvas] = useState(false);
@@ -11,11 +11,11 @@ function OrderFilter(props) {
     <>
       <div className="container d-flex justify-content-end">
         <button
-          className="btn mt-2 px-4" style={{backgroundColor:"#154d6b",color:'white'}}
+          className="btn mt-2 px-4" style={{backgroundColor:"#091b29",color:'#f8f8f7'}}
           onClick={toggleCanvasHandler}
           type="button"
         >
-          <IoFilterOutline className="me-3" style={{color:"white" ,fontSize:"25px"}}/>
+          <IoFilterOutline className="me-3" style={{color:"#f8f8f7" ,fontSize:"25px"}}/>
           Filter
         </button>
       </div>

@@ -2,11 +2,10 @@ import ProductTabs from "../../../components/product/product-tabs.js/product-tab
 import React, { useState, useEffect } from "react";
 import { axiosInstance } from "../../../network/axiosConfig";
 import { useParams } from "react-router-dom";
-import "./product-details.scss";
-import ProductEditPanel from "../../../components/product/product-edit-panel/product-edit-panel";
+import "./product-details-buyer.scss";
 import useFetch from "../../../hooks/useFetch";
-import ProductInfo from "../../../components/product/product-info/product-info";
-function ProductDetails() {
+import ProductInfo from "../../../components/product/product-info/product-info"
+function ProductDetailsBuyer() {
   const { sendRequest } = useFetch();
   const [productData, setProductData] = useState({});
   const param = useParams();
@@ -28,7 +27,7 @@ function ProductDetails() {
       sendRequest(
         {
           method: "GET",
-          url: `seller/product/${param.id}`,
+          url: `buyer/product/${param.id}`,
         },
         prdoductDataHandler
       );
@@ -52,4 +51,4 @@ function ProductDetails() {
 
 }
 
-export default ProductDetails;
+export default ProductDetailsBuyer;

@@ -24,6 +24,7 @@ import Favourites from "./components/buyer/Favourites";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import BuyerOrder from "./components/order/buyer-order/buyer-order";
 library.add(fab, fas);
 //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/myProducts" element={<ProductList />} />
             <Route path="/myProducts/:id" element={<ProductDetails />} />
             <Route path="/myProducts/addProduct" element={<ProductForm />} />
+            <Route path="/placeOrder" element={<BuyerOrder/>}/>
             {/* // todo: product details + edit product */}
           </>
         )}

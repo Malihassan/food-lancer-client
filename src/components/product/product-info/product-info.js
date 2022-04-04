@@ -3,7 +3,6 @@ import StarRatings from 'react-star-ratings';
 import "./product-info.scss"
 import CartOffCanvas from '../../cart/cart-offcanvas/cart-offcanvas';
 import { orderActions } from '../../../store/orderSlice';
-import store from "../../../store/index"
 import { useDispatch, useSelector } from 'react-redux';
 
 function ProductInfo(props){
@@ -59,13 +58,10 @@ function ProductInfo(props){
             case "extra":
                 setServes(parseInt(e.target.value));
             break;
-            default:
-              break;
         }
     }
 
     const showCanvas = async () => {
-        console.log(cartItems);
         const finder = cartItems.selectedOrderProducts.find((item)=> item._id === data._id)? 
         cartItems.selectedOrderProducts.find((item)=> item._id === data._id) :
         null
@@ -79,11 +75,11 @@ function ProductInfo(props){
             console.log(finder)
             await dispatch(orderActions.setCartItem({
                 products: [...cartItems.selectedOrderProducts.filter((item)=> item._id !== finder._id), {...finder, serves}], 
-                totalPrice: cartItems.totalPrice + (data.price * serves)
+                totalPrice: cartItems.totalPrice - (finder.serves * finder.price) + (data.price * serves)
             }))
         }
-        
-        console.log(store.getState().order);
+        setServes(0);
+        setExtra(false);
         setShow(true);
         
     };
@@ -168,7 +164,7 @@ function ProductInfo(props){
                         <button onClick={() => showCanvas()} className='btn shadow maroon text-light text-font w-100 me-1'>Add To Cart</button>
                     </div>
                 </div>
-                <CartOffCanvas controlProps={{show, setShow, extra, setExtra, serves, setServes}}/>
+                <CartOffCanvas controlProps={{show, setShow}}/>
             </div>
         </>
     )

@@ -104,7 +104,7 @@ function ProductEditPanel(props) {
   };
 
   const imageHandler = (files) => {
-    if(files){
+    if(files[0]){
       console.log(files[0], "file");
     setEditForm({ ...editForm, imagesField: [...files] });
     setEditFormErr({
@@ -126,8 +126,6 @@ function ProductEditPanel(props) {
           : null,
       });
     });
-  } else {
-    setEditForm({ ...editForm, imagesField: data.image });
   }
   };
 

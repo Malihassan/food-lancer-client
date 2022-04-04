@@ -78,7 +78,7 @@ function App() {
         {/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-        <Route path="/orderHistory" element={<OrderHistory />} />
+        <Route path="/myOrders" element={<OrderHistory />} />
         <Route path="*" element={<Navigate replace to="/" />} />
         <Route path="/home" element={<BuyerHome />} />
       </Routes>

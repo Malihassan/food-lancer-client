@@ -1,7 +1,7 @@
 import "./App.scss";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/loginPage";
+import LoginPage from "./pages/login/LoginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -24,9 +24,11 @@ import Favourites from "./components/buyer/Favourites";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-library.add(fab, fas);
-//import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import {far} from "@fortawesome/free-regular-svg-icons"
 
+//import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import BuyerHome from './pages/buyerHome/BuyerHome';
+library.add(fab, fas,far);
 function App() {
   const authenticated = useSelector((state) => state.auth.authenticated);
   const loggedAs = useSelector((state) => state.auth.userType);
@@ -48,6 +50,7 @@ function App() {
             <Route path="/forgetPassword" element={<ForgetPassword />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/test" element={<BuyerHome />} />
           </>
         )}
 
@@ -76,6 +79,7 @@ function App() {
 			<Route path="users" element={<Users users={users} />} /> */}
         <Route path="/orderHistory" element={<OrderHistory />} />
         <Route path="*" element={<Navigate replace to="/" />} />
+        <Route path="/home" element={<BuyerHome />} />
       </Routes>
       <Footer />
     </>

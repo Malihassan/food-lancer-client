@@ -32,7 +32,7 @@ export default function ProductList() {
 
   const products = useSelector((state) => state.product.products);
   const pageCount = useSelector((state) => state.product.pageCount);
-  const totoalDocs = useSelector((state) => state.product.totoalDocs);
+  //const totoalDocs = useSelector((state) => state.product.totoalDocs);
   return (
     <div className={`container-fluid ${classes.bgColor} `}>
      <div className="d-flex justify-content-end">

@@ -55,7 +55,7 @@ function LoginPage() {
 							role="tabpanel"
 							aria-labelledby="nav-profile-tab"
 						>
-							blahhhhhhhh
+				
 						</div>
 					</div>
 				</div>

@@ -1,14 +1,23 @@
 import classes from "./buyerHome.module.scss";
 import React, { useEffect, useState } from "react";
+import { IoFilterOutline } from "react-icons/io5";
+import { Rating } from "react-simple-star-rating";
 import BuyerProductCard from "./../../components/shared/buyerProductCard/BuyerProductCard";
 import useFetch from "../../hooks/useFetch";
 import Empty from "./../../components/shared/emptyData/Empty";
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import OffCanvas from "./../../components/shared/offCanvas/OffCanvas";
 import {
 	faCircleArrowLeft,
 	faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
+// import Box from "@mui/material/Box";
+// import Slider from "@mui/material/Slider";
+/* function valuetext(value) {
+  //console.log(value);
+  return `${value}°C`;
+} */
 function BuyerHome() {
 	const handelPageClick = async (data) => {
 		let currentPage = data.selected + 1;

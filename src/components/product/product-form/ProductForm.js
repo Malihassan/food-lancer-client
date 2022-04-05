@@ -27,7 +27,7 @@ export default function ProductForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const { sendRequest } = useFetch();
+  const { sendRequest,hasError } = useFetch();
   const fillSelectMenu = async () => {
     // dispatch(loadActions.toggelLoader());
     // const res = await axiosInstance.get(`seller/category/allCategories`);
@@ -152,6 +152,9 @@ export default function ProductForm() {
             <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="name" />
             </div>
+            {hasError?.error && (
+              <div className="form-text text-warning text-center">{hasError?.error}</div>
+            )}
             <Field
               id="description"
               name="description"
@@ -245,6 +248,7 @@ export default function ProductForm() {
             <div className={`my-1 fw-light ${classes.textWarning} text-center`}>
               <ErrorMessage name="image" />
             </div>
+           
             <div className="d-flex justify-content-center mt-4 mb-4">
               <button type="submit" className={`btn ${classes.btnSubmit} `}>
                 Create New Product

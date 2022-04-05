@@ -1,6 +1,7 @@
 import "./SignupPage.scss"
 import React from 'react'
 import SignupSeller from './../../components/auth/seller/signupComponent/SignupSeller';
+import SignupBuyer from './../../components/auth/buyer/signupComponent/SignupBuyer';
 function SignupPage() {
   return (
     <>
@@ -51,7 +52,7 @@ function SignupPage() {
             role="tabpanel"
             aria-labelledby="nav-profile-tab"
           >
-            blahhhhhhhh
+           <SignupBuyer></SignupBuyer>
           </div>
         </div>
       </div>

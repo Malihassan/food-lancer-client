@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import "./SignupSeller.scss";
+import React, { useRef,useState } from "react";
+import "./SignupBuyer.scss";
 import { useForm } from "react-hook-form";
 import useFetch from "../../../../hooks/useFetch";
 import { ErrorMessage } from "@hookform/error-message";
@@ -12,17 +12,14 @@ import {
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-const axios = require("axios");
-function SignupSeller() {
+function SignupBuyer() {
   let navigate = useNavigate();
-  const [coverageAreas, setCoverageAreas] = useState();
   const [serverMessage, setServerMessage] = useState();
   const { sendRequest, hasError } = useFetch();
   const {
     register,
     handleSubmit,
     watch,
-    setError,
     formState: { errors },
   } = useForm();
 
@@ -67,7 +64,7 @@ function SignupSeller() {
     formData.append("phone", data.phone);
     formData.append("gender", data.gender);
     formData.append("email", data.email);
-    formData.append("coverageArea", data.coverageArea);
+    formData.append("address", data.address);
 
     function signupSellerProfilehandler(res) {
       if (res.status === 200) {
@@ -80,7 +77,7 @@ function SignupSeller() {
 
     sendRequest(
       {
-        url: `seller/account/signup`,
+        url: `buyer/account/signup`,
         method: "POST",
         body: formData,
         headers: {
@@ -92,20 +89,6 @@ function SignupSeller() {
   };
   const password = useRef({});
   password.current = watch("password", "");
-  useEffect(() => {
-    function coverageAreaHandler(res) {
-      if (res.status === 200) {
-        setCoverageAreas(res.data);
-      }
-    }
-    sendRequest(
-      {
-        url: "seller/account/coverageArea",
-        method: "GET",
-      },
-      coverageAreaHandler
-    );
-  }, []);
   return (
     <>
       <div className="w-75 m-auto text-center signup-form">
@@ -249,7 +232,7 @@ function SignupSeller() {
                     required: "this field is required",
                     validate: (value) =>
                       value === password.current ||
-                      "The password doesn't match ",
+                      "The password doesn't match",
                   })}
                   type="password"
                   className="form-control"
@@ -331,35 +314,30 @@ function SignupSeller() {
               </div>
             </div>
             <div className="mb-3 ">
-              <div className="input-group flex-nowrap my-2">
-                <select
-                  {...register("coverageArea", {
+              <div className="input-group flex-nowrap my-2 ">
+                <span
+                  className="input-group-text icon-container"
+                  id="addressHelp"
+                >
+                  <FontAwesomeIcon icon="fa-solid fa-location-dot" />
+                </span>
+                <input
+                  {...register("address", {
                     required: "this field is required",
                   })}
-                  className="form-select"
-                  aria-label="Default select example"
-                >
-                  <option value="" name="coverageArea">
-                    Select Coverage Area
-                  </option>
-                  {coverageAreas?.map((coverageArea) => {
-                    return (
-                      <option
-                        key={coverageArea?._id}
-                        value={coverageArea?._id}
-                        name="coverageArea"
-                      >
-                        {coverageArea?.regionName}
-                      </option>
-                    );
-                  })}
-                </select>
+                  type="text"
+                  className="form-control "
+                  id="address"
+                  placeholder=" Enter Your address"
+                />
               </div>
               <div className="form-text text-warning">
                 <ErrorMessage
                   errors={errors}
-                  name="coverageArea"
-                  render={({ message }) => <small>{message}</small>}
+                  name="address"
+                  render={({ message }) => (
+                    <small className="form-text text-warning">{message}</small>
+                  )}
                 />
               </div>
             </div>
@@ -471,4 +449,4 @@ function SignupSeller() {
   );
 }
 
-export default SignupSeller;
+export default SignupBuyer;

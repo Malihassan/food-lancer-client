@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function ProductCard(props) {
-	const MAX_LENGTH = 125;
+	const MAX_LENGTH = 100;
 	const { product } = props;
 	const [ratingValue, setRatingValue] = useState(0);
 	const [count, setCount] = useState(0);

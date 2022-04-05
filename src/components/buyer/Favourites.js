@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { axiosInstance } from "../../network/axiosConfig";
 import Empty from "../shared/emptyData/Empty";
-import ProductCard from "../shared/product-card/Product-Card";
+import BuyerProductCard from "../shared/buyerProductCard/BuyerProductCard";
 import classes from "../product/product-list/product-list.module.scss";
 
 function Favourites() {
@@ -13,7 +12,6 @@ function Favourites() {
 				`http://localhost:3000/buyer/product/favs`
 			);
 			setProductsArr(res.data);
-			console.log(res.data);
 		})();
 	}, []);
 
@@ -23,9 +21,8 @@ function Favourites() {
 				`http://localhost:3000/buyer/product/favs`,
 				{ data: { id: e._id } }
 			);
-			console.log(res);
+			setProductsArr(res.data);
 		})();
-		console.log("clicked", e, e._id);
 	};
 
 	const renderList = () => {
@@ -35,8 +32,9 @@ function Favourites() {
 					key={prd._id}
 					className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
 				>
-					<ProductCard
+					<BuyerProductCard
 						product={prd}
+						fav={true}
 						userType={"buyer"}
 						handleFavClick={handleFavClick}
 					/>

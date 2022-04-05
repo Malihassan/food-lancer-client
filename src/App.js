@@ -24,14 +24,17 @@ import Favourites from "./components/buyer/Favourites";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-library.add(fab, fas);
-//import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { far } from "@fortawesome/free-regular-svg-icons";
 
+//import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import BuyerHome from "./pages/buyerHome/BuyerHome";
+library.add(fab, fas, far);
 function App() {
 	const authenticated = useSelector((state) => state.auth.authenticated);
 	const loggedAs = useSelector((state) => state.auth.userType);
 
-	//   useEffect(() => {}, [authenticated]);
+	console.log(authenticated, loggedAs);
+	useEffect(() => {}, [authenticated, loggedAs]);
 	return (
 		<>
 			<Loader />
@@ -39,22 +42,21 @@ function App() {
 			<Routes>
 				{loggedAs === "viewer" && !authenticated && (
 					<>
-						{/* <Route path="/home" element={<Navigate replace to="/" />} /> */}
 						<Route path="/" element={<LandingPage />} />
+						<Route path="/signup" element={<SignupPage />} />
+						<Route path="/login" element={<LoginPage />} />
+						<Route path="/forgetPassword" element={<ForgetPassword />} />
+						<Route path="/test" element={<BuyerHome />} />
 						<Route
 							path="/seller/account/resetPassword/:token"
 							element={<ResetPassword />}
 						/>
-						<Route path="/forgetPassword" element={<ForgetPassword />} />
-						<Route path="/login" element={<LoginPage />} />
-						<Route path="/signup" element={<SignupPage />} />
 					</>
 				)}
 
 				{loggedAs === "seller" && authenticated && (
 					<>
 						<Route path="/" element={<Navigate replace to="/home" />} />
-
 						<Route path="/home" element={<SellerHome />} />
 						<Route path="/updateProfile" element={<UpdateProfile />} />
 						<Route path="/myProducts" element={<ProductList />} />
@@ -63,12 +65,12 @@ function App() {
 							path="/myProducts/addProduct"
 							element={<ProductForm />}
 						/>
-						{/* // todo: product details + edit product */}
 					</>
 				)}
 
-				{loggedAs === "buyer" && (
+				{loggedAs === "buyer" && authenticated && (
 					<>
+						<Route path="/" element={<LandingPage />} />
 						<Route path="/updateProfile" element={<BuyerProfile />} />
 						<Route path="/favs" element={<Favourites />} />
 					</>
@@ -79,6 +81,7 @@ function App() {
 			<Route path="users" element={<Users users={users} />} /> */}
 				<Route path="/orderHistory" element={<OrderHistory />} />
 				<Route path="*" element={<Navigate replace to="/" />} />
+				<Route path="/home" element={<BuyerHome />} />
 			</Routes>
 			<Footer />
 		</>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { axiosInstance } from "../../network/axiosConfig";
 import Empty from "../shared/emptyData/Empty";
-import ProductCard from "../shared/product-card/Product-Card";
+import BuyerProductCard from "../shared/buyerProductCard/BuyerProductCard";
 import classes from "../product/product-list/product-list.module.scss";
 
 function Favourites() {
@@ -13,33 +12,43 @@ function Favourites() {
 				`http://localhost:3000/buyer/product/favs`
 			);
 			setProductsArr(res.data);
-			console.log(res);
-			console.log(productsArr[0]);
 		})();
-	}, [productsArr]);
+	}, []);
+
+	const handleFavClick = (e) => {
+		(async () => {
+			const res = await axiosInstance.delete(
+				`http://localhost:3000/buyer/product/favs`,
+				{ data: { id: e._id } }
+			);
+			setProductsArr(res.data);
+		})();
+	};
+
+	const renderList = () => {
+		const renderedList = productsArr.map((prd) => {
+			return (
+				<div
+					key={prd._id}
+					className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
+				>
+					<BuyerProductCard
+						product={prd}
+						fav={true}
+						userType={"buyer"}
+						handleFavClick={handleFavClick}
+					/>
+				</div>
+			);
+		});
+		return renderedList;
+	};
 	return (
 		<>
 			<div className="container-fluid">
-				<Link
-					to="addProduct"
-					className="btn btn-dark text-white bg-dark mt-2"
-				>
-					Add Product
-				</Link>
 				{productsArr.length === 0 && <Empty />}
 				{productsArr.length !== 0 && (
-					<div className="row bg-transparent">
-						{productsArr.map((prd) => {
-							return (
-								<div
-									key={prd._id}
-									className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
-								>
-									<ProductCard product={prd} />
-								</div>
-							);
-						})}
-					</div>
+					<div className="row bg-transparent">{renderList()}</div>
 				)}
 			</div>
 		</>

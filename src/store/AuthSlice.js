@@ -20,7 +20,6 @@ export const buyerLogin = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.post("buyer/account/login", formData);
-      console.log(res.data, "<===========");
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -46,17 +45,17 @@ const authSlice = createSlice({
     logout: (state, action) => {
       deleteCookie("token");
       deleteCookie("userType");
-	  deleteCookie("id");
+      deleteCookie("id"); 
       state.userType = "viewer";
       state.authenticated = false;
-	  state._id =null
+      state._id = null;
     },
   },
   extraReducers: {
     [sellerLogin.pending]: (state) => {},
     [sellerLogin.fulfilled]: (state, { payload }) => {
       state.authenticated = true;
-	  state._id = payload._id
+      state._id = payload._id;
       state.userType = "seller";
       document.cookie = `token=${payload.token}`;
       document.cookie = "userType=seller";
@@ -68,12 +67,11 @@ const authSlice = createSlice({
 
     [buyerLogin.fulfilled]: (state, { payload }) => {
       state.authenticated = true;
-	  state._id = payload._id
+      state._id = payload._id;
       state.userType = "buyer";
       document.cookie = `token=${payload.token}`;
       document.cookie = "userType=buyer";
       document.cookie = `id=${payload._id}`;
-
     },
     [buyerLogin.rejected]: (state, { payload }) => {
       state.resErrorMes = payload.error;

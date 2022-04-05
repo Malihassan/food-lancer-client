@@ -18,7 +18,6 @@ function LoginBuyer() {
     email: "",
     password: "",
   });
-  useEffect(() => {}, [formData]);
 
   const addToForm = (inputName, value) => {
     setInputErrorMessage({
@@ -62,16 +61,9 @@ function LoginBuyer() {
   }
   const handleLoginSellerSubmit = (e) => {
     e.preventDefault();
-    console.log(formData, "=====<");
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        // setSocket(
-        //   io("http://localhost:3300", {
-        //     query: { type: "buyer", id: res.payload._id },
-        //   })
-        // );
-        // console.log('hereeeee');
-        navigate("/orderHistory");
+        navigate("/myOrders");
       }
     });
   };

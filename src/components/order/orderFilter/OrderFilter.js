@@ -27,7 +27,7 @@ function OrderFilter(props) {
         title="Filter Order"
       >
         <div className="mt-3">
-          <h4 className="title mt-2" style={{ color: "black" }}>
+          <h4 className="title mt-2" style={{ color: "#091b29" }}>
             Status
           </h4>
           <div className="list-group">

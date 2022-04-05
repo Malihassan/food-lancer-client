@@ -38,6 +38,7 @@ function App() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
+    console.log('agin');
     if (loggedAs !== 'viewer') {
       setSocket(
         io("https://food-lancer.herokuapp.com/", {

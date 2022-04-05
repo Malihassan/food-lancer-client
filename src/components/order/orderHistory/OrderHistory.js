@@ -122,12 +122,12 @@ export default function OrderHistory() {
                   </span>
                 )}
                 {order.status === "delivered" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-success">
+                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-success">
                     {order.status}
                   </span>
                 )}
                 {order.status === "canceled" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-danger">
+                  <span className="badge col-4 col-xl-3x p-2 rounded-2 bg-danger">
                     {order.status}
                   </span>
                 )}

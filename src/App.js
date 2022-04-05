@@ -1,4 +1,5 @@
 import "./App.scss";
+import { io } from "socket.io-client";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./pages/login/loginPage";
@@ -15,7 +16,7 @@ import Loader from "./components/shared/loader/Loader";
 import SellerHome from "./pages/sellerHome/SellerHome";
 import Footer from "./components/shared/footer/Footer";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./components/shared/nav/Navbar";
 import OrderHistory from "./components/order/orderHistory/OrderHistory";
@@ -24,17 +25,28 @@ import Favourites from "./components/buyer/Favourites";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import {far} from "@fortawesome/free-regular-svg-icons"
+import { far } from "@fortawesome/free-regular-svg-icons";
 
 //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
-import BuyerHome from './pages/buyerHome/BuyerHome';
-library.add(fab, fas,far);
+import BuyerHome from "./pages/buyerHome/BuyerHome";
+library.add(fab, fas, far);
+
 function App() {
   const authenticated = useSelector((state) => state.auth.authenticated);
   const loggedAs = useSelector((state) => state.auth.userType);
+  const _id = useSelector((state) => state.auth._id);
+  const [socket, setSocket] = useState(null);
 
-  console.log(authenticated, loggedAs);
-  useEffect(() => {}, [authenticated, loggedAs]);
+  useEffect(() => {
+    if (loggedAs !== 'viewer') {
+      setSocket(
+        io("http://localhost:3300", {
+          query: { type: loggedAs, id: _id },
+        })
+      );
+    }
+  }, [authenticated,loggedAs]);
+
   return (
     <>
       <Loader />
@@ -45,12 +57,15 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
-            <Route path="/test" element={<BuyerHome />} />
             <Route
-              path="/seller/account/resetPassword/:token"
+              path="/forgetPassword/:userType"
+              element={<ForgetPassword />}
+            />
+            <Route
+              path="/:userType/account/resetPassword/:token"
               element={<ResetPassword />}
             />
+            {/* <Route path="/home" element={<BuyerHome />} /> */}
           </>
         )}
 
@@ -67,18 +82,17 @@ function App() {
 
         {loggedAs === "buyer" && authenticated && (
           <>
-            <Route path="/" element={<LandingPage/>} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/updateProfile" element={<BuyerProfile />} />
             <Route path="/favs" element={<Favourites />} />
+            <Route path="/myOrders" element={<OrderHistory socket={socket} />} />
           </>
         )}
-        <Route path="/buyer/profile/edit" element={<BuyerProfile />} />
         {/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-        <Route path="/myOrders" element={<OrderHistory />} />
         <Route path="*" element={<Navigate replace to="/" />} />
-        <Route path="/home" element={<BuyerHome />} />
+        {/* <Route path="/home" element={<BuyerHome />} /> */}
       </Routes>
       <Footer />
     </>

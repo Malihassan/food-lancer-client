@@ -11,7 +11,8 @@ import { HiIdentification } from "react-icons/hi";
 import { BsCalendarDate } from "react-icons/bs";
 import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
-export default function OrderHistory() {
+import {io} from 'socket.io-client'
+export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
   const [ratingValue, setRatingValue] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
@@ -90,6 +91,12 @@ export default function OrderHistory() {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
+  const socket = props.socket 
+  useEffect(() => {
+    socket?.on("updateOrderStatus", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
   useEffect(async () => {
     sendRequest(
       {
@@ -103,6 +110,7 @@ export default function OrderHistory() {
         }
       }
     );
+    
   }, []);
   return (
     <div className="row justify-content-center bg-light mx-0">
@@ -128,6 +136,11 @@ export default function OrderHistory() {
                 )}
                 {order.status === "canceled" && (
                   <span className="badge col-4 col-xl-3x p-2 rounded-2 bg-danger">
+                    {order.status}
+                  </span>
+                )}
+                {order.status === "pending" && (
+                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
                     {order.status}
                   </span>
                 )}

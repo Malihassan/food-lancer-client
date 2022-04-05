@@ -31,6 +31,16 @@ function OrderFilter(props) {
             Status
           </h4>
           <div className="list-group">
+          <label className="list-group-item border-0">
+              <input
+                className="form-check-input me-1"
+                checked={props.checkboxSelected.pending}
+                onChange={props.sellerFilterSelection}
+                type="checkbox"
+                value="pending"
+              />
+              Pending
+            </label>
             <label className="list-group-item border-0">
               <input
                 className="form-check-input me-1"

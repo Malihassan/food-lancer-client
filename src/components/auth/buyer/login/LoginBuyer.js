@@ -70,7 +70,8 @@ function LoginBuyer() {
             query: { type: "buyer", id: res.payload._id },
           })
         );
-        navigate("/");
+        console.log('hereeeee');
+        navigate("/orderHistory");
       }
     });
   };
@@ -136,7 +137,7 @@ function LoginBuyer() {
               Login
             </button>
             <div>
-              <Link className="forget-link text-warning" to="/forgetpassword">
+              <Link className="forget-link text-warning" to="/forgetpassword/buyer">
                 forget password ?
               </Link>
             </div>

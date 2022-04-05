@@ -25,6 +25,9 @@ function BuyerHome() {
 			setProducts(res?.data.docs);
 			setTotalPages(res?.data.totalPages);
 		}
+		function getFavs(res) {
+			setFavs(res.data);
+		}
 
 		sendRequest(
 			{
@@ -34,7 +37,69 @@ function BuyerHome() {
 			},
 			getAllProduct
 		);
+		sendRequest(
+			{
+				url: `buyer/product/favs`,
+				method: "GET",
+			},
+			getFavs
+		);
 	}, [page, sendRequest]);
+
+	const handleFavClick = (product, favStatus) => {
+		const addFav = (res) => {
+			setFavs(res.data);
+		};
+		const removeFav = (res) => {
+			setFavs(res.data);
+			console.log(res);
+		};
+		if (!favStatus) {
+			sendRequest(
+				{
+					url: `buyer/product/favs`,
+					method: "POST",
+					body: {
+						id: product._id,
+					},
+				},
+				addFav
+			);
+		} else {
+			sendRequest(
+				{
+					url: `buyer/product/favs`,
+					method: "DELETE",
+					body: {
+						id: product._id,
+					},
+				},
+				removeFav
+			);
+		}
+	};
+
+	const renderProducts = () => {
+		const lockup = {};
+		for (let fav of favs) {
+			lockup[fav._id] = fav._id;
+		}
+		let list = products.map((prd) => {
+			let fav = false;
+			if (lockup[prd._id]) fav = true;
+			return (
+				<div key={prd._id} className={`col-xl-4`}>
+					<BuyerProductCard
+						handleFavClick={handleFavClick}
+						product={prd}
+						fav={fav}
+					/>
+				</div>
+			);
+		});
+
+		return list;
+	};
 
 	return (
 		<>
@@ -45,13 +110,7 @@ function BuyerHome() {
 						<div
 							className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center  `}
 						>
-							{products?.map((prd) => {
-								return (
-									<div key={prd._id} className={`col-xl-4`}>
-										<BuyerProductCard product={prd} />
-									</div>
-								);
-							})}
+							{renderProducts()}
 						</div>
 					)}
 					{products?.length !== 0 && (

@@ -30,12 +30,24 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 import BuyerHome from "./pages/buyerHome/BuyerHome";
 library.add(fab, fas, far);
+
 function App() {
 	const authenticated = useSelector((state) => state.auth.authenticated);
 	const loggedAs = useSelector((state) => state.auth.userType);
+	const _id = useSelector((state) => state.auth._id);
+	const [socket, setSocket] = useState(null);
 
-	console.log(authenticated, loggedAs);
-	useEffect(() => {}, [authenticated, loggedAs]);
+	useEffect(() => {
+		console.log("agin");
+		if (loggedAs !== "viewer") {
+			setSocket(
+				io("https://food-lancer.herokuapp.com/", {
+					query: { type: loggedAs, id: _id },
+				})
+			);
+		}
+	}, [authenticated, loggedAs]);
+
 	return (
 		<>
 			<Loader />
@@ -46,12 +58,15 @@ function App() {
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/signup" element={<SignupPage />} />
 						<Route path="/login" element={<LoginPage />} />
-						<Route path="/forgetPassword" element={<ForgetPassword />} />
-						<Route path="/test" element={<BuyerHome />} />
 						<Route
-							path="/seller/account/resetPassword/:token"
+							path="/forgetPassword/:userType"
+							element={<ForgetPassword />}
+						/>
+						<Route
+							path="/:userType/account/resetPassword/:token"
 							element={<ResetPassword />}
 						/>
+						{/* <Route path="/home" element={<BuyerHome />} /> */}
 					</>
 				)}
 
@@ -74,15 +89,18 @@ function App() {
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/updateProfile" element={<BuyerProfile />} />
 						<Route path="/favs" element={<Favourites />} />
+						<Route
+							path="/myOrders"
+							element={<OrderHistory socket={socket} />}
+						/>
+						<Route path="/home" element={<BuyerHome />} />
 					</>
 				)}
-				<Route path="/buyer/profile/edit" element={<BuyerProfile />} />
 				{/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-				<Route path="/orderHistory" element={<OrderHistory />} />
 				<Route path="*" element={<Navigate replace to="/" />} />
-				<Route path="/home" element={<BuyerHome />} />
+				{/* <Route path="/home" element={<BuyerHome />} /> */}
 			</Routes>
 			<Footer />
 		</>

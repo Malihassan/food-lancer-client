@@ -14,6 +14,7 @@ function BuyerOrder(){
     const [sortedOrders, setSortedOrders] = useState({});
     const [sellerOrderPrice, setSellerOrderPrice] = useState({});
     const [buyerData, setBuyerData] = useState({});
+    const [orderResponse, setOrderResponse] = useState({})
     const dispatch = useDispatch();
     async function buyerDataHandler(res) {
         if (res.status === 200) {
@@ -99,18 +100,43 @@ function BuyerOrder(){
         setSortedOrders(filteredOrders);
     }
 
-    const postOrder = () => {
-        // sendRequest({
-        //     method: "POST",
-        //     url: `buyer/order/add`,
-        //     body: {
-        //         
-        //     }
-        // })
+    const postOrder = (orderProducts, sellerId) => {
+        let products = [];
+
+        orderProducts.forEach((product)=>{
+            products.push({
+                _id: product._id,
+                quantity: product.serves
+            })
+        })
+
+        sendRequest({
+            method: "POST",
+            url: `buyer/order/add`,
+            body: {
+                sellerId,
+                buyerId: buyerData._id,
+                address: buyerData.address,
+                products,
+                totalPrice: sellerOrderPrice[sellerId]
+            }
+        }, orderHandler)
+    }
+
+    const orderHandler = async (res) => {
+        if (res.status === 200) {
+            console.log(res);
+            setOrderResponse(res.data);
+            console.log(orderResponse)
+        }
     }
 
     return (
         <div className="p-4">
+            {orderResponse === "Order Submitted Successfully!" && 
+            <div className="alert alert-success" role="alert">
+                A simple success alert—check it out!
+            </div>}
             {Object.keys(sortedOrders).map((seller, idx)=>{
                 return(
                     <div className="card d-flex flex-column text-font p-3" key={idx}>
@@ -132,9 +158,9 @@ function BuyerOrder(){
                                                             </div>
                                                         </div>
                                                         <div className="align-self-center col-2">
-                                                            <div className="smaller mb-1">Price: {product.price}$</div>
+                                                            <div className="smaller mb-1">Price: {product.price}&#163;</div>
                                                             <div className="smaller mb-2">x{product.serves}</div>
-                                                            <div className="fw-bold text-info">Total: {product.price * product.serves}$</div>
+                                                            <div className="fw-bold text-info">Total: {product.price * product.serves}&#163;</div>
                                                         </div>
                                                     </li>
                                                 )
@@ -164,7 +190,7 @@ function BuyerOrder(){
                                                         
                                                     </div>
                                                     <div className="col-5">x{product.serves}</div>
-                                                    <div className="col-1 text-end">{product.price* product.serves}$</div>
+                                                    <div className="col-1 text-end">{product.price* product.serves}&#163;</div>
                                                 </div>
                                             )
                                         })}
@@ -172,19 +198,19 @@ function BuyerOrder(){
                                     <li className="list-group-item fw-light my-2">
                                         <div className="d-flex justify-content-between">
                                             <div>Price</div>
-                                            <div >{sellerOrderPrice[seller]}$</div>
+                                            <div >{sellerOrderPrice[seller]}&#163;</div>
                                         </div>
                                         <div className="d-flex justify-content-between">
                                             <div>Discount</div>
-                                            <div >0$</div>
+                                            <div >0&#163;</div>
                                         </div>
                                     </li>
                                     <li className="list-group-item d-flex flex-column">
                                         <div className="text-success d-flex justify-content-between">
                                             <div className="h5">Total</div>
-                                            <div className="display-6 mb-4">{sellerOrderPrice[seller]}$</div>
+                                            <div className="display-6 mb-4">{sellerOrderPrice[seller]}&#163;</div>
                                         </div>
-                                        <button onClick={()=> postOrder()} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
+                                        <button onClick={()=> postOrder(sortedOrders[seller], seller)} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
                                     </li>
                                 </ul>
                             </div>

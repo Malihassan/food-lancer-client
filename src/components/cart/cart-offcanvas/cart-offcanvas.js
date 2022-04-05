@@ -76,7 +76,7 @@ function CartOffCanvas(props){
                                                         <input type="text" value={item.serves} className="border border-rounded-1 p-1 w-15 text-center h-75" readOnly/>
                                                         <button className="btn btn-outline-danger h-75 d-flex align-items-center" onClick={()=> decrementServes(item)} type="button">-</button> 
                                                     </div>
-                                                    <div className="card-text small fw-bold d-flex align-items-center">{item.price * item.serves}$</div>
+                                                    <div className="card-text small fw-bold d-flex align-items-center">{item.price * item.serves}&#163;</div>
                                                 </div>
                                                 </li>
                                             </ul>
@@ -91,7 +91,7 @@ function CartOffCanvas(props){
                         <Link to="/placeOrder" className="btn btn-dark rounded-0 w-100 mb-2">Checkout</Link>
                         <div className="d-flex justify-content-between">
                             <div>Total Price</div>
-                            <div>{cardItems.totalPrice}</div>
+                            <div>{cardItems.totalPrice}&#163;</div>
                         </div>
                     </div>}
                 </Offcanvas.Body>

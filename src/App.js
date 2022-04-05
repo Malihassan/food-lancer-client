@@ -28,6 +28,7 @@ import {far} from "@fortawesome/free-regular-svg-icons"
 
 //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 import BuyerHome from './pages/buyerHome/BuyerHome';
+import ProductDetailsBuyer from "./pages/product/product-details-buyer/product-details-buyer";
 library.add(fab, fas,far);
 function App() {
   const authenticated = useSelector((state) => state.auth.authenticated);
@@ -62,7 +63,7 @@ function App() {
             <Route path="/myProducts" element={<ProductList />} />
             <Route path="/myProducts/:id" element={<ProductDetails />} />
             <Route path="/myProducts/addProduct" element={<ProductForm />} />
-            <Route path="/placeOrder" element={<BuyerOrder/>}/>
+
             {/* // todo: product details + edit product */}
           </>
         )}
@@ -72,6 +73,8 @@ function App() {
             <Route path="/" element={<LandingPage/>} />
             <Route path="/updateProfile" element={<BuyerProfile />} />
             <Route path="/favs" element={<Favourites />} />
+            <Route path="/product/:id" element={<ProductDetailsBuyer/>}/>
+            <Route path="/placeOrder" element={<BuyerOrder/>}/>
           </>
         )}
         <Route path="/buyer/profile/edit" element={<BuyerProfile />} />

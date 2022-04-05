@@ -3,15 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
 import { axiosInstance } from "../../../network/axiosConfig";
-import { BiPhoneCall } from "react-icons/bi";
+import { BiPhoneCall,BiDish } from "react-icons/bi";
 import { CgProductHunt } from "react-icons/cg";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
 import { BsCalendarDate } from "react-icons/bs";
+
 import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
-import {io} from 'socket.io-client'
+import { io } from "socket.io-client";
 export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
   const [ratingValue, setRatingValue] = useState(0);
@@ -91,15 +92,7 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
-  const [data,setData] = useState('')
-  const socket = props.socket 
-  useEffect(() => {
-    console.log(data);
-    socket?.on("updateOrderStatus", (data) => {
-      console.log(data);
-      setData(data)
-    });
-  }, [socket]);
+  const socket = props.socket;
   useEffect(async () => {
     sendRequest(
       {
@@ -113,38 +106,55 @@ export default function OrderHistory(props) {
         }
       }
     );
-    
   }, []);
+  useEffect(() => {
+    socket?.on("updateOrderStatus", (data) => {
+      let updatedOrders = [...orders];
+      updatedOrders.find((order)=>{
+        if (order._id===data._id)
+        {
+          order.status=data.status;
+        }
+      })
+      setOrder(updatedOrders);
+      socket.off("updateOrderStatus");
+
+    });
+  }, [orders,socket]);
   return (
     <div className="row justify-content-center bg-light mx-0">
       {orders.map((order) => {
         return (
           <div
             key={orders.indexOf(order)}
-            className={`card mx-0  border w-75  ${classes.cardOrder}`}
+            className={`card mx-0  border  ${classes.cardOrder}`}
           >
             <div className="d-flex flex-md-row flex-column col-12">
               <div
-                className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-12 p-3 ${classes.divLeftCard}`}
+                className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
               >
                 {order.status == "in progress" && (
                   <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
+                    {/* {data.status?data.status:order.status} */}
                     {order.status}
                   </span>
                 )}
                 {order.status === "delivered" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-success">
+                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-success">
                     {order.status}
+                    {/* {data.status?data.status:order.status} */}
                   </span>
                 )}
                 {order.status === "canceled" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-danger">
+                  <span className="badge col-4 col-xl-3x p-2 rounded-2 bg-danger">
                     {order.status}
+                    {/* {data.status?data.status:order.status} */}
                   </span>
                 )}
                 {order.status === "pending" && (
                   <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
                     {order.status}
+                    {/* {data.status?data.status:order.status} */}
                   </span>
                 )}
                 <p className="pt-3">
@@ -165,7 +175,7 @@ export default function OrderHistory(props) {
                 </p>
               </div>
               <div
-                className={`d-flex flex-column col-lg-4 col-md-6 col-12 p-3 ${classes.divLeftCard} `}
+                className={`d-flex flex-column col-xl-6 col-lg-5 col-md-6 col-12 p-3 ${classes.divLeftCard} `}
               >
                 <div
                   style={{ maxHeight: 159.5, minHeight: 159.5 }}
@@ -178,11 +188,12 @@ export default function OrderHistory(props) {
                         className="d-flex justify-conten-between"
                       >
                         <p className="col-9">
-                          <CgProductHunt className="fs-4 me-1 text-danger" />
+                          {/* <CgProductHunt  /> */}
+                          <BiDish className="fs-4 me-1 text-danger" />
                           {product.quantity} x {product._id.name}
                         </p>
-                        <p className="col-3 pe-1 text-end ">
-                          EGP {product._id.price}
+                        <p className="col-3 pe-1 fs-4 text-end ">
+                        <span className="fw-thin">E&#163;</span> {product._id.price} 
                         </p>
                       </div>
                     );
@@ -192,13 +203,13 @@ export default function OrderHistory(props) {
                 <div className="d-flex justify-conten-between">
                   <p className="col-8 fs-4 fw-bold">
                     Total Price{" "}
-                    <small className="fw-light ps-2 fs-5">
-                      EGP {order.totalPrice}
+                    
+
+                    <small className="fw-light ps-2 fs-4">
+                    <span className="fw-thin">E&#163;</span> {order.totalPrice} 
                     </small>
                   </p>
-                  {/* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button> */}
                   <button
-                    // style={{ height: 40 }}
                     className="col-4 btm-sm btn btn-primary"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
@@ -382,7 +393,7 @@ export default function OrderHistory(props) {
                 </div>
               </div>
               <div
-                className={`d-flex flex-column  col-lg-4 col-md-6 col-12 p-3`}
+                className={`d-flex flex-column col-xl-3 col-lg-3 col-md-6 col-12 p-3`}
               >
                 <p className="fw-light text-secondary opacity-75 fs-5">
                   Seller Details

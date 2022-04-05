@@ -96,9 +96,7 @@ function App() {
 						<Route path="/home" element={<BuyerHome />} />
 					</>
 				)}
-				{/*
-				dynamic routing example
-			<Route path="users" element={<Users users={users} />} /> */}
+
 				<Route path="*" element={<Navigate replace to="/" />} />
 				{/* <Route path="/home" element={<BuyerHome />} /> */}
 			</Routes>

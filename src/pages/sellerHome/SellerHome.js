@@ -11,9 +11,13 @@ import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
 function SellerHome(params) {
   const [toggleCanvas, setToggleCanvas] = useState(false);
+  const [updateOrderStatus ,setUpdateOrderStatus] = useState(false)
   const toggleCanvasHandler = () => {
     setToggleCanvas(!toggleCanvas);
   };
+  const changeStateOrderStatus=()=>{
+    setUpdateOrderStatus(!updateOrderStatus)
+  }
   const [userInfo, setUserInfo] = useState({
     img: "",
     name: "",
@@ -96,7 +100,7 @@ function SellerHome(params) {
     );
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
-  }, [page, checkboxSelected]);
+  }, [page, checkboxSelected,updateOrderStatus]);
 
   return (
     <>
@@ -122,7 +126,7 @@ function SellerHome(params) {
             toggleCanvas={toggleCanvas}
             toggleCanvasHandler={toggleCanvasHandler}
           >
-            <OrderDetails  toggleCanvasHandler={toggleCanvasHandler}/>
+            <OrderDetails changeStateOrderStatus={changeStateOrderStatus}  toggleCanvasHandler={toggleCanvasHandler}/>
           </OffCanvas>
         </section>
       )}

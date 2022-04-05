@@ -7,7 +7,11 @@ import {
   faArrowRightFromBracket,
   faUser,
   faUtensils,
+  faCartShopping,
+  faThin,
 } from "@fortawesome/free-solid-svg-icons";
+import { HiOutlineShoppingCart } from "react-icons/hi";
+import { MdOutlineFavoriteBorder } from "react-icons/md";
 
 import { authActions } from "../../../store/AuthSlice";
 import React from "react";
@@ -37,7 +41,7 @@ const Navbar = ({ bg, buttons }) => {
         FoodLancer
       </Link>
       <div
-        className={`text-light py-2 mt-2 px-0 col-sm-7 col-12 d-flex align-items-center ${
+        className={`text-light py-2 mt-2 px-0 col-sm-8 col-12 d-flex align-items-center ${
           loggedAs === "viewer"
             ? "justify-content-end"
             : "justify-content-around"
@@ -116,8 +120,66 @@ const Navbar = ({ bg, buttons }) => {
             </Link>
           </div>
         )}
+        {loggedAs === "buyer" && (
+          <div className="col-12 d-flex justify-content-around align-items-center">
+            <Link
+              to="/home"
+              type="button"
+              className="lead text-center  text-light mx-4 text-decoration-none"
+            >
+              <div className="d-lg-block d-none ">
+                <FontAwesomeIcon icon={faHome} />
+                <span className="mx-2 ">home</span>
+              </div>
+              <div className="d-lg-none d-block ">
+                <FontAwesomeIcon icon={faHome} />
+              </div>
+            </Link>
 
-        
+            <Link
+              to="/myOrders"
+              type="button"
+              className="lead text-light mx-4 text-decoration-none"
+            >
+              <div className="d-lg-block d-none ">
+                <FontAwesomeIcon icon={faUtensils} />
+                <span className="mx-2  ">My Orders</span>
+              </div>
+              <div className="d-lg-none d-block ">
+                <FontAwesomeIcon icon={faUtensils} />
+              </div>
+            </Link>
+
+            <Link
+              to="/updateProfile"
+              type="button"
+              className="lead text-light mx-4 text-decoration-none"
+            >
+              <div className="d-lg-block d-none ">
+                <FontAwesomeIcon icon={faUser} />
+
+                <span className="mx-2  ">Profile</span>
+              </div>
+              <div className="d-lg-none d-block ">
+                <FontAwesomeIcon icon={faUser} />
+              </div>
+            </Link>
+            <Link to="/" type="button" className="btn btn-outline-light ">
+              <MdOutlineFavoriteBorder className="fs-4" />
+            </Link>
+            <Link to="/" type="button" className="btn btn-outline-light">
+              <HiOutlineShoppingCart className="fs-4" />
+            </Link>
+            <Link
+              to="/"
+              onClick={logout}
+              type="button"
+              className="btn btn-outline-warning "
+            >
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            </Link>
+          </div>
+        )}
       </div>
       {/* </div> */}
     </nav>

@@ -13,9 +13,7 @@ export default function OrderDetails(props) {
   createdAt = new Date(createdAt);
   let status = useSelector((state) => state.order.status);
   const orderId = useSelector((state) => state.order._id);
-  console.log(orderId,"orderId");
   const changeOrderStatus = (status) => {
-    console.log(status);
     sendRequest(
       {
         url: `seller/order/status`,
@@ -24,7 +22,8 @@ export default function OrderDetails(props) {
       },
       () => {}
     );
-    // props.toggleCanvasHandler()
+    props.toggleCanvasHandler()
+    props.changeStateOrderStatus()
   };
   return (
     <div className="card-body d-flex flex-column justify-content-between">

@@ -30,12 +30,10 @@ const useFetch = () => {
               requestConfig.body ? requestConfig.body : null
             )
             .catch((error) => {
-              console.log(error.response.data);
               setHasError(error.response.data);
             });
           break;
         case "PATCH":
-          console.log(requestConfig);
           respose = await axiosInstance
             .patch(
               requestConfig.url,

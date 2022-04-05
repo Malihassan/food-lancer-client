@@ -94,6 +94,7 @@ export default function OrderHistory(props) {
   const [data,setData] = useState('')
   const socket = props.socket 
   useEffect(() => {
+    console.log(data);
     socket?.on("updateOrderStatus", (data) => {
       console.log(data);
       setData(data)

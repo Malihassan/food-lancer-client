@@ -4,8 +4,8 @@ import {IoFilterOutline}  from 'react-icons/io5'
 import { Rating } from "react-simple-star-rating";
 import BuyerProductCard from './../../components/shared/buyerProductCard/BuyerProductCard';
 import useFetch from "../../hooks/useFetch";
-import Empty from './../../components/shared/emptyData/Empty';
-import  ReactPaginate  from 'react-paginate';
+import Empty from "./../../components/shared/emptyData/Empty";
+import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OffCanvas from "./../../components/shared/offCanvas/OffCanvas";
 import {
@@ -25,6 +25,7 @@ function BuyerHome() {
 const rateArr= [4.5,4.0,3.5,3.0,2.5]
   const [priceValue, setPriceValue] = useState([30, 100]);
   const [rateValue, setRateValue] = useState(0);
+  //const [favs, setFavs] = useState([]);
   ////********************************OFF CANVAS******************************************////
   const [toggleCanvas, setToggleCanvas] = useState(false);
   const toggleCanvasHandler = () => {
@@ -260,4 +261,4 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
   )
 }
 
-export default BuyerHome
+export default BuyerHome;

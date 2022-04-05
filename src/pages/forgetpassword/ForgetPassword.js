@@ -2,29 +2,30 @@ import "./ForgetPassword.css";
 import React from "react";
 import { useState } from "react";
 import { axiosInstance } from "./../../network/axiosConfig";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 function ForgetPassword() {
+  const navigate = useNavigate();
+  const param = useParams();
   const [sellerEmail, setEmail] = useState();
   const [message, setMessage] = useState();
-  let navigate = useNavigate();
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
   const handleEmailSubmit = (e) => {
     e.preventDefault();
     axiosInstance
-      .post("seller/account/forgetPassword", {
+      .post(`${param.userType}/account/forgetPassword`, {
         email: sellerEmail,
       })
       .then((response) => {
         console.log(response);
-         if (response.status === 200) {
+        if (response.status === 200) {
           setMessage(response.data.response);
           setTimeout(() => {
             navigate("/home");
           }, 5000);
           return;
-        } 
+        }
       })
       .catch(function (err) {
         console.log(err.response.data.error);
@@ -71,7 +72,7 @@ function ForgetPassword() {
                       {/* <h5 className="modal-title" id="staticBackdropLabel">
                         Message
                       </h5> */}
-                     {/*  <button
+                      {/*  <button
                         type="button"
                         className="btn-close "
                         data-bs-dismiss="modal"

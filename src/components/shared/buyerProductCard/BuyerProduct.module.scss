@@ -36,7 +36,6 @@
     -o-border-radius:1rem !important;
     border-top-left-radius: 5rem !important;
     border-bottom-right-radius: 5rem !important;
-             
 }
   .iconContainerFav{
     position: absolute !important;
@@ -45,6 +44,16 @@
     font-size: larger !important;
     background-color: transparent;
     color: #9f0000;
+    //border: #9f0000 1px solid;
+  }
+  .iconContainerFav{
+    position: absolute !important;
+    bottom:4rem !important;
+    right:4rem !important;
+    font-size: larger !important;
+    background-color: transparent;
+    color: #9f0000;
+    fill:#9f0000;
     //border: #9f0000 1px solid;
   }
   .iconContainerCart{

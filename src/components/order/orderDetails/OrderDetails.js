@@ -1,24 +1,71 @@
-import classes from './orderDetails.module.scss'
-export default function OrderDetails(props) {
-  return (
-    <div>
-      <div className="row flex-wrap py-2 justify-content-around mx-0">
-        <div className="col-3 ps-0">
-          <img src={props.order._id.image[0].url} className="round-img img-fluid rounded-circle" />
-        </div>
-        <div className="col-9 d-flex pe-0 flex-column">
-          <h6 className="fw-bold">{props.order._id.name}</h6>
-          <small className="pb-2 card-text text-secondary">
-            {props.order._id.description}
-          </small>
+import { useSelector } from "react-redux";
+import useFetch from "../../../hooks/useFetch";
+import ListOrderDetails from "../listOrderDetails/OrderDetails";
 
-          <div className="d-flex justify-content-between">
-            <small className="fw-bold">EGP {props.order._id.price}</small>
-            <small className="fw-bold">{props.order.quantity} Items</small>
-          </div>
-          <hr />
-        </div>
+export default function OrderDetails(props) {
+  const { sendRequest } = useFetch();
+
+  const selectedOrderProducts = useSelector(
+    (state) => state.order.selectedOrderProducts
+  );
+  const totalPrice = useSelector((state) => state.order.totalPrice);
+  let createdAt = useSelector((state) => state.order.createdAt);
+  createdAt = new Date(createdAt);
+  let status = useSelector((state) => state.order.status);
+  const orderId = useSelector((state) => state.order._id);
+  const changeOrderStatus = (status) => {
+    sendRequest(
+      {
+        url: `seller/order/status`,
+        method: "PATCH",
+        body: { status, orderId },
+      },
+      () => {}
+    );
+    props.toggleCanvasHandler()
+    props.changeStateOrderStatus()
+  };
+  return (
+    <div className="card-body d-flex flex-column justify-content-between">
+      <small className="fw-bold mb-3">
+        {createdAt.toLocaleDateString(undefined, {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </small>
+      {selectedOrderProducts.map((item, index) => (
+        <ListOrderDetails key={index} order={item} />
+      ))}
+      <div className={`col-12 d-flex justify-content-between`}>
+        <h4>Total</h4>
+        <h4>EGP {totalPrice.toFixed(2)}</h4>
       </div>
+      {status === "pending" && (
+        <div className="d-flex justify-content-end my-3">
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Basic mixed styles example"
+          >
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => changeOrderStatus("canceled")}
+            >
+              Rejected
+            </button>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => changeOrderStatus("in progress")}
+            >
+              Accepted
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import Empty from "../../components/shared/emptyData/Empty";
 import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
 import Chat from "../../components/shared/chat/Chat";
-function SellerHome(params) {
+function SellerHome(props) {
   const [toggleCanvas, setToggleCanvas] = useState(false);
   const [updateOrderStatus, setUpdateOrderStatus] = useState(false);
   const toggleCanvasHandler = () => {
@@ -177,7 +177,7 @@ function SellerHome(params) {
                 role="tabpanel"
                 aria-labelledby="nav-profile-tab"
               >
-                <Chat/>
+                <Chat socket={props.socket} />
               </div>
             </div>
           </OffCanvas>

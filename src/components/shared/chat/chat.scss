@@ -72,6 +72,9 @@
                 }
             }
         }
+        .disabled-link {
+            pointer-events: none;
+          }
     }
     .bubble {
         font-size: 16px;

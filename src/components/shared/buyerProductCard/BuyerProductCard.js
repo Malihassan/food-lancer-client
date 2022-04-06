@@ -13,7 +13,7 @@ function BuyerProductCard(props) {
     <div className={`col-xl-10 m-auto ${classes.cardContainer} `}>
     <button
 						onClick={() => {
-							props.handleFavClick(product);
+							props.handleFavClick(product, props.fav);
 						}}
 						className={`btn  ${classes.iconContainerFav}`}
 					>

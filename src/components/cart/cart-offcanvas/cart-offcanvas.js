@@ -1,5 +1,5 @@
 import { Offcanvas } from "react-bootstrap";
-import img from "../../../assets/imgs/1.jpeg"
+import img from "../../../assets/imgs/landing page/bg-1.jpeg"
 import StarRatings from 'react-star-ratings';
 import { useSelector, useDispatch } from "react-redux";
 import { orderActions } from '../../../store/orderSlice';

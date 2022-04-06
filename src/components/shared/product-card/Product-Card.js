@@ -7,7 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { productActions } from "../../../store/ProductSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import img from "../../../assets/imgs/1.jpeg"
+import img from "../../../assets/imgs/landing page/bg-1.jpeg"
 
 export default function ProductCard(props) {
 	const MAX_LENGTH = 100;

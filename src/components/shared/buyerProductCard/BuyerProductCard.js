@@ -69,7 +69,7 @@ function BuyerProductCard(props) {
 						) : (
 							<div className={`${classes.productDescription}`}>
 								{product.description}....
-								<Link to={`${product?._id}`}>read more</Link>
+								<Link to={`product/${product?._id}`}>read more</Link>
 							</div>
 						)}
 

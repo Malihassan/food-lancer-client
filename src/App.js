@@ -28,8 +28,10 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
 //import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
-import BuyerHome from "./pages/buyerHome/BuyerHome";
-library.add(fab, fas, far);
+import BuyerHome from './pages/buyerHome/BuyerHome';
+import ProductDetailsBuyer from "./pages/product/product-details-buyer/product-details-buyer";
+import BuyerOrder from "./pages/buyer-order/buyer-order";
+library.add(fab, fas,far);
 
 function App() {
 	const authenticated = useSelector((state) => state.auth.authenticated);
@@ -92,6 +94,8 @@ function App() {
 							element={<OrderHistory socket={socket} />}
 						/>
 						<Route path="/home" element={<BuyerHome />} />
+            <Route path="/product/:id" element={<ProductDetailsBuyer />} />
+            <Route path="/placeOrder" element={<BuyerOrder />} />
 						<Route path="/" element={<Navigate replace to="/home" />} />
 					</>
 				)}

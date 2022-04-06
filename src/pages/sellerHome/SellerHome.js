@@ -9,7 +9,7 @@ import classes from "./sellerHome.module.scss";
 import Empty from "../../components/shared/emptyData/Empty";
 import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
-function SellerHome(params) {
+function SellerHome(props) {
   const [toggleCanvas, setToggleCanvas] = useState(false);
   const [updateOrderStatus ,setUpdateOrderStatus] = useState(false)
   const toggleCanvasHandler = () => {
@@ -44,6 +44,9 @@ function SellerHome(params) {
     canceled: false,
     pending: false,
   });
+
+  const socket = props.socket;
+
   let orderStatus = [];
   for (const [key, value] of Object.entries(checkboxSelected)) {
     if (value) {
@@ -101,6 +104,15 @@ function SellerHome(params) {
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
   }, [page, checkboxSelected,updateOrderStatus]);
+
+  useEffect(() => {
+    socket?.on("addOrder", (data) => {
+      setListOfOrders([data, ...listOfOrders]);
+      console.log("Howdaaaayyyy")
+      socket.off("addOrder");
+
+    });
+  }, [listOfOrders,socket]);
 
   return (
     <>

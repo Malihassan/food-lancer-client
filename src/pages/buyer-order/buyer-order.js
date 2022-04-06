@@ -143,7 +143,7 @@ function BuyerOrder(){
             </div>}
             {Object.keys(sortedOrders).map((seller, idx)=>{
                 return(
-                    <div className="card d-flex flex-column text-font p-3" key={idx}>
+                    <div className="card d-flex flex-column text-font p-3 mb-3" key={idx}>
                         <button onClick={()=> removeOrder(sortedOrders[seller], seller)} className="btn btn-outline-danger w-2-5 align-self-end text-center d-flex"><FontAwesomeIcon className="Xmark-font align-self-center" icon={faXmark} /></button>
                         <div className="card-body d-flex justify-content-between">
                             <div className="card col-6">

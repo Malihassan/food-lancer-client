@@ -40,13 +40,15 @@ function App() {
 	const [socket, setSocket] = useState(null);
 
 	useEffect(() => {
-		//  if (loggedAs !== 'viewer') {
-		//   setSocket(
-		//    io("https://food-lancer.herokuapp.com/", {
-		//     query: { type: loggedAs, id: _id },
-		//  })
-		// );
-		//}
+		 if (loggedAs !== 'viewer') {
+		  setSocket(
+		   io("http://localhost:3300/", {
+		    query: { type: loggedAs, id: _id },
+		 })
+		);
+
+		// "https://food-lancer.herokuapp.com/"
+		}
 	}, [authenticated, loggedAs]);
 
 	return (
@@ -74,7 +76,7 @@ function App() {
 				{loggedAs === "seller" && authenticated && (
 					<>
 						<Route path="/" element={<Navigate replace to="/home" />} />
-						<Route path="/home" element={<SellerHome />} />
+						<Route path="/home" element={<SellerHome socket={socket} />} />
 						<Route path="/updateProfile" element={<UpdateProfile />} />
 						<Route path="/myProducts" element={<ProductList />} />
 						<Route path="/myProducts/:id" element={<ProductDetails />} />

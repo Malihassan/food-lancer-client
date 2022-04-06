@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import Navbar from "./components/shared/nav/Navbar";
 import OrderHistory from "./components/order/orderHistory/OrderHistory";
 import BuyerProfile from "./components/buyer/BuyerProfile";
+import NotFound from './components/shared/not-found-page/NotFound'
 import Favourites from "./components/buyer/Favourites";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -38,15 +39,15 @@ function App() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    console.log('agin');
-    if (loggedAs !== 'viewer') {
+    console.log("agin",loggedAs,authenticated);
+    if (loggedAs !== "viewer") {
       setSocket(
         io("https://food-lancer.herokuapp.com/", {
           query: { type: loggedAs, id: _id },
         })
       );
     }
-  }, [authenticated,loggedAs]);
+  }, [authenticated, loggedAs]);
 
   return (
     <>
@@ -66,7 +67,7 @@ function App() {
               path="/:userType/account/resetPassword/:token"
               element={<ResetPassword />}
             />
-            {/* <Route path="/home" element={<BuyerHome />} /> */}
+            <Route path="/home" element={<BuyerHome />} />
           </>
         )}
 
@@ -83,17 +84,22 @@ function App() {
 
         {loggedAs === "buyer" && authenticated && (
           <>
-            <Route path="/" element={<LandingPage />} />
             <Route path="/updateProfile" element={<BuyerProfile />} />
             <Route path="/favs" element={<Favourites />} />
-            <Route path="/myOrders" element={<OrderHistory socket={socket} />} />
+            <Route
+              path="/myOrders"
+              element={<OrderHistory socket={socket} />}
+            />
+            <Route path="/home" element={<BuyerHome />} />
           </>
         )}
         {/*
 				dynamic routing example
 			<Route path="users" element={<Users users={users} />} /> */}
-        <Route path="*" element={<Navigate replace to="/" />} />
-        {/* <Route path="/home" element={<BuyerHome />} /> */}
+        {/* <Route path="/" element={<LandingPage />} /> */}
+        
+        {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
+        <Route path="*" element={<NotFound/>} />
       </Routes>
       <Footer />
     </>

@@ -28,7 +28,7 @@ function ProductDetailsBuyer() {
       sendRequest(
         {
           method: "GET",
-          url: `buyer/product/${param.id}`,
+          url: `buyer/product/details/${param.id}`,
         },
         prdoductDataHandler
       );

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+  _id: "",
   selectedOrderProducts: [],
   totalPrice: 0,
   createdAt: "",
@@ -10,10 +11,11 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     toggleDetailsOrder(state, { payload }) {
-      state.selectedOrderProducts = payload[0].products;
-      state.totalPrice = payload[0].totalPrice;
-      state.createdAt = payload[0].createdAt;
-      state.status = payload[0].status
+      state._id = payload._id;
+      state.selectedOrderProducts = payload.products;
+      state.totalPrice = payload.totalPrice;
+      state.createdAt = payload.createdAt;
+      state.status = payload.status;
     },
     setCartItem(state, {payload}){
       state.selectedOrderProducts = payload.products;

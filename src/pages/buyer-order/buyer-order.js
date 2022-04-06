@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { orderActions } from "../../../store/orderSlice";
+import {orderActions} from "../../store/orderSlice"
 import { useEffect, useState } from "react";
 import StarRatings from 'react-star-ratings';
 import "./buyer-order.scss";
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../hooks/useFetch"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 

@@ -14,6 +14,8 @@ import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
 import { io } from "socket.io-client";
 import OffCanvas from "../../shared/offCanvas/OffCanvas";
+import Empty from "../../shared/emptyData/Empty";
+import Chat from "../../shared/chat/Chat";
 export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
   const [ratingValue, setRatingValue] = useState(0);
@@ -126,6 +128,7 @@ export default function OrderHistory(props) {
   }, [orders, socket]);
   return (
     <>
+      {orders.length === 0 && <Empty />}
       <OffCanvas
         className={classes.OffCanvas}
         placement={"end"}
@@ -133,7 +136,11 @@ export default function OrderHistory(props) {
         title="Chat"
         toggleCanvas={toggleCanvas}
         toggleCanvasHandler={toggleCanvasHandler}
-      ></OffCanvas>
+      >
+        <div>
+        <Chat />
+        </div>
+      </OffCanvas>
       <div className="row justify-content-center bg-light mx-0">
         {orders.map((order) => {
           return (
@@ -146,13 +153,13 @@ export default function OrderHistory(props) {
                   className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
                 >
                   {order.status == "in progress" && (
-                    <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
+                    <span className="badge col-4  p-2 rounded-2 bg-warning">
                       {/* {data.status?data.status:order.status} */}
                       {order.status}
                     </span>
                   )}
                   {order.status === "delivered" && (
-                    <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-success">
+                    <span className="badge col-4 p-2 rounded-2 bg-success">
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>

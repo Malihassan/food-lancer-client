@@ -71,7 +71,7 @@ export default function Chat(props) {
               </div>
             ))}
           </div>
-          <div class="write">
+          <div className="write">
             <input
               value={message}
               type="text"

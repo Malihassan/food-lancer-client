@@ -65,6 +65,7 @@ function BuyerOrder(){
                         [product.sellerId._id]: [product]
                     })
                     setSellerOrderPrice({
+                        ...sellerOrderPrice,
                         [product.sellerId._id]: product.price * product.serves
                     })
                 } else if(seller && !sellerProduct){
@@ -73,6 +74,7 @@ function BuyerOrder(){
                         [product.sellerId._id]: [...sortedOrders[product.sellerId._id], product]
                     })
                     setSellerOrderPrice({
+                        ...sellerOrderPrice,
                         [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] + product.price * product.serves
                     })
                 }

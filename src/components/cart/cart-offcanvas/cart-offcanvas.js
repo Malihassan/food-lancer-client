@@ -51,7 +51,7 @@ function CartOffCanvas(props){
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <div className="my-2 h-84">
-                        {cardItems.selectedOrderProducts.map((item, idx) => {
+                        {cardItems.selectedOrderProducts?.map((item, idx) => {
                             return (
                                 <div className="card mb-3" key={idx}>
                                     <div className="row g-0">

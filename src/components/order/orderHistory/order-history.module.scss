@@ -9,6 +9,17 @@ border-radius: 20px !important;
 margin: 20px 50px !important;
 width: 85% !important;
 }
+.OffCanvas{
+    width: 550px!important;
+    background-color: #fff!important;
+    color: #091b29 !important;
+}
+.chatIcon{
+    &:hover{
+        cursor: pointer !important;
+        color: rgb(58, 58, 251);
+    }
+}
 .imgSEller{
     width: 4rem;
     height: 4rem;

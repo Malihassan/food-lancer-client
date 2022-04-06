@@ -22,8 +22,8 @@ export default function OrderDetails(props) {
       },
       () => {}
     );
-    props.toggleCanvasHandler()
-    props.changeStateOrderStatus()
+    // props.toggleCanvasHandler()
+    // props.changeStateOrderStatus()
   };
   return (
     <div className="card-body d-flex flex-column justify-content-between">

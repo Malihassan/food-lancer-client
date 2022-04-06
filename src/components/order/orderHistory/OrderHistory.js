@@ -8,16 +8,19 @@ import { CgProductHunt } from "react-icons/cg";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
-import { BsCalendarDate } from "react-icons/bs";
+import { BsCalendarDate, BsFillChatQuoteFill } from "react-icons/bs";
 
 import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
 import { io } from "socket.io-client";
+import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import Empty from "../../shared/emptyData/Empty";
+import Chat from "../../shared/chat/Chat";
 export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
   const [ratingValue, setRatingValue] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
+  const [toggleCanvas, setToggleCanvas] = useState(false);
   const [isReviewd, setIsReviewd] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -29,6 +32,9 @@ export default function OrderHistory(props) {
     commentError: null,
     selectError: null,
   });
+  const toggleCanvasHandler = () => {
+    setToggleCanvas(!toggleCanvas);
+  };
   const handleRating = (rate) => {
     setIsReviewd(false);
     setIsAdded(false);
@@ -123,6 +129,18 @@ export default function OrderHistory(props) {
   return (
     <>
       {orders.length === 0 && <Empty />}
+      <OffCanvas
+        className={classes.OffCanvas}
+        placement={"end"}
+        name={"end"}
+        title="Chat"
+        toggleCanvas={toggleCanvas}
+        toggleCanvasHandler={toggleCanvasHandler}
+      >
+        <div>
+        <Chat />
+        </div>
+      </OffCanvas>
       <div className="row justify-content-center bg-light mx-0">
         {orders.map((order) => {
           return (
@@ -396,9 +414,15 @@ export default function OrderHistory(props) {
                 <div
                   className={`d-flex flex-column col-xl-3 col-lg-3 col-md-6 col-12 p-3`}
                 >
-                  <p className="fw-light text-secondary opacity-75 fs-5">
-                    Seller Details
-                  </p>
+                  <div className="d-flex justify-content-between col-12">
+                    <p className="fw-light text-secondary opacity-75 fs-5">
+                      Seller Details
+                    </p>
+                    <BsFillChatQuoteFill
+                      onClick={toggleCanvasHandler}
+                      className={`fs-3 ${classes.chatIcon}`}
+                    />
+                  </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <img
                       src={photoTest}

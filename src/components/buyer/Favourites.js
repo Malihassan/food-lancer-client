@@ -8,19 +8,16 @@ function Favourites() {
 	const [productsArr, setProductsArr] = useState([]);
 	useEffect(() => {
 		(async () => {
-			const res = await axiosInstance.get(
-				`http://localhost:3000/buyer/product/favs`
-			);
+			const res = await axiosInstance.get(`buyer/product/favs`);
 			setProductsArr(res.data);
 		})();
 	}, []);
 
 	const handleFavClick = (e) => {
 		(async () => {
-			const res = await axiosInstance.delete(
-				`http://localhost:3000/buyer/product/favs`,
-				{ data: { id: e._id } }
-			);
+			const res = await axiosInstance.delete(`buyer/product/favs`, {
+				data: { id: e._id },
+			});
 			setProductsArr(res.data);
 		})();
 	};

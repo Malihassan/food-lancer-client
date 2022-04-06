@@ -13,7 +13,7 @@ function BuyerProductCard(props) {
     <div className={`col-xl-10 m-auto ${classes.cardContainer} `}>
     <button
 						onClick={() => {
-							props.handleFavClick(product);
+							props.handleFavClick(product, props.fav);
 						}}
 						className={`btn  ${classes.iconContainerFav}`}
 					>
@@ -56,12 +56,12 @@ function BuyerProductCard(props) {
 						{product.description.length > MAX_LENGTH ? (
 							<div className={`${classes.productDescription}`}>
 								{`${product.description.substring(0, MAX_LENGTH)}....`}
-								<Link to={`${product?._id}`}>read more</Link>
+								<Link to={`/product/${product?._id}`}>read more</Link>
 							</div>
 						) : (
 							<div className={`${classes.productDescription}`}>
 								{product.description}....
-								<Link to={`${product?._id}`}>read more</Link>
+								<Link to={`/product/${product?._id}`}>read more</Link>
 							</div>
 						)}
 

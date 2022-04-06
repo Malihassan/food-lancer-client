@@ -14,11 +14,11 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 
 import { authActions } from "../../../store/AuthSlice";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-const Navbar = ({ bg, buttons }) => {
+const Navbar = (props) => {
   const dispatch = useDispatch();
   const loggedAs = useSelector((state) => state.auth.userType);
   const logout = async (type) => {
@@ -27,12 +27,21 @@ const Navbar = ({ bg, buttons }) => {
       dispatch(authActions.logout());
     }
   };
+  const socket = props.socket;
+  const [notification, setNotificatioed] = useState(false);
+  useEffect(() => {
+    socket?.on("updateOrderStatus", (data) => {
+      if (data) {
+        setNotificatioed(true);
+      }
+      socket.off("updateOrderStatus");
+    });
+  }, [socket]);
 
   return (
     <nav
       className={`sticky-top navbar p-0 m-0 ${classes.nav}  d-flex justify-content-between align-items-center`}
     >
-      {/* <div className="container-fluid d-flex flex-row flex-wrap justify-content-lg-between justify-content-center"> */}
       <Link
         to="/seller/home"
         type="button"
@@ -93,7 +102,7 @@ const Navbar = ({ bg, buttons }) => {
             </Link>
             <Link
               to="/"
-              onClick={()=>{logout('seller')}}
+              onClick={() => logout("seller")}
               type="button"
               className="btn btn-outline-warning "
             >
@@ -139,8 +148,12 @@ const Navbar = ({ bg, buttons }) => {
             <Link
               to="/myOrders"
               type="button"
-              className="lead text-light mx-4 text-decoration-none"
+              onClick={() => setNotificatioed(false)}
+              className="lead text-light mx-4 p-2 text-decoration-none position-relative"
             >
+              {notification && (
+                <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"></span>
+              )}
               <div className="d-lg-block d-none ">
                 <FontAwesomeIcon icon={faUtensils} />
                 <span className="mx-2  ">My Orders</span>
@@ -164,7 +177,7 @@ const Navbar = ({ bg, buttons }) => {
                 <FontAwesomeIcon icon={faUser} />
               </div>
             </Link>
-            <Link to="/" type="button" className="btn btn-outline-light ">
+            <Link to="/favs" type="button" className="btn btn-outline-light ">
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
             <Link to="/" type="button" className="btn btn-outline-light">
@@ -172,7 +185,7 @@ const Navbar = ({ bg, buttons }) => {
             </Link>
             <Link
               to="/"
-              onClick={()=>{logout('buyer')}}
+              onClick={() => logout("buyer")}
               type="button"
               className="btn btn-outline-warning "
             >
@@ -181,7 +194,6 @@ const Navbar = ({ bg, buttons }) => {
           </div>
         )}
       </div>
-      {/* </div> */}
     </nav>
   );
 };

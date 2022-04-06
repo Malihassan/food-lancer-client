@@ -3,15 +3,17 @@ import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
 import { axiosInstance } from "../../../network/axiosConfig";
-import { BiPhoneCall } from "react-icons/bi";
+import { BiPhoneCall, BiDish } from "react-icons/bi";
 import { CgProductHunt } from "react-icons/cg";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
 import { BsCalendarDate } from "react-icons/bs";
+
 import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
-import {io} from 'socket.io-client'
+import { io } from "socket.io-client";
+import Empty from "../../shared/emptyData/Empty";
 export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
   const [ratingValue, setRatingValue] = useState(0);
@@ -91,15 +93,7 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
-  const [data,setData] = useState('')
-  const socket = props.socket 
-  useEffect(() => {
-    console.log(data);
-    socket?.on("updateOrderStatus", (data) => {
-      console.log(data);
-      setData(data)
-    });
-  }, [socket]);
+  const socket = props.socket;
   useEffect(async () => {
     sendRequest(
       {
@@ -113,312 +107,333 @@ export default function OrderHistory(props) {
         }
       }
     );
-    
   }, []);
+  useEffect(() => {
+    socket?.on("updateOrderStatus", (data) => {
+      let updatedOrders = [...orders];
+      updatedOrders.find((order) => {
+        if (order._id === data._id) {
+          order.status = data.status;
+        }
+      });
+      setOrder(updatedOrders);
+      socket.off("updateOrderStatus");
+    });
+  }, [orders, socket]);
   return (
-    <div className="row justify-content-center bg-light mx-0">
-      {orders.map((order) => {
-        return (
-          <div
-            key={orders.indexOf(order)}
-            className={`card mx-0  border w-75  ${classes.cardOrder}`}
-          >
-            <div className="d-flex flex-md-row flex-column col-12">
-              <div
-                className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-12 p-3 ${classes.divLeftCard}`}
-              >
-                {order.status == "in progress" && (
-                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
-                    {order.status}
-                  </span>
-                )}
-                {order.status === "delivered" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-success">
-                    {order.status}
-                  </span>
-                )}
-                {order.status === "canceled" && (
-                  <span className="badge col-3 p-2 rounded-2 bg-danger">
-                    {order.status}
-                  </span>
-                )}
-                {order.status === "pending" && (
-                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
-                    {order.status}
-                  </span>
-                )}
-                <p className="pt-3">
-                  <HiIdentification className="fs-3 me-3" /> {order._id}
-                </p>
-                <p className="">
-                  <ImLocation className="fs-3 me-3" /> Egypt - Faysal
-                </p>
-                <p className="">
-                  <BsCalendarDate className="fs-4" /> &nbsp;&nbsp;&nbsp;&nbsp;
-                  {new Date(order.createdAt).getHours()} h &nbsp;
-                  {new Date(order.createdAt).getMinutes()} m &nbsp;
-                </p>
-                <p className="">
-                  <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
-                  {new Date(order.updatedAt).getHours()} h &nbsp;
-                  {new Date(order.updatedAt).getMinutes()} m &nbsp;
-                </p>
-              </div>
-              <div
-                className={`d-flex flex-column col-lg-4 col-md-6 col-12 p-3 ${classes.divLeftCard} `}
-              >
+    <>
+      {orders.length === 0 && <Empty />}
+      <div className="row justify-content-center bg-light mx-0">
+        {orders.map((order) => {
+          return (
+            <div
+              key={orders.indexOf(order)}
+              className={`card mx-0  border  ${classes.cardOrder}`}
+            >
+              <div className="d-flex flex-md-row flex-column col-12">
                 <div
-                  style={{ maxHeight: 159.5, minHeight: 159.5 }}
-                  className="d-flex flex-column overflow-auto"
+                  className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
                 >
-                  {order.products.map((product) => {
-                    return (
-                      <div
-                        key={order.products.indexOf(product)}
-                        className="d-flex justify-conten-between"
-                      >
-                        <p className="col-9">
-                          <CgProductHunt className="fs-4 me-1 text-danger" />
-                          {product.quantity} x {product._id.name}
-                        </p>
-                        <p className="col-3 pe-1 text-end ">
-                          EGP {product._id.price}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-                <hr className="opacity-25 fw-light text-secondary" />
-                <div className="d-flex justify-conten-between">
-                  <p className="col-8 fs-4 fw-bold">
-                    Total Price{" "}
-                    <small className="fw-light ps-2 fs-5">
-                      EGP {order.totalPrice}
-                    </small>
+                  {order.status == "in progress" && (
+                    <span className="badge col-4  p-2 rounded-2 bg-warning">
+                      {/* {data.status?data.status:order.status} */}
+                      {order.status}
+                    </span>
+                  )}
+                  {order.status === "delivered" && (
+                    <span className="badge col-4 p-2 rounded-2 bg-success">
+                      {order.status}
+                      {/* {data.status?data.status:order.status} */}
+                    </span>
+                  )}
+                  {order.status === "canceled" && (
+                    <span className="badge col-4 col-xl-3x p-2 rounded-2 bg-danger">
+                      {order.status}
+                      {/* {data.status?data.status:order.status} */}
+                    </span>
+                  )}
+                  {order.status === "pending" && (
+                    <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
+                      {order.status}
+                      {/* {data.status?data.status:order.status} */}
+                    </span>
+                  )}
+                  <p className="pt-3">
+                    <HiIdentification className="fs-3 me-3" /> {order._id}
                   </p>
-                  {/* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button> */}
-                  <button
-                    // style={{ height: 40 }}
-                    className="col-4 btm-sm btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo"
-                    onClick={() => {
-                      console.log(order);
-                      setSelectedOrder(order);
-                    }}
-                  >
-                    add review
-                  </button>
+                  <p className="">
+                    <ImLocation className="fs-3 me-3" /> Egypt - Faysal
+                  </p>
+                  <p className="">
+                    <BsCalendarDate className="fs-4" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                    {new Date(order.createdAt).getHours()} h &nbsp;
+                    {new Date(order.createdAt).getMinutes()} m &nbsp;
+                  </p>
+                  <p className="">
+                    <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
+                    {new Date(order.updatedAt).getHours()} h &nbsp;
+                    {new Date(order.updatedAt).getMinutes()} m &nbsp;
+                  </p>
+                </div>
+                <div
+                  className={`d-flex flex-column col-xl-6 col-lg-5 col-md-6 col-12 p-3 ${classes.divLeftCard} `}
+                >
                   <div
-                    className="modal fade"
-                    id="exampleModal"
-                    tabIndex="-1"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
+                    style={{ maxHeight: 159.5, minHeight: 159.5 }}
+                    className="d-flex flex-column overflow-auto"
                   >
-                    <div className="modal-dialog">
-                      <div className="modal-content bg-light">
-                        <div className="modal-header">
-                          <h5
-                            className="modal-title text-secondary fw-light"
-                            id="exampleModalLabel"
-                          >
-                            Add Review
-                          </h5>
-                          <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
+                    {order.products.map((product) => {
+                      return (
+                        <div
+                          key={order.products.indexOf(product)}
+                          className="d-flex justify-conten-between"
+                        >
+                          <p className="col-9">
+                            {/* <CgProductHunt  /> */}
+                            <BiDish className="fs-4 me-1 text-danger" />
+                            {product.quantity} x {product._id.name}
+                          </p>
+                          <p className="col-3 pe-1 fs-4 text-end ">
+                            <span className="fw-thin">E&#163;</span>{" "}
+                            {product._id.price}
+                          </p>
                         </div>
-                        <div className="modal-body">
-                          <form onSubmit={handelFormSubmit}>
-                            <div className="mb-3">
-                              {/* <label
+                      );
+                    })}
+                  </div>
+                  <hr className="opacity-25 fw-light text-secondary" />
+                  <div className="d-flex justify-conten-between">
+                    <p className="col-8 fs-4 fw-bold">
+                      Total Price{" "}
+                      <small className="fw-light ps-2 fs-4">
+                        <span className="fw-thin">E&#163;</span>{" "}
+                        {order.totalPrice}
+                      </small>
+                    </p>
+                    <button
+                      className="col-4 btm-sm btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      data-bs-whatever="@mdo"
+                      onClick={() => {
+                        console.log(order);
+                        setSelectedOrder(order);
+                      }}
+                    >
+                      add review
+                    </button>
+                    <div
+                      className="modal fade"
+                      id="exampleModal"
+                      tabIndex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog">
+                        <div className="modal-content bg-light">
+                          <div className="modal-header">
+                            <h5
+                              className="modal-title text-secondary fw-light"
+                              id="exampleModalLabel"
+                            >
+                              Add Review
+                            </h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div className="modal-body">
+                            <form onSubmit={handelFormSubmit}>
+                              <div className="mb-3">
+                                {/* <label
                                 htmlFor="select"
                                 className="col-form-label fw-bold fs-5"
                               >
                                 Select Product
                               </label> */}
-                              <select
-                                id="select"
-                                className="form-select form-select-sm"
-                                aria-label=".form-select-sm example"
-                                onChange={onChangeHandler}
-                              >
-                                <option
-                                  value=""
-                                  name="products"
-                                  aria-describedby="selectHelp"
+                                <select
+                                  id="select"
+                                  className="form-select form-select-sm"
+                                  aria-label=".form-select-sm example"
+                                  onChange={onChangeHandler}
                                 >
-                                  Select Your Product
-                                </option>
+                                  <option
+                                    value=""
+                                    name="products"
+                                    aria-describedby="selectHelp"
+                                  >
+                                    Select Your Product
+                                  </option>
 
-                                {order.products.map((product) => {
-                                  return (
-                                    <option
-                                      key={order.products.indexOf(product)}
-                                      value={product._id.name}
-                                      id={product._id._id}
-                                      name="products"
-                                    >
-                                      {product._id.name}
-                                    </option>
-                                  );
-                                })}
-                              </select>
-                              <div
-                                id="selectHelp"
-                                className="text-danger form-text"
-                              >
-                                {reviewFormErrors.selectError}
+                                  {order.products.map((product) => {
+                                    return (
+                                      <option
+                                        key={order.products.indexOf(product)}
+                                        value={product._id.name}
+                                        id={product._id._id}
+                                        name="products"
+                                      >
+                                        {product._id.name}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
+                                <div
+                                  id="selectHelp"
+                                  className="text-danger form-text"
+                                >
+                                  {reviewFormErrors.selectError}
+                                </div>
                               </div>
-                            </div>
 
-                            <div className="mb-3">
-                              <label
-                                htmlFor="comment"
-                                className="col-form-label fw-bold fs-5"
-                              >
-                                Review
-                              </label>
-                              <textarea
-                                id="comment"
-                                name="comment"
-                                className={`form-control ${
-                                  reviewFormErrors.commentError
-                                    ? "border-danger"
-                                    : ""
-                                }`}
-                                value={reviewForm.comment}
-                                aria-describedby="commentHelp"
-                                onChange={(e) => handelFormChange(e)}
-                              ></textarea>
-                              <div
-                                id="commentHelp"
-                                className="text-danger form-text"
-                              >
-                                {reviewFormErrors.commentError}
+                              <div className="mb-3">
+                                <label
+                                  htmlFor="comment"
+                                  className="col-form-label fw-bold fs-5"
+                                >
+                                  Review
+                                </label>
+                                <textarea
+                                  id="comment"
+                                  name="comment"
+                                  className={`form-control ${
+                                    reviewFormErrors.commentError
+                                      ? "border-danger"
+                                      : ""
+                                  }`}
+                                  value={reviewForm.comment}
+                                  aria-describedby="commentHelp"
+                                  onChange={(e) => handelFormChange(e)}
+                                ></textarea>
+                                <div
+                                  id="commentHelp"
+                                  className="text-danger form-text"
+                                >
+                                  {reviewFormErrors.commentError}
+                                </div>
                               </div>
-                            </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="rate"
-                                className="form-label fw-bold fs-5"
-                              >
-                                Rate
-                              </label>
-                              <br />
-                              <div className="d-flex justify-content-between">
-                                <Rating
-                                  transition
-                                  aria-describedby="rateHelp"
-                                  id="rate"
-                                  name="rate"
-                                  onClick={handleRating}
-                                  ratingValue={ratingValue}
-                                  allowHalfIcon
-                                  allowHover
-                                  size={20}
-                                  fillColorArray={[
-                                    "red",
-                                    "red",
-                                    "red",
-                                    "red",
-                                    "orange",
-                                    "orange",
-                                    "orange",
-                                    "yellow",
-                                    "yellow",
-                                    "yellow",
-                                  ]}
-                                />
-                                <p className="pe-2">{ratingValue / 20}</p>
+                              <div className="mb-3">
+                                <label
+                                  htmlFor="rate"
+                                  className="form-label fw-bold fs-5"
+                                >
+                                  Rate
+                                </label>
+                                <br />
+                                <div className="d-flex justify-content-between">
+                                  <Rating
+                                    transition
+                                    aria-describedby="rateHelp"
+                                    id="rate"
+                                    name="rate"
+                                    onClick={handleRating}
+                                    ratingValue={ratingValue}
+                                    allowHalfIcon
+                                    allowHover
+                                    size={20}
+                                    fillColorArray={[
+                                      "red",
+                                      "red",
+                                      "red",
+                                      "red",
+                                      "orange",
+                                      "orange",
+                                      "orange",
+                                      "yellow",
+                                      "yellow",
+                                      "yellow",
+                                    ]}
+                                  />
+                                  <p className="pe-2">{ratingValue / 20}</p>
+                                </div>
+                                <div
+                                  id="rateHelp"
+                                  className="text-danger form-text"
+                                >
+                                  {reviewFormErrors.rateError}
+                                </div>
                               </div>
-                              <div
-                                id="rateHelp"
-                                className="text-danger form-text"
-                              >
-                                {reviewFormErrors.rateError}
+                              {isReviewd && (
+                                <h5 className="text-danger fw-light">
+                                  this product already commented by your
+                                </h5>
+                              )}
+                              {isAdded && (
+                                <h5 className="text-success fw-light">
+                                  Added Successfully
+                                </h5>
+                              )}
+                              <div className="modal-footer border-0">
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Close
+                                </button>
+                                <button
+                                  type="submit"
+                                  disabled={
+                                    reviewForm.comment == "" ||
+                                    ratingValue == 0 ||
+                                    selectedProductId == ""
+                                  }
+                                  className="btn btn-primary"
+                                >
+                                  Send review
+                                </button>
                               </div>
-                            </div>
-                            {isReviewd && (
-                              <h5 className="text-danger fw-light">
-                                this product already commented by your
-                              </h5>
-                            )}
-                            {isAdded && (
-                              <h5 className="text-success fw-light">
-                                Added Successfully
-                              </h5>
-                            )}
-                            <div className="modal-footer border-0">
-                              <button
-                                type="button"
-                                className="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                              >
-                                Close
-                              </button>
-                              <button
-                                type="submit"
-                                disabled={
-                                  reviewForm.comment == "" ||
-                                  ratingValue == 0 ||
-                                  selectedProductId == ""
-                                }
-                                className="btn btn-primary"
-                              >
-                                Send review
-                              </button>
-                            </div>
-                          </form>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className={`d-flex flex-column  col-lg-4 col-md-6 col-12 p-3`}
-              >
-                <p className="fw-light text-secondary opacity-75 fs-5">
-                  Seller Details
-                </p>
-                <div className="d-flex flex-wrap align-items-center">
-                  <img
-                    src={photoTest}
-                    className={`img img-fluid rounded-circle ${classes.imgSEller}`}
-                  />
-                  <p className="ps-2 fs-4 ">
-                    {order.sellerId.firstName + "  " + order.sellerId.lastName}
+                <div
+                  className={`d-flex flex-column col-xl-3 col-lg-3 col-md-6 col-12 p-3`}
+                >
+                  <p className="fw-light text-secondary opacity-75 fs-5">
+                    Seller Details
                   </p>
-                  {/* <p>{seller.firstName[0].toUpperCase()+seller.firstName.slice(1) + '  '+ seller.lastName[0].toUpperCase()+seller.lastName.slice(1)}</p> */}
-                </div>
-                <p className="pt-4">
-                  <BiPhoneCall className="text-primary fs-4 me-2" />
-                  {order.sellerId.phone}
-                </p>
-                <div className="d-flex justify-content-between pt-2">
-                  <p>rate</p>
-                  <p className="pe-2">{order.sellerId.rate * 10}% </p>
-                </div>
-                <div className="progress" style={{ height: 9 }}>
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{ width: 39.2 * order.sellerId.rate }}
-                  >
-                    {/* {seller.rate*10}%  */}
+                  <div className="d-flex flex-wrap align-items-center">
+                    <img
+                      src={photoTest}
+                      className={`img img-fluid rounded-circle ${classes.imgSEller}`}
+                    />
+                    <p className="ps-2 fs-4 ">
+                      {order.sellerId.firstName +
+                        "  " +
+                        order.sellerId.lastName}
+                    </p>
+                    {/* <p>{seller.firstName[0].toUpperCase()+seller.firstName.slice(1) + '  '+ seller.lastName[0].toUpperCase()+seller.lastName.slice(1)}</p> */}
+                  </div>
+                  <p className="pt-4">
+                    <BiPhoneCall className="text-primary fs-4 me-2" />
+                    {order.sellerId.phone}
+                  </p>
+                  <div className="d-flex justify-content-between pt-2">
+                    <p>rate</p>
+                    <p className="pe-2">{order.sellerId.rate * 10}% </p>
+                  </div>
+                  <div className="progress" style={{ height: 9 }}>
+                    <div
+                      className="progress-bar"
+                      role="progressbar"
+                      style={{ width: 39.2 * order.sellerId.rate }}
+                    >
+                      {/* {seller.rate*10}%  */}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </>
   );
 }

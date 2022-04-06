@@ -90,7 +90,9 @@ function BuyerOrder(){
             orderList = orderList.filter((item) => item._id !== product._id);
         }
 
-        await dispatch(orderActions.setCartItem({...orderCards, product: orderList}));
+        await dispatch(orderActions.setCartItem({...orderCards, products: orderList}));
+
+        console.log(orderList);
 
         const filteredOrders = Object.keys(sortedOrders)
             .filter(key => !key.includes(seller))

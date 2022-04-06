@@ -18,11 +18,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-const Navbar = ({ bg, buttons }) => {
+const Navbar = () => {
 	const dispatch = useDispatch();
 	const loggedAs = useSelector((state) => state.auth.userType);
-	const logout = async () => {
-		const res = await axiosInstance.get(`seller/account/logout`);
+	const logout = async (type) => {
+		const res = await axiosInstance.get(`${type}/account/logout`);
 		if (res) {
 			dispatch(authActions.logout());
 		}
@@ -93,7 +93,7 @@ const Navbar = ({ bg, buttons }) => {
 						</Link>
 						<Link
 							to="/"
-							onClick={logout}
+							onClick={() => logout("seller")}
 							type="button"
 							className="btn btn-outline-warning "
 						>
@@ -176,7 +176,7 @@ const Navbar = ({ bg, buttons }) => {
 						</Link>
 						<Link
 							to="/"
-							onClick={logout}
+							onClick={() => logout("buyer")}
 							type="button"
 							className="btn btn-outline-warning "
 						>

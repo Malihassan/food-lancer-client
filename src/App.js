@@ -38,14 +38,13 @@ function App() {
 	const [socket, setSocket] = useState(null);
 
 	useEffect(() => {
-		console.log("agin");
-		if (loggedAs !== "viewer") {
-			setSocket(
-				io("https://food-lancer.herokuapp.com/", {
-					query: { type: loggedAs, id: _id },
-				})
-			);
-		}
+		//  if (loggedAs !== 'viewer') {
+		//   setSocket(
+		//    io("https://food-lancer.herokuapp.com/", {
+		//     query: { type: loggedAs, id: _id },
+		//  })
+		// );
+		//}
 	}, [authenticated, loggedAs]);
 
 	return (
@@ -66,7 +65,7 @@ function App() {
 							path="/:userType/account/resetPassword/:token"
 							element={<ResetPassword />}
 						/>
-						{/* <Route path="/home" element={<BuyerHome />} /> */}
+						<Route path="/dishes" element={<BuyerHome />} />
 					</>
 				)}
 
@@ -86,7 +85,6 @@ function App() {
 
 				{loggedAs === "buyer" && authenticated && (
 					<>
-						<Route path="/" element={<LandingPage />} />
 						<Route path="/updateProfile" element={<BuyerProfile />} />
 						<Route path="/favs" element={<Favourites />} />
 						<Route
@@ -94,6 +92,7 @@ function App() {
 							element={<OrderHistory socket={socket} />}
 						/>
 						<Route path="/home" element={<BuyerHome />} />
+						<Route path="/" element={<Navigate replace to="/home" />} />
 					</>
 				)}
 

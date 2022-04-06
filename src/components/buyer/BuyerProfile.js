@@ -41,11 +41,9 @@ function BuyerProfile() {
 
 	const onSubmit = (values) => {
 		let formData = new FormData();
-		console.log(images.url);
 		const newImg = { _id: "", url: "" };
 		newImg._id = images._id;
 		newImg.url = images.url;
-		console.log(newImg, "newOne");
 		formData.append("image", images.image);
 		formData.append("newImg", newImg._id);
 		formData.append("firstName", values.firstName);
@@ -77,7 +75,6 @@ function BuyerProfile() {
 	useEffect(() => {
 		const fillData = async () => {
 			const { data } = await axiosInstance.get(`buyer/account/info`);
-			console.log(data);
 
 			setImages(data?.image);
 

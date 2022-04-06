@@ -32,7 +32,7 @@ function BuyerHome() {
 	useEffect(() => {
 		function getAllProduct(res) {
 			setProducts(res?.data.docs);
-			setTotalPages(res?.data.totalPages);
+			setTotalPages(Math.ceil(res?.data.totalPages));
 		}
 		function getFavs(res) {
 			setFavs(res.data);
@@ -129,7 +129,7 @@ function BuyerHome() {
 							}
 							nextLabel={<FontAwesomeIcon icon={faCircleArrowRight} />}
 							breakLabel={"..."}
-							pageCount={totalPages}
+							pageCount={Math.ceil(totalPages)}
 							marginPagesDisplayed={2}
 							pageRangeDisplayed={3}
 							onPageChange={handelPageClick}

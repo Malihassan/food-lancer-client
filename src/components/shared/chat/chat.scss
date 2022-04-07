@@ -96,7 +96,8 @@
         }
         &.you {
             float: left;
-            background-color: #b0d5ee;
+            background-color: rgb(0, 132, 255);
+            color: white;
             align-self: flex-start;
             animation-name: slideFromLeft;
             &:before {

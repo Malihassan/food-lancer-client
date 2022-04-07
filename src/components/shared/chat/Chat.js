@@ -31,11 +31,9 @@ export default function Chat(props) {
   }, []);
   useEffect(() => {
     socket?.on("receiveMessage", (data) => {
-        console.log(data);
-        // setChat(data)
-      socket.off("receiveMessage");
+      setChat(data.messages);
     });
-  }, [socket]);
+  }, [socket,chat]);
   const sendMessage = () => {
     axiosInstance.post(`${loggedAs}/chat/sendMessage`, {
       message,
@@ -65,7 +63,7 @@ export default function Chat(props) {
             {chat.map((message) => (
               <div
                 key={message._id}
-                className={`bubble ${message.from ? "you" : "me"}`}
+                className={`bubble ${message.from==="buyer" ? "you" : "me"}`}
               >
                 {message.content}
               </div>

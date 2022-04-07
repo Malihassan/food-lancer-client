@@ -12,7 +12,7 @@ import {
 function OrderList(props) {
   const dispatch = useDispatch();
   const selectedProductHandler = (order) => {
-    props.toggleCanvasHandler();
+    props.togglecanvashandler();
     dispatch(
       orderActions.toggleDetailsOrder({
         orderId: order._id,

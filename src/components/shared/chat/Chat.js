@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { axiosInstance } from "../../../network/axiosConfig";
-import Empty from "../emptyData/Empty";
+import { FiSend } from "react-icons/fi";
 import "./chat.scss";
 export default function Chat(props) {
   const { sendRequest, hasError } = useFetch();
@@ -11,11 +11,15 @@ export default function Chat(props) {
   const orderId = useSelector((state) => state.order.orderId);
   const sellerId = useSelector((state) => state.order.sellerId);
   const buyerId = useSelector((state) => state.order.buyerId);
-
   const socket = props.socket;
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [updatedAt, setUpdatedAt] = useState();
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  });
   useEffect(() => {
     sendRequest(
       {
@@ -23,7 +27,6 @@ export default function Chat(props) {
         method: "GET",
       },
       (res) => {
-        console.log(res);
         setChat(res.data.messages);
         setUpdatedAt(new Date(res.data.updatedAt));
       }
@@ -48,7 +51,7 @@ export default function Chat(props) {
       {!hasError && (
         <div className="right">
           <div className="top text-center mb-4">
-            {updatedAt && (
+            {updatedAt ? (
               <span>
                 {updatedAt.toLocaleDateString(undefined, {
                   weekday: "long",
@@ -57,11 +60,14 @@ export default function Chat(props) {
                   day: "numeric",
                 })}
               </span>
+            ) : (
+              <h3>let`s chat now</h3>
             )}
           </div>
           <div className="chat" data-chat="person2">
             {chat.map((message) => (
               <div
+                ref={messagesEndRef}
                 key={message._id}
                 className={`bubble ${message.from==="buyer" ? "you" : "me"}`}
               >
@@ -79,9 +85,11 @@ export default function Chat(props) {
             />
             <Link
               to=""
-              className={`write-link send ${message ? "" : "disabled-link"}`}
+              className={`${message ? "" : "disabled-link"}`}
               onClick={sendMessage}
-            ></Link>
+            >
+              <FiSend  className="fs-3"/>
+            </Link>
           </div>
         </div>
       )}

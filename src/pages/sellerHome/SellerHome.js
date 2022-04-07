@@ -10,11 +10,13 @@ import Empty from "../../components/shared/emptyData/Empty";
 import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
 import Chat from "../../components/shared/chat/Chat";
+import { useSelector } from "react-redux";
 function SellerHome(props) {
-  const [toggleCanvas, setToggleCanvas] = useState(false);
+  const statusOfSelectedOrder = useSelector((state) => state.order.status);
+  const [togglecanvas, settogglecanvas] = useState(false);
   const [updateOrderStatus, setUpdateOrderStatus] = useState(false);
-  const toggleCanvasHandler = () => {
-    setToggleCanvas(!toggleCanvas);
+  const togglecanvashandler = () => {
+    settogglecanvas(!togglecanvas);
   };
   const changeStateOrderStatus = () => {
     setUpdateOrderStatus(!updateOrderStatus);
@@ -102,7 +104,10 @@ function SellerHome(props) {
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
   }, [page, checkboxSelected, updateOrderStatus]);
-
+  const displayChat =
+    statusOfSelectedOrder &&
+    (statusOfSelectedOrder === "pending" ||
+      statusOfSelectedOrder === "in progress");
   return (
     <>
       <SellerInfo userInfo={userInfo} />
@@ -113,7 +118,7 @@ function SellerHome(props) {
             sellerFilterSelection={sellerFilterSelection}
           />
           <OrderList
-            toggleCanvasHandler={toggleCanvasHandler}
+            togglecanvashandler={togglecanvashandler}
             listOfOrders={listOfOrders}
             totalDocs={paginateData.totalDocs}
             totalPages={paginateData.totalPages}
@@ -124,8 +129,8 @@ function SellerHome(props) {
             placement={"end"}
             name={"end"}
             title="Details Order"
-            toggleCanvas={toggleCanvas}
-            toggleCanvasHandler={toggleCanvasHandler}
+            togglecanvas={togglecanvas}
+            togglecanvashandler={togglecanvashandler}
           >
             <nav className="">
               <div
@@ -145,18 +150,20 @@ function SellerHome(props) {
                 >
                   Order Details
                 </button>
-                <button
-                  className={`nav-link nav-button ${classes.active}`}
-                  id="nav-profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
-                >
-                  Chat
-                </button>
+                {displayChat &&
+                  <button
+                    className={`nav-link nav-button ${classes.active}`}
+                    id="nav-profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false"
+                  >
+                    Chat
+                  </button>
+                }
               </div>
             </nav>
             <div className="tab-content " id="nav-tabContent">
@@ -168,7 +175,7 @@ function SellerHome(props) {
               >
                 <OrderDetails
                   changeStateOrderStatus={changeStateOrderStatus}
-                  toggleCanvasHandler={toggleCanvasHandler}
+                  togglecanvashandler={togglecanvashandler}
                 />
               </div>
               <div

@@ -13,10 +13,10 @@ import Chat from "../../components/shared/chat/Chat";
 import { useSelector } from "react-redux";
 function SellerHome(props) {
   const statusOfSelectedOrder = useSelector((state) => state.order.status);
-  const [togglecanvas, settogglecanvas] = useState(false);
+  const [toggleCanvas, setToggleCanvas] = useState(false);
   const [updateOrderStatus, setUpdateOrderStatus] = useState(false);
-  const togglecanvashandler = () => {
-    settogglecanvas(!togglecanvas);
+  const toggleCanvasHandler = () => {
+    setToggleCanvas(!toggleCanvas);
   };
   const changeStateOrderStatus = () => {
     setUpdateOrderStatus(!updateOrderStatus);
@@ -118,7 +118,7 @@ function SellerHome(props) {
             sellerFilterSelection={sellerFilterSelection}
           />
           <OrderList
-            togglecanvashandler={togglecanvashandler}
+            toggleCanvasHandler={toggleCanvasHandler}
             listOfOrders={listOfOrders}
             totalDocs={paginateData.totalDocs}
             totalPages={paginateData.totalPages}
@@ -129,8 +129,8 @@ function SellerHome(props) {
             placement={"end"}
             name={"end"}
             title="Details Order"
-            togglecanvas={togglecanvas}
-            togglecanvashandler={togglecanvashandler}
+            toggleCanvas={toggleCanvas}
+            toggleCanvasHandler={toggleCanvasHandler}
           >
             <nav className="">
               <div
@@ -175,7 +175,7 @@ function SellerHome(props) {
               >
                 <OrderDetails
                   changeStateOrderStatus={changeStateOrderStatus}
-                  togglecanvashandler={togglecanvashandler}
+                  toggleCanvasHandler={toggleCanvasHandler}
                 />
               </div>
               <div

@@ -7,10 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { io } from "socket.io-client";
 
-function LoginSeller(props) {
+function LoginSeller() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const errResMes = useSelector((state) => state.auth.resErrorMes);
+
+  const [socket, setSocket] = useState(null);
   const emailReg = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
   const passReg = new RegExp(
     "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
@@ -62,9 +64,6 @@ function LoginSeller(props) {
     dispatch(sellerLogin(userForm)).then((res) => {
 		console.log(res.payload._id);
       if (res.meta.requestStatus === "fulfilled") {
-        const socket  = props.socket
-        console.log(socket);
-        socket.emit('addSeller',res.payload._id)
         // setSocket(	
         //   io("http://localhost:3300", {
         //     query: { type: "seller", id: res.payload._id },

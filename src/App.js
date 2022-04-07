@@ -39,12 +39,15 @@ function App() {
   const loggedAs = useSelector((state) => state.auth.userType);
   const _id = useSelector((state) => state.auth._id);
   const [socket, setSocket] = useState(null);
-  /**, {
-          query: { type: loggedAs, id: _id },
-        } */
+  /** */
+  // http://localhost:3300/
   useEffect(() => {
     if (loggedAs !== "viewer") {
-      setSocket(io("https://food-lancer.herokuapp.com/"));
+      setSocket(
+        io("https://food-lancer.herokuapp.com/", {
+          query: { type: loggedAs, id: _id },
+        })
+      );
     }
   }, [authenticated, loggedAs]);
 
@@ -57,7 +60,7 @@ function App() {
           <>
             <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage socket={socket} />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route
               path="/forgetPassword/:userType"
               element={<ForgetPassword />}

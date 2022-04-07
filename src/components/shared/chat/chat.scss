@@ -1,0 +1,145 @@
+@mixin font-bold {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+}
+@mixin font {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+.right {
+    // position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .top {
+        width: 100%;
+        height: 47px;
+        padding: 15px 29px;
+        background-color: #eceff1;
+        span {
+            font-size: 15px;
+            color: var(--grey);
+            .name {
+                color: var(--dark);
+                @include font-bold;
+            }
+        }
+    }
+    .chat {
+        position: relative;
+        overflow: hidden;
+        height: calc(100% - 48px);
+        justify-content: flex-end;
+        flex-direction: column;
+        margin-bottom: 80px;
+    }
+    .write {
+        position: absolute;
+        bottom: 15px;
+        height: 42px;
+        border: 1px solid var(--light);
+        background-color: #eceff1;
+        width: 93%;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        input {
+            font-size: 16px;
+            width: 85%;
+            height: 40px;
+            padding: 0 10px;
+            color: var(--dark);
+            border: 0;
+            outline: none;
+            background-color: #eceff1;
+            @include font;
+        }
+        .write-link {
+            &.send {
+                &:before {
+                    display: inline-block;
+                    width: 20px;
+                    height: 42px;
+                    margin-right: 5px;
+                    content: '';
+                    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/send.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+            }
+        }
+        .disabled-link {
+            pointer-events: none;
+          }
+    }
+    .bubble {
+        font-size: 16px;
+        position: relative;
+        display: inline-block;
+        clear: both;
+        margin-bottom: 8px;
+        padding: 13px 14px;
+        vertical-align: top;
+        border-radius: 5px;
+        &:before {
+            position: absolute;
+            top: 19px;
+            display: block;
+            width: 8px;
+            height: 6px;
+            content: '\00a0';
+            transform: rotate(29deg) skew(-35deg);
+        }
+        &.you {
+            float: left;
+            background-color: #b0d5ee;
+            align-self: flex-start;
+            animation-name: slideFromLeft;
+            &:before {
+                left: -3px;
+                background-color: var(--blue);
+            }
+        }
+        &.me {
+            float: right;
+            background-color: #eceff1;
+            align-self: flex-end;
+            animation-name: slideFromRight;
+            &:before {
+                right: -3px;
+                background-color: #eceff1;
+            }
+        }
+    }
+    .conversation-start {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        margin-top: 10px;
+        text-align: center;
+        span {
+            font-size: 14px;
+            display: inline-block;
+            color: var(--grey);
+            &:before,&:after {
+                position: absolute;
+                top: 10px;
+                display: inline-block;
+                width: 30%;
+                height: 1px;
+                content: '';
+                background-color: var(--light);
+            }
+            &:before {
+                left: 0;
+            }
+            &:after {
+                right: 0;
+            }
+        }
+    }
+}

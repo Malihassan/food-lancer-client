@@ -9,15 +9,16 @@ import classes from "./sellerHome.module.scss";
 import Empty from "../../components/shared/emptyData/Empty";
 import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
+import Chat from "../../components/shared/chat/Chat";
 function SellerHome(props) {
   const [toggleCanvas, setToggleCanvas] = useState(false);
-  const [updateOrderStatus ,setUpdateOrderStatus] = useState(false)
+  const [updateOrderStatus, setUpdateOrderStatus] = useState(false);
   const toggleCanvasHandler = () => {
     setToggleCanvas(!toggleCanvas);
   };
-  const changeStateOrderStatus=()=>{
-    setUpdateOrderStatus(!updateOrderStatus)
-  }
+  const changeStateOrderStatus = () => {
+    setUpdateOrderStatus(!updateOrderStatus);
+  };
   const [userInfo, setUserInfo] = useState({
     img: "",
     name: "",
@@ -103,7 +104,7 @@ function SellerHome(props) {
     );
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
-  }, [page, checkboxSelected,updateOrderStatus]);
+  }, [page, checkboxSelected, updateOrderStatus]);
 
   useEffect(() => {
     socket?.on("addOrder", (data) => {
@@ -138,7 +139,59 @@ function SellerHome(props) {
             toggleCanvas={toggleCanvas}
             toggleCanvasHandler={toggleCanvasHandler}
           >
-            <OrderDetails changeStateOrderStatus={changeStateOrderStatus}  toggleCanvasHandler={toggleCanvasHandler}/>
+            <nav className="">
+              <div
+                className="nav nav-tabs tabs-button"
+                id="nav-tab"
+                role="tablist"
+              >
+                <button
+                  className={`nav-link nav-button ${classes.active}`}
+                  id="nav-home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="nav-home"
+                  aria-selected="true"
+                >
+                  Order Details
+                </button>
+                <button
+                  className={`nav-link nav-button ${classes.active}`}
+                  id="nav-profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="nav-profile"
+                  aria-selected="false"
+                >
+                  Chat
+                </button>
+              </div>
+            </nav>
+            <div className="tab-content " id="nav-tabContent">
+              <div
+                className="tab-pane fade show active"
+                id="nav-home"
+                role="tabpanel"
+                aria-labelledby="nav-home-tab"
+              >
+                <OrderDetails
+                  changeStateOrderStatus={changeStateOrderStatus}
+                  toggleCanvasHandler={toggleCanvasHandler}
+                />
+              </div>
+              <div
+                className="tab-pane fade"
+                id="nav-profile"
+                role="tabpanel"
+                aria-labelledby="nav-profile-tab"
+              >
+                <Chat socket={props.socket} />
+              </div>
+            </div>
           </OffCanvas>
         </section>
       )}

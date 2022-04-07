@@ -15,7 +15,9 @@ function OrderList(props) {
     props.toggleCanvasHandler();
     dispatch(
       orderActions.toggleDetailsOrder({
-        _id: order._id,
+        orderId: order._id,
+        buyerId:order.buyerId._id,
+        sellerId:order.sellerId._id,
         products: order.products,
         totalPrice: order.totalPrice,
         createdAt: order.createdAt,

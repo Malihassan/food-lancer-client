@@ -1,13 +1,13 @@
 import { Offcanvas } from "react-bootstrap";
 function OffCanvas({ name, ...props }) {
   const handleClose = () => {
-    props.toggleCanvasHandler()
+    props.togglecanvashandler()
   };
   return (
     <>
       <Offcanvas
         className={`${props.className}`}
-        show={props.toggleCanvas}
+        show={props.togglecanvas}
         onHide={handleClose}
         {...props}
       >

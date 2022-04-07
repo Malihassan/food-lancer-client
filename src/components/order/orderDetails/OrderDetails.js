@@ -22,7 +22,7 @@ export default function OrderDetails(props) {
       },
       () => {}
     );
-    // props.toggleCanvasHandler()
+    // props.togglecanvashandler()
     // props.changeStateOrderStatus()
   };
   return (

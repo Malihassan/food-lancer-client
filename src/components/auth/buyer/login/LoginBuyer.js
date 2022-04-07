@@ -63,9 +63,7 @@ function LoginBuyer(props) {
     e.preventDefault();
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        const socket  = props.socket
-        console.log(socket);
-        socket.emit('addSeller',res.payload._id)
+        
         navigate("/home");
       }
     });

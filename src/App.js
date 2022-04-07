@@ -43,7 +43,7 @@ function App() {
   useEffect(() => {
     if (loggedAs !== "viewer") {
       setSocket(
-        io("https://food-lancer.herokuapp.com/", {
+        io("http://localhost:3300/", {
           query: { type: loggedAs, id: _id },
         })
       );

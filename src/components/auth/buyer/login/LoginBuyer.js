@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buyerLogin } from "../../../../store/AuthSlice";
-function LoginBuyer() {
+function LoginBuyer(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errResMes = useSelector((state) => state.auth.resErrorMes);
@@ -63,6 +63,9 @@ function LoginBuyer() {
     e.preventDefault();
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
+        const socket  = props.socket
+        console.log(socket);
+        socket.emit('addSeller',res.payload._id)
         navigate("/home");
       }
     });

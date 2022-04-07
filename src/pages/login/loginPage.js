@@ -4,7 +4,7 @@ import React from "react";
 import LoginSeller from "../../components/auth/seller/loginComponent/LoginSeller";
 import LoginBuyer from "../../components/auth/buyer/login/LoginBuyer";
 
-function LoginPage() {
+function LoginPage(props) {
   return (
     <>
       <div className="d-flex p-5 align-items-start justify-content-xl-start justify-content-lg-center justify-content-md-center justify-content-sm-center loginpage-container">
@@ -48,7 +48,7 @@ function LoginPage() {
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
-              <LoginSeller></LoginSeller>
+              <LoginSeller socket={props.socket}></LoginSeller>
             </div>
             <div
               className="tab-pane fade"
@@ -56,7 +56,7 @@ function LoginPage() {
               role="tabpanel"
               aria-labelledby="nav-profile-tab"
             >
-              <LoginBuyer></LoginBuyer>
+              <LoginBuyer socket={props.socket}></LoginBuyer>
             </div>
           </div>
         </div>

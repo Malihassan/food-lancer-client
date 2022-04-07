@@ -9,7 +9,6 @@ function LoginBuyer(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errResMes = useSelector((state) => state.auth.resErrorMes);
-  const [socket, setSocket] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -63,9 +62,10 @@ function LoginBuyer(props) {
     e.preventDefault();
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        const socket  = props.socket
+        const socket  = props.socket;
         console.log(socket);
-        socket.emit('addSeller',res.payload._id)
+        console.log(props);
+        socket.emit('addBuyer',res.payload._id)
         navigate("/home");
       }
     });

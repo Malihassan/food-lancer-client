@@ -36,6 +36,7 @@ export default function OrderHistory(props) {
     selectError: null,
   });
   const toggleCanvasHandler = (order) => {
+    console.log("in canvas");
     setToggleCanvas(!toggleCanvas);
     if (order)
     {

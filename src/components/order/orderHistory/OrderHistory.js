@@ -122,7 +122,7 @@ export default function OrderHistory(props) {
     });
   }, [orders,socket]);
   return (
-    <div className="row justify-content-center bg-light mx-0">
+    <div className={`row justify-content-center mx-0 ${classes.orderContainer}`}>
       {orders.map((order) => {
         return (
           <div
@@ -133,26 +133,26 @@ export default function OrderHistory(props) {
               <div
                 className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
               >
-                {order.status == "in progress" && (
-                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
+                {order.status === "in progress" && (
+                  <span className={`badge col-4 col-xl-3 p-2 rounded-2 ${classes.bgWarning}`}>
                     {/* {data.status?data.status:order.status} */}
                     {order.status}
                   </span>
                 )}
                 {order.status === "delivered" && (
-                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-success">
+                  <span className={`badge col-4 col-xl-3 p-2 rounded-2 ${classes.bgSuccess}`}>
                     {order.status}
                     {/* {data.status?data.status:order.status} */}
                   </span>
                 )}
                 {order.status === "canceled" && (
-                  <span className="badge col-4 col-xl-3x p-2 rounded-2 bg-danger">
+                  <span className={`badge col-4 col-xl-3 p-2 rounded-2 ${classes.bgDanger}`}>
                     {order.status}
                     {/* {data.status?data.status:order.status} */}
                   </span>
                 )}
                 {order.status === "pending" && (
-                  <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
+                  <span className={`badge col-4 col-xl-3 p-2 rounded-2 ${classes.bgWarning}`}>
                     {order.status}
                     {/* {data.status?data.status:order.status} */}
                   </span>
@@ -189,11 +189,11 @@ export default function OrderHistory(props) {
                       >
                         <p className="col-9">
                           {/* <CgProductHunt  /> */}
-                          <BiDish className="fs-4 me-1 text-danger" />
+                          <BiDish className={`fs-4 me-1 ${classes.iconDanger}`} />
                           {product.quantity} x {product._id.name}
                         </p>
-                        <p className="col-3 pe-1 fs-4 text-end ">
-                        <span className="fw-thin">E&#163;</span> {product._id.price} 
+                        <p className={`col-3 pe-1 fs-4 text-end  ${classes.iconDanger}`}>
+                        <span className={`fw-thin`}>E&#163;</span> {product._id.price} 
                         </p>
                       </div>
                     );
@@ -205,12 +205,12 @@ export default function OrderHistory(props) {
                     Total Price{" "}
                     
 
-                    <small className="fw-light ps-2 fs-4">
+                    <small className={`fw-light ps-2 fs-4 ${classes.iconDanger}`}>
                     <span className="fw-thin">E&#163;</span> {order.totalPrice} 
                     </small>
                   </p>
                   <button
-                    className="col-4 btm-sm btn btn-primary"
+                    className={`col-4 py-1 btn-sm btn btn-primary `}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
@@ -395,7 +395,7 @@ export default function OrderHistory(props) {
               <div
                 className={`d-flex flex-column col-xl-3 col-lg-3 col-md-6 col-12 p-3`}
               >
-                <p className="fw-light text-secondary opacity-75 fs-5">
+                <p className={` ${classes.textgray} fw-light  opacity-75 fs-5 `}>
                   Seller Details
                 </p>
                 <div className="d-flex flex-wrap align-items-center">

@@ -66,7 +66,7 @@ export default function ProductList() {
               marginPagesDisplayed={2}
               pageRangeDisplayed={3}
               onPageChange={handelPageClick}
-              containerClassName={`${classes.paginationContainer} pagination justify-content-center`}
+              containerClassName={`${classes.paginationContainer} pagination justify-content-center mb-0 pb-4`}
               pageClassName={"page-item px-2 py-1"}
               pageLinkClassName={`page-link ${classes.pageLink}`}
               previousClassName={`page-item `}

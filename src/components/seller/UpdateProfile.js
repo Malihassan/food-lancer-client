@@ -136,10 +136,6 @@ function UpdateProfile() {
 
   return (
     <div className={`${classes.backColor} py-3 container-fluid`}>
-     
-        {/* <div
-						className={`col-5 d-none d-lg-block ${classes.bgImg}`}
-					></div> */}
         <div
           className= {`col-lg-7 shadow mx-auto container-fluid ${classes.backColors} col-md-10 ${classes.borderLeft} d-flex flex-column `}
         >
@@ -261,9 +257,7 @@ function UpdateProfile() {
                 Submit
               </button>
              </div>
-            </Form>
-          </Formik>
-          <div
+             <div
             className="fs-3 mt-5 ms-1 "
             style={{
               fontFamily: " 'El Messiri', sans-serif",
@@ -271,6 +265,9 @@ function UpdateProfile() {
           >
             {updateRes}
           </div>
+            </Form>
+          </Formik>
+        
         </div>
       
     </div>

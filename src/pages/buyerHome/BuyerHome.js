@@ -97,7 +97,8 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
  
   return (
     <>
-    <div  className="container d-flex justify-content-end mb-2">
+     <div className={`${classes.homeBody} `}>
+    <div  className={` container d-flex justify-content-end mb-2  `}>
      <button
           className="btn mt-2 px-4" style={{backgroundColor:"#091b29",color:'#f8f8f7'}}
           onClick={toggleCanvasHandler}
@@ -108,6 +109,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
         </button>
         </div>
         <OffCanvas
+        className={``}
         toggleCanvas={toggleCanvas}
         toggleCanvasHandler={toggleCanvasHandler}
         placement={"end"}
@@ -118,12 +120,13 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
           <h4 className="title mt-2" style={{ color: "#091b29" }}>
             Category
           </h4>
-          <div className="list-group">
+          <div className="list-group" >
            
             {allCategory?.map((category) => {
                     return (
-                      <label className="list-group-item border-0">
+                      <label className="list-group-item border-0" style={{ backgroundColor: "#fff" }}>
               <input
+              
               key={category._id} 
                 className="form-check-input me-1"
                 //checked={checked}
@@ -142,7 +145,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
             Price
           </h4>
       <div className="list-group ">
-     <label className="list-group-item border-0 ">
+     <label className="list-group-item border-0 " style={{ backgroundColor: "#fff" }}>
      <Box className="me-1 " sx={{ width: 300 }}>
       <Slider
        // getAriaLabel={() => 'Temperature range'}
@@ -167,7 +170,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
            
            {rateArr?.map((rate) => {
                     return (
-                      <label className="list-group-item border-0">
+                      <label className="list-group-item border-0 " style={{ backgroundColor: "#fff" }}>
               <input
               key={rate._id} 
                 className="form-check-input me-1"
@@ -211,7 +214,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
         </div>
         </div>
       </OffCanvas>
-    <div className={`${classes.homeBody} `}>
+   
     <div className={`${classes.container} container my-0`}>
   {/* {hasError.error && <Empty />} */}
     {hasError?.error === "Product not found !" && <Empty />}  
@@ -222,7 +225,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
             return (
               <div
                 key={prd._id} 
-                className={`col-xl-4 col-lg-6 col-md-6 col-sm-8 ${classes.colsDesign}`}
+                className={`col-xl-4 col-lg-5 col-md-5 col-sm-8 ${classes.colsDesign}`}
               >
                  <BuyerProductCard product={prd} /> 
               </div>

@@ -67,7 +67,7 @@ function App() {
               path="/:userType/account/resetPassword/:token"
               element={<ResetPassword />}
             />
-             <Route path="/home" element={<BuyerHome />} /> 
+             {/* <Route path="/home" element={<BuyerHome />} />  */}
           </>
         )}
 
@@ -88,6 +88,7 @@ function App() {
             <Route path="/updateProfile" element={<BuyerProfile />} />
             <Route path="/favs" element={<Favourites />} />
             <Route path="/myOrders" element={<OrderHistory socket={socket} />} />
+            <Route path="/home" element={<BuyerHome />} /> 
           </>
         )}
         {/*

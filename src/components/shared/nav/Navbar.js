@@ -17,15 +17,19 @@ import { authActions } from "../../../store/AuthSlice";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import useFetch from "../../../hooks/useFetch";
 const Navbar = (props) => {
+  const { sendRequest } = useFetch();
   const dispatch = useDispatch();
   const loggedAs = useSelector((state) => state.auth.userType);
   const logout = async (type) => {
-    const res = await axiosInstance.get(`${type}/account/logout`);
-    if (res) {
-      dispatch(authActions.logout());
-    }
+    sendRequest(
+      {
+        url: `${type}/account/logout`,
+        method: "GET",
+      },
+      (res) => dispatch(authActions.logout())
+    );
   };
   const socket = props.socket;
   const [notification, setNotificatioed] = useState(false);
@@ -37,6 +41,21 @@ const Navbar = (props) => {
       socket.off("updateOrderStatus");
     });
   }, [socket]);
+
+  useEffect(() => {
+    if (loggedAs !== "viewer") {
+      sendRequest(
+        {
+          url: `${loggedAs}/account/notification`,
+          method: "GET",
+        },
+        (res) => {
+          console.log(res.data);
+          dispatch(authActions.setNotification(res.data))
+        }
+      );
+    }
+  }, []);
 
   return (
     <nav

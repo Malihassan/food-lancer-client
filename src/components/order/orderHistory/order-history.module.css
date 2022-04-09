@@ -9,11 +9,49 @@
 .cardOrder {
   border-radius: 20px !important;
   margin: 20px 50px !important;
+  width: 85% !important;
 }
 
 .imgSEller {
   width: 4rem;
   height: 4rem;
+}
+
+.orderContainer {
+  background-color: #f8f8f7 !important;
+}
+
+.bgWarning {
+  background-color: #f0a500 !important;
+  color: #091b29 !important;
+}
+
+.bgDanger {
+  background-color: #9f0000 !important;
+  color: #f8f8f7 !important;
+}
+
+.iconDanger {
+  color: #9f0000 !important;
+}
+
+.bgSuccess {
+  background-color: #006400 !important;
+  color: #f8f8f7 !important;
+}
+
+.addButton {
+  background-color: #1f00a4 !important;
+  color: #f8f8f7 !important;
+}
+
+.addButton:hover {
+  background-color: #1f00a4 !important;
+  color: #f8f8f7 !important;
+}
+
+.textgray {
+  color: #8f8f8f !important;
 }
 
 @media (max-width: 987px) {

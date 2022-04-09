@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import {orderActions} from "../../store/orderSlice"
+import {orderActions} from "../../store/orderSlice";
+import { buyerOrderActions } from "../../store/BuyerOrderSlice";
 import { useEffect, useState } from "react";
 import StarRatings from 'react-star-ratings';
 import "./buyer-order.scss";
@@ -11,10 +12,11 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 function BuyerOrder(){
     const { sendRequest } = useFetch();
     const orderCards = useSelector((state) => state.order);
+    const removedItems = useSelector((state) => state.removedItems);
     const [sortedOrders, setSortedOrders] = useState({});
     const [sellerOrderPrice, setSellerOrderPrice] = useState({});
     const [buyerData, setBuyerData] = useState({});
-    const [orderResponse, setOrderResponse] = useState({})
+    const [orderResponse, setOrderResponse] = useState({});
     const dispatch = useDispatch();
     async function buyerDataHandler(res) {
         if (res.status === 200) {
@@ -36,50 +38,91 @@ function BuyerOrder(){
     }, [])
 
     useEffect(()=>{
-
+        
         sortSellerOrders();
 
-    },[sortedOrders]);
+    },[orderCards, sortedOrders]);
 
     // useEffect(()=>{
     //     console.log(sortedOrders);
-    //     console.log(sellerIds);
 
     // },[sortedOrders]);
 
-    const sortSellerOrders = () => {
-
+    const sortSellerOrders = async () => {
+        let i =0
         if(orderCards.selectedOrderProducts){
+            
             for(let product of orderCards.selectedOrderProducts){
-
+                i++;
+                console.log(i);
                 let seller = sortedOrders[product.sellerId._id]? true : false;
-    
+
                 let sellerProduct = seller && 
                 sortedOrders[product.sellerId._id].find((item) => item._id === product._id)?
                 sortedOrders[product.sellerId._id].find((item) => item._id === product._id)
                 : null;
-    
+
                 if(!seller){
+
                     setSortedOrders({
                         ...sortedOrders,
                         [product.sellerId._id]: [product]
-                    })
+                    });
+
                     setSellerOrderPrice({
                         ...sellerOrderPrice,
-                        [product.sellerId._id]: product.price * product.serves
-                    })
+                        [product.sellerId._id]: product.price * product.serves, 
+                    });
+
+                    console.log(sortedOrders);
                 } else if(seller && !sellerProduct){
+                    console.log("no product");
+                    
                     setSortedOrders({
                         ...sortedOrders,
                         [product.sellerId._id]: [...sortedOrders[product.sellerId._id], product]
-                    })
+                    });
+
                     setSellerOrderPrice({
                         ...sellerOrderPrice,
                         [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] + product.price * product.serves
-                    })
-                }
-    
-                console.log(sortedOrders);
+                    });
+
+                } else if( seller && sellerProduct && sellerProduct.serves !== product.serves){
+                    console.log("no serves");
+                    setSortedOrders({
+                        ...sortedOrders,
+                        [product.sellerId._id]: [...sortedOrders[product.sellerId._id].filter((item) => item._id !== sellerProduct._id), product]
+                    });
+
+                    setSellerOrderPrice({
+                        ...sellerOrderPrice,
+                        [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] - (sellerProduct.price * sellerProduct.serves) + product.price * product.serves
+                    });
+
+                } 
+                // else if(unfoundProduct){
+                    
+                //     setSortedOrders({
+                //         ...sortedOrders,
+                //         [product.sellerId._id]: [...sortedOrders[product.sellerId._id].filter((item) => item._id !== product._id)]
+                //     });
+                //     setSellerOrderPrice({
+                //         ...sellerOrderPrice,
+                //         [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] - (product.price * product.serves)
+                //     });
+                    
+                //     await dispatch(buyerOrderActions.setRemovedItems({
+                //         products: [...removedItems.removedItems.filter((item) => {
+                //             return item !== product._id
+                            
+                //         })]
+                //     }));
+
+
+                // }
+
+
             }
         }
     }
@@ -143,7 +186,7 @@ function BuyerOrder(){
             </div>}
             {Object.keys(sortedOrders).map((seller, idx)=>{
                 return(
-                    <div className="card d-flex flex-column text-font p-3" key={idx}>
+                    <div className="card d-flex flex-column text-font p-3 mb-3" key={idx}>
                         <button onClick={()=> removeOrder(sortedOrders[seller], seller)} className="btn btn-outline-danger w-2-5 align-self-end text-center d-flex"><FontAwesomeIcon className="Xmark-font align-self-center" icon={faXmark} /></button>
                         <div className="card-body d-flex justify-content-between">
                             <div className="card col-6">

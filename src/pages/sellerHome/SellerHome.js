@@ -47,6 +47,9 @@ function SellerHome(props) {
     canceled: false,
     pending: false,
   });
+
+  const socket = props.socket;
+
   let orderStatus = [];
   for (const [key, value] of Object.entries(checkboxSelected)) {
     if (value) {
@@ -104,6 +107,16 @@ function SellerHome(props) {
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
   }, [page, checkboxSelected, updateOrderStatus]);
+
+  useEffect(() => {
+    socket?.on("addOrder", (data) => {
+      setListOfOrders([data, ...listOfOrders]);
+      console.log("Howdaaaayyyy")
+      socket.off("addOrder");
+
+    });
+  }, [listOfOrders,socket]);
+
   const displayChat =
     statusOfSelectedOrder &&
     (statusOfSelectedOrder === "pending" ||

@@ -22,12 +22,34 @@
   border: 1px solid #091b29 !important;
 }
 
-.container {
-  background-image: linear-gradient(145deg, #ff6464 0%, #87bce5 50%, #ff6464 100%);
-}
-
+/*  .container{
+    background-color: #fff!important;
+  
+    //background-image: linear-gradient(145deg, #ff6464 0%, #87bce5 50%,#ff6464 100%);
+  } */
 .homeBody {
   margin: 0 !important;
-  background-color: #fff !important;
+  background-color: #f8f8f7 !important;
 }
+
+.slider {
+  color: #091b29 !important;
+}
+
+/* @media only screen and (max-width: 576px) {
+    .colsDesign {
+      width: 80% !important;
+    }
+  } */
+@media (max-width: 575.98px) {
+  .colsDesign {
+    width: 75% !important;
+    margin: auto !important;
+  }
+}
+
+/* .stars{
+    //margin-top: 1rem;
+    //margin-left: .75rem;
+  } */
 /*# sourceMappingURL=buyerHome.module.css.map */

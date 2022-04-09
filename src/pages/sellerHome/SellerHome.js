@@ -9,15 +9,18 @@ import classes from "./sellerHome.module.scss";
 import Empty from "../../components/shared/emptyData/Empty";
 import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
-function SellerHome(params) {
-  const [toggleCanvas, setToggleCanvas] = useState(false);
-  const [updateOrderStatus ,setUpdateOrderStatus] = useState(false)
-  const toggleCanvasHandler = () => {
-    setToggleCanvas(!toggleCanvas);
+import Chat from "../../components/shared/chat/Chat";
+import { useSelector } from "react-redux";
+function SellerHome(props) {
+  const statusOfSelectedOrder = useSelector((state) => state.order.status);
+  const [togglecanvas, settogglecanvas] = useState(false);
+  const [updateOrderStatus, setUpdateOrderStatus] = useState(false);
+  const togglecanvashandler = () => {
+    settogglecanvas(!togglecanvas);
   };
-  const changeStateOrderStatus=()=>{
-    setUpdateOrderStatus(!updateOrderStatus)
-  }
+  const changeStateOrderStatus = () => {
+    setUpdateOrderStatus(!updateOrderStatus);
+  };
   const [userInfo, setUserInfo] = useState({
     img: "",
     name: "",
@@ -100,8 +103,11 @@ function SellerHome(params) {
     );
 
     const res = await Promise.all([api_getOrders_Promise, api_getSeller_info]);
-  }, [page, checkboxSelected,updateOrderStatus]);
-
+  }, [page, checkboxSelected, updateOrderStatus]);
+  const displayChat =
+    statusOfSelectedOrder &&
+    (statusOfSelectedOrder === "pending" ||
+      statusOfSelectedOrder === "in progress");
   return (
     <>
       <SellerInfo userInfo={userInfo} />
@@ -112,7 +118,7 @@ function SellerHome(params) {
             sellerFilterSelection={sellerFilterSelection}
           />
           <OrderList
-            toggleCanvasHandler={toggleCanvasHandler}
+            togglecanvashandler={togglecanvashandler}
             listOfOrders={listOfOrders}
             totalDocs={paginateData.totalDocs}
             totalPages={paginateData.totalPages}
@@ -123,10 +129,64 @@ function SellerHome(params) {
             placement={"end"}
             name={"end"}
             title="Details Order"
-            toggleCanvas={toggleCanvas}
-            toggleCanvasHandler={toggleCanvasHandler}
+            togglecanvas={togglecanvas}
+            togglecanvashandler={togglecanvashandler}
           >
-            <OrderDetails changeStateOrderStatus={changeStateOrderStatus}  toggleCanvasHandler={toggleCanvasHandler}/>
+            <nav className="">
+              <div
+                className="nav nav-tabs tabs-button"
+                id="nav-tab"
+                role="tablist"
+              >
+                <button
+                  className={`nav-link nav-button ${classes.active}`}
+                  id="nav-home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="nav-home"
+                  aria-selected="true"
+                >
+                  Order Details
+                </button>
+                {displayChat &&
+                  <button
+                    className={`nav-link nav-button ${classes.active}`}
+                    id="nav-profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false"
+                  >
+                    Chat
+                  </button>
+                }
+              </div>
+            </nav>
+            <div className="tab-content " id="nav-tabContent">
+              <div
+                className="tab-pane fade show active"
+                id="nav-home"
+                role="tabpanel"
+                aria-labelledby="nav-home-tab"
+              >
+                <OrderDetails
+                  changeStateOrderStatus={changeStateOrderStatus}
+                  togglecanvashandler={togglecanvashandler}
+                />
+              </div>
+              <div
+                className="tab-pane fade"
+                id="nav-profile"
+                role="tabpanel"
+                aria-labelledby="nav-profile-tab"
+              >
+                <Chat socket={props.socket} />
+              </div>
+            </div>
           </OffCanvas>
         </section>
       )}

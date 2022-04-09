@@ -63,6 +63,7 @@ function BuyerOrder() {
 						[product.sellerId._id]: [product],
 					});
 					setSellerOrderPrice({
+						...sellerOrderPrice,
 						[product.sellerId._id]: product.price * product.serves,
 					});
 				} else if (seller && !sellerProduct) {
@@ -80,7 +81,7 @@ function BuyerOrder() {
 							product.price * product.serves,
 					});
 				}
-				console.log(sellerOrderPrice, "newOne");
+
 				console.log(sortedOrders);
 			}
 		}
@@ -93,8 +94,10 @@ function BuyerOrder() {
 		}
 
 		await dispatch(
-			orderActions.setCartItem({ ...orderCards, product: orderList })
+			orderActions.setCartItem({ ...orderCards, products: orderList })
 		);
+
+		console.log(orderList);
 
 		const filteredOrders = Object.keys(sortedOrders)
 			.filter((key) => !key.includes(seller))
@@ -181,7 +184,7 @@ function BuyerOrder() {
 																</div>
 																<div className="small">
 																	<span className="badge bg-warning text-light">
-																		{product.categoryId?.name}
+																		{product.categoryId.name}
 																	</span>
 																</div>
 																<StarRatings

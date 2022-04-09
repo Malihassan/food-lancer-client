@@ -63,7 +63,7 @@ function LoginBuyer() {
     e.preventDefault();
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        navigate("/myOrders");
+        navigate("/home");
       }
     });
   };

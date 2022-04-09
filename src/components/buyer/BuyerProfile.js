@@ -4,6 +4,7 @@ import classes from "./buyerProfile.module.scss";
 import { axiosInstance } from "../../network/axiosConfig";
 import { RiFolderOpenFill } from "react-icons/ri";
 import Dropzone from "react-dropzone";
+import useFetch from "../../hooks/useFetch";
 // import { useDropzone } from "react-dropzone";
 
 let initialValues = {
@@ -18,6 +19,7 @@ function BuyerProfile() {
 	const [update, setUpdate] = useState(false);
 	const [updateRes, setUpdateRes] = useState("");
 	const [images, setImages] = useState({ image: "" });
+	const { sendRequest } = useFetch();
 
 	const validate = (values) => {
 		let errors = {};
@@ -53,15 +55,32 @@ function BuyerProfile() {
 		formData.append("imageId", images._id);
 		formData.append("imageUrl", images.url);
 
-		(async () => {
-			const res = await axiosInstance.patch(
-				`buyer/account/update`,
-				formData,
-				{ headers: { "Content-Type": "multipart/form-data" } }
-			);
-			setUpdateRes(res.data);
-			setUpdate(!update);
-		})();
+		// (async () => {
+		// 	const res = await axiosInstance.patch(
+		// 		`buyer/account/update`,
+		// 		formData,
+		// 		{ headers: { "Content-Type": "multipart/form-data" } }
+		// 	);
+		// 	setUpdateRes(res.data);
+		// 	setUpdate(!update);
+		// })();
+		function updateBuyerProfileHandler(res) {
+			if (res.status === 200) {
+				setUpdateRes(res.data);
+				setUpdate(!update);
+			}
+		}
+		sendRequest(
+			{
+				url: `seller/account/editProfile`,
+				method: "PATCH",
+				body: formData,
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			},
+			updateBuyerProfileHandler
+		);
 	};
 
 	const uploadImage = (files) => {
@@ -73,17 +92,21 @@ function BuyerProfile() {
 	};
 
 	useEffect(() => {
-		const fillData = async () => {
-			const { data } = await axiosInstance.get(`buyer/account/info`);
-
+		const getBuyerInfoHandler = ({ data }) => {
 			setImages(data?.image);
-
 			initialValues.image = data?.image?.url;
 			initialValues.firstName = data?.firstName;
 			initialValues.lastName = data?.lastName;
 			initialValues.phone = data?.phone;
 			initialValues.address = data?.address;
 			setUpdate(!update);
+		};
+		const fillData = async () => {
+			// const { data } = await axiosInstance.get(`buyer/account/info`);
+			sendRequest(
+				{ url: `buyer/account/info`, method: "GET" },
+				getBuyerInfoHandler
+			);
 		};
 		fillData();
 	}, []);

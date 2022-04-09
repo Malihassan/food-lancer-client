@@ -62,7 +62,6 @@ function LoginBuyer(props) {
     e.preventDefault();
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        
         navigate("/home");
       }
     });
@@ -82,7 +81,7 @@ function LoginBuyer(props) {
                 type="email"
                 className="form-control "
                 placeholder=" Enter Your Email"
-                aria-label="Username"
+                aria-label="Username"     
                 aria-describedby="emailHelp"
                 onChange={emailValidator}
               />

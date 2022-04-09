@@ -3,23 +3,48 @@ import { axiosInstance } from "../../network/axiosConfig";
 import Empty from "../shared/emptyData/Empty";
 import BuyerProductCard from "../shared/buyerProductCard/BuyerProductCard";
 import classes from "../product/product-list/product-list.module.scss";
+import useFetch from "../../hooks/useFetch";
 
 function Favourites() {
+	const { sendRequest /* , hasError */ } = useFetch();
 	const [productsArr, setProductsArr] = useState([]);
 	useEffect(() => {
-		(async () => {
-			const res = await axiosInstance.get(`buyer/product/favs`);
-			setProductsArr(res.data);
-		})();
+		// (async () => {
+		// 	const res = await axiosInstance.get(`buyer/product/favs`);
+		// 	setProductsArr(res.data);
+		// })();
+
+		sendRequest(
+			{
+				url: `buyer/product/favs`,
+				method: "GET",
+			},
+			(res) => {
+				setProductsArr(res.data);
+			}
+		);
 	}, []);
 
 	const handleFavClick = (e) => {
-		(async () => {
-			const res = await axiosInstance.delete(`buyer/product/favs`, {
-				data: { id: e._id },
-			});
-			setProductsArr(res.data);
-		})();
+		// (async () => {
+		// 	const res = await axiosInstance.delete(`buyer/product/favs`, {
+		// 		data: { id: e._id },
+		// 	});
+		// 	setProductsArr(res.data);
+		// })();
+
+		sendRequest(
+			{
+				url: `buyer/product/favs`,
+				method: "DELETE",
+				body: {
+					id: e._id,
+				},
+			},
+			(res) => {
+				setProductsArr(res.data);
+			}
+		);
 	};
 
 	const renderList = () => {

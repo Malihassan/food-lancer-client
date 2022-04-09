@@ -10,7 +10,9 @@ import Empty from "../../components/shared/emptyData/Empty";
 import useFetch from "../../hooks/useFetch";
 import OrderDetails from "../../components/order/orderDetails/OrderDetails";
 import Chat from "../../components/shared/chat/Chat";
+import { useSelector } from "react-redux";
 function SellerHome(props) {
+  const statusOfSelectedOrder = useSelector((state) => state.order.status);
   const [toggleCanvas, setToggleCanvas] = useState(false);
   const [updateOrderStatus, setUpdateOrderStatus] = useState(false);
   const toggleCanvasHandler = () => {
@@ -115,6 +117,10 @@ function SellerHome(props) {
     });
   }, [listOfOrders,socket]);
 
+  const displayChat =
+    statusOfSelectedOrder &&
+    (statusOfSelectedOrder === "pending" ||
+      statusOfSelectedOrder === "in progress");
   return (
     <>
       <SellerInfo userInfo={userInfo} />
@@ -157,18 +163,20 @@ function SellerHome(props) {
                 >
                   Order Details
                 </button>
-                <button
-                  className={`nav-link nav-button ${classes.active}`}
-                  id="nav-profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
-                >
-                  Chat
-                </button>
+                {displayChat &&
+                  <button
+                    className={`nav-link nav-button ${classes.active}`}
+                    id="nav-profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false"
+                  >
+                    Chat
+                  </button>
+                }
               </div>
             </nav>
             <div className="tab-content " id="nav-tabContent">

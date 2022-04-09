@@ -39,10 +39,12 @@ function App() {
   const loggedAs = useSelector((state) => state.auth.userType);
   const _id = useSelector((state) => state.auth._id);
   const [socket, setSocket] = useState(null);
-
+// http://localhost:3300/
+//https://food-lancer.herokuapp.com/
   useEffect(() => {
     if (loggedAs !== "viewer") {
       setSocket(
+
         io("http://localhost:3300/", {
           query: { type: loggedAs, id: _id },
         })

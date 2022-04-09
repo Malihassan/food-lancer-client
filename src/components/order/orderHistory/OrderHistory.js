@@ -9,6 +9,7 @@ import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
 import { BsCalendarDate, BsFillChatQuoteFill } from "react-icons/bs";
+import { orderActions } from "../../../store/orderSlice";
 
 import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
@@ -16,8 +17,10 @@ import { io } from "socket.io-client";
 import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import Empty from "../../shared/emptyData/Empty";
 import Chat from "../../shared/chat/Chat";
+import { useDispatch } from "react-redux";
 export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
+  const dispatch = useDispatch();
   const [ratingValue, setRatingValue] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
   const [toggleCanvas, setToggleCanvas] = useState(false);
@@ -32,8 +35,20 @@ export default function OrderHistory(props) {
     commentError: null,
     selectError: null,
   });
-  const toggleCanvasHandler = () => {
+  const toggleCanvasHandler = (order) => {
+    console.log("in canvas");
     setToggleCanvas(!toggleCanvas);
+    if (order)
+    {
+      dispatch(
+        orderActions.toggleDetailsOrder({
+          orderId: order._id,
+          buyerId:order.buyerId,
+          sellerId:order.sellerId._id,
+        })
+      );
+    }
+
   };
   const handleRating = (rate) => {
     setIsReviewd(false);
@@ -138,7 +153,7 @@ export default function OrderHistory(props) {
         toggleCanvasHandler={toggleCanvasHandler}
       >
         <div>
-        <Chat />
+        <Chat socket={socket} />
         </div>
       </OffCanvas>
       <div className="row justify-content-center bg-light mx-0">
@@ -418,10 +433,12 @@ export default function OrderHistory(props) {
                     <p className="fw-light text-secondary opacity-75 fs-5">
                       Seller Details
                     </p>
+                    { (order.status==="in progress" || order.status==="pending")&&
                     <BsFillChatQuoteFill
-                      onClick={toggleCanvasHandler}
+                      onClick={()=>toggleCanvasHandler(order)}
                       className={`fs-3 ${classes.chatIcon}`}
                     />
+        }
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <img

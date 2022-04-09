@@ -9,7 +9,6 @@ function LoginBuyer(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errResMes = useSelector((state) => state.auth.resErrorMes);
-  const [socket, setSocket] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",

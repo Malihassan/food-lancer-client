@@ -180,7 +180,7 @@ export default function OrderHistory(props) {
                     </span>
                   )}
                   {order.status === "canceled" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgDanger}`}>
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.iconDanger}`}>
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>
@@ -223,11 +223,11 @@ export default function OrderHistory(props) {
                         >
                           <p className="col-9">
                             {/* <CgProductHunt  /> */}
-                            <BiDish className="fs-4 me-1 text-danger" />
+                            <BiDish className={`fs-4 me-1 text-danger ${classes.iconDanger}`} />
                             {product.quantity} x {product._id.name}
                           </p>
-                          <p className="col-3 pe-1 fs-4 text-end ">
-                            <span className={`fw-thin ${classes.bgDanger}`}>E&#163;</span>{" "}
+                          <p className={`col-3 pe-1 fs-4 text-end ${classes.iconDanger}`}>
+                            <span className={`fw-thin `}>E&#163;</span>{" "}
                             {product._id.price}
                           </p>
                         </div>
@@ -238,8 +238,8 @@ export default function OrderHistory(props) {
                   <div className="d-flex justify-conten-between">
                     <p className="col-8 fs-4 fw-bold">
                       Total Price{" "}
-                      <small className="fw-light ps-2 fs-4">
-                        <span className={`fw-thin ${classes.bgDanger}`}>E&#163;</span>{" "}
+                      <small className={`fw-light ps-2 fs-4 ${classes.iconDanger}`}>
+                        <span className={`fw-thin `}>E&#163;</span>{" "}
                         {order.totalPrice}
                       </small>
                     </p>

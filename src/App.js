@@ -39,7 +39,8 @@ function App() {
   const loggedAs = useSelector((state) => state.auth.userType);
   const _id = useSelector((state) => state.auth._id);
   const [socket, setSocket] = useState(null);
-
+  /** */
+  // http://localhost:3300/
   useEffect(() => {
     if (loggedAs !== "viewer") {
       setSocket(

@@ -12,7 +12,7 @@ export default function OrderDetails(props) {
   let createdAt = useSelector((state) => state.order.createdAt);
   createdAt = new Date(createdAt);
   let status = useSelector((state) => state.order.status);
-  const orderId = useSelector((state) => state.order._id);
+  const orderId = useSelector((state) => state.order.orderId);
   const changeOrderStatus = (status) => {
     sendRequest(
       {
@@ -22,8 +22,8 @@ export default function OrderDetails(props) {
       },
       () => {}
     );
-    props.toggleCanvasHandler()
-    props.changeStateOrderStatus()
+    // props.toggleCanvasHandler()
+    // props.changeStateOrderStatus()
   };
   return (
     <div className="card-body d-flex flex-column justify-content-between">

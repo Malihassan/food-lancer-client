@@ -49,7 +49,13 @@ const useFetch = () => {
 						break;
 					case "DELETE":
 						respose = await axiosInstance
-							.delete(requestConfig.url)
+							.delete(requestConfig.url, {
+								data: {
+									id: requestConfig.body.id
+										? requestConfig.body.id
+										: {},
+								},
+							})
 							.catch((error) => {
 								setHasError(error.response.data);
 							});

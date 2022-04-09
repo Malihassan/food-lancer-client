@@ -104,7 +104,8 @@ function ProductEditPanel(props) {
   };
 
   const imageHandler = (files) => {
-    console.log(files[0], "file");
+    if(files[0]){
+      console.log(files[0], "file");
     setEditForm({ ...editForm, imagesField: [...files] });
     setEditFormErr({
       ...editFormErr,
@@ -125,6 +126,7 @@ function ProductEditPanel(props) {
           : null,
       });
     });
+  }
   };
 
   const editDetails = async (e) => {
@@ -192,7 +194,7 @@ function ProductEditPanel(props) {
                 <form id="editForm" onSubmit={editDetails}>
                   <div className="my-4">
                     <label
-                      htmlFor="exampleInputEmail1"
+                      htmlFor="exampleInput1"
                       className="form-label text-start"
                     >
                       Product Name
@@ -203,7 +205,7 @@ function ProductEditPanel(props) {
                       onChange={(e) => formHandler(e)}
                       value={editForm.nameField}
                       className="form-control"
-                      id="exampleInputEmail1"
+                      id="exampleInput1"
                       aria-describedby="emailHelp"
                       required
                     />
@@ -213,7 +215,7 @@ function ProductEditPanel(props) {
                   </div>
                   <div className="my-4">
                     <label
-                      htmlFor="exampleInputPassword1"
+                      htmlFor="exampleInput2"
                       className="form-label text-start"
                     >
                       Price
@@ -224,7 +226,7 @@ function ProductEditPanel(props) {
                       onChange={(e) => formHandler(e)}
                       value={editForm.priceField}
                       className="form-control"
-                      id="exampleInputPassword1"
+                      id="exampleInput2"
                       required
                     />
                     <div className="text-danger">
@@ -233,7 +235,7 @@ function ProductEditPanel(props) {
                   </div>
                   <div className="my-4">
                     <label
-                      htmlFor="exampleInputPassword1"
+                      htmlFor="exampleInput3"
                       className="form-label text-start"
                     >
                       Description
@@ -244,7 +246,7 @@ function ProductEditPanel(props) {
                       onChange={(e) => formHandler(e)}
                       value={editForm.descriptionField}
                       className="form-control"
-                      id="exampleInputPassword1"
+                      id="exampleInput3"
                       required
                     />
                     <div className="text-danger">
@@ -253,7 +255,7 @@ function ProductEditPanel(props) {
                   </div>
                   <div className="my-4">
                     <label
-                      htmlFor="exampleInputPassword1"
+                      htmlFor="exampleInput4"
                       className="form-label text-start"
                     >
                       Images
@@ -263,8 +265,7 @@ function ProductEditPanel(props) {
                       name="imagesField"
                       onChange={(e) => imageHandler(e.target.files)}
                       className="form-control"
-                      id="exampleInputPassword1"
-                      required
+                      id="exampleInput4"
                       multiple
                     />
                     <div className="text-danger">

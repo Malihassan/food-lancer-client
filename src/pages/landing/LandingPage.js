@@ -27,48 +27,46 @@ const LandingPage = () => {
   }, [text]);
 
   return (
-      <div
-        style={{
-          backgroundImage: `url(${img})`,
-        }}
-        className={`container-fluid mx-0 d-flex justify-content-center justify-content-md-start ${classes.bgImg} `}
-      >
-        <div className={`row mt-5 ms-md-5  ${classes.overLay} `}>
-            <div
-              className={`text-light col-10  ${classes["overlay-text"]}`}
-            >
-              <div className="lh-base d-flex flex-md-column  align-items-center">
-                <div className="lh-base text-center ">
-                  <div
-                    className="lh-base mt-3 display-5 ms-5 "
-                    style={{
-                      color: "#F0A500",
-                      fontFamily: " 'El Messiri', sans-serif",
-                    }}
-                  >
-                    {text}
-                    <hr />
-                  </div>
-                  <p
-                    className="lh-base fs-2 ms-3 fw-light"
-                    style={{
-                      fontFamily: "'Cabin Sketch', cursive",
-                    }}
-                  >
-                    Try FoodLancer
-                  </p>
-                  <Link
-                    to="/dishes"
-                    type="button"
-                    className="btn btn-lg btn-outline-light mt-1 ms-3 "
-                  >
-                    <strong>View Dishes</strong>
-                  </Link>
-                </div>
+    <div
+      style={{
+        backgroundImage: `url(${img})`,
+      }}
+      className={`container-fluid mx-0 d-flex justify-content-center justify-content-md-start ${classes.bgImg} `}
+    >
+      <div className={`row mt-5 ms-md-5  ${classes.overLay} `}>
+        <div className={`text-light col-10  ${classes["overlay-text"]}`}>
+          <div className="lh-base d-flex flex-md-column  align-items-center">
+            <div className="lh-base text-center ">
+              <div
+                className="lh-base mt-3 display-5 ms-5 "
+                style={{
+                  color: "#F0A500",
+                  fontFamily: " 'El Messiri', sans-serif",
+                }}
+              >
+                {text}
+                <hr />
               </div>
+              <p
+                className="lh-base fs-2 ms-3 fw-light"
+                style={{
+                  fontFamily: "'Cabin Sketch', cursive",
+                }}
+              >
+                Try FoodLancer
+              </p>
+              <Link
+                to="/home"
+                type="button"
+                className="btn btn-lg btn-outline-light mt-1 ms-3 "
+              >
+                <strong>View Dishes</strong>
+              </Link>
             </div>
+          </div>
         </div>
       </div>
+    </div>
   );
 };
 

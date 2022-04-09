@@ -1,25 +1,107 @@
 import classes from "./buyerHome.module.scss";
-import React ,{useEffect,useState}from 'react'
-import {IoFilterOutline}  from 'react-icons/io5'
+import React, { useEffect, useState } from "react";
+import { IoFilterOutline } from "react-icons/io5";
 import { Rating } from "react-simple-star-rating";
-import BuyerProductCard from './../../components/shared/buyerProductCard/BuyerProductCard';
+import BuyerProductCard from "./../../components/shared/buyerProductCard/BuyerProductCard";
 import useFetch from "../../hooks/useFetch";
 import Empty from "./../../components/shared/emptyData/Empty";
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OffCanvas from "./../../components/shared/offCanvas/OffCanvas";
 import {
-
-  faCircleArrowLeft,
-  faCircleArrowRight,
+	faCircleArrowLeft,
+	faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
+ import Box from "@mui/material/Box";
+ import Slider from "@mui/material/Slider";
 /* function valuetext(value) {
   //console.log(value);
   return `${value}°C`;
 } */
 function BuyerHome() {
+
+
+	const [favs, setFavs] = useState([]);
+	useEffect(() => {
+		function getAllProduct(res) {
+			setProducts(res?.data.docs);
+			setTotalPages(Math.ceil(res?.data.totalPages));
+		}
+		function getFavs(res) {
+			setFavs(res.data);
+		}
+
+		sendRequest(
+			{
+				url: `buyer/product/allProducts`,
+				method: "GET",
+				params: { page },
+			},
+			getAllProduct
+		);
+		sendRequest(
+			{
+				url: `buyer/product/favs`,
+				method: "GET",
+			},
+			getFavs
+		);
+	}, [page, sendRequest]);
+
+	const handleFavClick = (product, favStatus) => {
+		const addFav = (res) => {
+			setFavs(res.data);
+		};
+		const removeFav = (res) => {
+			setFavs(res.data);
+			console.log(res);
+		};
+		if (!favStatus) {
+			sendRequest(
+				{
+					url: `buyer/product/favs`,
+					method: "POST",
+					body: {
+						id: product._id,
+					},
+				},
+				addFav
+			);
+		} else {
+			sendRequest(
+				{
+					url: `buyer/product/favs`,
+					method: "DELETE",
+					body: {
+						id: product._id,
+					},
+				},
+				removeFav
+			);
+		}
+	};
+
+	const renderProducts = () => {
+		const lockup = {};
+		for (let fav of favs) {
+			lockup[fav._id] = fav._id;
+		}
+		let list = products.map((prd) => {
+			let fav = false;
+			if (lockup[prd._id]) fav = true;
+			return (
+				<div key={prd._id} className={`col-xl-4`}>
+					<BuyerProductCard
+						handleFavClick={handleFavClick}
+						product={prd}
+						fav={fav}
+					/>
+				</div>
+			);
+		});
+
+		return list;
+	};
 
  
 const rateArr= [4.5,4.0,3.5,3.0,2.5]
@@ -214,23 +296,15 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
         </div>
         </div>
       </OffCanvas>
-   
     <div className={`${classes.container} container my-0`}>
   {/* {hasError.error && <Empty />} */}
     {hasError?.error === "Product not found !" && <Empty />}  
      {!hasError && ( 
+      
     <div>
+       
           <div className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center `}>
-           {products?.map((prd) => { 
-            return (
-              <div
-                key={prd._id} 
-                className={`col-xl-4 col-lg-5 col-md-5 col-sm-8 ${classes.colsDesign}`}
-              >
-                 <BuyerProductCard product={prd} /> 
-              </div>
-            );
-           })} 
+          {renderProducts()}
         </div>
           <ReactPaginate
           previousLabel={<FontAwesomeIcon icon={faCircleArrowLeft} />}

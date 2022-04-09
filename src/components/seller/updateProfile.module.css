@@ -13,10 +13,8 @@
   -o-border-radius: .5rem;
 }
 .bgImg {
-
 	border-radius: 20px 0px 0px 20px;
 	max-width: 50px;
-	background-image: url(../../assets/imgs/update\ profile/left-img.jpg);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }
@@ -24,7 +22,7 @@
 .inputWidth {
   background-color: #fff !important;
 	border-top: 0 !important;
-	border-right: 0!important;
+	border-right: 0 !important;
 	height: 40px !important;
 }
 
@@ -33,29 +31,29 @@
 }
 
 .btnSubmit {
-  background-color: transparent !important;
-  color: #091b29 !important;
-  border: 1px #091b29 solid !important;
+	background-color: transparent !important;
+	color: #091b29 !important;
+	border: 1px #091b29 solid !important;
 }
 .btnSubmit:hover {
-  background-color: transparent !important;
-  color: #f0a500 !important;
-  border: 1px #f0a500 solid !important;
+	background-color: transparent !important;
+	color: #f0a500 !important;
+	border: 1px #f0a500 solid !important;
 }
 .dropZone {
 	background-color: #fff;
 	color: #091b29;
-  margin-left: 7rem;
-  margin-right: 7rem;
+	margin-left: 7rem;
+	margin-right: 7rem;
 	border-radius: 10px;
 	text-align: center;
 	height: auto;
 	border: 1px dashed #8f8f8f;
 }
-.textWarning{
-  color:#f0a500 !important;
-  text-align: center !important;
-  }
-  .textMuted{
-    color: #8f8f8f;
-  }
+.textWarning {
+	color: #f0a500 !important;
+	text-align: center !important;
+}
+.textMuted {
+	color: #8f8f8f;
+}

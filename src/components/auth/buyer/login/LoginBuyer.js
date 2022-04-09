@@ -5,11 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buyerLogin } from "../../../../store/AuthSlice";
-function LoginBuyer() {
+function LoginBuyer(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errResMes = useSelector((state) => state.auth.resErrorMes);
-  const [socket, setSocket] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -63,7 +62,8 @@ function LoginBuyer() {
     e.preventDefault();
     dispatch(buyerLogin(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        navigate("/buyer/home");
+        
+        navigate("/home");
       }
     });
   };

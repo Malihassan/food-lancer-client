@@ -48,7 +48,7 @@ function LoginPage() {
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
-              <LoginSeller></LoginSeller>
+              <LoginSeller ></LoginSeller>
             </div>
             <div
               className="tab-pane fade"

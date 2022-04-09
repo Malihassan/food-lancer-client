@@ -19,7 +19,12 @@ import {
   return `${value}°C`;
 } */
 function BuyerHome() {
-
+  const { sendRequest,hasError} = useFetch();
+  const [products,setProducts] = useState([])
+  const [totalPages,setTotalPages]=useState("")
+  const [page,setPage]=useState(1)
+  const [allCategory,setAllCategory] = useState()
+  const [categoryId,setCategory] = useState()
 
 	const [favs, setFavs] = useState([]);
 	useEffect(() => {
@@ -119,12 +124,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
    setPage(currentPage);
   };
  ////********************************PRODUCT REQUEST******************************************////
-  const { sendRequest,hasError} = useFetch();
-  const [products,setProducts] = useState([])
-  const [totalPages,setTotalPages]=useState("")
-  const [page,setPage]=useState(1)
-  const [allCategory,setAllCategory] = useState()
-  const [categoryId,setCategory] = useState()
+  
   ////********************************FILTER******************************************////
   const handleCategoryChange=(e)=> {
     if (e.target.checked) {

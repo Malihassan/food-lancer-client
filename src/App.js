@@ -45,7 +45,7 @@ function App() {
     if (loggedAs !== "viewer") {
       setSocket(
 
-        io("http://localhost:3300/", {
+        io("https://food-lancer.herokuapp.com/", {
           query: { type: loggedAs, id: _id },
         })
       );

@@ -65,8 +65,26 @@ function Favourites() {
 		});
 		return renderedList;
 	};
+	const clicked = () => {
+		axiosInstance
+			.post("http://localhost:3300/buyer/account/sendToPayment", {
+				items: [
+					{ id: 1, quantity: 3 },
+					{ id: 2, quantity: 5 },
+				],
+			})
+			.then((res) => {
+				console.log(res);
+				window.location = res.data.url;
+				if (res.ok) return res.json();
+			})
+			.catch((e) => {
+				console.error(e.error);
+			});
+	};
 	return (
 		<>
+			<button onClick={clicked}>here</button>
 			<div className="container-fluid">
 				{productsArr.length === 0 && <Empty />}
 				{productsArr.length !== 0 && (

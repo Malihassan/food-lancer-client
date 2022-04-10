@@ -61,7 +61,6 @@ function BuyerHome() {
 		};
 		const removeFav = (res) => {
 			setFavs(res.data);
-			console.log(res);
 		};
 		if (!favStatus) {
 			sendRequest(

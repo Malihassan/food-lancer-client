@@ -31,6 +31,11 @@ export default function Chat(props) {
         setUpdatedAt(new Date(res.data.updatedAt));
       }
     );
+    sendRequest({
+      url:`${loggedAs}/chat/setMessgeAsReaded`,
+      method:'PATCH',
+      body:{orderId}
+    },(res)=>{})
   }, []);
   useEffect(() => {
     socket?.on("receiveMessage", (data) => {

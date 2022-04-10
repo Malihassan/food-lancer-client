@@ -4,8 +4,13 @@
 	height: auto;
 }
 .backColors {
-  background-color: #f8f8f7;
+  background-color: #fff;
 	color: #091b29;
+  border-radius: .5rem;
+  -webkit-border-radius: .5rem;
+  -moz-border-radius: .5rem;
+  -ms-border-radius: .5rem;
+  -o-border-radius: .5rem;
 }
 .bgImg {
 	border-radius: 20px 0px 0px 20px;
@@ -15,7 +20,7 @@
 }
 
 .inputWidth {
-  background-color: #f8f8f7 !important;
+  background-color: #fff !important;
 	border-top: 0 !important;
 	border-right: 0!important;
 	height: 40px !important;
@@ -40,7 +45,7 @@
   border: 1px #f0a500 solid !important;
 }
 .dropZone{
-	background-color: #f8f8f7;
+	background-color: #fff;
 	color: #091b29;
   margin-left: 7rem;
   margin-right: 7rem;

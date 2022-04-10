@@ -8,7 +8,7 @@ function Pagination(props) {
   );
   return (
     <nav className="py-2 d-flex justify-content-center paginationContainer">
-      <ul className="pagination">
+      <ul className="pagination mb-0">
         {props.currentPage > 1 && (
           <li
             className={`page-item`}

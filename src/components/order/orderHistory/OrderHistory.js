@@ -5,7 +5,7 @@ import photoTest from "../../../assets/imgs/landing page/cheif.png";
 import { axiosInstance } from "../../../network/axiosConfig";
 import { format, formatDistance, formatRelative, subDays, subMonths, subWeeks } from 'date-fns';
 import { BiPhoneCall, BiDish } from "react-icons/bi";
-import { CgProductHunt } from "react-icons/cg";
+//import { CgProductHunt } from "react-icons/cg";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
@@ -14,7 +14,7 @@ import { orderActions } from "../../../store/orderSlice";
 
 import useFetch from "../../../hooks/useFetch";
 // import { loadActions } from "../../../store/LoadingSlice";
-import { io } from "socket.io-client";
+//import { io } from "socket.io-client";
 import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import Empty from "../../shared/emptyData/Empty";
 import Chat from "../../shared/chat/Chat";
@@ -193,26 +193,26 @@ export default function OrderHistory(props) {
                 <div
                   className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
                 >
-                  {order.status == "in progress" && (
-                    <span className="badge col-4  p-2 rounded-2 bg-warning">
+                  {order.status === "in progress" && (
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgWarning}`}>
                       {/* {data.status?data.status:order.status} */}
                       {order.status}
                     </span>
                   )}
                   {order.status === "delivered" && (
-                    <span className="badge col-4 p-2 rounded-2 bg-success">
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgSuccess}`}>
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>
                   )}
                   {order.status === "canceled" && (
-                    <span className="badge col-4 col-xl-3x p-2 rounded-2 bg-danger">
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.iconDanger}`}>
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>
                   )}
                   {order.status === "pending" && (
-                    <span className="badge col-4 col-xl-3 p-2 rounded-2 bg-warning">
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgWarning}`}>
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>
@@ -247,11 +247,11 @@ export default function OrderHistory(props) {
                         >
                           <p className="col-9">
                             {/* <CgProductHunt  /> */}
-                            <BiDish className="fs-4 me-1 text-danger" />
+                            <BiDish className={`fs-4 me-1 text-danger ${classes.iconDanger}`} />
                             {product.quantity} x {product._id.name}
                           </p>
-                          <p className="col-3 pe-1 fs-4 text-end ">
-                            <span className="fw-thin">E&#163;</span>{" "}
+                          <p className={`col-3 pe-1 fs-4 text-end ${classes.iconDanger}`}>
+                            <span className={`fw-thin `}>E&#163;</span>{" "}
                             {product._id.price}
                           </p>
                         </div>
@@ -262,8 +262,8 @@ export default function OrderHistory(props) {
                   <div className="d-flex justify-conten-between">
                     <p className="col-8 fs-4 fw-bold">
                       Total Price{" "}
-                      <small className="fw-light ps-2 fs-4">
-                        <span className="fw-thin">E&#163;</span>{" "}
+                      <small className={`fw-light ps-2 fs-4 ${classes.iconDanger}`}>
+                        <span className={`fw-thin `}>E&#163;</span>{" "}
                         {order.totalPrice}
                       </small>
                     </p>
@@ -433,9 +433,9 @@ export default function OrderHistory(props) {
                                 <button
                                   type="submit"
                                   disabled={
-                                    reviewForm.comment == "" ||
-                                    ratingValue == 0 ||
-                                    selectedProductId == ""
+                                    reviewForm.comment === "" ||
+                                    ratingValue === 0 ||
+                                    selectedProductId === ""
                                   }
                                   className="btn btn-primary"
                                 >
@@ -453,7 +453,7 @@ export default function OrderHistory(props) {
                   className={`d-flex flex-column col-xl-3 col-lg-3 col-md-6 col-12 p-3`}
                 >
                   <div className="d-flex justify-content-between col-12">
-                    <p className="fw-light text-secondary opacity-75 fs-5">
+                    <p className={`fw-light text-secondary opacity-75 fs-5 ${classes.textgray}`}>
                       Seller Details
                     </p>
                     {(order.status === "in progress" ||
@@ -490,6 +490,7 @@ export default function OrderHistory(props) {
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <img
+                    alt="sellerImage"
                       src={photoTest}
                       className={`img img-fluid rounded-circle ${classes.imgSEller}`}
                     />

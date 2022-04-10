@@ -2,7 +2,7 @@ import "./App.scss";
 import { io } from "socket.io-client";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/loginPage";
+import LoginPage from "./pages/login/LoginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -45,7 +45,7 @@ function App() {
     if (loggedAs !== "viewer") {
       setSocket(
 
-        io("http://localhost:3000/", {
+        io("https://food-lancer.herokuapp.com/", {
           query: { type: loggedAs, id: _id },
         })
       );

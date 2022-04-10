@@ -30,56 +30,57 @@ export default function ProductList() {
 		dispatch(loadActions.toggelLoader());
 	}, [page, isDeleted]);
 
-	const products = useSelector((state) => state.product.products);
-	const pageCount = useSelector((state) => state.product.pageCount);
-	//const totoalDocs = useSelector((state) => state.product.totoalDocs);
-	return (
-		<div className={`container-fluid ${classes.bgColor} `}>
-			<div className="d-flex justify-content-end">
-				<Link to="addProduct" className={`btn ${classes.addBtn}  my-2`}>
-					Add Product
-				</Link>
-			</div>
-			<div className="container">
-				{products.length === 0 && <Empty />}
-				{products.length !== 0 && (
-					<div
-						className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center `}
-					>
-						{products.map((prd) => {
-							return (
-								<div
-									key={prd._id}
-									className={`card col-lg-4 col-md-6 col-sm-8 col-xs-8 py-3  ${classes.cardPrd} `}
-								>
-									<ProductCard product={prd} />
-								</div>
-							);
-						})}
-					</div>
-				)}
-				{products.length !== 0 && (
-					<ReactPaginate
-						previousLabel={<FontAwesomeIcon icon={faCircleArrowLeft} />}
-						nextLabel={<FontAwesomeIcon icon={faCircleArrowRight} />}
-						breakLabel={"..."}
-						pageCount={pageCount}
-						marginPagesDisplayed={2}
-						pageRangeDisplayed={3}
-						onPageChange={handelPageClick}
-						containerClassName={`${classes.paginationContainer} pagination justify-content-center`}
-						pageClassName={"page-item px-2 py-1"}
-						pageLinkClassName={`page-link ${classes.pageLink}`}
-						previousClassName={`page-item `}
-						previousLinkClassName={`page-link ${classes.pageItem}`}
-						nextClassName={"page-item"}
-						nextLinkClassName={`page-link ${classes.pageItem}`}
-						breakClassName={"page-item"}
-						breakLinkClassName={"page-link"}
-						activeClassName={`${classes.active1}`}
-					/>
-				)}
-			</div>
-		</div>
-	);
+  const products = useSelector((state) => state.product.products);
+  const pageCount = useSelector((state) => state.product.pageCount);
+  //const totoalDocs = useSelector((state) => state.product.totoalDocs);
+  return (
+    <div className={`container-fluid ${classes.bgColor} `}>
+     <div className="d-flex justify-content-end">
+     <Link to="addProduct" className={`btn ${classes.addBtn}  my-2`}>
+        Add Product
+      </Link>
+     </div>
+      <div className="container">
+      {products.length === 0 && <Empty />}
+      {products.length !== 0 && (
+        <div className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center `}>
+          {products.map((prd) => {
+            return (
+              <div
+                key={prd._id}
+                className={`card col-lg-4 col-md-6 col-sm-8 col-xs-8 py-3  ${classes.cardPrd} `}
+              >
+                <ProductCard product={prd} />
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {products.length !== 0 && (
+        
+            <ReactPaginate
+              previousLabel={<FontAwesomeIcon icon={faCircleArrowLeft} />}
+              nextLabel={<FontAwesomeIcon icon={faCircleArrowRight} />}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handelPageClick}
+              containerClassName={`${classes.paginationContainer} pagination justify-content-center mb-0 pb-4`}
+              pageClassName={"page-item px-2 py-1"}
+              pageLinkClassName={`page-link ${classes.pageLink}`}
+              previousClassName={`page-item `}
+              previousLinkClassName={`page-link ${classes.pageItem}`}
+              nextClassName={"page-item"}
+              nextLinkClassName={`page-link ${classes.pageItem}`}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={`${classes.active1}`}
+            />
+          
+        
+      )}
+      </div>
+    </div>
+  );
 }

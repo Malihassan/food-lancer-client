@@ -17,6 +17,7 @@ import { authActions } from "../../../store/AuthSlice";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
@@ -29,12 +30,20 @@ const Navbar = (props) => {
   };
   const socket = props.socket;
   const [notification, setNotificatioed] = useState(false);
+  const [show, setShow] = useState(false);
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
       if (data) {
         setNotificatioed(true);
       }
       socket.off("updateOrderStatus");
+    });
+    socket?.on("addOrder", (data) => {
+      if (data) {
+        setNotificatioed(true);
+        console.log(notification)
+      }
+      socket.off("addOrder");
     });
   }, [socket]);
 
@@ -61,8 +70,12 @@ const Navbar = (props) => {
             <Link
               to="/home"
               type="button"
-              className="lead text-center text-light mx-4 text-decoration-none"
+              onClick={() => setNotificatioed(false)}
+              className="lead text-center text-light mx-4 text-decoration-none position-relative"
             >
+              {notification && (
+                  <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"></span>
+                )}
               <div className="d-lg-block d-none ">
                 <FontAwesomeIcon icon={faHome} />
                 <span className="mx-2 ">home</span>
@@ -180,9 +193,10 @@ const Navbar = (props) => {
             <Link to="/favs" type="button" className="btn btn-outline-light ">
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
-            <Link to="/" type="button" className="btn btn-outline-light">
+            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light">
+              
               <HiOutlineShoppingCart className="fs-4" />
-            </Link>
+            </button>
             <Link
               to="/"
               onClick={() => logout("buyer")}
@@ -191,6 +205,7 @@ const Navbar = (props) => {
             >
               <FontAwesomeIcon icon={faArrowRightFromBracket} />
             </Link>
+            <CartOffCanvas controlProps={{show, setShow}}/>
           </div>
         )}
       </div>

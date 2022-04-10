@@ -2,15 +2,17 @@ import { Offcanvas } from "react-bootstrap";
 import img from "../../../assets/imgs/landing page/bg-1.jpeg";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
-import { orderActions } from "../../../store/orderSlice";
+import { orderActions } from '../../../store/orderSlice';
+import { buyerOrderActions } from "../../../store/BuyerOrderSlice";
 import "./cart-offcanvas.scss";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
-function CartOffCanvas(props) {
-	const { controlProps } = props;
-	let cardItems = useSelector((state) => state.order);
-	let dispatch = useDispatch();
+function CartOffCanvas(props){
+    const {controlProps} = props
+    let cardItems = useSelector((state) => state.order);
+    const removedItems = useSelector((state) => state.removedItems);
+    let dispatch = useDispatch();
 
 	const handleClose = () => controlProps.setShow(false);
 
@@ -31,10 +33,25 @@ function CartOffCanvas(props) {
 		);
 	};
 
-	const decrementServes = async (item) => {
-		let otherProducts = cardItems.selectedOrderProducts.filter(
-			(product) => product._id !== item._id
-		);
+    const decrementServes = async (item) => {
+        let otherProducts = cardItems.selectedOrderProducts.filter((product)=> product._id !== item._id);
+        
+        if(item.serves < 2){
+            await dispatch(orderActions.setCartItem({
+                products: [...otherProducts],
+                totalPrice: cardItems.totalPrice - item.price
+            }));
+            await dispatch(buyerOrderActions.setRemovedItems({
+                products: [...removedItems.removedItems, item._id]
+            }));
+        } else {
+            await dispatch(orderActions.setCartItem({
+                products: [{...item, serves: item.serves - 1}, ...otherProducts],
+                totalPrice: cardItems.totalPrice - item.price
+            }));
+            
+        }
+    }
 
 		return (
 			<>
@@ -140,7 +157,6 @@ function CartOffCanvas(props) {
 				</Offcanvas>
 			</>
 		);
-	};
 }
 
 export default CartOffCanvas;

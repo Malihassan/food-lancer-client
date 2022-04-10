@@ -34,18 +34,18 @@ const Navbar = (props) => {
     );
   };
   const socket = props.socket;
-  const [notification, setNotificatioed] = useState(false);
+  const [notification, setNotification] = useState(false);
   const [show, setShow] = useState(false);
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
       if (data) {
-        setNotificatioed(true);
+        setNotification(true);
       }
       socket.off("updateOrderStatus");
     });
     socket?.on("addOrder", (data) => {
       if (data) {
-        setNotificatioed(true);
+        setNotification(true);
         console.log(notification)
       }
       socket.off("addOrder");
@@ -62,6 +62,11 @@ const Navbar = (props) => {
         (res) => {
           console.log(res.data);
           dispatch(authActions.setNotification(res.data))
+          res.data.map((item)=>{
+            if (item.order.read === false) {
+              setNotification(true)
+            }
+          })
         }
       );
     }
@@ -90,7 +95,7 @@ const Navbar = (props) => {
             <Link
               to="/home"
               type="button"
-              onClick={() => setNotificatioed(false)}
+              onClick={() => setNotification(false)}
               className="lead text-center text-light mx-4 text-decoration-none position-relative"
             >
               {notification && (
@@ -181,7 +186,7 @@ const Navbar = (props) => {
             <Link
               to="/myOrders"
               type="button"
-              onClick={() => setNotificatioed(false)}
+              onClick={() => setNotification(false)}
               className="lead text-light mx-4 p-2 text-decoration-none position-relative"
             >
               {notification && (

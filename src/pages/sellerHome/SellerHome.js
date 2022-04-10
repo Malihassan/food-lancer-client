@@ -115,7 +115,9 @@ function SellerHome(props) {
       socket.off("addOrder");
 
     });
+    
   }, [listOfOrders,socket]);
+
 
   const displayChat =
     statusOfSelectedOrder &&

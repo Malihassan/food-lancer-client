@@ -41,14 +41,19 @@ const Navbar = (props) => {
       if (data) {
         setNotification(true);
       }
-      socket.off("updateOrderStatus");
+      // socket.off("updateOrderStatus");
     });
+    socket?.on("receiveNotification",(data)=>{
+      if (data) {
+        dispatch(authActions.setNotification(data))
+      }
+    })
     socket?.on("addOrder", (data) => {
       if (data) {
         setNotification(true);
-        console.log(notification)
+        // console.log(notification)
       }
-      socket.off("addOrder");
+      // socket.off("addOrder");
     });
   }, [socket]);
 
@@ -60,7 +65,7 @@ const Navbar = (props) => {
           method: "GET",
         },
         (res) => {
-          console.log(res.data);
+          console.log(res);
           dispatch(authActions.setNotification(res.data))
           res.data.map((item)=>{
             if (item.order.read === false) {

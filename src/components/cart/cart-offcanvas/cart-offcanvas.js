@@ -11,6 +11,7 @@ import { useEffect } from "react";
 function CartOffCanvas(props){
     const {controlProps} = props
     let cardItems = useSelector((state) => state.order);
+	console.log(cardItems,'===<');
     const removedItems = useSelector((state) => state.removedItems);
     let dispatch = useDispatch();
 

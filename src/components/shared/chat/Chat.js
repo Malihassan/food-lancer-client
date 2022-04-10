@@ -38,8 +38,8 @@ export default function Chat(props) {
     },(res)=>{})
   }, []);
   useEffect(() => {
-    socket?.on("receiveMessage", (data) => {
-      setChat(data.messages);
+    socket?.on("receiveNotification", (messages) => {
+      setChat(messages);
     });
   }, [socket,chat]);
   const sendMessage = () => {

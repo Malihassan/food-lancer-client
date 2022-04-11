@@ -43,34 +43,22 @@ const Navbar = (props) => {
       if (data) {
         setNotification(true);
       }
-      // socket.off("updateOrderStatus");
     });
     socket?.on("receiveNotification",(data)=>{
       if (data) {
         dispatch(authActions.setNotification(data))
+        setNotification(true);
       }
     })
     socket?.on("addOrder", (data) => {
       if (data) {
         setNotification(true);
-        // console.log(notification)
+        console.log(data,"data from add order");
       }
       // socket.off("addOrder");
     });
   }, [socket]);
 
-  const handelChangeNotificationAsReaded=()=>{
-    // setNotification(false);
-    sendRequest(
-      {
-        url: `buyer/account/setOrderNotificationAsReaded`,
-        method: "GET",
-      },
-      (res) => {
-        console.log(res);
-      }
-    );
-  }
   useEffect(() => {
     if (loggedAs !== 'viewer') {
       sendRequest(
@@ -206,7 +194,7 @@ const Navbar = (props) => {
             <Link
               to="/myOrders"
               type="button"
-              onClick={() => handelChangeNotificationAsReaded}
+              onClick={() => setNotification(false)}
               className="lead text-light mx-4 p-2 text-decoration-none position-relative"
             >
               {notification && (

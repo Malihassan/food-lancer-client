@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
 import "./product-info.scss";
 import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
-import { orderActions } from "../../../store/orderSlice";
+import { cartItemsActions } from "../../../store/BuyerOrderSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function ProductInfo(props) {
@@ -13,7 +13,7 @@ function ProductInfo(props) {
 	const [extra, setExtra] = useState(false);
 	const [serves, setServes] = useState(0);
 
-	let cartItems = useSelector((state) => state.order);
+	let cartItems = useSelector((state) => state.cartItems);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -60,34 +60,69 @@ function ProductInfo(props) {
 	};
 
 	const showCanvas = async () => {
-		const finder = cartItems.selectedOrderProducts.find(
-			(item) => item._id === data._id
-		)
-			? cartItems.selectedOrderProducts.find((item) => item._id === data._id)
+		const finder = cartItems.selectedOrderProducts[data.sellerId._id]?.find((item) => item._id === data._id)
+			? cartItems.selectedOrderProducts[data.sellerId._id].find((item) => item._id === data._id)
 			: null;
-		if (!finder) {
+
+		const sellerFinder = Object.keys(cartItems.selectedOrderProducts).find((item) => {
+			console.log(item);
+			return item === data.sellerId._id
+		})?
+		Object.keys(cartItems.selectedOrderProducts).find((item) => item === data.sellerId._id)
+		: null;
+
+
+		if (!sellerFinder && !finder) {
+
 			await dispatch(
-				orderActions.setCartItem({
-					products: [
+				cartItemsActions.setCartItem({
+					products: {
 						...cartItems.selectedOrderProducts,
-						{ ...data, serves },
-					],
-					totalPrice: cartItems.totalPrice + data.price * serves,
+						[data.sellerId._id]: [{ ...data, serves }]
+					},
+					sellerOrderPrice: {
+						...cartItems.sellerOrderPrice,
+						[data.sellerId._id]: data.price * serves
+					},
+					totalPrice: cartItems.totalPrice + data.price * serves
 				})
 			);
-		} else {
-			console.log(finder);
+		} else if (!finder && sellerFinder) {
+
 			await dispatch(
-				orderActions.setCartItem({
-					products: [
-						...cartItems.selectedOrderProducts.filter(
-							(item) => item._id !== finder._id
-						),
-						{ ...finder, serves },
-					],
+				cartItemsActions.setCartItem({
+					products: {
+						...cartItems.selectedOrderProducts,
+						[data.sellerId._id]: [...cartItems.selectedOrderProducts[data.sellerId._id], { ...data, serves }]
+					},
+					sellerOrderPrice: {
+						...cartItems.sellerOrderPrice,
+						[data.sellerId._id]: cartItems.sellerOrderPrice[data.sellerId._id] + data.price * serves
+					},
+					totalPrice: cartItems.totalPrice + data.price * serves
+				})
+			)
+			
+		} else if (finder && sellerFinder) {
+			console.log("3")
+			await dispatch(
+				cartItemsActions.setCartItem({
+					products: {
+						...cartItems.selectedOrderProducts,
+						[data.sellerId._id]: [
+							...cartItems.selectedOrderProducts[data.sellerId._id].filter(
+								(item) => item._id !== finder._id
+							),
+							{ ...finder, serves },
+						]
+					},
+					sellerOrderPrice: {
+						...cartItems.sellerOrderPrice,
+						[data.sellerId._id]: cartItems.sellerOrderPrice[data.sellerId._id] - (finder.price * finder.serves) + (data.price * serves)
+					},
 					totalPrice:
 						cartItems.totalPrice -
-						finder.serves * finder.price +
+						finder.price * finder.serves +
 						data.price * serves,
 				})
 			);

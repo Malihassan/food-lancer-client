@@ -22,6 +22,7 @@ import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
 const Navbar = (props) => {
   const dispatch = useDispatch();
   const loggedAs = useSelector((state) => state.auth.userType);
+  const cartItems = useSelector((state) => state.cartItems)
   const logout = async (type) => {
     const res = await axiosInstance.get(`${type}/account/logout`);
     if (res) {
@@ -31,6 +32,7 @@ const Navbar = (props) => {
   const socket = props.socket;
   const [notification, setNotificatioed] = useState(false);
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
       if (data) {
@@ -46,6 +48,8 @@ const Navbar = (props) => {
       socket.off("addOrder");
     });
   }, [socket]);
+
+
 
   return (
     <nav
@@ -193,8 +197,8 @@ const Navbar = (props) => {
             <Link to="/favs" type="button" className="btn btn-outline-light ">
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
-            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light">
-              
+            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light position-relative">
+              <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">{cartItems.productCount}</span>
               <HiOutlineShoppingCart className="fs-4" />
             </button>
             <Link

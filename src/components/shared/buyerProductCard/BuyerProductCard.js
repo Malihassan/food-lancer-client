@@ -39,7 +39,8 @@ function BuyerProductCard(props) {
 						...cartItems.sellerOrderPrice,
 						[product.sellerId._id]: product.price
 					},
-					totalPrice: cartItems.totalPrice + product.price
+					totalPrice: cartItems.totalPrice + product.price,
+					count: cartItems.productCount + 1
 				})
 			);
 		} else if (!finder && sellerFinder) {
@@ -54,7 +55,8 @@ function BuyerProductCard(props) {
 						...cartItems.sellerOrderPrice,
 						[product.sellerId._id]: cartItems.sellerOrderPrice[product.sellerId._id] + product.price
 					},
-					totalPrice: cartItems.totalPrice + product.price
+					totalPrice: cartItems.totalPrice + product.price,
+					count: cartItems.productCount + 1
 				})
 			)
 			
@@ -78,6 +80,7 @@ function BuyerProductCard(props) {
 					totalPrice:
 						cartItems.totalPrice +
 						product.price,
+					count: cartItems.productCount
 				})
 			);
 		}

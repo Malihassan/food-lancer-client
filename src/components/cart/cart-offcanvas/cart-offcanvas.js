@@ -35,6 +35,7 @@ function CartOffCanvas(props){
 					[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] + item.price
 				},
 				totalPrice: cardItems.totalPrice + item.price,
+				count: cardItems.productCount
 			})
 		);
 	};
@@ -54,7 +55,8 @@ function CartOffCanvas(props){
 						...cardItems.sellerOrderPrice,
 						[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] - item.price
 					},
-					totalPrice: cardItems.totalPrice - item.price
+					totalPrice: cardItems.totalPrice - item.price,
+					count: cardItems.productCount - 1
 				}));
 			} else {
 				await dispatch(cartItemsActions.setCartItem({
@@ -72,7 +74,8 @@ function CartOffCanvas(props){
 							return obj;
 						}, {})
 					},
-					totalPrice: cardItems.totalPrice - item.price
+					totalPrice: cardItems.totalPrice - item.price,
+					count: cardItems.productCount - 1
 				}));
 			}
             await dispatch(cartItemsActions.setRemovedItems({
@@ -88,7 +91,8 @@ function CartOffCanvas(props){
 					...cardItems.sellerOrderPrice,
 					[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] - item.price
 				},
-                totalPrice: cardItems.totalPrice - item.price
+                totalPrice: cardItems.totalPrice - item.price,
+				count: cardItems.productCount
             }));
             
         }

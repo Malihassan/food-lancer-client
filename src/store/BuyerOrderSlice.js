@@ -3,7 +3,8 @@ const initialState = {
   removedItems: [],
   selectedOrderProducts: {},
   sellerOrderPrice: {},
-  totalPrice: 0
+  totalPrice: 0,
+  productCount: 0
 };
 const cartItemsSlice = createSlice({
   name: "removedItems",
@@ -17,6 +18,7 @@ const cartItemsSlice = createSlice({
       state.selectedOrderProducts = payload.products;
       state.sellerOrderPrice = payload.sellerOrderPrice;
       state.totalPrice = payload.totalPrice;
+      state.productCount = payload.count;
     },
   },
 });

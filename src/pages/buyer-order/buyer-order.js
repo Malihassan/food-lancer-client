@@ -52,7 +52,8 @@ function BuyerOrder(){
                         return obj;
                     }, {})
                 },
-                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[seller]
+                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[seller],
+                count: orderCards.productCount - orderCards.selectedOrderProducts[seller].length
 
             })
         )

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import {authActions}  from '../../../store/AuthSlice'
 import { axiosInstance } from "../../../network/axiosConfig";
 import { FiSend } from "react-icons/fi";
 import "./chat.scss";
@@ -16,7 +17,7 @@ export default function Chat(props) {
   const [chat, setChat] = useState([]);
   const [updatedAt, setUpdatedAt] = useState();
   const messagesEndRef = useRef(null);
-
+  const dispatch =  useDispatch()
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   });
@@ -35,10 +36,14 @@ export default function Chat(props) {
       url:`${loggedAs}/chat/setMessgeAsReaded`,
       method:'PATCH',
       body:{orderId}
-    },(res)=>{})
+    },(res)=>{
+      console.log(res.data);
+      dispatch(authActions.setNotification(res.data))
+    })
   }, []);
   useEffect(() => {
     socket?.on("receiveMessage", (messages) => {
+      console.log(messages,"messages");
       setChat(messages);
     });
   }, [socket,chat]);

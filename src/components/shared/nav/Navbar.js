@@ -58,7 +58,7 @@ const Navbar = (props) => {
   }, [socket]);
 
   useEffect(() => {
-    if (loggedAs !== "viewer") {
+    if (loggedAs !== 'viewer') {
       sendRequest(
         {
           url: `${loggedAs}/account/notification`,

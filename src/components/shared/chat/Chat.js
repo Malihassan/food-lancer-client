@@ -38,7 +38,7 @@ export default function Chat(props) {
     },(res)=>{})
   }, []);
   useEffect(() => {
-    socket?.on("receiveNotification", (messages) => {
+    socket?.on("receiveMessage", (messages) => {
       setChat(messages);
     });
   }, [socket,chat]);

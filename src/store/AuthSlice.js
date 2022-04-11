@@ -37,18 +37,19 @@ const authSlice = createSlice({
     userType,
     resErrorMes: "",
     loading: false,
+    notification: [],
   },
   reducers: {
-    // login: (state) => {
-    //   state.authenticated = true;
-    // },
     logout: (state, action) => {
       deleteCookie("token");
       deleteCookie("userType");
-      deleteCookie("id"); 
+      deleteCookie("id");
       state.userType = "viewer";
       state.authenticated = false;
       state._id = null;
+    },
+    setNotification: (state, {payload}) => {
+      state.notification = payload
     },
   },
   extraReducers: {

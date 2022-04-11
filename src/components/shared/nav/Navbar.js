@@ -24,6 +24,7 @@ const Navbar = (props) => {
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
   const loggedAs = useSelector((state) => state.auth.userType);
+  const cartItems = useSelector((state) => state.cartItems)
   const logout = async (type) => {
     sendRequest(
       {
@@ -36,6 +37,7 @@ const Navbar = (props) => {
   const socket = props.socket;
   const [notification, setNotification] = useState(false);
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
       if (data) {
@@ -223,8 +225,10 @@ const Navbar = (props) => {
             <Link to="/favs" type="button" className="btn btn-outline-light ">
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
-            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light">
-              
+            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light position-relative">
+              {cartItems.productCount? (
+                <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">{cartItems.productCount}</span>
+              ) : <></>}
               <HiOutlineShoppingCart className="fs-4" />
             </button>
             <Link

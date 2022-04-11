@@ -34,6 +34,7 @@ const Navbar = (props) => {
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
       if (data) {
+        console.log(data);
         setNotificatioed(true);
       }
       socket.off("updateOrderStatus");

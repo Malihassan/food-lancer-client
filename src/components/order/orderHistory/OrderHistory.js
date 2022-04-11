@@ -2,7 +2,8 @@ import classes from "./order-history.module.scss";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
-//import { axiosInstance } from "../../../network/axiosConfig";
+import { axiosInstance } from "../../../network/axiosConfig";
+import { format, formatDistance, formatRelative, subDays, subMonths, subWeeks } from 'date-fns';
 import { BiPhoneCall, BiDish } from "react-icons/bi";
 //import { CgProductHunt } from "react-icons/cg";
 import { ImLocation } from "react-icons/im";
@@ -36,19 +37,29 @@ export default function OrderHistory(props) {
     selectError: null,
   });
   const toggleCanvasHandler = (order) => {
-    console.log("in canvas");
     setToggleCanvas(!toggleCanvas);
-    if (order)
-    {
+    if (order) {
       dispatch(
         orderActions.toggleDetailsOrder({
           orderId: order._id,
-          buyerId:order.buyerId,
-          sellerId:order.sellerId._id,
+          buyerId: order.buyerId,
+          sellerId: order.sellerId._id,
         })
       );
+      console.log(order._id,"orderId");
+      sendRequest(
+        {
+          url: `buyer/chat/setMessgeAsReaded`,
+          method: "PATCH",
+          body: { orderId: order._id },
+        },
+        (res) => {
+          if (res.status === 200) {
+            setNotifications(res.data);
+          }
+        }
+      );
     }
-
   };
   const handleRating = (rate) => {
     setIsReviewd(false);
@@ -114,6 +125,7 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const socket = props.socket;
   useEffect(async () => {
     sendRequest(
@@ -125,6 +137,17 @@ export default function OrderHistory(props) {
         if (res.status === 200) {
           const allData = res.data;
           setOrder(allData);
+        }
+      }
+    );
+    sendRequest(
+      {
+        url: `buyer/order/notifications`,
+        method: "GET",
+      },
+      (res) => {
+        if (res.status === 200) {
+          setNotifications(res.data);
         }
       }
     );
@@ -140,7 +163,10 @@ export default function OrderHistory(props) {
       setOrder(updatedOrders);
       socket.off("updateOrderStatus");
     });
-  }, [orders, socket]);
+    socket?.on("receiveNotification", (data) => {
+      setNotifications(data);
+      });
+  }, [orders, socket,notifications]);
   return (
     <>
       {orders.length === 0 && <Empty />}
@@ -153,7 +179,7 @@ export default function OrderHistory(props) {
         toggleCanvasHandler={toggleCanvasHandler}
       >
         <div>
-        <Chat socket={socket} />
+          <Chat socket={socket} />
         </div>
       </OffCanvas>
       <div className="row justify-content-center bg-light mx-0">
@@ -199,13 +225,11 @@ export default function OrderHistory(props) {
                   </p>
                   <p className="">
                     <BsCalendarDate className="fs-4" /> &nbsp;&nbsp;&nbsp;&nbsp;
-                    {new Date(order.createdAt).getHours()} h &nbsp;
-                    {new Date(order.createdAt).getMinutes()} m &nbsp;
+                    {formatDistance(subDays(new Date(),new Date(order.createdAt).getDay()), new Date(order.createdAt), { addSuffix: true })}
                   </p>
                   <p className="">
                     <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
-                    {new Date(order.updatedAt).getHours()} h &nbsp;
-                    {new Date(order.updatedAt).getMinutes()} m &nbsp;
+                    {formatDistance(subDays(new Date(),new Date(order.updatedAt).getDay()), new Date(order.createdAt), { addSuffix: true })}
                   </p>
                 </div>
                 <div
@@ -249,7 +273,6 @@ export default function OrderHistory(props) {
                       data-bs-target="#exampleModal"
                       data-bs-whatever="@mdo"
                       onClick={() => {
-                        console.log(order);
                         setSelectedOrder(order);
                       }}
                     >
@@ -433,12 +456,37 @@ export default function OrderHistory(props) {
                     <p className={`fw-light text-secondary opacity-75 fs-5 ${classes.textgray}`}>
                       Seller Details
                     </p>
-                    { (order.status==="in progress" || order.status==="pending")&&
-                    <BsFillChatQuoteFill
-                      onClick={()=>toggleCanvasHandler(order)}
-                      className={`fs-3 ${classes.chatIcon}`}
-                    />
-        }
+                    {(order.status === "in progress" ||
+                      order.status === "pending") && (
+                      <>
+                        <div className="position-relative">
+                          <BsFillChatQuoteFill
+                            onClick={() => toggleCanvasHandler(order)}
+                            className={`fs-3 m-2 ${classes.chatIcon} `}
+                          />
+                          {notifications.map((notification) => {
+                            if (
+                              notification.order.orderId === order._id &&
+                              notification.chatMessageCount !== 0
+                            ) {
+                              return (
+                                <span key={notification._id} className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                  {notification.chatMessageCount} +
+                                </span>
+                              );
+                            }
+                            // else
+                            // {
+                            //   return (
+                            //     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            //       0 +
+                            //     </span>
+                            //   );
+                            // }
+                          })}
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <img

@@ -198,7 +198,9 @@ const Navbar = (props) => {
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
             <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light position-relative">
-              <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">{cartItems.productCount}</span>
+              {cartItems.productCount? (
+                <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">{cartItems.productCount}</span>
+              ) : <></>}
               <HiOutlineShoppingCart className="fs-4" />
             </button>
             <Link

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 function ProductInfo(props) {
 	const { data } = props;
-
 	const [show, setShow] = useState(false);
 	const [rating, setRating] = useState(0);
 	const [extra, setExtra] = useState(false);
@@ -16,16 +15,13 @@ function ProductInfo(props) {
 
 	let cartItems = useSelector((state) => state.cartItems);
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		setRating(data.avgRate);
 	}, []);
-
 	const viewExtraInput = () => {
 		setServes(0);
 		setExtra(true);
 	};
-
 	const hideExtraInput = () => {
 		setServes(0);
 		setExtra(false);
@@ -58,6 +54,8 @@ function ProductInfo(props) {
 			case "extra":
 				setServes(parseInt(e.target.value));
 				break;
+        default:
+        break;
 		}
 	};
 
@@ -145,7 +143,7 @@ function ProductInfo(props) {
 
 	return (
 		<>
-			<div className="row flex-xl-row flex-column justify-content-between text-dark p-2">
+			<div className="row flex-xl-row flex-column justify-content-between  p-2" >
 				<div
 					id="carouselExampleIndicators"
 					className="carousel slide col-xl-6 col-12 pt-xl-2"
@@ -209,7 +207,7 @@ function ProductInfo(props) {
 						<span className="visually-hidden">Next</span>
 					</button>
 				</div>
-				<div className="col-xl-6 col-12 mt-4 mt-xl-0">
+				<div className="col-xl-6 col-12 mt-4 mt-xl-0" style={{color:"#091b29"}}>
 					<p className="display-5">{data.name}</p>
 					<div className="d-flex">
 						<StarRatings
@@ -222,7 +220,7 @@ function ProductInfo(props) {
 					</div>
 					<div className="mt-3">
 						<p>Seller: {data.sellerId?.userName}</p>
-						<p>{data.price} EGP</p>
+						<p className="productPrice">{data.price} EGP</p>
 						<p>Category: {data.categoryId?.name}</p>
 					</div>
 					<div className="d-flex my-3">

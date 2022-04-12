@@ -18,7 +18,8 @@ import useFetch from "../../../hooks/useFetch";
 import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import Empty from "../../shared/emptyData/Empty";
 import Chat from "../../shared/chat/Chat";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../store/AuthSlice";
 export default function OrderHistory(props) {
   const { sendRequest, hasError } = useFetch();
   const dispatch = useDispatch();
@@ -55,7 +56,8 @@ export default function OrderHistory(props) {
         },
         (res) => {
           if (res.status === 200) {
-            setNotifications(res.data);
+            // setNotifications(res.data);
+            dispatch(authActions.setNotification(res.data))
           }
         }
       );
@@ -125,7 +127,8 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  // const [notifications, setNotifications] = useState([]);
+  const notifications =  useSelector((state)=>state.auth.notification)
   const socket = props.socket;
   useEffect(async () => {
     sendRequest(
@@ -140,17 +143,22 @@ export default function OrderHistory(props) {
         }
       }
     );
-    sendRequest(
-      {
-        url: `buyer/order/notifications`,
-        method: "GET",
-      },
-      (res) => {
-        if (res.status === 200) {
-          setNotifications(res.data);
-        }
-      }
-    );
+    // sendRequest(
+    //   {
+    //     url: `buyer/order/notifications`,
+    //     method: "GET",
+    //   },
+    //   (res) => {
+    //     if (res.status === 200) {
+    //       setNotifications(res.data);
+    //     }
+    //   }
+    // );
+     sendRequest({
+      url: `buyer/order/setOrderNotificationAsReaded`,
+      method: "GET",
+     },(res)=>{console.log(res);}) 
+
   }, []);
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
@@ -164,7 +172,8 @@ export default function OrderHistory(props) {
       socket.off("updateOrderStatus");
     });
     socket?.on("receiveNotification", (data) => {
-      setNotifications(data);
+      // setNotifications(data);
+      dispatch(authActions.setNotification(data))
       });
   }, [orders, socket,notifications]);
   return (
@@ -194,7 +203,7 @@ export default function OrderHistory(props) {
                   className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
                 >
                   {order.status === "in progress" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgWarning}`}>
+                    <span className={`badge col-4  p-2 rounded-2 bg-primary`}>
                       {/* {data.status?data.status:order.status} */}
                       {order.status}
                     </span>
@@ -206,7 +215,7 @@ export default function OrderHistory(props) {
                     </span>
                   )}
                   {order.status === "canceled" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.iconDanger}`}>
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgDanger}`}>
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>

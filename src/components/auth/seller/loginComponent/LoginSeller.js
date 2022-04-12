@@ -130,7 +130,7 @@ function LoginSeller() {
                 <div className="form-text text-warning">{errResMes}</div>
               )}
             </div>
-            <div className="d-flex flex-xl-column flex-lg-column flex-md-column flex-sm-column justify-content-around align-items-center p-4">
+            <div className="d-flex flex-row-reverse justify-content-between align-items-center pb-3 mt-4">
               <button type="submit" className="btn btn-submit px-4  mb-3">
                 Login
               </button>

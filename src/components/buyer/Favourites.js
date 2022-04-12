@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../network/axiosConfig";
+import classes from "./../../pages/buyerHome/buyerHome.module.scss";
+//import { axiosInstance } from "../../network/axiosConfig";
 import Empty from "../shared/emptyData/Empty";
 import BuyerProductCard from "../shared/buyerProductCard/BuyerProductCard";
-import classes from "../product/product-list/product-list.module.scss";
+//import classes from "../product/product-list/product-list.module.scss";
 import useFetch from "../../hooks/useFetch";
 
 function Favourites() {
@@ -52,7 +53,7 @@ function Favourites() {
 			return (
 				<div
 					key={prd._id}
-					className={`card col-lg-4 col-md-6 col-12 py-3 ${classes.cardPrd}`}
+					className={`col-xl-4 col-lg-6 col-md-6 col-sm-8 ${classes.colsDesign}`}
 				>
 					<BuyerProductCard
 						product={prd}
@@ -67,12 +68,17 @@ function Favourites() {
 	};
 	return (
 		<>
-			<div className="container-fluid">
+		<div className={`${classes.homeBody} `}>
+    <div className={`${classes.container} container my-0`}>
 				{productsArr.length === 0 && <Empty />}
 				{productsArr.length !== 0 && (
-					<div className="row bg-transparent">{renderList()}</div>
+<div>
+<div className={`row justify-content-lg-start justify-content-md-center justify-content-sm-center `}>{renderList()}</div>
+
+</div>				
 				)}
 			</div>
+    </div>
 		</>
 	);
 }

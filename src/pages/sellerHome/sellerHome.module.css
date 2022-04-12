@@ -3,4 +3,9 @@
   background-color: #fff !important;
   color: #091b29 !important;
 }
+
+.OffCanvas .active {
+  font-weight: bolder;
+  color: black;
+}
 /*# sourceMappingURL=sellerHome.module.css.map */

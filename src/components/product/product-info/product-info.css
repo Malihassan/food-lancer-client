@@ -1,11 +1,11 @@
 .maroon {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 .maroon:active:hover {
   background-color: #410615 !important;
-  color: rgba(211, 211, 211, 0.933) !important;
+  color: #f8f8f7 !important;
 }
 
 .maroon:hover {
@@ -26,34 +26,38 @@
   background-color: transparent;
 }
 
+.productPrice {
+  color: #750a25 !important;
+}
+
 .btn-serve:hover {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 #inp-1:checked + label {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 #inp-2:checked + label {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 #inp-3:checked + label {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 #inp-4:checked + label {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 #inp-5:checked + label {
   background-color: #750a25 !important;
-  color: #EEEE !important;
+  color: #f8f8f7 !important;
 }
 
 .smaller {

@@ -111,7 +111,6 @@ function SellerHome(props) {
   useEffect(() => {
     socket?.on("addOrder", (data) => {
       setListOfOrders([data, ...listOfOrders]);
-      console.log("Howdaaaayyyy")
       socket.off("addOrder");
 
     });

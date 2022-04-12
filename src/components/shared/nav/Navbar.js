@@ -57,7 +57,8 @@ const Navbar = (props) => {
       }
       // socket.off("addOrder");
     });
-  }, [socket]);
+
+  }, [socket, notification]);
 
   useEffect(() => {
     if (loggedAs !== 'viewer') {
@@ -107,8 +108,8 @@ const Navbar = (props) => {
               className="lead text-center text-light mx-4 text-decoration-none position-relative"
             >
               {notification && (
-                  <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"></span>
-                )}
+                <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"></span>
+              )}
               <div className="d-lg-block d-none ">
                 <FontAwesomeIcon icon={faHome} />
                 <span className="mx-2 ">home</span>

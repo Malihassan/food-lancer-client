@@ -43,10 +43,9 @@ export default function Chat(props) {
   }, []);
   useEffect(() => {
     socket?.on("receiveMessage", (messages) => {
-      console.log(messages,"messages");
       setChat(messages);
     });
-  }, [socket,chat]);
+  }, [socket, chat]);
   const sendMessage = () => {
     axiosInstance.post(`${loggedAs}/chat/sendMessage`, {
       message,
@@ -77,9 +76,9 @@ export default function Chat(props) {
           <div className="chat" data-chat="person2">
             {chat.map((message) => (
               <div
-                ref={messagesEndRef}
+              ref={messagesEndRef}
                 key={message._id}
-                className={`bubble ${message.from==="buyer" ? "you" : "me"}`}
+                className={`bubble ${message.from === "buyer" ? "you" : "me"}`}
               >
                 {message.content}
               </div>
@@ -98,8 +97,9 @@ export default function Chat(props) {
               className={`${message ? "" : "disabled-link"}`}
               onClick={sendMessage}
             >
-              <FiSend  className="fs-3"/>
+              <FiSend className="fs-3" />
             </Link>
+           
           </div>
         </div>
       )}

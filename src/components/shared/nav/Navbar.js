@@ -43,17 +43,17 @@ const Navbar = (props) => {
       if (data) {
         setNotification(true);
       }
-      // socket.off("updateOrderStatus");
     });
     socket?.on("receiveNotification",(data)=>{
       if (data) {
         dispatch(authActions.setNotification(data))
+        setNotification(true);
       }
     })
     socket?.on("addOrder", (data) => {
       if (data) {
         setNotification(true);
-        // console.log(notification)
+        console.log(data,"data from add order");
       }
       // socket.off("addOrder");
     });
@@ -77,6 +77,7 @@ const Navbar = (props) => {
         }
       );
     }
+    
   }, []);
 
   return (

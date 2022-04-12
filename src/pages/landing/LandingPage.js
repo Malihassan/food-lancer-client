@@ -34,11 +34,11 @@ const LandingPage = () => {
       className={`container-fluid mx-0 d-flex justify-content-center justify-content-md-start ${classes.bgImg} `}
     >
       <div className={`row mt-5 ms-md-5  ${classes.overLay} `}>
-        <div className={`text-light col-10  ${classes["overlay-text"]}`}>
-          <div className="lh-base d-flex flex-md-column  align-items-center">
-            <div className="lh-base text-center ">
+        <div className={`text-light col-12  ${classes["overlay-text"]} d-flex justify-content-center align-items-center`}>
+          <div className="lh-base col-10 d-flex flex-column justify-content-center align-items-center">
+            <div className="lh-base text-center">
               <div
-                className="lh-base mt-3 display-5 ms-5 "
+                className="lh-base display-5 text-start"
                 style={{
                   color: "#F0A500",
                   fontFamily: " 'El Messiri', sans-serif",
@@ -48,7 +48,7 @@ const LandingPage = () => {
                 <hr />
               </div>
               <p
-                className="lh-base fs-2 ms-3 fw-light"
+                className="lh-base fs-2 ms-3 fw-light "
                 style={{
                   fontFamily: "'Cabin Sketch', cursive",
                 }}
@@ -58,7 +58,7 @@ const LandingPage = () => {
               <Link
                 to="/home"
                 type="button"
-                className="btn btn-lg btn-outline-light mt-1 ms-3 "
+                className="btn btn-lg btn-outline-light mt-1 ms-3"
               >
                 <strong>View Dishes</strong>
               </Link>

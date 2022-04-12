@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import classes from "./updateProfile.module.css";
-import { axiosInstance } from "../../network/axiosConfig";
 import { RiFolderOpenFill } from "react-icons/ri";
 import Dropzone from "react-dropzone";
 import useFetch from "../../hooks/useFetch";
-// import { useDropzone } from "react-dropzone";
+import img from "../../assets/imgs/landing page/cheif.png";
 
 let initialValues = {
 	firstName: "",
@@ -59,13 +58,6 @@ function UpdateProfile() {
 			}
 		}
 		(async () => {
-			// const res = await axiosInstance.patch(
-			//   `seller/account/editProfile`,
-			//   formData,
-			//   { headers: { "Content-Type": "multipart/form-data" } }
-			// );
-			// setUpdateRes(res.data);
-			// setUpdate(!update);
 			sendRequest(
 				{
 					url: `seller/account/editProfile`,
@@ -115,20 +107,6 @@ function UpdateProfile() {
 				{ url: `seller/account/info`, method: "GET" },
 				getSellerInfoHandler
 			);
-			// 	const res = await axiosInstance.get(`seller/account/coverageArea`);
-
-			// 	const resAreas = res.data;
-			// 	setAreas(resAreas);
-			// 	const { data } = await axiosInstance.get(`seller/account/info`);
-
-			// 	setImages(data.seller.image);
-
-			// 	initialValues.image = data.seller.image?.url;
-			// 	initialValues.firstName = data.seller?.firstName;
-			// 	initialValues.lastName = data.seller?.lastName;
-			// 	initialValues.phone = data.seller?.phone;
-			// 	initialValues.coverageArea = data.seller?.coverageArea?._id;
-			// 	setUpdate(!update);
 		};
 		fillData();
 	}, []);
@@ -147,11 +125,11 @@ function UpdateProfile() {
             Update Information
             <br />
             <img
-              src={images?.url}
+              src={images?.url || img}
               alt=".."
               style={{
-                width: "100px",
-                height: "100px",
+                width: "130px",
+                height: "130px",
                 borderRadius: "50%",
               }}
             />

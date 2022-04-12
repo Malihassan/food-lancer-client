@@ -2,10 +2,11 @@ import classes from "./order-history.module.scss";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
-import { axiosInstance } from "../../../network/axiosConfig";
-import { format, formatDistance, formatRelative, subDays, subMonths, subWeeks } from 'date-fns';
+import {
+  formatDistance,
+  subDays,
+} from "date-fns";
 import { BiPhoneCall, BiDish } from "react-icons/bi";
-//import { CgProductHunt } from "react-icons/cg";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
 import { HiIdentification } from "react-icons/hi";
@@ -13,8 +14,6 @@ import { BsCalendarDate, BsFillChatQuoteFill } from "react-icons/bs";
 import { orderActions } from "../../../store/orderSlice";
 
 import useFetch from "../../../hooks/useFetch";
-// import { loadActions } from "../../../store/LoadingSlice";
-//import { io } from "socket.io-client";
 import OffCanvas from "../../shared/offCanvas/OffCanvas";
 import Empty from "../../shared/emptyData/Empty";
 import Chat from "../../shared/chat/Chat";
@@ -47,7 +46,7 @@ export default function OrderHistory(props) {
           sellerId: order.sellerId._id,
         })
       );
-      console.log(order._id,"orderId");
+      console.log(order._id, "orderId");
       sendRequest(
         {
           url: `buyer/chat/setMessgeAsReaded`,
@@ -57,7 +56,7 @@ export default function OrderHistory(props) {
         (res) => {
           if (res.status === 200) {
             // setNotifications(res.data);
-            dispatch(authActions.setNotification(res.data))
+            dispatch(authActions.setNotification(res.data));
           }
         }
       );
@@ -108,12 +107,12 @@ export default function OrderHistory(props) {
           comments: reviewForm.comment,
           rate: ratingValue / 20,
           orderId: selectedOrder._id,
-          buyerId: selectedOrder.buyerId,
           sellerId: selectedOrder.sellerId._id,
         },
       },
       (res) => {
         if (res.status === 200) {
+          setOrder(res.data);
           setIsReviewd(false);
           setIsAdded(true);
         }
@@ -127,8 +126,7 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
-  // const [notifications, setNotifications] = useState([]);
-  const notifications =  useSelector((state)=>state.auth.notification)
+  const notifications = useSelector((state) => state.auth.notification);
   const socket = props.socket;
   useEffect(async () => {
     sendRequest(
@@ -143,22 +141,15 @@ export default function OrderHistory(props) {
         }
       }
     );
-    // sendRequest(
-    //   {
-    //     url: `buyer/order/notifications`,
-    //     method: "GET",
-    //   },
-    //   (res) => {
-    //     if (res.status === 200) {
-    //       setNotifications(res.data);
-    //     }
-    //   }
-    // );
-     sendRequest({
-      url: `buyer/order/setOrderNotificationAsReaded`,
-      method: "GET",
-     },(res)=>{console.log(res);}) 
-
+    sendRequest(
+      {
+        url: `buyer/order/setOrderNotificationAsReaded`,
+        method: "GET",
+      },
+      (res) => {
+        console.log(res);
+      }
+    );
   }, []);
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
@@ -172,10 +163,13 @@ export default function OrderHistory(props) {
       socket.off("updateOrderStatus");
     });
     socket?.on("receiveNotification", (data) => {
-      // setNotifications(data);
-      dispatch(authActions.setNotification(data))
-      });
-  }, [orders, socket,notifications]);
+      dispatch(authActions.setNotification(data));
+    });
+    // socket?.on("updateRateOfSeller", (data) => {
+    // console.log(data,"orders");
+    // setOrder(data);
+    // });
+  }, [orders, socket, notifications]);
   return (
     <>
       {orders.length === 0 && <Empty />}
@@ -204,41 +198,51 @@ export default function OrderHistory(props) {
                 >
                   {order.status === "in progress" && (
                     <span className={`badge col-4  p-2 rounded-2 bg-primary`}>
-                      {/* {data.status?data.status:order.status} */}
                       {order.status}
                     </span>
                   )}
                   {order.status === "delivered" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgSuccess}`}>
+                    <span
+                      className={`badge col-4  p-2 rounded-2 ${classes.bgSuccess}`}
+                    >
                       {order.status}
-                      {/* {data.status?data.status:order.status} */}
                     </span>
                   )}
                   {order.status === "canceled" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgDanger}`}>
+                    <span
+                      className={`badge col-4  p-2 rounded-2 ${classes.bgDanger}`}
+                    >
                       {order.status}
-                      {/* {data.status?data.status:order.status} */}
                     </span>
                   )}
                   {order.status === "pending" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgWarning}`}>
+                    <span
+                      className={`badge col-4  p-2 rounded-2 ${classes.bgWarning}`}
+                    >
                       {order.status}
-                      {/* {data.status?data.status:order.status} */}
                     </span>
                   )}
                   <p className="pt-3">
                     <HiIdentification className="fs-3 me-3" /> {order._id}
                   </p>
                   <p className="">
-                    <ImLocation className="fs-3 me-3" /> Egypt - Faysal
+                    <ImLocation className="fs-3 me-3" />{order?.address}
                   </p>
                   <p className="">
                     <BsCalendarDate className="fs-4" /> &nbsp;&nbsp;&nbsp;&nbsp;
-                    {formatDistance(subDays(new Date(),new Date(order.createdAt).getDay()), new Date(order.createdAt), { addSuffix: true })}
+                    {formatDistance(
+                      subDays(new Date(), new Date(order.createdAt).getDay()),
+                      new Date(order.createdAt),
+                      { addSuffix: true }
+                    )}
                   </p>
                   <p className="">
                     <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
-                    {formatDistance(subDays(new Date(),new Date(order.updatedAt).getDay()), new Date(order.createdAt), { addSuffix: true })}
+                    {formatDistance(
+                      subDays(new Date(), new Date(order.updatedAt).getDay()),
+                      new Date(order.createdAt),
+                      { addSuffix: true }
+                    )}
                   </p>
                 </div>
                 <div
@@ -256,10 +260,14 @@ export default function OrderHistory(props) {
                         >
                           <p className="col-9">
                             {/* <CgProductHunt  /> */}
-                            <BiDish className={`fs-4 me-1 text-danger ${classes.iconDanger}`} />
+                            <BiDish
+                              className={`fs-4 me-1 text-danger ${classes.iconDanger}`}
+                            />
                             {product.quantity} x {product._id.name}
                           </p>
-                          <p className={`col-3 pe-1 fs-4 text-end ${classes.iconDanger}`}>
+                          <p
+                            className={`col-3 pe-1 fs-4 text-end ${classes.iconDanger}`}
+                          >
                             <span className={`fw-thin `}>E&#163;</span>{" "}
                             {product._id.price}
                           </p>
@@ -271,22 +279,26 @@ export default function OrderHistory(props) {
                   <div className="d-flex justify-conten-between">
                     <p className="col-8 fs-4 fw-bold">
                       Total Price{" "}
-                      <small className={`fw-light ps-2 fs-4 ${classes.iconDanger}`}>
+                      <small
+                        className={`fw-light ps-2 fs-4 ${classes.iconDanger}`}
+                      >
                         <span className={`fw-thin `}>E&#163;</span>{" "}
                         {order.totalPrice}
                       </small>
                     </p>
-                    <button
-                      className="col-4 btm-sm btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      data-bs-whatever="@mdo"
-                      onClick={() => {
-                        setSelectedOrder(order);
-                      }}
-                    >
-                      add review
-                    </button>
+                    {order.status == "delivered" && (
+                      <button
+                        className="col-4 btm-sm btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                        }}
+                      >
+                        add review
+                      </button>
+                    )}
                     <div
                       className="modal fade"
                       id="exampleModal"
@@ -313,12 +325,6 @@ export default function OrderHistory(props) {
                           <div className="modal-body">
                             <form onSubmit={handelFormSubmit}>
                               <div className="mb-3">
-                                {/* <label
-                                htmlFor="select"
-                                className="col-form-label fw-bold fs-5"
-                              >
-                                Select Product
-                              </label> */}
                                 <select
                                   id="select"
                                   className="form-select form-select-sm"
@@ -332,19 +338,20 @@ export default function OrderHistory(props) {
                                   >
                                     Select Your Product
                                   </option>
-
-                                  {order.products.map((product) => {
-                                    return (
-                                      <option
-                                        key={order.products.indexOf(product)}
-                                        value={product._id.name}
-                                        id={product._id._id}
-                                        name="products"
-                                      >
-                                        {product._id.name}
-                                      </option>
-                                    );
-                                  })}
+                                  {selectedOrder?.products?.map(
+                                    (product, index) => {
+                                      return (
+                                        <option
+                                          key={index}
+                                          value={product._id.name}
+                                          id={product._id._id}
+                                          name="products"
+                                        >
+                                          {product._id.name}
+                                        </option>
+                                      );
+                                    }
+                                  )}
                                 </select>
                                 <div
                                   id="selectHelp"
@@ -448,7 +455,7 @@ export default function OrderHistory(props) {
                                   }
                                   className="btn btn-primary"
                                 >
-                                  Send review
+                                  Send Review
                                 </button>
                               </div>
                             </form>
@@ -462,7 +469,9 @@ export default function OrderHistory(props) {
                   className={`d-flex flex-column col-xl-3 col-lg-3 col-md-6 col-12 p-3`}
                 >
                   <div className="d-flex justify-content-between col-12">
-                    <p className={`fw-light text-secondary opacity-75 fs-5 ${classes.textgray}`}>
+                    <p
+                      className={`fw-light text-secondary opacity-75 fs-5 ${classes.textgray}`}
+                    >
                       Seller Details
                     </p>
                     {(order.status === "in progress" ||
@@ -479,19 +488,14 @@ export default function OrderHistory(props) {
                               notification.chatMessageCount !== 0
                             ) {
                               return (
-                                <span key={notification._id} className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <span
+                                  key={notification._id}
+                                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                >
                                   {notification.chatMessageCount} +
                                 </span>
                               );
                             }
-                            // else
-                            // {
-                            //   return (
-                            //     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            //       0 +
-                            //     </span>
-                            //   );
-                            // }
                           })}
                         </div>
                       </>
@@ -499,16 +503,17 @@ export default function OrderHistory(props) {
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <img
-                    alt="sellerImage"
+                      alt="sellerImage"
                       src={photoTest}
                       className={`img img-fluid rounded-circle ${classes.imgSEller}`}
                     />
                     <p className="ps-2 fs-4 ">
-                      {order.sellerId.firstName +
+                      {order.sellerId.firstName[0].toUpperCase() +
+                        order.sellerId.firstName.slice(1) +
                         "  " +
-                        order.sellerId.lastName}
+                        order.sellerId.lastName[0].toUpperCase() +
+                        order.sellerId.lastName.slice(1)}
                     </p>
-                    {/* <p>{seller.firstName[0].toUpperCase()+seller.firstName.slice(1) + '  '+ seller.lastName[0].toUpperCase()+seller.lastName.slice(1)}</p> */}
                   </div>
                   <p className="pt-4">
                     <BiPhoneCall className="text-primary fs-4 me-2" />
@@ -523,9 +528,7 @@ export default function OrderHistory(props) {
                       className="progress-bar"
                       role="progressbar"
                       style={{ width: 39.2 * order.sellerId.rate }}
-                    >
-                      {/* {seller.rate*10}%  */}
-                    </div>
+                    ></div>
                   </div>
                 </div>
               </div>

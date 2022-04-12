@@ -12,7 +12,7 @@ function BuyerOrder(){
     const { sendRequest } = useFetch();
     const orderCards = useSelector((state) => state.cartItems);
     const [buyerData, setBuyerData] = useState({});
-    const [orderResponse, setOrderResponse] = useState({});
+    const [orderResponse, setOrderResponse] = useState(false);
     const dispatch = useDispatch();
     async function buyerDataHandler(res) {
         if (res.status === 200) {
@@ -80,23 +80,49 @@ function BuyerOrder(){
                 products,
                 totalPrice: orderCards.sellerOrderPrice[sellerId]
             }
-        }, orderHandler)
+        }, orderHandler);
+
+
+        dispatch(
+            cartItemsActions.setCartItem({
+                products: {
+                    ...Object.keys(orderCards.selectedOrderProducts)
+                    .filter(key => !key.includes(sellerId))
+                    .reduce((obj, key) => {
+                        obj[key] = orderCards.selectedOrderProducts[key];
+                        return obj;
+                    }, {})
+                },
+                sellerOrderPrice: {
+                    ...Object.keys(orderCards.sellerOrderPrice).filter(key => !key.includes(sellerId))
+                    .reduce((obj, key) => {
+                        obj[key] = orderCards.sellerOrderPrice[key];
+                        return obj;
+                    }, {})
+                },
+                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[sellerId],
+                count: orderCards.productCount - orderCards.selectedOrderProducts[sellerId].length
+
+            })
+        )
     }
 
     const orderHandler = async (res) => {
         if (res.status === 200) {
             console.log(res);
-            setOrderResponse(res.data);
-            console.log(orderResponse)
+            setOrderResponse(true);
+            setTimeout(()=> setOrderResponse(false), 5000)
         }
     }
+    
 
     return (
         <div className="p-4">
-            {orderResponse === "Order Submitted Successfully!" && 
-            <div className="alert alert-success" role="alert">
-                A simple success alert—check it out!
-            </div>}
+            {orderResponse ? (
+                <div className="alert alert-success text-font fw-lighter" role="alert">
+                    Order is successfully created!
+                </div>
+            ) : <></>}
             {Object.keys(orderCards.selectedOrderProducts).map((seller, idx)=>{
                 return(
                     <div className="card d-flex flex-column text-font p-3 mb-3" key={idx}>

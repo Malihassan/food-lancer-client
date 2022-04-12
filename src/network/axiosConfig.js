@@ -6,50 +6,50 @@ export const axiosInstance = axios.create({
 	baseURL: "http://localhost:3300/",
 });
 export function getCookie(cName) {
-	const name = cName + "=";
-	const cDecoded = decodeURIComponent(document.cookie); //to be careful
-	const cArr = cDecoded.split("; ");
-	let res;
-	cArr.forEach((val) => {
-		if (val.indexOf(name) === 0) res = val.substring(name.length);
-	});
-	return res;
+  const name = cName + "=";
+  const cDecoded = decodeURIComponent(document.cookie); //to be careful
+  const cArr = cDecoded.split("; ");
+  let res;
+  cArr.forEach((val) => {
+    if (val.indexOf(name) === 0) res = val.substring(name.length);
+  });
+  return res;
 }
 export function deleteCookie(name, path, domain) {
-	if (getCookie(name)) {
-		document.cookie =
-			name +
-			"=" +
-			(path ? ";path=" + path : "") +
-			(domain ? ";domain=" + domain : "") +
-			";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-	}
+  if (getCookie(name)) {
+    document.cookie =
+      name +
+      "=" +
+      (path ? ";path=" + path : "") +
+      (domain ? ";domain=" + domain : "") +
+      ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  }
 }
 //Add a request interceptor
 axiosInstance.interceptors.request.use(
-	function (config) {
-		const token = getCookie("token");
+  function (config) {
+    const token = getCookie("token");
 
-		config.headers["token"] = token;
+    config.headers["token"] = token;
 
-		return config;
-	},
-	function (error) {
-		console.log("error", error);
-		// if (axios.isAxiosError(error)) {
-		//   if (error.response) {
-		//     if (error.response.status === 401) {
-		//       //   window.location.reload();
-		//       deleteCookie("token");
-		//       deleteCookie("userType");
-		//       window.location.replace("./home");
-		//     }
-		//   }
-		// }
+    return config;
+  },
+  function (error) {
+    console.log("error", error);
+    // if (axios.isAxiosError(error)) {
+    //   if (error.response) {
+    //     if (error.response.status === 401) {
+    //       //   window.location.reload();
+    //       deleteCookie("token");
+    //       deleteCookie("userType");
+    //       window.location.replace("./home");
+    //     }
+    //   }
+    // }
 
-		// Do something with request error
-		return Promise.reject(error);
-	}
+    // Do something with request error
+    return Promise.reject(error);
+  }
 );
 
 // // Add a response interceptor

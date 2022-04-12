@@ -16,15 +16,12 @@ const orderSlice = createSlice({
       state.orderId = payload.orderId;
       state.sellerId = payload.sellerId
       state.buyerId = payload.buyerId;
-      state.selectedOrderProducts = payload.products;
+      state.selectedOrderProducts = payload.products?payload.products:[];
       state.totalPrice = payload.totalPrice;
       state.createdAt = payload.createdAt;
       state.status = payload.status;
     },
-    setCartItem(state, { payload }) {
-      state.selectedOrderProducts = payload.products;
-      state.totalPrice = payload.totalPrice;
-    },
+    
   },
 });
 

@@ -17,35 +17,68 @@ import { authActions } from "../../../store/AuthSlice";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import useFetch from "../../../hooks/useFetch";
 import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
 
 const Navbar = (props) => {
+  const { sendRequest } = useFetch();
   const dispatch = useDispatch();
   const loggedAs = useSelector((state) => state.auth.userType);
+  const cartItems = useSelector((state) => state.cartItems)
   const logout = async (type) => {
-    const res = await axiosInstance.get(`${type}/account/logout`);
-    if (res) {
-      dispatch(authActions.logout());
-    }
+    sendRequest(
+      {
+        url: `${type}/account/logout`,
+        method: "GET",
+      },
+      (res) => dispatch(authActions.logout())
+    );
   };
   const socket = props.socket;
-  const [notification, setNotificatioed] = useState(false);
+  const [notification, setNotification] = useState(false);
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     socket?.on("updateOrderStatus", (data) => {
       if (data) {
-        setNotificatioed(true);
+        setNotification(true);
       }
-      socket.off("updateOrderStatus");
     });
+    socket?.on("receiveNotification",(data)=>{
+      if (data) {
+        dispatch(authActions.setNotification(data))
+        setNotification(true);
+      }
+    })
     socket?.on("addOrder", (data) => {
       if (data) {
-        setNotificatioed(true);
-        console.log(notification)
+        setNotification(true);
+        console.log(data,"data from add order");
       }
-      socket.off("addOrder");
+      // socket.off("addOrder");
     });
   }, [socket]);
+
+  useEffect(() => {
+    if (loggedAs !== 'viewer') {
+      sendRequest(
+        {
+          url: `${loggedAs}/account/notification`,
+          method: "GET",
+        },
+        (res) => {
+          console.log(res);
+          dispatch(authActions.setNotification(res.data))
+          res.data.map((item)=>{
+            if (item.order.read === false) {
+              setNotification(true)
+            }
+          })
+        }
+      );
+    }
+    
+  }, []);
 
   return (
     <nav
@@ -70,7 +103,7 @@ const Navbar = (props) => {
             <Link
               to="/home"
               type="button"
-              onClick={() => setNotificatioed(false)}
+              onClick={() => setNotification(false)}
               className="lead text-center text-light mx-4 text-decoration-none position-relative"
             >
               {notification && (
@@ -161,7 +194,7 @@ const Navbar = (props) => {
             <Link
               to="/myOrders"
               type="button"
-              onClick={() => setNotificatioed(false)}
+              onClick={() => setNotification(false)}
               className="lead text-light mx-4 p-2 text-decoration-none position-relative"
             >
               {notification && (
@@ -193,8 +226,10 @@ const Navbar = (props) => {
             <Link to="/favs" type="button" className="btn btn-outline-light ">
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
-            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light">
-              
+            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light position-relative">
+              {cartItems.productCount? (
+                <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">{cartItems.productCount}</span>
+              ) : <></>}
               <HiOutlineShoppingCart className="fs-4" />
             </button>
             <Link

@@ -203,7 +203,7 @@ export default function OrderHistory(props) {
                   className={`d-flex flex-column d-md-none d-lg-flex col-lg-4 col-xl-3 col-12 p-3 ${classes.divLeftCard}`}
                 >
                   {order.status === "in progress" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgWarning}`}>
+                    <span className={`badge col-4  p-2 rounded-2 bg-primary`}>
                       {/* {data.status?data.status:order.status} */}
                       {order.status}
                     </span>
@@ -215,7 +215,7 @@ export default function OrderHistory(props) {
                     </span>
                   )}
                   {order.status === "canceled" && (
-                    <span className={`badge col-4  p-2 rounded-2 ${classes.iconDanger}`}>
+                    <span className={`badge col-4  p-2 rounded-2 ${classes.bgDanger}`}>
                       {order.status}
                       {/* {data.status?data.status:order.status} */}
                     </span>

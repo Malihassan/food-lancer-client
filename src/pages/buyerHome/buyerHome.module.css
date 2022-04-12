@@ -6,7 +6,7 @@
 
 .pageLink {
   border: none !important;
-  background-color: #fff !important;
+  background-color: #f8f8f7 !important;
   color: #091b29 !important;
   font-size: larger !important;
 }
@@ -17,7 +17,7 @@
 }
 
 .pageItem {
-  background-color: #fff !important;
+  background-color: #f8f8f7 !important;
   color: #091b29 !important;
   border: 1px solid #091b29 !important;
 }

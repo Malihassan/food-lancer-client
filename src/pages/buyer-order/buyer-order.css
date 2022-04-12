@@ -1,0 +1,17 @@
+.smaller {
+  font-size: 0.7rem;
+}
+
+.text-font {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bolder !important;
+}
+
+.w-2-5 {
+  width: 3%;
+}
+
+.Xmark-font {
+  font-size: 1.3rem;
+}
+/*# sourceMappingURL=buyer-order.css.map */

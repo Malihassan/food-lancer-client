@@ -95,7 +95,7 @@ function BuyerHome() {
 			let fav = false;
 			if (lockup[prd._id]) fav = true;
 			return (
-				<div key={prd._id} className={`col-xl-4`}>
+				<div key={prd._id} className={`col-xl-4 col-lg-6 col-md-6 col-sm-8 ${classes.colsDesign}`}>
 					<BuyerProductCard
 						handleFavClick={handleFavClick}
 						product={prd}
@@ -180,7 +180,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
   return (
     <>
      <div className={`${classes.homeBody} `}>
-    <div  className={` container d-flex justify-content-end mb-2  `}>
+    <div  className={`  d-flex justify-content-end container mb-2 pt-2 pe-5 `}>
      <button
           className="btn mt-2 px-4" style={{backgroundColor:"#091b29",color:'#f8f8f7'}}
           onClick={toggleCanvasHandler}
@@ -296,9 +296,8 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
         </div>
         </div>
       </OffCanvas>
-    <div className={`${classes.container} container my-0`}>
-  {/* {hasError.error && <Empty />} */}
-    {hasError?.error === "Product not found !" && <Empty />}  
+    <div className={`${classes.container} container  my-0`}>
+    {(hasError?.error === "Product not found !" || products.length===0) && <Empty />}  
      {!hasError && ( 
       
     <div>

@@ -45,7 +45,7 @@ function App() {
     if (loggedAs !== "viewer") {
       setSocket(
 
-        io("http://localhost:3300/", {
+        io("http://localhost:3000/", {
           query: { type: loggedAs, id: _id },
         })
       );

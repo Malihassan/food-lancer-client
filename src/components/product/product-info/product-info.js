@@ -12,6 +12,7 @@ function ProductInfo(props) {
 	const [rating, setRating] = useState(0);
 	const [extra, setExtra] = useState(false);
 	const [serves, setServes] = useState(0);
+	const [servesErr, setServesErr] = useState(false);
 
 	let cartItems = useSelector((state) => state.cartItems);
 	const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function ProductInfo(props) {
 	};
 
 	const countServes = (e) => {
+		setServesErr(false);
 		switch (e.target.id) {
 			case "inp-1":
 				setServes(1);
@@ -133,9 +135,12 @@ function ProductInfo(props) {
 			}
 			setServes(0);
 			setExtra(false);
+			setShow(true);
+		} else {
+			setServesErr(true);
 		}
 
-		setShow(true);
+		
 	};
 
 	return (
@@ -345,7 +350,7 @@ function ProductInfo(props) {
 						</div>
 					</div>
 					<div
-						className={`col-12 d-flex justify-content-center align-self-bottom ${
+						className={`col-12 d-flex flex-column justify-content-center align-self-bottom ${
 							extra ? "" : "mt-4"
 						}`}
 					>
@@ -355,6 +360,9 @@ function ProductInfo(props) {
 						>
 							Add To Cart
 						</button>
+						{servesErr && (
+							<p className=" col-12 text-danger text-center">You have to choose serves</p>
+						)}
 					</div>
 				</div>
 				<CartOffCanvas controlProps={{ show, setShow }} />

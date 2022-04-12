@@ -66,7 +66,7 @@ function SellerHome(props) {
   async function sellerInfoDataHandler(res) {
     if (res.statusText === "OK") {
       setUserInfo({
-        img: "",
+        image: res.data.seller.image.url,
         name: res.data.seller.firstName + " " + res.data.seller.lastName,
         coverageArea:
           res.data.seller.coverageArea.governorateName +
@@ -115,7 +115,7 @@ function SellerHome(props) {
       socket.off("addOrder");
 
     });
-    
+
   }, [listOfOrders,socket]);
 
 

@@ -29,9 +29,16 @@ function OrderList(props) {
   };
   const setChatIcon = (order) => {
     return notification.map((item) => {
-      if (order._id === item.order.orderId && item.chatMessageCount !== 0) {
+      if (
+        order._id === item.order.orderId &&
+        order.status !== "cancel" &&
+        item.chatMessageCount !== 0
+      ) {
         return (
-          <td key={order._id} className="col h-50 p-0 m-0 d-flex justify-content-start  position-relative">
+          <td
+            key={order._id}
+            className="col h-50 p-0 m-0 d-flex justify-content-start  position-relative"
+          >
             <span className="w-0 position-absolute  top-1 start-25 translate-middle badge rounded-pill bg-danger">
               {item.chatMessageCount}
             </span>

@@ -20,15 +20,15 @@ function SellerInfo(props) {
      <img
       alt="SellerPhoto"
         className="  "
-        src={img}
+        src={props?.userInfo?.image || img}
       />
      </div>
       <div className={`${classes.nameContainer} `}>
-        <label className={`${classes.textDark}`}>{props.userInfo.name}</label>
+        <label className={`${classes.textDark}`}>{props.userInfo.name || "username"}</label>
         <div>
           <label>
             <FontAwesomeIcon icon={faHouseUser} />
-            {props.userInfo.coverageArea}
+            {props.userInfo.coverageArea || "coverageArea" }
           </label>
           {props.userInfo.status === "active" && (
             <label className="mx-3">
@@ -66,7 +66,7 @@ function SellerInfo(props) {
           <FontAwesomeIcon className={`${classes.icon}`} icon={faStar} />
           <div>
             <label>rating</label>
-            <h4>{props.userInfo.rate}</h4>
+            <h4>{props.userInfo.rate}/5</h4>
           </div>
         </div>
       </div>

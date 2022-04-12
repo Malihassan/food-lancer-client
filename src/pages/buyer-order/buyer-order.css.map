@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CAAA;EACJ,SAAS,EAAE,MAAM;CACpB;;AAED,AAAA,UAAU,CAAA;EACN,WAAW,EAAC,wFAAwF;EACpG,WAAW,EAAE,iBAAiB;CACjC;;AAED,AAAA,MAAM,CAAA;EACF,KAAK,EAAE,EACX;CAAC;;AAED,AAAA,WAAW,CAAA;EACP,SAAS,EAAE,MAAM;CACpB",
+    "sources": [
+        "buyer-order.scss"
+    ],
+    "names": [],
+    "file": "buyer-order.css"
+}

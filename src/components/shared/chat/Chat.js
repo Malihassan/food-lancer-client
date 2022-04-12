@@ -32,14 +32,14 @@ export default function Chat(props) {
         setUpdatedAt(new Date(res.data.updatedAt));
       }
     );
-    sendRequest({
-      url:`${loggedAs}/chat/setMessgeAsReaded`,
-      method:'PATCH',
-      body:{orderId}
-    },(res)=>{
-      console.log(res.data);
-      dispatch(authActions.setNotification(res.data))
-    })
+    // sendRequest({
+    //   url:`${loggedAs}/chat/setMessgeAsReaded`,
+    //   method:'PATCH',
+    //   body:{orderId}
+    // },(res)=>{
+    //   console.log(res.data);
+    //   dispatch(authActions.setNotification(res.data))
+    // })
   }, []);
   useEffect(() => {
     socket?.on("receiveMessage", (messages) => {

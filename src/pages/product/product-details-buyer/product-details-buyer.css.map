@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,yBAAyB,CAAA;EACrB,gBAAgB,EAAE,kBAAkB;EACpC,mBAAmB,EAAE,SAAS;EAC9B,eAAe,EAAE,KAAK;CACzB",
+    "sources": [
+        "product-details-buyer.scss"
+    ],
+    "names": [],
+    "file": "product-details-buyer.css"
+}

@@ -15,6 +15,7 @@ import {
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 /* function valuetext(value) {
   //console.log(value);
   return `${value}°C`;
@@ -28,6 +29,7 @@ function BuyerHome() {
   const [categoryId, setCategory] = useState();
   const loggedAs = useSelector((state) => state.auth.userType);
   const [favs, setFavs] = useState([]);
+  const navigate = useNavigate()
   // useEffect(() => {
   // 	function getAllProduct(res) {
   // 		console.log(res?.data.docs);
@@ -62,6 +64,10 @@ function BuyerHome() {
     const removeFav = (res) => {
       setFavs(res.data);
     };
+    if(loggedAs === "viewer"){
+      navigate('/', { replace: true })
+      return
+   }
     if (!favStatus) {
       sendRequest(
         {

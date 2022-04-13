@@ -43,7 +43,6 @@ export default function OrderHistory(props) {
 					sellerId: order.sellerId._id,
 				})
 			);
-			console.log(order._id, "orderId");
 			sendRequest(
 				{
 					url: `buyer/chat/setMessgeAsReaded`,
@@ -186,7 +185,6 @@ export default function OrderHistory(props) {
 			</OffCanvas>
 			<div className="row justify-content-center bg-light mx-0">
 				{orders.map((order) => {
-					console.log(order);
 					return (
 						<div
 							key={orders.indexOf(order)}

@@ -27,31 +27,7 @@ function BuyerHome() {
   const [categoryId,setCategory] = useState()
 
 	const [favs, setFavs] = useState([]);
-	useEffect(() => {
-		function getAllProduct(res) {
-			setProducts(res?.data.docs);
-			setTotalPages(Math.ceil(res?.data.totalPages));
-		}
-		function getFavs(res) {
-			setFavs(res.data);
-		}
 
-		sendRequest(
-			{
-				url: `buyer/product/allProducts`,
-				method: "GET",
-				params: { page },
-			},
-			getAllProduct
-		);
-		sendRequest(
-			{
-				url: `buyer/product/favs`,
-				method: "GET",
-			},
-			getFavs
-		);
-	}, [page, sendRequest]);
 
 	const handleFavClick = (product, favStatus) => {
 		const addFav = (res) => {
@@ -110,7 +86,7 @@ function BuyerHome() {
 
  
 const rateArr= [4.5,4.0,3.5,3.0,2.5]
-  const [priceValue, setPriceValue] = useState([30, 100]);
+  const [priceValue, setPriceValue] = useState([40, 400]);
   const [rateValue, setRateValue] = useState(0);
   //const [favs, setFavs] = useState([]);
   ////********************************OFF CANVAS******************************************////
@@ -164,9 +140,13 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
   }, [sendRequest]);
   useEffect(() => {
     function  getAllProduct(res) {
+      console.log(res);
        setProducts(res?.data.docs)
       setTotalPages(res.data.totalPages)
     } 
+    function getFavs(res) {
+			setFavs(res.data);
+		}
     sendRequest(
       {
         url: `buyer/product/allProducts`,
@@ -175,6 +155,13 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
       },
       getAllProduct
     );
+    sendRequest(
+			{
+				url: `buyer/product/favs`,
+				method: "GET",
+			},
+			getFavs
+		);
   }, [page,sendRequest,categoryId,priceValue,rateValue]);
  
   return (
@@ -236,7 +223,7 @@ const rateArr= [4.5,4.0,3.5,3.0,2.5]
         onChange={handlePriceChange}
         valueLabelDisplay="auto"
         min={0}
-  max={300}
+  max={400}
  // color="secondary"
        // getAriaValueText={valuetext}
       />

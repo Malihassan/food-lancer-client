@@ -46,6 +46,7 @@ const Navbar = (props) => {
     });
     socket?.on("receiveNotification",(data)=>{
       if (data) {
+        console.log(data ,"=<");
         dispatch(authActions.setNotification(data))
         setNotification(true);
       }
@@ -104,7 +105,7 @@ const Navbar = (props) => {
             <Link
               to="/home"
               type="button"
-              onClick={() => setNotification(false)}
+              // onClick={() => setNotification(false)}
               className="lead text-center text-light mx-4 text-decoration-none position-relative"
             >
               {notification && (

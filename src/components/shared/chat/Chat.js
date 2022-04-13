@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import {authActions} from "../../../store/AuthSlice";
 import { axiosInstance } from "../../../network/axiosConfig";
 import { FiSend } from "react-icons/fi";
 import "./chat.scss";
@@ -16,7 +17,7 @@ export default function Chat(props) {
   const [chat, setChat] = useState([]);
   const [updatedAt, setUpdatedAt] = useState();
   const messagesEndRef = useRef(null);
-
+  const dispatch=useDispatch();
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   });
@@ -37,7 +38,10 @@ export default function Chat(props) {
         method: "PATCH",
         body: { orderId },
       },
-      (res) => {}
+      (res) => {
+        console.log(res.data);
+        dispatch(authActions.setNotification(res.data));
+      }
     );
   }, []);
   useEffect(() => {
@@ -75,7 +79,7 @@ export default function Chat(props) {
           <div className="chat" data-chat="person2">
             {chat.map((message) => (
               <div
-              ref={messagesEndRef}
+                ref={messagesEndRef}
                 key={message._id}
                 className={`bubble ${message.from === "buyer" ? "you" : "me"}`}
               >
@@ -98,7 +102,6 @@ export default function Chat(props) {
             >
               <FiSend className="fs-3" />
             </Link>
-           
           </div>
         </div>
       )}

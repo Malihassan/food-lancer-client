@@ -40,7 +40,7 @@ function ProductDetails() {
 			<div className="card border-0  bg-transparent" style={{ width: "80rem" }}>
 				<ul className="list-group list-group-flush ">
 					<li className="list-group-item mx-5">
-						<ProductInfo data={productData} />
+						<ProductEditPanel data={productData} />
 					</li>
 					<li className="list-group-item mx-5 ">
 						<ProductTabs data={productData} />

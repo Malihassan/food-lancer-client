@@ -4,6 +4,7 @@ import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
 import { orderActions } from '../../../store/orderSlice';
 import { cartItemsActions } from "../../../store/BuyerOrderSlice";
+import Empty from '../../shared/emptyData/Empty'
 import "./cart-offcanvas.scss";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -110,6 +111,7 @@ function CartOffCanvas(props){
 						<Offcanvas.Title>Cart</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
+						{cardItems.selectedOrderProducts.length === 0 && <Empty message ="No Item In Cart"/> }
 						<div className="my-2 h-84">
 							{Object.keys(cardItems.selectedOrderProducts).map((seller, index) => {
 								return (

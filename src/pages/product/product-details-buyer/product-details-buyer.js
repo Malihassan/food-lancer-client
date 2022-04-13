@@ -21,16 +21,17 @@ function ProductDetailsBuyer() {
   const [sellerId, setSellerId] = useState();
 	const param = useParams();
 	async function prdoductDataHandler(res) {
+    console.log(res);
 		if (res.status === 200) {
-			console.log(res.data.sellerId._id);
 			setProductData(res.data);
       setSellerId(res.data.sellerId._id)
 		}
+    
 	}
   async function getSellerProducts(res) {
+    console.log(res);
 	if (res.status === 200) {
-			console.log(res.data.docs);
-			setSellerProducts(res.data.docs);
+			setSellerProducts(res.data);
 		}
 	}  
  
@@ -44,6 +45,7 @@ function ProductDetailsBuyer() {
 		);
 	}, []);
    useEffect(() => {
+     console.log(sellerId);
      if (sellerId!==undefined) {
       sendRequest(
         {
@@ -54,6 +56,7 @@ function ProductDetailsBuyer() {
       );
      }
      console.log(productData?.sellerId?._id);
+     console.log(sellerId);
 	
 	}, [sellerId]);  
  

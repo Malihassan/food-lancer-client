@@ -279,7 +279,7 @@ function BuyerHome() {
 										}}
 										valueLabelDisplay="auto"
 										min={0}
-										max={300}
+										max={500}
 										// color="secondary"
 										// getAriaValueText={valuetext}
 									/>

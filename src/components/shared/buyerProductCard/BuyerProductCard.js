@@ -3,10 +3,90 @@ import classes from "./BuyerProduct.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
+import { useSelector, useDispatch } from "react-redux";
+import { cartItemsActions } from "../../../store/BuyerOrderSlice";
+import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
 function BuyerProductCard(props) {
 	//const [ratingValue, setRatingValue] = useState(0);
 	const MAX_LENGTH = 125;
+	const [show, setShow] = useState(false);
+	const cartItems = useSelector((state) => state.cartItems);
+	const dispatch = useDispatch();
 	const { product } = props;
+
+	const addProduct = async (product) => {
+		const finder = cartItems.selectedOrderProducts[product.sellerId._id]?.find((item) => item._id === product._id)
+			? cartItems.selectedOrderProducts[product.sellerId._id].find((item) => item._id === product._id)
+			: null;
+
+		const sellerFinder = Object.keys(cartItems.selectedOrderProducts).find((item) => {
+			console.log(item);
+			return item === product.sellerId._id
+		})?
+		Object.keys(cartItems.selectedOrderProducts).find((item) => item === product.sellerId._id)
+		: null;
+
+
+		if (!sellerFinder && !finder) {
+
+			await dispatch(
+				cartItemsActions.setCartItem({
+					products: {
+						...cartItems.selectedOrderProducts,
+						[product.sellerId._id]: [{ ...product, serves: 1 }]
+					},
+					sellerOrderPrice: {
+						...cartItems.sellerOrderPrice,
+						[product.sellerId._id]: product.price
+					},
+					totalPrice: cartItems.totalPrice + product.price,
+					count: cartItems.productCount + 1
+				})
+			);
+		} else if (!finder && sellerFinder) {
+
+			await dispatch(
+				cartItemsActions.setCartItem({
+					products: {
+						...cartItems.selectedOrderProducts,
+						[product.sellerId._id]: [...cartItems.selectedOrderProducts[product.sellerId._id], { ...product, serves: 1 }]
+					},
+					sellerOrderPrice: {
+						...cartItems.sellerOrderPrice,
+						[product.sellerId._id]: cartItems.sellerOrderPrice[product.sellerId._id] + product.price
+					},
+					totalPrice: cartItems.totalPrice + product.price,
+					count: cartItems.productCount + 1
+				})
+			)
+			
+		} else if (finder && sellerFinder) {
+			console.log("3")
+			await dispatch(
+				cartItemsActions.setCartItem({
+					products: {
+						...cartItems.selectedOrderProducts,
+						[product.sellerId._id]: [
+							...cartItems.selectedOrderProducts[product.sellerId._id].filter(
+								(item) => item._id !== finder._id
+							),
+							{ ...finder, serves: finder.serves + 1 },
+						]
+					},
+					sellerOrderPrice: {
+						...cartItems.sellerOrderPrice,
+						[product.sellerId._id]: cartItems.sellerOrderPrice[product.sellerId._id] + product.price
+					},
+					totalPrice:
+						cartItems.totalPrice +
+						product.price,
+					count: cartItems.productCount
+				})
+			);
+		}
+
+		setShow(true);
+	}
 	return (
 		<>
 			<div className={`mt-5 position-relative `}>
@@ -64,12 +144,12 @@ function BuyerProductCard(props) {
 						{product.description.length > MAX_LENGTH ? (
 							<div className={`${classes.productDescription}`}>
 								{`${product.description.substring(0, MAX_LENGTH)}....`}
-								<Link to={`/product/${product?._id}`}>read more</Link>
+								<Link to={`/product/${product?._id}`}>See Detailes</Link>
 							</div>
 						) : (
 							<div className={`${classes.productDescription}`}>
 								{product.description}....
-								<Link to={`/product/${product?._id}`}>read more</Link>
+								<Link to={`/product/${product?._id}`}>See Detailes</Link>
 							</div>
 						)}
 
@@ -79,12 +159,14 @@ function BuyerProductCard(props) {
 						<div className={`d-flex justify-content-center mt-2 mb-4`}>
 							<button
 								className={` btn ${classes.productButton} mx-auto px-4 mb-4`}
+								onClick={() => addProduct(product)}
 							>
 								Add To Cart
 							</button>
 						</div>
 					</div>
 				</div>
+				<CartOffCanvas controlProps={{ show, setShow }} />
 			</div>
 		</>
 	);

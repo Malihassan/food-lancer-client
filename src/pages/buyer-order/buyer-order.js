@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {orderActions} from "../../store/orderSlice";
-import { buyerOrderActions } from "../../store/BuyerOrderSlice";
+import { cartItemsActions } from "../../store/BuyerOrderSlice";
 import { useEffect, useState } from "react";
 import StarRatings from 'react-star-ratings';
 import "./buyer-order.scss";
@@ -11,12 +10,9 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 
 function BuyerOrder(){
     const { sendRequest } = useFetch();
-    const orderCards = useSelector((state) => state.order);
-    const removedItems = useSelector((state) => state.removedItems);
-    const [sortedOrders, setSortedOrders] = useState({});
-    const [sellerOrderPrice, setSellerOrderPrice] = useState({});
+    const orderCards = useSelector((state) => state.cartItems);
     const [buyerData, setBuyerData] = useState({});
-    const [orderResponse, setOrderResponse] = useState({});
+    const [orderResponse, setOrderResponse] = useState(false);
     const dispatch = useDispatch();
     async function buyerDataHandler(res) {
         if (res.status === 200) {
@@ -35,116 +31,33 @@ function BuyerOrder(){
             buyerDataHandler
         );
 
-    }, [])
+    }, []);
 
-    useEffect(()=>{
-        
-        sortSellerOrders();
+    const removeOrder = async (seller) => {
+  
+        await dispatch(
+            cartItemsActions.setCartItem({
+                products: {
+                    ...Object.keys(orderCards.selectedOrderProducts)
+                    .filter(key => !key.includes(seller))
+                    .reduce((obj, key) => {
+                        obj[key] = orderCards.selectedOrderProducts[key];
+                        return obj;
+                    }, {})
+                },
+                sellerOrderPrice: {
+                    ...Object.keys(orderCards.sellerOrderPrice).filter(key => !key.includes(seller))
+                    .reduce((obj, key) => {
+                        obj[key] = orderCards.sellerOrderPrice[key];
+                        return obj;
+                    }, {})
+                },
+                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[seller],
+                count: orderCards.productCount - orderCards.selectedOrderProducts[seller].length
 
-    },[orderCards, sortedOrders]);
+            })
+        )
 
-    // useEffect(()=>{
-    //     console.log(sortedOrders);
-
-    // },[sortedOrders]);
-
-    const sortSellerOrders = async () => {
-        let i =0
-        if(orderCards.selectedOrderProducts){
-            
-            for(let product of orderCards.selectedOrderProducts){
-                i++;
-                console.log(i);
-                let seller = sortedOrders[product.sellerId._id]? true : false;
-
-                let sellerProduct = seller && 
-                sortedOrders[product.sellerId._id].find((item) => item._id === product._id)?
-                sortedOrders[product.sellerId._id].find((item) => item._id === product._id)
-                : null;
-
-                if(!seller){
-
-                    setSortedOrders({
-                        ...sortedOrders,
-                        [product.sellerId._id]: [product]
-                    });
-
-                    setSellerOrderPrice({
-                        ...sellerOrderPrice,
-                        [product.sellerId._id]: product.price * product.serves, 
-                    });
-
-                    console.log(sortedOrders);
-                } else if(seller && !sellerProduct){
-                    console.log("no product");
-                    
-                    setSortedOrders({
-                        ...sortedOrders,
-                        [product.sellerId._id]: [...sortedOrders[product.sellerId._id], product]
-                    });
-
-                    setSellerOrderPrice({
-                        ...sellerOrderPrice,
-                        [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] + product.price * product.serves
-                    });
-
-                } else if( seller && sellerProduct && sellerProduct.serves !== product.serves){
-                    console.log("no serves");
-                    setSortedOrders({
-                        ...sortedOrders,
-                        [product.sellerId._id]: [...sortedOrders[product.sellerId._id].filter((item) => item._id !== sellerProduct._id), product]
-                    });
-
-                    setSellerOrderPrice({
-                        ...sellerOrderPrice,
-                        [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] - (sellerProduct.price * sellerProduct.serves) + product.price * product.serves
-                    });
-
-                } 
-                // else if(unfoundProduct){
-                    
-                //     setSortedOrders({
-                //         ...sortedOrders,
-                //         [product.sellerId._id]: [...sortedOrders[product.sellerId._id].filter((item) => item._id !== product._id)]
-                //     });
-                //     setSellerOrderPrice({
-                //         ...sellerOrderPrice,
-                //         [product.sellerId._id]: sellerOrderPrice[product.sellerId._id] - (product.price * product.serves)
-                //     });
-                    
-                //     await dispatch(buyerOrderActions.setRemovedItems({
-                //         products: [...removedItems.removedItems.filter((item) => {
-                //             return item !== product._id
-                            
-                //         })]
-                //     }));
-
-
-                // }
-
-
-            }
-        }
-    }
-
-    const removeOrder = async (sellerProducts, seller) => {
-        let orderList = [...orderCards.selectedOrderProducts]
-        for(let product of sellerProducts){
-            orderList = orderList.filter((item) => item._id !== product._id);
-        }
-
-        await dispatch(orderActions.setCartItem({...orderCards, products: orderList}));
-
-        console.log(orderList);
-
-        const filteredOrders = Object.keys(sortedOrders)
-            .filter(key => !key.includes(seller))
-            .reduce((obj, key) => {
-                obj[key] = sortedOrders[key];
-                return obj;
-        }, {});
-
-        setSortedOrders(filteredOrders);
     }
 
     const postOrder = (orderProducts, sellerId) => {
@@ -165,35 +78,61 @@ function BuyerOrder(){
                 buyerId: buyerData._id,
                 address: buyerData.address,
                 products,
-                totalPrice: sellerOrderPrice[sellerId]
+                totalPrice: orderCards.sellerOrderPrice[sellerId]
             }
-        }, orderHandler)
+        }, orderHandler);
+
+
+        dispatch(
+            cartItemsActions.setCartItem({
+                products: {
+                    ...Object.keys(orderCards.selectedOrderProducts)
+                    .filter(key => !key.includes(sellerId))
+                    .reduce((obj, key) => {
+                        obj[key] = orderCards.selectedOrderProducts[key];
+                        return obj;
+                    }, {})
+                },
+                sellerOrderPrice: {
+                    ...Object.keys(orderCards.sellerOrderPrice).filter(key => !key.includes(sellerId))
+                    .reduce((obj, key) => {
+                        obj[key] = orderCards.sellerOrderPrice[key];
+                        return obj;
+                    }, {})
+                },
+                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[sellerId],
+                count: orderCards.productCount - orderCards.selectedOrderProducts[sellerId].length
+
+            })
+        )
     }
 
     const orderHandler = async (res) => {
         if (res.status === 200) {
             console.log(res);
-            setOrderResponse(res.data);
-            console.log(orderResponse)
+            setOrderResponse(true);
+            setTimeout(()=> setOrderResponse(false), 5000)
         }
     }
+    
 
     return (
         <div className="p-4">
-            {orderResponse === "Order Submitted Successfully!" && 
-            <div className="alert alert-success" role="alert">
-                A simple success alert—check it out!
-            </div>}
-            {Object.keys(sortedOrders).map((seller, idx)=>{
+            {orderResponse ? (
+                <div className="alert alert-success text-font fw-lighter" role="alert">
+                    Order is successfully created!
+                </div>
+            ) : <></>}
+            {Object.keys(orderCards.selectedOrderProducts).map((seller, idx)=>{
                 return(
                     <div className="card d-flex flex-column text-font p-3 mb-3" key={idx}>
-                        <button onClick={()=> removeOrder(sortedOrders[seller], seller)} className="btn btn-outline-danger w-2-5 align-self-end text-center d-flex"><FontAwesomeIcon className="Xmark-font align-self-center" icon={faXmark} /></button>
+                        <button onClick={()=> removeOrder(seller)} className="btn btn-outline-danger w-2-5 align-self-end justify-content-center text-center d-flex"><FontAwesomeIcon className="Xmark-font align-self-center" icon={faXmark} /></button>
                         <div className="card-body d-flex justify-content-between">
                             <div className="card col-6">
                                 <ul className="list-group list-group-flush">
                                     <li className="list-group-item">
                                         <ul className="list-group list-group-flush">
-                                            {sortedOrders[seller].map((product)=>{
+                                            {orderCards.selectedOrderProducts[seller]?.map((product)=>{
                                                 return(
                                                     <li className="list-group-item d-flex justify-content-between" key={product._id}>
                                                         <div className="d-flex col-10">
@@ -229,7 +168,7 @@ function BuyerOrder(){
                                 <ul className="list-group list-group-flush p-1">
                                     <li className="list-group-item my-2">
                                         <p className="h4 mb-4">Products</p>
-                                        {sortedOrders[seller].map((product, idx)=>{
+                                        {orderCards.selectedOrderProducts[seller]?.map((product, idx)=>{
                                             return(
                                                 <div className="d-flex fw-light justify-content-between" key={idx}>
                                                     <div className="col-6">
@@ -245,7 +184,7 @@ function BuyerOrder(){
                                     <li className="list-group-item fw-light my-2">
                                         <div className="d-flex justify-content-between">
                                             <div>Price</div>
-                                            <div >{sellerOrderPrice[seller]}&#163;</div>
+                                            <div >{orderCards.sellerOrderPrice[seller]}&#163;</div>
                                         </div>
                                         <div className="d-flex justify-content-between">
                                             <div>Discount</div>
@@ -255,9 +194,9 @@ function BuyerOrder(){
                                     <li className="list-group-item d-flex flex-column">
                                         <div className="text-success d-flex justify-content-between">
                                             <div className="h5">Total</div>
-                                            <div className="display-6 mb-4">{sellerOrderPrice[seller]}&#163;</div>
+                                            <div className="display-6 mb-4">{orderCards.sellerOrderPrice[seller]}&#163;</div>
                                         </div>
-                                        <button onClick={()=> postOrder(sortedOrders[seller], seller)} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
+                                        <button onClick={()=> postOrder(orderCards.selectedOrderProducts[seller], seller)} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
                                     </li>
                                 </ul>
                             </div>

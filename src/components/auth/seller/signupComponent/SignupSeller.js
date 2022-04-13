@@ -26,36 +26,6 @@ function SignupSeller() {
     formState: { errors },
   } = useForm();
 
-  // if (hasError) {
-  //   (() => {
-  //     console.log(hasError);
-  //     for (let key in hasError) {
-  //       console.log(key,'=============<');
-  //       switch (key) {
-  //         case "userName":
-  //           setError("userName", {
-  //             type: "manual",
-  //             message: `${key} already exist`,
-  //           });
-  //           break;
-  //         case "email":
-  //           setError("email", {
-  //             type: "manual",
-  //             message: `${key} already exist`,
-  //           });
-  //           break;
-  //         case "phone":
-  //           setError("phone", {
-  //             type: "manual",
-  //             message: `${key} already exist`,
-  //           });
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //   })();
-  // }
   const onSubmit = (data) => {
     let formData = new FormData();
     const image = data.image[0];

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import {authActions} from "../../../store/AuthSlice";
 import { axiosInstance } from "../../../network/axiosConfig";
 import { FiSend } from "react-icons/fi";
 import "./chat.scss";
@@ -16,7 +17,7 @@ export default function Chat(props) {
   const [chat, setChat] = useState([]);
   const [updatedAt, setUpdatedAt] = useState();
   const messagesEndRef = useRef(null);
-
+  const dispatch=useDispatch();
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   });
@@ -31,17 +32,23 @@ export default function Chat(props) {
         setUpdatedAt(new Date(res.data.updatedAt));
       }
     );
-    sendRequest({
-      url:`${loggedAs}/chat/setMessgeAsReaded`,
-      method:'PATCH',
-      body:{orderId}
-    },(res)=>{})
+    sendRequest(
+      {
+        url: `${loggedAs}/chat/setMessgeAsReaded`,
+        method: "PATCH",
+        body: { orderId },
+      },
+      (res) => {
+        console.log(res.data);
+        dispatch(authActions.setNotification(res.data));
+      }
+    );
   }, []);
   useEffect(() => {
     socket?.on("receiveMessage", (messages) => {
       setChat(messages);
     });
-  }, [socket,chat]);
+  }, [socket, chat]);
   const sendMessage = () => {
     axiosInstance.post(`${loggedAs}/chat/sendMessage`, {
       message,
@@ -74,7 +81,7 @@ export default function Chat(props) {
               <div
                 ref={messagesEndRef}
                 key={message._id}
-                className={`bubble ${message.from==="buyer" ? "you" : "me"}`}
+                className={`bubble ${message.from === "buyer" ? "you" : "me"}`}
               >
                 {message.content}
               </div>
@@ -93,7 +100,7 @@ export default function Chat(props) {
               className={`${message ? "" : "disabled-link"}`}
               onClick={sendMessage}
             >
-              <FiSend  className="fs-3"/>
+              <FiSend className="fs-3" />
             </Link>
           </div>
         </div>

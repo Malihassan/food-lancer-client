@@ -2,35 +2,33 @@ import React, { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
 import "./product-info.scss";
 import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
-import { orderActions } from "../../../store/orderSlice";
+import { cartItemsActions } from "../../../store/BuyerOrderSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function ProductInfo(props) {
 	const { data } = props;
-
 	const [show, setShow] = useState(false);
 	const [rating, setRating] = useState(0);
 	const [extra, setExtra] = useState(false);
 	const [serves, setServes] = useState(0);
+	const [servesErr, setServesErr] = useState(false);
 
-	let cartItems = useSelector((state) => state.order);
+	let cartItems = useSelector((state) => state.cartItems);
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		setRating(data.avgRate);
 	}, []);
-
 	const viewExtraInput = () => {
 		setServes(0);
 		setExtra(true);
 	};
-
 	const hideExtraInput = () => {
 		setServes(0);
 		setExtra(false);
 	};
 
 	const countServes = (e) => {
+		setServesErr(false);
 		switch (e.target.id) {
 			case "inp-1":
 				setServes(1);
@@ -56,50 +54,96 @@ function ProductInfo(props) {
 			case "extra":
 				setServes(parseInt(e.target.value));
 				break;
+        default:
+        break;
 		}
 	};
 
 	const showCanvas = async () => {
-		const finder = cartItems.selectedOrderProducts.find(
-			(item) => item._id === data._id
-		)
-			? cartItems.selectedOrderProducts.find((item) => item._id === data._id)
+		if(serves){
+			const finder = cartItems.selectedOrderProducts[data.sellerId._id]?.find((item) => item._id === data._id)
+			? cartItems.selectedOrderProducts[data.sellerId._id].find((item) => item._id === data._id)
 			: null;
-		if (!finder) {
-			await dispatch(
-				orderActions.setCartItem({
-					products: [
-						...cartItems.selectedOrderProducts,
-						{ ...data, serves },
-					],
-					totalPrice: cartItems.totalPrice + data.price * serves,
-				})
-			);
+
+			const sellerFinder = Object.keys(cartItems.selectedOrderProducts).find((item) => {
+				console.log(item);
+				return item === data.sellerId._id
+			})?
+			Object.keys(cartItems.selectedOrderProducts).find((item) => item === data.sellerId._id)
+			: null;
+
+
+			if (!sellerFinder && !finder) {
+
+				await dispatch(
+					cartItemsActions.setCartItem({
+						products: {
+							...cartItems.selectedOrderProducts,
+							[data.sellerId._id]: [{ ...data, serves }]
+						},
+						sellerOrderPrice: {
+							...cartItems.sellerOrderPrice,
+							[data.sellerId._id]: data.price * serves
+						},
+						totalPrice: cartItems.totalPrice + data.price * serves,
+						count: cartItems.productCount + 1
+					})
+				);
+			} else if (!finder && sellerFinder) {
+
+				await dispatch(
+					cartItemsActions.setCartItem({
+						products: {
+							...cartItems.selectedOrderProducts,
+							[data.sellerId._id]: [...cartItems.selectedOrderProducts[data.sellerId._id], { ...data, serves }]
+						},
+						sellerOrderPrice: {
+							...cartItems.sellerOrderPrice,
+							[data.sellerId._id]: cartItems.sellerOrderPrice[data.sellerId._id] + data.price * serves
+						},
+						totalPrice: cartItems.totalPrice + data.price * serves,
+						count: cartItems.productCount + 1
+					})
+				)
+				
+			} else if (finder && sellerFinder) {
+				console.log("3")
+				await dispatch(
+					cartItemsActions.setCartItem({
+						products: {
+							...cartItems.selectedOrderProducts,
+							[data.sellerId._id]: [
+								...cartItems.selectedOrderProducts[data.sellerId._id].filter(
+									(item) => item._id !== finder._id
+								),
+								{ ...finder, serves },
+							]
+						},
+						sellerOrderPrice: {
+							...cartItems.sellerOrderPrice,
+							[data.sellerId._id]: cartItems.sellerOrderPrice[data.sellerId._id] - (finder.price * finder.serves) + (data.price * serves)
+						},
+						totalPrice:
+							cartItems.totalPrice -
+							(finder.price * finder.serves) +
+							(data.price * serves),
+						count: cartItems.productCount
+					})
+				);
+			}
+			setServes(0);
+			setExtra(false);
+			setShow(true);
 		} else {
-			console.log(finder);
-			await dispatch(
-				orderActions.setCartItem({
-					products: [
-						...cartItems.selectedOrderProducts.filter(
-							(item) => item._id !== finder._id
-						),
-						{ ...finder, serves },
-					],
-					totalPrice:
-						cartItems.totalPrice -
-						finder.serves * finder.price +
-						data.price * serves,
-				})
-			);
+			setServesErr(true);
 		}
-		setServes(0);
-		setExtra(false);
-		setShow(true);
+
+		
 	};
 
 	return (
 		<>
-			<div className="row flex-xl-row flex-column justify-content-between text-dark p-2">
+			<div className="row flex-xl-row flex-column justify-content-between  p-2" >
 				<div
 					id="carouselExampleIndicators"
 					className="carousel slide col-xl-6 col-12 pt-xl-2"
@@ -163,7 +207,7 @@ function ProductInfo(props) {
 						<span className="visually-hidden">Next</span>
 					</button>
 				</div>
-				<div className="col-xl-6 col-12 mt-4 mt-xl-0">
+				<div className="col-xl-6 col-12 mt-4 mt-xl-0" style={{color:"#091b29"}}>
 					<p className="display-5">{data.name}</p>
 					<div className="d-flex">
 						<StarRatings
@@ -176,7 +220,7 @@ function ProductInfo(props) {
 					</div>
 					<div className="mt-3">
 						<p>Seller: {data.sellerId?.userName}</p>
-						<p>{data.price} EGP</p>
+						<p className="productPrice">{data.price} EGP</p>
 						<p>Category: {data.categoryId?.name}</p>
 					</div>
 					<div className="d-flex my-3">
@@ -304,7 +348,7 @@ function ProductInfo(props) {
 						</div>
 					</div>
 					<div
-						className={`col-12 d-flex justify-content-center align-self-bottom ${
+						className={`col-12 d-flex flex-column justify-content-center align-self-bottom ${
 							extra ? "" : "mt-4"
 						}`}
 					>
@@ -314,6 +358,9 @@ function ProductInfo(props) {
 						>
 							Add To Cart
 						</button>
+						{servesErr && (
+							<p className=" col-12 text-danger text-center">You have to choose serves</p>
+						)}
 					</div>
 				</div>
 				<CartOffCanvas controlProps={{ show, setShow }} />

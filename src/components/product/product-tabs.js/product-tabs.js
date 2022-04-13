@@ -4,6 +4,7 @@ import StarRatings from "react-star-ratings";
 
 function ProductTabs(props) {
   const { data } = props;
+  console.log(data.reviews);
   return(
       <>
         <div className="productTabsContainer">
@@ -29,7 +30,7 @@ function ProductTabs(props) {
                                 </div>
                             </div>
                             <div className="mt-2">
-                                {review?.comment}
+                                {review?.comments}
                             </div>
                         </li>
                       )    

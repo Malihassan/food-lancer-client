@@ -121,7 +121,7 @@ function CartOffCanvas(props){
 
 												<div className="card mb-3" key={idx}>
 												<div className="row g-0">
-													<div className="col-md-4">
+													<div className="col-md-4 p-2">
 														<img
 															src={`${
 																item?.image ? item.image[0].url : img
@@ -137,7 +137,7 @@ function CartOffCanvas(props){
 														<ul className="list-group list-group-flush">
 															<li className="list-group-item">
 																<div className="d-flex justify-content-between">
-																	<div className="card-text badge bg-warning text-light smaller my-1">
+																	<div className="card-text badge bgWarning smaller my-1">
 																		{item?.categoryId?.name}
 																	</div>
 																	<div>
@@ -154,7 +154,7 @@ function CartOffCanvas(props){
 																<div className="d-flex justify-content-between">
 																	<div className="input-group ">
 																		<button
-																			className="btn btn-outline-success h-75 d-flex align-items-center"
+																			className="btn successButton h-75 d-flex align-items-center"
 																			onClick={() =>
 																				addServes(item)
 																			}
@@ -169,7 +169,7 @@ function CartOffCanvas(props){
 																			readOnly
 																		/>
 																		<button
-																			className="btn btn-outline-danger h-75 d-flex align-items-center"
+																			className="btn dangerButton h-75 d-flex align-items-center"
 																			onClick={() =>
 																				decrementServes(item)
 																			}
@@ -197,7 +197,7 @@ function CartOffCanvas(props){
 							<div className="px-2">
 								<Link
 									to="/placeOrder"
-									className="btn btn-dark rounded-0 w-100 mb-2"
+									className="btn darkButton rounded-0 w-100 mb-2"
 								>
 									Checkout
 								</Link>

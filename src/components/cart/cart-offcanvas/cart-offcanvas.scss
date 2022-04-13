@@ -14,3 +14,32 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder !important;
 }
+.bgWarning{
+  background-color: #f0a500 !important;
+  color:#f8f8f7 !important ;
+}
+.dangerButton{
+background-color: transparent !important;
+border: 1px solid #9f0000 !important;
+color: #9f0000 !important;
+}
+.dangerButton:hover{
+  background-color: #9f0000 !important;
+  border: 1px solid #9f0000 !important;
+  color: #f8f8f7 !important;
+  }
+  .successButton{
+    background-color: transparent !important;
+    border: 1px solid #006400 !important;
+    color: #006400 !important;
+    }
+    .successButton:hover{
+      background-color: #006400 !important;
+      border: 1px solid #006400 !important;
+      color: #f8f8f7 !important;
+      }
+      .darkButton{
+        background-color: #091b29 !important;
+        border: 1px solid #091b29 !important;
+        color: #f8f8f7 !important;
+        }

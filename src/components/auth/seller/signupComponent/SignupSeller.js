@@ -381,6 +381,7 @@ function SignupSeller() {
                   className="form-control"
                   id="image"
                   name="image"
+                  accept="image/*"
                 ></input>
               </div>
               <div>

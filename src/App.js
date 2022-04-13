@@ -35,76 +35,84 @@ import BuyerOrder from "./pages/buyer-order/buyer-order";
 library.add(fab, fas, far);
 
 function App() {
-  const authenticated = useSelector((state) => state.auth.authenticated);
-  const loggedAs = useSelector((state) => state.auth.userType);
-  const _id = useSelector((state) => state.auth._id);
-  const [socket, setSocket] = useState(null);
-// http://localhost:3000/
-//https://food-lancer.herokuapp.com/
-  useEffect(() => {
-    if (loggedAs !== "viewer") {
-      setSocket(
+	const authenticated = useSelector((state) => state.auth.authenticated);
+	const loggedAs = useSelector((state) => state.auth.userType);
+	const _id = useSelector((state) => state.auth._id);
+	const [socket, setSocket] = useState(null);
+	// http://localhost:3000/
+	//https://food-lancer.herokuapp.com/
+	useEffect(() => {
+		if (loggedAs !== "viewer") {
+			setSocket(
+				io("https://food-lancer.herokuapp.com/", {
+					query: { type: loggedAs, id: _id },
+				})
+			);
+		}
+	}, [authenticated, loggedAs]);
 
-        io("https://food-lancer.herokuapp.com/", {
-          query: { type: loggedAs, id: _id },
-        })
-      );
-    }
-  }, [authenticated, loggedAs]);
+	return (
+		<>
+			<Loader />
+			<Navbar socket={socket} />
+			<Routes>
+				{loggedAs === "viewer" && !authenticated && (
+					<>
+						<Route path="/" element={<LandingPage />} />
+						<Route path="/signup" element={<SignupPage />} />
+						<Route path="/login" element={<LoginPage />} />
+						<Route
+							path="/forgetPassword/:userType"
+							element={<ForgetPassword />}
+						/>
+						<Route
+							path="/:userType/account/resetPassword/:token"
+							element={<ResetPassword />}
+						/>
+						<Route path="/dishes" element={<BuyerHome />} />
+					</>
+				)}
 
-  return (
-    <>
-      <Loader />
-      <Navbar socket={socket} />
-      <Routes>
-        {loggedAs === "viewer" && !authenticated && (
-          <>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route
-              path="/forgetPassword/:userType"
-              element={<ForgetPassword />}
-            />
-            <Route
-              path="/:userType/account/resetPassword/:token"
-              element={<ResetPassword />}
-            />
-            <Route path="/dishes" element={<BuyerHome />} />
-          </>
-        )}
+				{loggedAs === "seller" && authenticated && (
+					<>
+						<Route path="/" element={<Navigate replace to="/home" />} />
+						<Route
+							path="/home"
+							element={<SellerHome socket={socket} />}
+						/>
+						<Route path="/updateProfile" element={<UpdateProfile />} />
+						<Route path="/myProducts" element={<ProductList />} />
+						<Route path="/myProducts/:id" element={<ProductDetails />} />
+						<Route
+							path="/myProducts/addProduct"
+							element={<ProductForm />}
+						/>
+					</>
+				)}
 
-        {loggedAs === "seller" && authenticated && (
-          <>
-            <Route path="/" element={<Navigate replace to="/home" />} />
-            <Route path="/home" element={<SellerHome socket={socket} />} />
-            <Route path="/updateProfile" element={<UpdateProfile />} />
-            <Route path="/myProducts" element={<ProductList />} />
-            <Route path="/myProducts/:id" element={<ProductDetails />} />
-            <Route path="/myProducts/addProduct" element={<ProductForm />} />
-          </>
-        )}
+				{loggedAs === "buyer" && authenticated && (
+					<>
+						<Route path="/updateProfile" element={<BuyerProfile />} />
+						<Route path="/favs" element={<Favourites />} />
+						<Route
+							path="/myOrders"
+							element={<OrderHistory socket={socket} />}
+						/>
+						<Route path="/home" element={<BuyerHome />} />
+						<Route
+							path="/product/:id"
+							element={<ProductDetailsBuyer />}
+						/>
+						<Route path="/placeOrder" element={<BuyerOrder />} />
+						<Route path="/" element={<Navigate replace to="/home" />} />
+					</>
+				)}
 
-        {loggedAs === "buyer" && authenticated && (
-          <>
-            <Route path="/updateProfile" element={<BuyerProfile />} />
-            <Route path="/favs" element={<Favourites />} />
-            <Route
-              path="/myOrders"
-              element={<OrderHistory socket={socket} />}
-            />
-            <Route path="/home" element={<BuyerHome />} />
-            <Route path="/product/:id" element={<ProductDetailsBuyer />} />
-            <Route path="/placeOrder" element={<BuyerOrder />} />
-            <Route path="/" element={<Navigate replace to="/home" />} />
-          </>
-        )}
-
-        <Route path="*" element={<Navigate replace to="/" />} />
-        {/* <Route path="/home" element={<BuyerHome />} /> */}
-      </Routes>
-      <Footer />
-    </>
-  );
+				<Route path="*" element={<Navigate replace to="/" />} />
+				{/* <Route path="/home" element={<BuyerHome />} /> */}
+			</Routes>
+			<Footer />
+		</>
+	);
 }
 export default App;

@@ -17,7 +17,7 @@ function CartOffCanvas(props){
 	const handleClose = () => controlProps.setShow(false);
 
 	useEffect(() => {
-		console.log(cardItems);
+		// console.log(cardItems);
 	}, [controlProps.show]);
 
 	const addServes = async (item) => {
@@ -111,7 +111,7 @@ function CartOffCanvas(props){
 						<Offcanvas.Title>Cart</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						{cardItems.selectedOrderProducts.length !==0 && <Empty message ="No Item In Cart"/> }
+						{cardItems.selectedOrderProducts.length === 0 && <Empty message ="No Item In Cart"/> }
 						<div className="my-2 h-84">
 							{Object.keys(cardItems.selectedOrderProducts).map((seller, index) => {
 								return (

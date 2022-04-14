@@ -112,7 +112,6 @@ function SellerHome(props) {
     socket?.on("addOrder", (data) => {
       setListOfOrders([data, ...listOfOrders]);
       socket.off("addOrder");
-
     });
 
   }, [listOfOrders,socket]);

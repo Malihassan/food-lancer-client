@@ -104,6 +104,13 @@ function OrderList(props) {
                     Delivered
                   </span>
                 )}
+                {order.status == "accepted" && (
+                  <span
+                    className={`badge mt-1 py-2 bg-info text-dark ${classes.badge}`}
+                  >
+                    Accepted
+                  </span>
+                )}
                 {order.status == "pending" && (
                   <span
                     className={`badge mt-1 px-3 py-2 bg-warning ${classes.badge}`}

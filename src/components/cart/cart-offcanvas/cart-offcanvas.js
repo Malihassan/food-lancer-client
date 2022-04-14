@@ -4,6 +4,7 @@ import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
 import { orderActions } from '../../../store/orderSlice';
 import { cartItemsActions } from "../../../store/BuyerOrderSlice";
+import Empty from '../../shared/emptyData/Empty'
 import "./cart-offcanvas.scss";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -110,6 +111,7 @@ function CartOffCanvas(props){
 						<Offcanvas.Title>Cart</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
+						{cardItems.selectedOrderProducts.length !==0 && <Empty message ="No Item In Cart"/> }
 						<div className="my-2 h-84">
 							{Object.keys(cardItems.selectedOrderProducts).map((seller, index) => {
 								return (
@@ -119,7 +121,7 @@ function CartOffCanvas(props){
 
 												<div className="card mb-3" key={idx}>
 												<div className="row g-0">
-													<div className="col-md-4">
+													<div className="col-md-4 p-2">
 														<img
 															src={`${
 																item?.image ? item.image[0].url : img
@@ -135,7 +137,7 @@ function CartOffCanvas(props){
 														<ul className="list-group list-group-flush">
 															<li className="list-group-item">
 																<div className="d-flex justify-content-between">
-																	<div className="card-text badge bg-warning text-light smaller my-1">
+																	<div className="card-text badge bgWarning smaller my-1">
 																		{item?.categoryId?.name}
 																	</div>
 																	<div>
@@ -152,7 +154,7 @@ function CartOffCanvas(props){
 																<div className="d-flex justify-content-between">
 																	<div className="input-group ">
 																		<button
-																			className="btn btn-outline-success h-75 d-flex align-items-center"
+																			className="btn successButton h-75 d-flex align-items-center"
 																			onClick={() =>
 																				addServes(item)
 																			}
@@ -167,7 +169,7 @@ function CartOffCanvas(props){
 																			readOnly
 																		/>
 																		<button
-																			className="btn btn-outline-danger h-75 d-flex align-items-center"
+																			className="btn dangerButton h-75 d-flex align-items-center"
 																			onClick={() =>
 																				decrementServes(item)
 																			}
@@ -195,7 +197,7 @@ function CartOffCanvas(props){
 							<div className="px-2">
 								<Link
 									to="/placeOrder"
-									className="btn btn-dark rounded-0 w-100 mb-2"
+									className="btn darkButton rounded-0 w-100 mb-2"
 								>
 									Checkout
 								</Link>

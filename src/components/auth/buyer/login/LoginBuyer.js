@@ -69,9 +69,10 @@ function LoginBuyer(props) {
 
   return (
     <div className="w-75 m-auto text-center ">
-      <form className="mt-5" onSubmit={handleLoginSellerSubmit}>
-        <div className="d-flex flex-column">
-          <div className="mb-2">
+      <h3 className="my-4 login-header">Login Form</h3>
+      <form className="" onSubmit={handleLoginSellerSubmit}>
+        <div className="">
+          <div className="mb-3">
             <div className="input-group flex-nowrap my-2 ">
               <span className="input-group-text icon-container" id="emailHelp">
                 <FontAwesomeIcon icon={faUser} />
@@ -128,7 +129,7 @@ function LoginBuyer(props) {
               Login
             </button>
             <div>
-              <Link className="forget-link text-warning" to="/forgetpassword/buyer">
+              <Link className="forget-link " to="/forgetpassword/buyer">
                 forget password ?
               </Link>
             </div>

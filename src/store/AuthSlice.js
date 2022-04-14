@@ -37,7 +37,8 @@ const authSlice = createSlice({
     userType,
     resErrorMes: "",
     loading: false,
-    notification: [],
+    sellerNotification: [],
+    buyerNotification: [],
   },
   reducers: {
     logout: (state, action) => {
@@ -49,7 +50,13 @@ const authSlice = createSlice({
       state._id = null;
     },
     setNotification: (state, {payload}) => {
-      state.notification = payload
+      // console.log(state.userType,"outside");
+      if(state.userType === "seller"){
+      // console.log(state.userType,"inside");
+        state.sellerNotification = payload
+        return
+      }
+      state.buyerNotification = payload
     },
   },
   extraReducers: {

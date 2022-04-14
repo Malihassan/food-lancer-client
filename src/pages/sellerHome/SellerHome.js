@@ -120,7 +120,8 @@ function SellerHome(props) {
   const displayChat =
     statusOfSelectedOrder &&
     (statusOfSelectedOrder === "pending" ||
-      statusOfSelectedOrder === "in progress");
+      statusOfSelectedOrder === "in progress" ||
+      statusOfSelectedOrder === "accepted" );
   return (
     <>
       <SellerInfo userInfo={userInfo} />

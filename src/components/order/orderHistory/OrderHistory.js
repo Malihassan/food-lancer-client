@@ -103,7 +103,7 @@ export default function OrderHistory(props) {
         body: { status: "delivered", orderId: order._id },
       },
       (res) => {
-		  console.log(res);
+        console.log(res);
         let updatedOrders = [...orders];
         updatedOrders.find((order) => {
           if (order._id === res.data._id) {
@@ -114,9 +114,7 @@ export default function OrderHistory(props) {
       }
     );
   };
-  const paymentOrderHandler = (order) =>{
-
-  }
+  const paymentOrderHandler = (order) => {};
   const handelFormSubmit = async (event) => {
     event.preventDefault();
     sendRequest(
@@ -146,7 +144,7 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
-  const notifications = useSelector((state) => state.auth.notification);
+  const notifications = useSelector((state) => state.auth.buyerNotification);
   const socket = props.socket;
   useEffect(async () => {
     sendRequest(
@@ -166,8 +164,7 @@ export default function OrderHistory(props) {
         url: `buyer/order/setOrderNotificationAsReaded`,
         method: "GET",
       },
-      (res) => {;
-      }
+      (res) => {}
     );
   }, []);
   useEffect(() => {
@@ -241,7 +238,7 @@ export default function OrderHistory(props) {
                       {order.status}
                     </span>
                   )}
-				  {order.status === "accepted" && (
+                  {order.status === "accepted" && (
                     <span
                       className={`badge col-4  p-2 rounded-2  bg-info text-dark`}
                     >
@@ -267,7 +264,7 @@ export default function OrderHistory(props) {
                     <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
                     {formatDistance(
                       subDays(new Date(), new Date(order.updatedAt).getDay()),
-                      new Date(order.createdAt),
+                      new Date(order.updatedAt),
                       { addSuffix: true }
                     )}
                   </p>
@@ -304,7 +301,7 @@ export default function OrderHistory(props) {
                   </div>
                   <hr className="opacity-25 fw-light text-secondary" />
                   <div className="d-flex justify-conten-between align-items-center">
-                    <p className="col-8 fs-4 fw-bold mb-0 pb-0">
+                    <p className="col-8 fs-5 fw-bold mb-0 pb-0">
                       Total Price{" "}
                       <small
                         className={`fw-light ps-2 fs-5 ${classes.iconDanger}`}
@@ -335,8 +332,8 @@ export default function OrderHistory(props) {
                       >
                         Delivered ?
                       </button>
-                     )}
-					 {order.status == "accepted" && (
+                    )}
+                    {order.status == "accepted" && (
                       <button
                         className="col-4 btn btn-primary"
                         onClick={() => {
@@ -345,7 +342,7 @@ export default function OrderHistory(props) {
                       >
                         Payment Order
                       </button>
-                     )}
+                    )}
                     <div
                       className="modal fade"
                       id="exampleModal"
@@ -522,6 +519,7 @@ export default function OrderHistory(props) {
                       Seller Details
                     </p>
                     {(order.status === "in progress" ||
+                      order.status === "accepted" ||
                       order.status === "pending") && (
                       <>
                         <div className="position-relative">
@@ -568,7 +566,9 @@ export default function OrderHistory(props) {
                   </p>
                   <div className="d-flex justify-content-between pt-2">
                     <p>rate</p>
-                    <p className="pe-2">{order.sellerId.rate.toFixed(1) } / 5 </p>
+                    <p className="pe-2">
+                      {order.sellerId.rate.toFixed(1)} / 5{" "}
+                    </p>
                   </div>
                   <div className="progress" style={{ height: 9 }}>
                     <div

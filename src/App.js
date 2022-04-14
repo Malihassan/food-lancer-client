@@ -58,7 +58,7 @@ function App() {
       <Routes>
         {loggedAs === "viewer" && !authenticated && (
           <>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/home" element={<LandingPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route

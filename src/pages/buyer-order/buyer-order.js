@@ -13,6 +13,8 @@ function BuyerOrder(){
     const orderCards = useSelector((state) => state.cartItems);
     const [buyerData, setBuyerData] = useState({});
     const [orderResponse, setOrderResponse] = useState(false);
+    const [address, setAddress] = useState("");
+    const [addressErr, setAddressErr] = useState("");
     const dispatch = useDispatch();
     async function buyerDataHandler(res) {
         if (res.status === 200) {
@@ -60,51 +62,67 @@ function BuyerOrder(){
 
     }
 
+    const checkAddress = (e) => {
+        setAddress(e.target.value);
+
+        if (e.target.value.length === 0){
+            setAddressErr("this field is required")
+        } else if (e.target.value.length < 5) {
+            setAddressErr("address can't be less than 5 characters")
+        } else if (e.target.value.length > 40){
+            setAddressErr("address can't be more than 40 characters")
+        } else {
+            setAddressErr("")
+        }
+    }
+
     const postOrder = (orderProducts, sellerId) => {
-        let products = [];
+        if(!addressErr.length){
+            let products = [];
 
-        orderProducts.forEach((product)=>{
-            products.push({
-                _id: product._id,
-                quantity: product.serves
+            orderProducts.forEach((product)=>{
+                products.push({
+                    _id: product._id,
+                    quantity: product.serves
+                })
             })
-        })
 
-        sendRequest({
-            method: "POST",
-            url: `buyer/order/add`,
-            body: {
-                sellerId,
-                buyerId: buyerData._id,
-                address: buyerData.address,
-                products,
-                totalPrice: orderCards.sellerOrderPrice[sellerId]
-            }
-        }, orderHandler);
+            sendRequest({
+                method: "POST",
+                url: `buyer/order/add`,
+                body: {
+                    sellerId,
+                    buyerId: buyerData._id,
+                    address,
+                    products,
+                    totalPrice: orderCards.sellerOrderPrice[sellerId]
+                }
+            }, orderHandler);
 
 
-        dispatch(
-            cartItemsActions.setCartItem({
-                products: {
-                    ...Object.keys(orderCards.selectedOrderProducts)
-                    .filter(key => !key.includes(sellerId))
-                    .reduce((obj, key) => {
-                        obj[key] = orderCards.selectedOrderProducts[key];
-                        return obj;
-                    }, {})
-                },
-                sellerOrderPrice: {
-                    ...Object.keys(orderCards.sellerOrderPrice).filter(key => !key.includes(sellerId))
-                    .reduce((obj, key) => {
-                        obj[key] = orderCards.sellerOrderPrice[key];
-                        return obj;
-                    }, {})
-                },
-                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[sellerId],
-                count: orderCards.productCount - orderCards.selectedOrderProducts[sellerId].length
+            dispatch(
+                cartItemsActions.setCartItem({
+                    products: {
+                        ...Object.keys(orderCards.selectedOrderProducts)
+                        .filter(key => !key.includes(sellerId))
+                        .reduce((obj, key) => {
+                            obj[key] = orderCards.selectedOrderProducts[key];
+                            return obj;
+                        }, {})
+                    },
+                    sellerOrderPrice: {
+                        ...Object.keys(orderCards.sellerOrderPrice).filter(key => !key.includes(sellerId))
+                        .reduce((obj, key) => {
+                            obj[key] = orderCards.sellerOrderPrice[key];
+                            return obj;
+                        }, {})
+                    },
+                    totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[sellerId],
+                    count: orderCards.productCount - orderCards.selectedOrderProducts[sellerId].length
 
-            })
-        )
+                })
+            )
+        }
     }
 
     const orderHandler = async (res) => {
@@ -117,7 +135,7 @@ function BuyerOrder(){
     
 
     return (
-        <div className="p-4">
+        <div className="p-4 min-h-100">
             {orderResponse ? (
                 <div className="alert alert-success text-font fw-lighter" role="alert">
                     Order is successfully created!
@@ -161,7 +179,6 @@ function BuyerOrder(){
                                             <div>Phone Number: {buyerData.phone}</div>
                                         </div>
                                     </li>
-                                    {/* <li className="list-group-item"></li> */}
                                 </ul>
                             </div>
                             <div className="card col-5">
@@ -195,6 +212,13 @@ function BuyerOrder(){
                                         <div className="text-success d-flex justify-content-between">
                                             <div className="h5">Total</div>
                                             <div className="display-6 mb-4">{orderCards.sellerOrderPrice[seller]}&#163;</div>
+                                        </div>
+                                        <div className="mt-3 mb-5">
+                                            <label for="exampleInputPassword1" className="form-label">Enter Your Address: </label>
+                                            <input type="text" onChange={(e) => checkAddress(e)} className="form-control" id="exampleInputPassword1"/>
+                                            {addressErr.length ? (
+                                                <small className="text-danger">{addressErr}</small>
+                                            ) : <></>}
                                         </div>
                                         <button onClick={()=> postOrder(orderCards.selectedOrderProducts[seller], seller)} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
                                     </li>

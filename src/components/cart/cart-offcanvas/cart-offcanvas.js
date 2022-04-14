@@ -101,7 +101,7 @@ function CartOffCanvas(props){
             
         }
     }
-
+console.log(cardItems.selectedOrderProducts);
 		return (
 			<>
 				<Offcanvas
@@ -114,7 +114,8 @@ function CartOffCanvas(props){
 						<Offcanvas.Title>Cart</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						{cardItems.selectedOrderProducts.length === 0 && <Empty message ="No Item In Cart"/> }
+						{Object.keys(cardItems.selectedOrderProducts).length === 0 && <Empty message ="No Item In Cart"/> 						}
+						
 						<div className="my-2 h-84">
 							{Object.keys(cardItems.selectedOrderProducts).map((seller, index) => {
 								return (

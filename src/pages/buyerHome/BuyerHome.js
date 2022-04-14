@@ -169,6 +169,7 @@ function BuyerHome() {
 			if (res.status === 200) {
 				setAllCategory(res.data);
 
+<<<<<<< HEAD
 				//console.log(allCategory);
 			}
 		}
@@ -186,6 +187,42 @@ function BuyerHome() {
 			setProducts(res?.data.docs);
 			setTotalPages(res.data.totalPages);
 		}
+||||||| df19a05
+        //console.log(allCategory);
+      }
+    }
+    sendRequest(
+      {
+        url: "buyer/product/getCategory",
+        method: "GET",
+      },
+      getAllCategry
+    );
+  }, [sendRequest]);
+  useEffect(() => {
+    function getAllProduct(res) {
+      console.log(res?.data.docs);
+      setProducts(res?.data.docs);
+      setTotalPages(res.data.totalPages);
+    }
+=======
+        //console.log(allCategory);
+      }
+    }
+    sendRequest(
+      {
+        url: "buyer/product/getCategory",
+        method: "GET",
+      },
+      getAllCategry
+    );
+  }, [sendRequest]);
+  useEffect(() => {
+    function getAllProduct(res) {
+      setProducts(res?.data.docs);
+      setTotalPages(res.data.totalPages);
+    }
+>>>>>>> 9a8c8f215022b7cb7abbd677ec7640e1b78eae91
 
 		function getFavs(res) {
 			setFavs(res.data);

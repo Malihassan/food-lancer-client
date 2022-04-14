@@ -20,7 +20,6 @@ function BuyerProductCard(props) {
 			: null;
 
 		const sellerFinder = Object.keys(cartItems.selectedOrderProducts).find((item) => {
-			console.log(item);
 			return item === product.sellerId._id
 		})?
 		Object.keys(cartItems.selectedOrderProducts).find((item) => item === product.sellerId._id)
@@ -61,7 +60,6 @@ function BuyerProductCard(props) {
 			)
 			
 		} else if (finder && sellerFinder) {
-			console.log("3")
 			await dispatch(
 				cartItemsActions.setCartItem({
 					products: {

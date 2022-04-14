@@ -59,7 +59,7 @@ export default function OrderDetails(props) {
             <button
               type="button"
               className="btn btn-success"
-              onClick={() => changeOrderStatus("in progress")}
+              onClick={() => changeOrderStatus("accepted")}
             >
               Accepted
             </button>

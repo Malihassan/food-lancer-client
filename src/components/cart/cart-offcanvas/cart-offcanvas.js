@@ -17,7 +17,7 @@ function CartOffCanvas(props){
 	const handleClose = () => controlProps.setShow(false);
 
 	useEffect(() => {
-		console.log(cardItems);
+		// console.log(cardItems);
 	}, [controlProps.show]);
 
 	const addServes = async (item) => {

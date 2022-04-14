@@ -1,68 +1,38 @@
 import { useSelector, useDispatch } from "react-redux";
 import { cartItemsActions } from "../../store/BuyerOrderSlice";
 import { useEffect, useState } from "react";
-import StarRatings from 'react-star-ratings';
+import StarRatings from "react-star-ratings";
 import "./buyer-order.scss";
-import useFetch from "../../hooks/useFetch"
+import useFetch from "../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-
-function BuyerOrder(){
-    const { sendRequest } = useFetch();
-    const orderCards = useSelector((state) => state.cartItems);
-    const [buyerData, setBuyerData] = useState({});
-    const [orderResponse, setOrderResponse] = useState(false);
+function BuyerOrder() {
+	const { sendRequest } = useFetch();
+	const orderCards = useSelector((state) => state.cartItems);
+	const [buyerData, setBuyerData] = useState({});
+	const [orderResponse, setOrderResponse] = useState(false);
+	const dispatch = useDispatch();
     const [address, setAddress] = useState("");
     const [addressErr, setAddressErr] = useState("");
-    const dispatch = useDispatch();
     async function buyerDataHandler(res) {
         if (res.status === 200) {
           console.log(res);
           setBuyerData(res.data);
         }
-      }
-
-    useEffect(()=>{
-
-        sendRequest(
-            {
-              method: "GET",
-              url: `buyer/account/info`,
-            },
-            buyerDataHandler
-        );
-
-    }, []);
-
-    const removeOrder = async (seller) => {
-  
-        await dispatch(
-            cartItemsActions.setCartItem({
-                products: {
-                    ...Object.keys(orderCards.selectedOrderProducts)
-                    .filter(key => !key.includes(seller))
-                    .reduce((obj, key) => {
-                        obj[key] = orderCards.selectedOrderProducts[key];
-                        return obj;
-                    }, {})
-                },
-                sellerOrderPrice: {
-                    ...Object.keys(orderCards.sellerOrderPrice).filter(key => !key.includes(seller))
-                    .reduce((obj, key) => {
-                        obj[key] = orderCards.sellerOrderPrice[key];
-                        return obj;
-                    }, {})
-                },
-                totalPrice: orderCards.totalPrice - orderCards.sellerOrderPrice[seller],
-                count: orderCards.productCount - orderCards.selectedOrderProducts[seller].length
-
-            })
-        )
-
     }
 
-    const checkAddress = (e) => {
+	useEffect(() => {
+		sendRequest(
+			{
+				method: "GET",
+				url: `buyer/account/info`,
+			},
+			buyerDataHandler
+		);
+	}, []);
+
+	const checkAddress = (e) => {
         setAddress(e.target.value);
 
         if (e.target.value.length === 0){
@@ -75,6 +45,37 @@ function BuyerOrder(){
             setAddressErr("")
         }
     }
+
+	const removeOrder = async (seller) => {
+		dispatch(
+			cartItemsActions.setCartItem({
+				products: {
+					...Object.keys(orderCards.selectedOrderProducts)
+						.filter((key) => !key.includes(seller))
+						.reduce((obj, key) => {
+							obj[key] = orderCards.selectedOrderProducts[key];
+							return obj;
+						}, {}),
+				},
+				sellerOrderPrice: {
+					...Object.keys(orderCards.sellerOrderPrice)
+						.filter((key) => !key.includes(seller))
+						.reduce((obj, key) => {
+							obj[key] = orderCards.sellerOrderPrice[key];
+							return obj;
+						}, {}),
+				},
+				totalPrice:
+					orderCards.totalPrice - orderCards.sellerOrderPrice[seller],
+				count:
+					orderCards.productCount -
+					orderCards.selectedOrderProducts[seller].length,
+			})
+		);
+	};
+
+
+
 
     const postOrder = (orderProducts, sellerId) => {
         if(!addressErr.length){
@@ -138,7 +139,9 @@ function BuyerOrder(){
         <div className="p-4 min-h-100">
             {orderResponse ? (
                 <div className="alert alert-success text-font fw-lighter" role="alert">
-                    Order is successfully created!
+                    Order is successfully created, 
+					<br/>
+					Await until seller accepted/canceled order please Contact him via chat !!!
                 </div>
             ) : <></>}
             {Object.keys(orderCards.selectedOrderProducts).map((seller, idx)=>{
@@ -232,4 +235,4 @@ function BuyerOrder(){
     )
 }
 
-export default BuyerOrder
+export default BuyerOrder;

@@ -2,7 +2,6 @@ import { Offcanvas } from "react-bootstrap";
 import img from "../../../assets/imgs/landing page/bg-1.jpeg";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
-import { orderActions } from '../../../store/orderSlice';
 import { cartItemsActions } from "../../../store/BuyerOrderSlice";
 import Empty from '../../shared/emptyData/Empty'
 import "./cart-offcanvas.scss";
@@ -17,7 +16,7 @@ function CartOffCanvas(props){
 	const handleClose = () => controlProps.setShow(false);
 
 	useEffect(() => {
-		console.log(cardItems);
+		// console.log(cardItems);
 	}, [controlProps.show]);
 
 	const addServes = async (item) => {

@@ -182,7 +182,6 @@ function BuyerHome() {
   }, [sendRequest]);
   useEffect(() => {
     function getAllProduct(res) {
-      console.log(res?.data.docs);
       setProducts(res?.data.docs);
       setTotalPages(res.data.totalPages);
     }

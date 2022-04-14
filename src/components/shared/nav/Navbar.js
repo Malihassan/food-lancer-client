@@ -69,7 +69,6 @@ const Navbar = (props) => {
           method: "GET",
         },
         (res) => {
-          console.log(res);
           dispatch(authActions.setNotification(res.data))
           res.data.map((item)=>{
             if (item.order.read === false) {

@@ -2,7 +2,14 @@ import classes from "./order-history.module.scss";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
-import { formatDistance, subDays } from "date-fns";
+import {
+  format,
+  formatDistance,
+  formatRelative,
+  subDays,
+  subMonths,
+  subWeeks,
+} from "date-fns";
 import { BiPhoneCall, BiDish } from "react-icons/bi";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
@@ -103,7 +110,7 @@ export default function OrderHistory(props) {
         body: { status: "delivered", orderId: order._id },
       },
       (res) => {
-		  console.log(res);
+        console.log(res);
         let updatedOrders = [...orders];
         updatedOrders.find((order) => {
           if (order._id === res.data._id) {
@@ -114,9 +121,7 @@ export default function OrderHistory(props) {
       }
     );
   };
-  const paymentOrderHandler = (order) =>{
-
-  }
+  const paymentOrderHandler = (order) => {};
   const handelFormSubmit = async (event) => {
     event.preventDefault();
     sendRequest(
@@ -146,7 +151,7 @@ export default function OrderHistory(props) {
     }
   }, [hasError]);
   const [orders, setOrder] = useState([]);
-  const notifications = useSelector((state) => state.auth.notification);
+  const notifications = useSelector((state) => state.auth.buyerNotification);
   const socket = props.socket;
   useEffect(async () => {
     sendRequest(
@@ -166,8 +171,7 @@ export default function OrderHistory(props) {
         url: `buyer/order/setOrderNotificationAsReaded`,
         method: "GET",
       },
-      (res) => {;
-      }
+      (res) => {}
     );
   }, []);
   useEffect(() => {
@@ -179,7 +183,7 @@ export default function OrderHistory(props) {
         }
       });
       setOrder(updatedOrders);
-      socket.off("updateOrderStatus");
+      // socket.off("updateOrderStatus");
     });
     socket?.on("receiveNotification", (data) => {
       dispatch(authActions.setNotification(data));
@@ -241,7 +245,7 @@ export default function OrderHistory(props) {
                       {order.status}
                     </span>
                   )}
-				  {order.status === "accepted" && (
+                  {order.status === "accepted" && (
                     <span
                       className={`badge col-4  p-2 rounded-2  bg-info text-dark`}
                     >
@@ -258,16 +262,16 @@ export default function OrderHistory(props) {
                   <p className="">
                     <BsCalendarDate className="fs-4" /> &nbsp;&nbsp;&nbsp;&nbsp;
                     {formatDistance(
-                      subDays(new Date(), new Date(order.createdAt).getDay()),
-                      new Date(order.createdAt),
+                      subDays(new Date(order.createdAt), 0),
+                      new Date(),
                       { addSuffix: true }
                     )}
                   </p>
                   <p className="">
                     <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
                     {formatDistance(
-                      subDays(new Date(), new Date(order.updatedAt).getDay()),
-                      new Date(order.createdAt),
+                      subDays(new Date(order.updatedAt), 0),
+                      new Date(),
                       { addSuffix: true }
                     )}
                   </p>
@@ -304,7 +308,7 @@ export default function OrderHistory(props) {
                   </div>
                   <hr className="opacity-25 fw-light text-secondary" />
                   <div className="d-flex justify-conten-between align-items-center">
-                    <p className="col-8 fs-4 fw-bold mb-0 pb-0">
+                    <p className="col-8 fs-5 fw-bold mb-0 pb-0">
                       Total Price{" "}
                       <small
                         className={`fw-light ps-2 fs-5 ${classes.iconDanger}`}
@@ -335,8 +339,8 @@ export default function OrderHistory(props) {
                       >
                         Delivered ?
                       </button>
-                     )}
-					 {order.status == "accepted" && (
+                    )}
+                    {order.status == "accepted" && (
                       <button
                         className="col-4 btn btn-primary"
                         onClick={() => {
@@ -345,7 +349,7 @@ export default function OrderHistory(props) {
                       >
                         Payment Order
                       </button>
-                     )}
+                    )}
                     <div
                       className="modal fade"
                       id="exampleModal"
@@ -522,6 +526,7 @@ export default function OrderHistory(props) {
                       Seller Details
                     </p>
                     {(order.status === "in progress" ||
+                      order.status === "accepted" ||
                       order.status === "pending") && (
                       <>
                         <div className="position-relative">
@@ -568,7 +573,9 @@ export default function OrderHistory(props) {
                   </p>
                   <div className="d-flex justify-content-between pt-2">
                     <p>rate</p>
-                    <p className="pe-2">{order.sellerId.rate.toFixed(1) } / 5 </p>
+                    <p className="pe-2">
+                      {order.sellerId.rate.toFixed(1)} / 5{" "}
+                    </p>
                   </div>
                   <div className="progress" style={{ height: 9 }}>
                     <div

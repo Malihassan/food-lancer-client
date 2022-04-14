@@ -66,7 +66,7 @@ function SellerInfo(props) {
           <FontAwesomeIcon className={`${classes.icon}`} icon={faStar} />
           <div>
             <label>rating</label>
-            <h4>{props.userInfo.rate}/5</h4>
+            <h4>{Number(props.userInfo.rate).toFixed(1)} / 5</h4>
           </div>
         </div>
       </div>

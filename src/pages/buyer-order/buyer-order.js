@@ -13,8 +13,8 @@ function BuyerOrder() {
 	const [buyerData, setBuyerData] = useState({});
 	const [orderResponse, setOrderResponse] = useState(false);
 	const dispatch = useDispatch();
-    const [address, setAddress] = useState("");
-    const [addressErr, setAddressErr] = useState("");
+    const [address, setAddress] = useState({});
+    const [addressErr, setAddressErr] = useState({});
     async function buyerDataHandler(res) {
         if (res.status === 200) {
           console.log(res);
@@ -32,17 +32,32 @@ function BuyerOrder() {
 		);
 	}, []);
 
-	const checkAddress = (e) => {
-        setAddress(e.target.value);
+	const checkAddress = (e, index) => {
+        setAddress({
+            ...address,
+            [index]: e.target.value
+        });
 
         if (e.target.value.length === 0){
-            setAddressErr("this field is required")
+            setAddressErr({
+                ...addressErr,
+                [index]: "this field is required"
+            })
         } else if (e.target.value.length < 5) {
-            setAddressErr("address can't be less than 5 characters")
+            setAddressErr({
+                ...addressErr,
+                [index]: "address can't be less than 5 characters"
+            })
         } else if (e.target.value.length > 40){
-            setAddressErr("address can't be more than 40 characters")
+            setAddressErr({
+                ...addressErr,
+                [index]: "address can't be more than 40 characters"
+            })
         } else {
-            setAddressErr("")
+            setAddressErr({
+                ...addressErr,
+                [index]: ""
+            })
         }
     }
 
@@ -77,8 +92,8 @@ function BuyerOrder() {
 
 
 
-    const postOrder = (orderProducts, sellerId) => {
-        if(!addressErr.length){
+    const postOrder = (orderProducts, sellerId, index) => {
+        if(!addressErr[index]?.length && address[index]){
             let products = [];
 
             orderProducts.forEach((product)=>{
@@ -94,7 +109,7 @@ function BuyerOrder() {
                 body: {
                     sellerId,
                     buyerId: buyerData._id,
-                    address,
+                    address: address[index],
                     products,
                     totalPrice: orderCards.sellerOrderPrice[sellerId]
                 }
@@ -218,12 +233,16 @@ function BuyerOrder() {
                                         </div>
                                         <div className="mt-3 mb-5">
                                             <label for="exampleInputPassword1" className="form-label">Enter Your Address: </label>
-                                            <input type="text" onChange={(e) => checkAddress(e)} className="form-control" id="exampleInputPassword1"/>
-                                            {addressErr.length ? (
-                                                <small className="text-danger">{addressErr}</small>
+                                            <input type="text" onChange={(e) => checkAddress(e, idx)} className="form-control" id="exampleInputPassword1"/>
+                                            {addressErr[idx]?.length ? (
+                                                <small className="text-danger">{addressErr[idx]}</small>
                                             ) : <></>}
                                         </div>
-                                        <button onClick={()=> postOrder(orderCards.selectedOrderProducts[seller], seller)} className="btn btn-dark w-100 rounded-0 align-self-bottom">Place Order</button>
+                                        <button disabled={address[idx] && !addressErr[idx]? false : true} onClick={()=> postOrder(orderCards.selectedOrderProducts[seller], seller, idx)} className={`btn btn-dark w-100 rounded-0 align-self-bottom `}>Place Order</button>
+                                        {addressErr[idx]?.length ? (
+                                            <small className="text-danger mt-2">You have to enter a valid address</small>
+                                        ): <></>
+                                        }
                                     </li>
                                 </ul>
                             </div>

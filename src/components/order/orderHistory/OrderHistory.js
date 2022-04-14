@@ -2,7 +2,14 @@ import classes from "./order-history.module.scss";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
-import { formatDistance, subDays } from "date-fns";
+import {
+  format,
+  formatDistance,
+  formatRelative,
+  subDays,
+  subMonths,
+  subWeeks,
+} from "date-fns";
 import { BiPhoneCall, BiDish } from "react-icons/bi";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
@@ -176,7 +183,7 @@ export default function OrderHistory(props) {
         }
       });
       setOrder(updatedOrders);
-      socket.off("updateOrderStatus");
+      // socket.off("updateOrderStatus");
     });
     socket?.on("receiveNotification", (data) => {
       dispatch(authActions.setNotification(data));
@@ -255,16 +262,16 @@ export default function OrderHistory(props) {
                   <p className="">
                     <BsCalendarDate className="fs-4" /> &nbsp;&nbsp;&nbsp;&nbsp;
                     {formatDistance(
-                      subDays(new Date(), new Date(order.createdAt).getDay()),
-                      new Date(order.createdAt),
+                      subDays(new Date(order.createdAt), 0),
+                      new Date(),
                       { addSuffix: true }
                     )}
                   </p>
                   <p className="">
                     <MdOutlineUpdate className="fs-4" /> &nbsp; &nbsp;&nbsp;
                     {formatDistance(
-                      subDays(new Date(), new Date(order.updatedAt).getDay()),
-                      new Date(order.updatedAt),
+                      subDays(new Date(order.updatedAt), 0),
+                      new Date(),
                       { addSuffix: true }
                     )}
                   </p>

@@ -2,7 +2,6 @@ import { Offcanvas } from "react-bootstrap";
 import img from "../../../assets/imgs/landing page/bg-1.jpeg";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
-import { orderActions } from '../../../store/orderSlice';
 import { cartItemsActions } from "../../../store/BuyerOrderSlice";
 import Empty from '../../shared/emptyData/Empty'
 import "./cart-offcanvas.scss";
@@ -21,16 +20,19 @@ function CartOffCanvas(props){
 	}, [controlProps.show]);
 
 	const addServes = async (item) => {
-		let otherProducts = cardItems.selectedOrderProducts[item.sellerId._id].filter(
-			(product) => product._id !== item._id
-		);
+		let products = JSON.parse(JSON.stringify(cardItems.selectedOrderProducts));
+
+		products[item.sellerId._id].find((element) => {
+			if(element._id === item._id){
+				element.serves = element.serves + 1
+				return element
+			}
+			return false
+		});
 
 		await dispatch(
 			cartItemsActions.setCartItem({
-				products: {
-					...cardItems.selectedOrderProducts,
-					[item.sellerId._id]:[{ ...item, serves: item.serves + 1 }, ...otherProducts]
-				},
+				products,
 				sellerOrderPrice: {
 					...cardItems.sellerOrderPrice,
 					[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] + item.price
@@ -43,7 +45,6 @@ function CartOffCanvas(props){
 
     const decrementServes = async (item) => {
         let otherProducts = cardItems.selectedOrderProducts[item.sellerId._id].filter((product)=> product._id !== item._id);
-		let removed = cardItems.removedItems? cardItems.removedItems : [];
         
         if(item.serves < 2){
             if(otherProducts[0]){
@@ -79,15 +80,17 @@ function CartOffCanvas(props){
 					count: cardItems.productCount - 1
 				}));
 			}
-            await dispatch(cartItemsActions.setRemovedItems({
-                removedItems: [...removed, item._id]
-            }));
         } else {
+			let products = JSON.parse(JSON.stringify(cardItems.selectedOrderProducts));
+			products[item.sellerId._id].find((element) => {
+				if(element._id === item._id){
+					element.serves = element.serves - 1
+					return element
+				}
+				return false
+			});
             await dispatch(cartItemsActions.setCartItem({
-                products: {
-					...cardItems.selectedOrderProducts,
-					[item.sellerId._id]:[{...item, serves: item.serves - 1}, ...otherProducts]
-				},
+                products,
 				sellerOrderPrice: {
 					...cardItems.sellerOrderPrice,
 					[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] - item.price

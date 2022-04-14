@@ -15,7 +15,6 @@ function BuyerOrder() {
 	const dispatch = useDispatch();
 	async function buyerDataHandler(res) {
 		if (res.status === 200) {
-			console.log(res);
 			setBuyerData(res.data);
 		}
 	}
@@ -67,27 +66,27 @@ function BuyerOrder() {
 				quantity: product.serves,
 			});
 		});
-		// const orderHandler = async (res) => {
-		// 	if (res.status === 200) {
-		// 		console.log(res);
-		// 		setOrderResponse(true);
-		// 		setTimeout(() => setOrderResponse(false), 5000);
-		// 	}
-		// };
-		// sendRequest(
-		// 	{
-		// 		method: "POST",
-		// 		url: `buyer/order/add`,
-		// 		body: {
-		// 			sellerId,
-		// 			buyerId: buyerData._id,
-		// 			address: buyerData.address,
-		// 			products,
-		// 			totalPrice: orderCards.sellerOrderPrice[sellerId],
-		// 		},
-		// 	},
-		// 	orderHandler
-		// );
+		const orderHandler = async (res) => {
+			if (res.status === 200) {
+				console.log(res);
+				setOrderResponse(true);
+				setTimeout(() => setOrderResponse(false), 5000);
+			}
+		};
+		sendRequest(
+			{
+				method: "POST",
+				url: `buyer/order/add`,
+				body: {
+					sellerId,
+					buyerId: buyerData._id,
+					address: buyerData.address,
+					products,
+					totalPrice: orderCards.sellerOrderPrice[sellerId],
+				},
+			},
+			orderHandler
+		);
 
 		dispatch(
 			cartItemsActions.setCartItem({
@@ -115,38 +114,38 @@ function BuyerOrder() {
 			})
 		);
 
-		const paymentResHandler = (res) => {
-			console.log(res);
-			try {
-				window.open(
-					res.data.url,
-					"targetWindow",
-					`toolbar=no,
-            location=no,
-            status=no,
-            menubar=no,
-            scrollbars=yes,
-            resizable=yes,
-            width=500px,
-            height=750px`
-				);
-				if (res.ok) {
-					return res.json();
-				}
-			} catch (e) {
-				console.log(e.error);
-			}
-		};
-		sendRequest(
-			{
-				method: "POST",
-				url: `buyer/account/sendToPayment`,
-				body: {
-					items: products,
-				},
-			},
-			paymentResHandler
-		);
+		// const paymentResHandler = (res) => {
+		// 	console.log(res);
+		// 	try {
+		// 		window.open(
+		// 			res.data.url,
+		// 			"targetWindow",
+		// 			`toolbar=no,
+		//         location=no,
+		//         status=no,
+		//         menubar=no,
+		//         scrollbars=yes,
+		//         resizable=yes,
+		//         width=500px,
+		//         height=750px`
+		// 		);
+		// 		if (res.ok) {
+		// 			return res.json();
+		// 		}
+		// 	} catch (e) {
+		// 		console.log(e.error);
+		// 	}
+		// };
+		// sendRequest(
+		// 	{
+		// 		method: "POST",
+		// 		url: `buyer/account/sendToPayment`,
+		// 		body: {
+		// 			items: products,
+		// 		},
+		// 	},
+		// 	paymentResHandler
+		// );
 	};
 
 	return (

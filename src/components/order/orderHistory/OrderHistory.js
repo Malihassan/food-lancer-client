@@ -163,6 +163,7 @@ export default function OrderHistory(props) {
         if (res.status === 200) {
           const allData = res.data;
           setOrder(allData);
+
         }
       }
     );
@@ -556,7 +557,7 @@ export default function OrderHistory(props) {
                   <div className="d-flex flex-wrap align-items-center">
                     <img
                       alt="sellerImage"
-                      src={photoTest}
+                      src={order?.sellerId?.image?.url||photoTest}
                       className={`img img-fluid rounded-circle ${classes.imgSEller}`}
                     />
                     <p className="ps-2 fs-4 ">

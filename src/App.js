@@ -72,6 +72,7 @@ function App() {
             />
             <Route path="/dishes" element={<BuyerHome />} />
             <Route path="/placeOrder" element={<Navigate replace to="/home" />}/>
+            <Route path="/product/:id" element={<Navigate replace to="/home" />}/>
           </>
         )}
 

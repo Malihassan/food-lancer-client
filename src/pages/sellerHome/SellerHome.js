@@ -113,6 +113,15 @@ function SellerHome(props) {
       setListOfOrders([data, ...listOfOrders]);
       socket.off("addOrder");
     });
+    socket?.on("paymentDone", (data) => {
+      let updatedOrders = [...listOfOrders];
+      updatedOrders.find((order) => {
+        if (order._id === data._id) {
+          order.status = data.status;
+        }
+      });
+      setListOfOrders(updatedOrders);
+    });
 
   }, [listOfOrders,socket]);
 

@@ -77,6 +77,7 @@ function App() {
           <>
             <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/home" element={<SellerHome socket={socket} />} />
+            <Route path="/seller/home" element={<SellerHome socket={socket} />} />
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/myProducts" element={<ProductList />} />
             <Route path="/myProducts/:id" element={<ProductDetails />} />

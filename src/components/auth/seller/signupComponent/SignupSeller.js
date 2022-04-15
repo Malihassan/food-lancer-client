@@ -249,7 +249,7 @@ function SignupSeller() {
                   {...register("phone", {
                     required: "this field is required",
                     pattern: {
-                      value: "",
+                      value: /^01[0125]\d{8}$/,
                       message: `phone input is invalid`,
                     },
                   })}

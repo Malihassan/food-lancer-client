@@ -41,12 +41,11 @@ function LoginBuyer(props) {
   };
   const passwordValidator = (e) => {
     const value = e.target.value;
-    // const reg = new RegExp(
-    //   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g
-    // );
-    // const validpassword = reg.test(value);
+    const reg = new RegExp(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g
+    );
+    const validpassword = reg.test(value);
 
-    const validpassword = true;
     validpassword
       ? addToForm("password", value)
       : setInputErrorMessage({

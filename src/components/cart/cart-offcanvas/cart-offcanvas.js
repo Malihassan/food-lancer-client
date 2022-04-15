@@ -185,7 +185,7 @@ console.log(cardItems.selectedOrderProducts);
 																		</button>
 																	</div>
 																	<div className="card-text small fw-bold d-flex align-items-center">
-																		{item?.price * item?.serves}&#163;
+																		{(item?.price * item?.serves).toFixed(2)}&#163;
 																	</div>
 																</div>
 															</li>
@@ -209,7 +209,7 @@ console.log(cardItems.selectedOrderProducts);
 								</Link>
 								<div className="d-flex justify-content-between">
 									<div>Total Price</div>
-									<div>{cardItems.totalPrice}&#163;</div>
+									<div>{cardItems.totalPrice.toFixed(2)}&#163;</div>
 								</div>
 								<div>{}</div>
 							</div>

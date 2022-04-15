@@ -2,7 +2,14 @@ import classes from "./order-history.module.scss";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import photoTest from "../../../assets/imgs/landing page/cheif.png";
-import { formatDistance, subDays } from "date-fns";
+import {
+	format,
+	formatDistance,
+	formatRelative,
+	subDays,
+	subMonths,
+	subWeeks,
+} from "date-fns";
 import { BiPhoneCall, BiDish } from "react-icons/bi";
 import { ImLocation } from "react-icons/im";
 import { MdOutlineUpdate } from "react-icons/md";
@@ -117,7 +124,6 @@ export default function OrderHistory(props) {
 		);
 	};
 	const paymentOrderHandler = (order) => {
-		console.log(order);
 		const paymentResHandler = (res) => {
 			console.log(res);
 			try {
@@ -181,7 +187,7 @@ export default function OrderHistory(props) {
 		}
 	}, [hasError]);
 	const [orders, setOrder] = useState([]);
-	const notifications = useSelector((state) => state.auth.notification);
+	const notifications = useSelector((state) => state.auth.buyerNotification);
 	const socket = props.socket;
 	useEffect(async () => {
 		sendRequest(
@@ -204,6 +210,7 @@ export default function OrderHistory(props) {
 			(res) => {}
 		);
 	}, []);
+	const [update, setUpadate] = useState(false);
 	useEffect(() => {
 		socket?.on("updateOrderStatus", (data) => {
 			let updatedOrders = [...orders];
@@ -213,15 +220,21 @@ export default function OrderHistory(props) {
 				}
 			});
 			setOrder(updatedOrders);
-			socket.off("updateOrderStatus");
+			// socket.off("updateOrderStatus");
 		});
 		socket?.on("receiveNotification", (data) => {
 			dispatch(authActions.setNotification(data));
 		});
-		// socket?.on("updateRateOfSeller", (data) => {
-		// console.log(data,"orders");
-		// setOrder(data);
-		// });
+		socket?.on("paymentDone", (data) => {
+			let updatedOrders = [...orders];
+			updatedOrders.find((order) => {
+				if (order._id === data._id) {
+					order.status = data.status;
+				}
+			});
+			setOrder(updatedOrders);
+			// setOrder(data);
+		});
 	}, [orders, socket, notifications]);
 	return (
 		<>
@@ -296,11 +309,8 @@ export default function OrderHistory(props) {
 										<BsCalendarDate className="fs-4" />{" "}
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										{formatDistance(
-											subDays(
-												new Date(),
-												new Date(order.createdAt).getDay()
-											),
-											new Date(order.createdAt),
+											subDays(new Date(order.createdAt), 0),
+											new Date(),
 											{ addSuffix: true }
 										)}
 									</p>
@@ -308,11 +318,8 @@ export default function OrderHistory(props) {
 										<MdOutlineUpdate className="fs-4" /> &nbsp;
 										&nbsp;&nbsp;
 										{formatDistance(
-											subDays(
-												new Date(),
-												new Date(order.updatedAt).getDay()
-											),
-											new Date(order.createdAt),
+											subDays(new Date(order.updatedAt), 0),
+											new Date(),
 											{ addSuffix: true }
 										)}
 									</p>
@@ -352,7 +359,7 @@ export default function OrderHistory(props) {
 									</div>
 									<hr className="opacity-25 fw-light text-secondary" />
 									<div className="d-flex justify-conten-between align-items-center">
-										<p className="col-8 fs-4 fw-bold mb-0 pb-0">
+										<p className="col-8 fs-5 fw-bold mb-0 pb-0">
 											Total Price{" "}
 											<small
 												className={`fw-light ps-2 fs-5 ${classes.iconDanger}`}
@@ -589,6 +596,7 @@ export default function OrderHistory(props) {
 											Seller Details
 										</p>
 										{(order.status === "in progress" ||
+											order.status === "accepted" ||
 											order.status === "pending") && (
 											<>
 												<div className="position-relative">
@@ -624,7 +632,7 @@ export default function OrderHistory(props) {
 									<div className="d-flex flex-wrap align-items-center">
 										<img
 											alt="sellerImage"
-											src={photoTest}
+											src={order?.sellerId?.image?.url || photoTest}
 											className={`img img-fluid rounded-circle ${classes.imgSEller}`}
 										/>
 										<p className="ps-2 fs-4 ">

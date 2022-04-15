@@ -13,8 +13,11 @@ function BuyerOrder() {
 	const [buyerData, setBuyerData] = useState({});
 	const [orderResponse, setOrderResponse] = useState(false);
 	const dispatch = useDispatch();
+	const [address, setAddress] = useState("");
+	const [addressErr, setAddressErr] = useState("");
 	async function buyerDataHandler(res) {
 		if (res.status === 200) {
+			console.log(res);
 			setBuyerData(res.data);
 		}
 	}
@@ -29,8 +32,22 @@ function BuyerOrder() {
 		);
 	}, []);
 
+	const checkAddress = (e) => {
+		setAddress(e.target.value);
+
+		if (e.target.value.length === 0) {
+			setAddressErr("this field is required");
+		} else if (e.target.value.length < 5) {
+			setAddressErr("address can't be less than 5 characters");
+		} else if (e.target.value.length > 40) {
+			setAddressErr("address can't be more than 40 characters");
+		} else {
+			setAddressErr("");
+		}
+	};
+
 	const removeOrder = async (seller) => {
-		await dispatch(
+		dispatch(
 			cartItemsActions.setCartItem({
 				products: {
 					...Object.keys(orderCards.selectedOrderProducts)
@@ -58,104 +75,78 @@ function BuyerOrder() {
 	};
 
 	const postOrder = (orderProducts, sellerId) => {
-		let products = [];
+		if (!addressErr.length) {
+			let products = [];
 
-		orderProducts.forEach((product) => {
-			products.push({
-				_id: product._id,
-				quantity: product.serves,
+			orderProducts.forEach((product) => {
+				products.push({
+					_id: product._id,
+					quantity: product.serves,
+				});
 			});
-		});
-		const orderHandler = async (res) => {
-			if (res.status === 200) {
-				console.log(res);
-				setOrderResponse(true);
-				setTimeout(() => setOrderResponse(false), 5000);
-			}
-		};
-		sendRequest(
-			{
-				method: "POST",
-				url: `buyer/order/add`,
-				body: {
-					sellerId,
-					buyerId: buyerData._id,
-					address: buyerData.address,
-					products,
-					totalPrice: orderCards.sellerOrderPrice[sellerId],
-				},
-			},
-			orderHandler
-		);
 
-		dispatch(
-			cartItemsActions.setCartItem({
-				products: {
-					...Object.keys(orderCards.selectedOrderProducts)
-						.filter((key) => !key.includes(sellerId))
-						.reduce((obj, key) => {
-							obj[key] = orderCards.selectedOrderProducts[key];
-							return obj;
-						}, {}),
+			sendRequest(
+				{
+					method: "POST",
+					url: `buyer/order/add`,
+					body: {
+						sellerId,
+						buyerId: buyerData._id,
+						address,
+						products,
+						totalPrice: orderCards.sellerOrderPrice[sellerId],
+					},
 				},
-				sellerOrderPrice: {
-					...Object.keys(orderCards.sellerOrderPrice)
-						.filter((key) => !key.includes(sellerId))
-						.reduce((obj, key) => {
-							obj[key] = orderCards.sellerOrderPrice[key];
-							return obj;
-						}, {}),
-				},
-				totalPrice:
-					orderCards.totalPrice - orderCards.sellerOrderPrice[sellerId],
-				count:
-					orderCards.productCount -
-					orderCards.selectedOrderProducts[sellerId].length,
-			})
-		);
+				orderHandler
+			);
 
-		// const paymentResHandler = (res) => {
-		// 	console.log(res);
-		// 	try {
-		// 		window.open(
-		// 			res.data.url,
-		// 			"targetWindow",
-		// 			`toolbar=no,
-		//         location=no,
-		//         status=no,
-		//         menubar=no,
-		//         scrollbars=yes,
-		//         resizable=yes,
-		//         width=500px,
-		//         height=750px`
-		// 		);
-		// 		if (res.ok) {
-		// 			return res.json();
-		// 		}
-		// 	} catch (e) {
-		// 		console.log(e.error);
-		// 	}
-		// };
-		// sendRequest(
-		// 	{
-		// 		method: "POST",
-		// 		url: `buyer/account/sendToPayment`,
-		// 		body: {
-		// 			items: products,
-		// 		},
-		// 	},
-		// 	paymentResHandler
-		// );
+			dispatch(
+				cartItemsActions.setCartItem({
+					products: {
+						...Object.keys(orderCards.selectedOrderProducts)
+							.filter((key) => !key.includes(sellerId))
+							.reduce((obj, key) => {
+								obj[key] = orderCards.selectedOrderProducts[key];
+								return obj;
+							}, {}),
+					},
+					sellerOrderPrice: {
+						...Object.keys(orderCards.sellerOrderPrice)
+							.filter((key) => !key.includes(sellerId))
+							.reduce((obj, key) => {
+								obj[key] = orderCards.sellerOrderPrice[key];
+								return obj;
+							}, {}),
+					},
+					totalPrice:
+						orderCards.totalPrice - orderCards.sellerOrderPrice[sellerId],
+					count:
+						orderCards.productCount -
+						orderCards.selectedOrderProducts[sellerId].length,
+				})
+			);
+		}
+	};
+
+	const orderHandler = async (res) => {
+		if (res.status === 200) {
+			console.log(res);
+			setOrderResponse(true);
+			setTimeout(() => setOrderResponse(false), 5000);
+		}
 	};
 
 	return (
-		<div className="p-4">
+		<div className="p-4 min-h-100">
 			{orderResponse ? (
 				<div
 					className="alert alert-success text-font fw-lighter"
 					role="alert"
 				>
-					Order is successfully created!
+					Order is successfully created,
+					<br />
+					Await until seller accepted/canceled order please Contact him via
+					chat !!!
 				</div>
 			) : (
 				<></>
@@ -243,7 +234,6 @@ function BuyerOrder() {
 											<div>Phone Number: {buyerData.phone}</div>
 										</div>
 									</li>
-									{/* <li className="list-group-item"></li> */}
 								</ul>
 							</div>
 							<div className="card col-5">
@@ -292,6 +282,27 @@ function BuyerOrder() {
 											<div className="display-6 mb-4">
 												{orderCards.sellerOrderPrice[seller]}&#163;
 											</div>
+										</div>
+										<div className="mt-3 mb-5">
+											<label
+												for="exampleInputPassword1"
+												className="form-label"
+											>
+												Enter Your Address:{" "}
+											</label>
+											<input
+												type="text"
+												onChange={(e) => checkAddress(e)}
+												className="form-control"
+												id="exampleInputPassword1"
+											/>
+											{addressErr.length ? (
+												<small className="text-danger">
+													{addressErr}
+												</small>
+											) : (
+												<></>
+											)}
 										</div>
 										<button
 											onClick={() =>

@@ -21,9 +21,9 @@ function ForgetPassword() {
         console.log(response);
         if (response.status === 200) {
           setMessage(response.data.response);
-          setTimeout(() => {
-            navigate("/home");
-          }, 5000);
+            setTimeout(() => {
+              navigate("/home");
+            }, 3000);
           return;
         }
       })
@@ -49,50 +49,18 @@ function ForgetPassword() {
                 onChange={(e) => handleEmailChange(e)}
               ></input>
               <br></br>
+              {message && (
+                <div className="form-text text-warning">{message}</div>
+              )}
+           
               <input
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
+                /* data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop" */
                 to=""
                 type={"submit"}
                 className="btn btn-submit my-3 "
               ></input>
-              {/* modal */}
-              <div
-                className="modal fade mt-5"
-                id="staticBackdrop"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false"
-                tabIndex="-1"
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog ">
-                  <div className="modal-content modal-container">
-                    <div className="modal-header border-0">
-                      {/* <h5 className="modal-title" id="staticBackdropLabel">
-                        Message
-                      </h5> */}
-                      {/*  <button
-                        type="button"
-                        className="btn-close "
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button> */}
-                    </div>
-                    <div className="modal-body ">{message}</div>
-                    <div className="modal-footer border-0">
-                      <button
-                        type="button"
-                        className="btn btn-submit px-4"
-                        data-bs-dismiss="modal"
-                      >
-                        Ok!
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* end of modal */}
+              
             </form>
           </div>
         </div>

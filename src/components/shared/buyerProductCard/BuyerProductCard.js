@@ -9,6 +9,7 @@ import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
 function BuyerProductCard(props) {
 	//const [ratingValue, setRatingValue] = useState(0);
 	const MAX_LENGTH = 125;
+  const MAX_PRODUCT=75
 	const [show, setShow] = useState(false);
 	let navigate = useNavigate();
 	const cartItems = useSelector((state) => state.cartItems);
@@ -142,14 +143,20 @@ function BuyerProductCard(props) {
 								]}
 							/>
 						</div>
-						<h4 className={`${classes.productName} `}>{product.name}</h4>
+          {product.name.length>MAX_PRODUCT?(<div className={`${classes.productName}`}>
+								{`${product.name.substring(0,MAX_PRODUCT)}....`}
+							</div>):(<div className={`${classes.productName}`}>
+								{product.name}
+								
+							</div>)} 
+						{/* <h4 className={`${classes.productName} `}>{product.name}</h4> */}
 						{/* <FontAwesomeIcon icon="fa-regular fa-user" /> */}
 						<h5 className={`${classes.productSeller} fw-light`}>
 							<FontAwesomeIcon
 								className={`${classes.icon}`}
 								icon="fa-regular fa-user"
-							/>
-							{product?.sellerId?.userName}
+							/> 
+							 {product?.sellerId?.userName}
 						</h5>
 						{/*  <h5 className={`${classes.productCategory} `}>{product?.categoryId?.name}</h5>  */}
 

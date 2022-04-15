@@ -109,6 +109,8 @@ console.log(cardItems.selectedOrderProducts);
 					placement="end"
 					show={controlProps.show}
 					onHide={handleClose}
+					scroll= {true}
+					backdrop= {true}
 				>
 					<Offcanvas.Header closeButton>
 						<Offcanvas.Title>Cart</Offcanvas.Title>

@@ -163,8 +163,8 @@ function BuyerOrder() {
                 return(
                     <div className="card d-flex flex-column text-font p-3 mb-3" key={idx}>
                         <button onClick={()=> removeOrder(seller)} className="btn btn-outline-danger w-2-5 align-self-end justify-content-center text-center d-flex"><FontAwesomeIcon className="Xmark-font align-self-center" icon={faXmark} /></button>
-                        <div className="card-body d-flex justify-content-between">
-                            <div className="card col-6">
+                        <div className="card-body flex-md-row flex-column d-flex justify-content-center align-items-md-start align-items-center justify-content-md-between">
+                            <div className="card col-6 m-2">
                                 <ul className="list-group list-group-flush">
                                     <li className="list-group-item">
                                         <ul className="list-group list-group-flush">
@@ -179,7 +179,7 @@ function BuyerOrder() {
                                                                 <StarRatings starDimension="0.8rem" starSpacing="0.025rem" rating={product.avgRate} starRatedColor="orange"/>
                                                             </div>
                                                         </div>
-                                                        <div className="align-self-center col-2">
+                                                        <div className="align-self-center col-3">
                                                             <div className="smaller mb-1">Price: {product.price}&#163;</div>
                                                             <div className="smaller mb-2">x{product.serves}</div>
                                                             <div className="fw-bold text-info">Total: {product.price * product.serves}&#163;</div>
@@ -199,19 +199,19 @@ function BuyerOrder() {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="card col-5">
+                            <div className="card col-md-5 col-6">
                                 <ul className="list-group list-group-flush p-1">
                                     <li className="list-group-item my-2">
                                         <p className="h4 mb-4">Products</p>
                                         {orderCards.selectedOrderProducts[seller]?.map((product, idx)=>{
                                             return(
                                                 <div className="d-flex fw-light justify-content-between" key={idx}>
-                                                    <div className="col-6">
+                                                    <div className="col-5">
                                                         <div className="me-2">{product.name}</div>
                                                         
                                                     </div>
-                                                    <div className="col-5">x{product.serves}</div>
-                                                    <div className="col-1 text-end">{product.price* product.serves}&#163;</div>
+                                                    <div className="col-4">x{product.serves}</div>
+                                                    <div className="col-3 text-end">{product.price* product.serves}&#163;</div>
                                                 </div>
                                             )
                                         })}

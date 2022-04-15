@@ -3,12 +3,11 @@ import {
 	faCircleCheck,
 	faLock,
 	faHouseUser,
-	//faCartShopping,
+	faHandHoldingDollar,
 	faExclamationCircle,
 	faCartArrowDown,
 	faStar,
 } from "@fortawesome/free-solid-svg-icons";
-
 import classes from "./sellerInfo.module.scss";
 import img from "../../../assets/imgs/landing page/cheif.png";
 
@@ -45,10 +44,10 @@ function SellerInfo(props) {
         </div>
       </div>
       <div className={`${classes.cardInfo} `}>
-        <FontAwesomeIcon className={`${classes.icon}`} icon={faCartArrowDown} />
+        <FontAwesomeIcon className={`${classes.icon}`} icon={faHandHoldingDollar} />
         <div>
-          <label>Order deliver</label>
-          <h4>{props.userInfo.countDeliverOrder}</h4>
+          <label>Balance</label>
+          <h4>{props.userInfo.balance}</h4>
         </div>
       </div>
       <div className={`${classes.cardInfo}`}>

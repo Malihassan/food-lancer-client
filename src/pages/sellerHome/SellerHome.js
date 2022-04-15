@@ -29,6 +29,7 @@ function SellerHome(props) {
 		rate: "",
 		countDeliverOrder: 0,
 		inprogressDeliver: 0,
+    balance:0
 	});
 	const [listOfOrders, setListOfOrders] = useState([]);
 	//for pagination
@@ -64,10 +65,12 @@ function SellerHome(props) {
 	const { sendRequest } = useFetch();
 
 	async function sellerInfoDataHandler(res) {
+    console.log(res);
 		if (res.statusText === "OK") {
 			setUserInfo({
 				image: res.data.seller.image.url,
 				name: res.data.seller.firstName + " " + res.data.seller.lastName,
+        balance:(res.data.seller.balance / 100),
 				coverageArea:
 					res.data.seller.coverageArea.governorateName +
 					"," +

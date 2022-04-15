@@ -1,5 +1,5 @@
 import classes from "./buyerHome.module.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback  } from "react";
 import { IoFilterOutline } from "react-icons/io5";
 import { Rating } from "react-simple-star-rating";
 import BuyerProductCard from "./../../components/shared/buyerProductCard/BuyerProductCard";
@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import debounce from 'lodash.debounce';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 /* function valuetext(value) {
@@ -122,7 +123,6 @@ function BuyerHome() {
   const [priceValue, setPriceValue] = useState([0, 100]);
   const [debouncedValue, setDebouncedValue] = useState(priceValue);
   const [rateValue, setRateValue] = useState(0);
-  //const [favs, setFavs] = useState([]);
   ////********************************OFF CANVAS******************************************////
   const [toggleCanvas, setToggleCanvas] = useState(false);
   const toggleCanvasHandler = () => {
@@ -133,32 +133,30 @@ function BuyerHome() {
     let currentPage = data.selected + 1;
     setPage(currentPage);
   };
-  ////********************************PRODUCT REQUEST******************************************////
-
   ////********************************FILTER******************************************////
   const handleCategoryChange = (e) => {
+    console.log(e.target.value);
     if (e.target.checked) {
-      console.log(e.target.checked);
       const target = e.target.value;
-      setCategory(target);
+     console.log(typeof(target));
+      setCategory([...categoryId,target]);
       return;
     }
-    setCategory();
+    categoryId.pop(e.target.value)
+    setCategory([...categoryId]);
   };
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedValue(priceValue);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [priceValue]);
+  const handlePriceChange = (event, newValue) => {
+    console.log(event);
+    setPriceValue(newValue);
+  };
+  const debouncedChangeHandler = useCallback(
+    debounce(handlePriceChange, 500)
+  , [handlePriceChange]);
 
   const handleRatingsChange = (e) => {
     if (e.target.checked) {
       const target = e.target.value;
+      console.log(target);
       setRateValue(target);
       return;
     }
@@ -205,15 +203,25 @@ function BuyerHome() {
         method: "GET",
         params: {
           page,
-          categoryId,
+          categoryId:categoryId?categoryId:[],
+          min: priceValue[0],
+          max: priceValue[1],
+        /*   categoryId,
           min: debouncedValue[0],
-          max: debouncedValue[1],
+          max: debouncedValue[1], */
           rate: rateValue,
         },
       },
       getAllProduct
     );
-  }, [page, sendRequest, categoryId, debouncedValue, rateValue]);
+    sendRequest(
+      {
+        url: `buyer/product/favs`,
+        method: "GET",
+      },
+      getFavs
+    );
+  }, [page, sendRequest, categoryId, priceValue, rateValue]);
 
   return (
     <>
@@ -282,9 +290,13 @@ function BuyerHome() {
                     // getAriaLabel={() => 'Temperature range'}
                     className={`${classes.slider}`}
                     value={priceValue}
-                    onChange={(event, newValue) => {
+                    onChange={debouncedChangeHandler} 
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={1000}
+                   /*  onChange={(event, newValue) => {
                       setPriceValue(newValue);
-                    }}
+                    }} */
                     valueLabelDisplay="auto"
                     min={0}
                     max={300}
@@ -305,18 +317,18 @@ function BuyerHome() {
                   <label
                     className="list-group-item border-0 "
                     style={{ backgroundColor: "#fff" }}
-                    key={rate._id}
                   >
                     <input
                       key={rate._id}
-                      className="form-check-input me-1"
+                      className={`form-check-input me-1 ${classes.squareRadio}`}
                       onChange={handleRatingsChange}
-                      type="checkbox"
+                      type="radio"
+                      name="flexRadioDefault"
                       value={rate}
                     />
                     {rate.toFixed(1)}&up
                     <Rating
-                      className={`${classes.stars} mx-2  pb-1`}
+                      className={`${classes.stars} mx-2 pb-1`}
                       transition
                       readonly
                       ratingValue={rate * 20}
@@ -336,14 +348,15 @@ function BuyerHome() {
                       ]}
                     />
                   </label>
+                  
                 );
               })}
-              <div></div>
             </div>
           </div>
         </OffCanvas>
         <div className={`${classes.container} container  my-0`}>
           {(hasError?.error === "Product not found !" ||
+           /*  products === undefined) && <Empty />} */
             products.length === 0) && <Empty />}
           {!hasError && (
             <div>

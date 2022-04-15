@@ -58,7 +58,7 @@ function ProductDetailsBuyer() {
      console.log(productData?.sellerId?._id);
      console.log(sellerId);
 	
-	}, [sellerId]);  
+	}, [sellerId,productData,sendRequest]);  
  
 	return (
 	<div className={`${classes.homeBody} `}>

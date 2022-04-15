@@ -173,7 +173,7 @@ function ProductEditPanel(props) {
           id="staticBackdrop"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
-          tabindex="-1"
+          tabIndex="-1"
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
@@ -274,10 +274,10 @@ function ProductEditPanel(props) {
                   </div>
                 </form>
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close
@@ -291,7 +291,7 @@ function ProductEditPanel(props) {
                     editFormErr.imagesFieldErr ||
                     editFormErr.descriptionFieldErr
                   }
-                  class="btn btn-dark"
+                  className="btn btn-dark"
                 >
                   Update
                 </button>
@@ -315,6 +315,7 @@ function ProductEditPanel(props) {
                   className={`${index === 0 ? "active" : ""}`}
                   aria-current={`${index === 0 ? "true" : ""}`}
                   aria-label={`Slide ${index + 1}`}
+                  key={index}
                 ></button>
               );
             })}

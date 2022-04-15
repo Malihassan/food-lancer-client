@@ -291,9 +291,6 @@ function BuyerHome() {
                    /*  onChange={(event, newValue) => {
                       setPriceValue(newValue);
                     }} */
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={300}
                     // color="secondary"
                     // getAriaValueText={valuetext}
                   />

@@ -56,7 +56,7 @@ const LandingPage = () => {
                 Try FoodLancer
               </p>
               <Link
-                to="/home"
+                to="/dishes"
                 type="button"
                 className="btn btn-lg btn-outline-light mt-1 ms-3"
               >

@@ -93,6 +93,9 @@ export default function ProductForm() {
     if (values.name.length < 1) {
       errors.name = "this feild is required";
     }
+    if (values.name.length > 25) {
+      errors.name = "this maximum length is 25 letter";
+    }
     if (values.description.length < 1) {
       errors.description = "this feild is required";
     }

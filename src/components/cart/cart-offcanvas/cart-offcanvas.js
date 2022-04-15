@@ -2,7 +2,6 @@ import { Offcanvas } from "react-bootstrap";
 import img from "../../../assets/imgs/landing page/bg-1.jpeg";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
-import { orderActions } from '../../../store/orderSlice';
 import { cartItemsActions } from "../../../store/BuyerOrderSlice";
 import Empty from '../../shared/emptyData/Empty'
 import "./cart-offcanvas.scss";
@@ -17,20 +16,23 @@ function CartOffCanvas(props){
 	const handleClose = () => controlProps.setShow(false);
 
 	useEffect(() => {
-		console.log(cardItems);
+		// console.log(cardItems);
 	}, [controlProps.show]);
 
 	const addServes = async (item) => {
-		let otherProducts = cardItems.selectedOrderProducts[item.sellerId._id].filter(
-			(product) => product._id !== item._id
-		);
+		let products = JSON.parse(JSON.stringify(cardItems.selectedOrderProducts));
+
+		products[item.sellerId._id].find((element) => {
+			if(element._id === item._id){
+				element.serves = element.serves + 1
+				return element
+			}
+			return false
+		});
 
 		await dispatch(
 			cartItemsActions.setCartItem({
-				products: {
-					...cardItems.selectedOrderProducts,
-					[item.sellerId._id]:[{ ...item, serves: item.serves + 1 }, ...otherProducts]
-				},
+				products,
 				sellerOrderPrice: {
 					...cardItems.sellerOrderPrice,
 					[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] + item.price
@@ -43,7 +45,6 @@ function CartOffCanvas(props){
 
     const decrementServes = async (item) => {
         let otherProducts = cardItems.selectedOrderProducts[item.sellerId._id].filter((product)=> product._id !== item._id);
-		let removed = cardItems.removedItems? cardItems.removedItems : [];
         
         if(item.serves < 2){
             if(otherProducts[0]){
@@ -79,15 +80,17 @@ function CartOffCanvas(props){
 					count: cardItems.productCount - 1
 				}));
 			}
-            await dispatch(cartItemsActions.setRemovedItems({
-                removedItems: [...removed, item._id]
-            }));
         } else {
+			let products = JSON.parse(JSON.stringify(cardItems.selectedOrderProducts));
+			products[item.sellerId._id].find((element) => {
+				if(element._id === item._id){
+					element.serves = element.serves - 1
+					return element
+				}
+				return false
+			});
             await dispatch(cartItemsActions.setCartItem({
-                products: {
-					...cardItems.selectedOrderProducts,
-					[item.sellerId._id]:[{...item, serves: item.serves - 1}, ...otherProducts]
-				},
+                products,
 				sellerOrderPrice: {
 					...cardItems.sellerOrderPrice,
 					[item.sellerId._id]: cardItems.sellerOrderPrice[item.sellerId._id] - item.price
@@ -98,7 +101,7 @@ function CartOffCanvas(props){
             
         }
     }
-
+console.log(cardItems.selectedOrderProducts);
 		return (
 			<>
 				<Offcanvas
@@ -106,12 +109,15 @@ function CartOffCanvas(props){
 					placement="end"
 					show={controlProps.show}
 					onHide={handleClose}
+					scroll= {true}
+					backdrop= {true}
 				>
 					<Offcanvas.Header closeButton>
 						<Offcanvas.Title>Cart</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						{cardItems.selectedOrderProducts.length === 0 && <Empty message ="No Item In Cart"/> }
+						{Object.keys(cardItems.selectedOrderProducts).length === 0 && <Empty message ="No Item In Cart"/> 						}
+						
 						<div className="my-2 h-84">
 							{Object.keys(cardItems.selectedOrderProducts).map((seller, index) => {
 								return (
@@ -179,7 +185,7 @@ function CartOffCanvas(props){
 																		</button>
 																	</div>
 																	<div className="card-text small fw-bold d-flex align-items-center">
-																		{item?.price * item?.serves}&#163;
+																		{(item?.price * item?.serves).toFixed(2)}&#163;
 																	</div>
 																</div>
 															</li>
@@ -203,7 +209,7 @@ function CartOffCanvas(props){
 								</Link>
 								<div className="d-flex justify-content-between">
 									<div>Total Price</div>
-									<div>{cardItems.totalPrice}&#163;</div>
+									<div>{cardItems.totalPrice.toFixed(2)}&#163;</div>
 								</div>
 								<div>{}</div>
 							</div>

@@ -72,7 +72,7 @@ function BuyerProfile() {
 		}
 		sendRequest(
 			{
-				url: `seller/account/editProfile`,
+				url: `buyer/account/update`,
 				method: "PATCH",
 				body: formData,
 				headers: {

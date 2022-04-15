@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  //baseURL: "https://food-lancer.herokuapp.com/",
-   baseURL: "http://localhost:3300/",
+	//   withCredentials: true,
+baseURL: "https://food-lancer.herokuapp.com/",
+	// baseURL: "http://localhost:3000/",
 });
 export function getCookie(cName) {
   const name = cName + "=";
@@ -34,11 +35,12 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   function (error) {
-    console.log("error", error);
+    // console.log("error==================");
     // if (axios.isAxiosError(error)) {
     //   if (error.response) {
     //     if (error.response.status === 401) {
     //       //   window.location.reload();
+    //       console.log(error.response,"============ error");
     //       deleteCookie("token");
     //       deleteCookie("userType");
     //       window.location.replace("./home");
@@ -51,23 +53,24 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// // Add a response interceptor
-// axiosInstance.interceptors.response.use(
-//   function (response) {
-//     // Any status code that lie within the range of 2xx cause this function to trigger
-//     // Do something with response data
-//     return response;
-//   },
-//   function (error) {
-//     if (axios.isAxiosError(error)) {
-//       if (error.response) {
-//         if (error.response.status === 401) {
-//           console.log("hereeeeeeeeee");
-//           //   window.location.reload();
-//           //   window.location.replace('/home')
-//         }
-//       }
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+// Add a response interceptor
+axiosInstance.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          deleteCookie("token");
+          deleteCookie("userType");
+          deleteCookie("id");
+          window.location.replace("/login");
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);

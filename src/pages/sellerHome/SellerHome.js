@@ -112,7 +112,15 @@ function SellerHome(props) {
     socket?.on("addOrder", (data) => {
       setListOfOrders([data, ...listOfOrders]);
       socket.off("addOrder");
-
+    });
+    socket?.on("paymentDone", (data) => {
+      let updatedOrders = [...listOfOrders];
+      updatedOrders.find((order) => {
+        if (order._id === data._id) {
+          order.status = data.status;
+        }
+      });
+      setListOfOrders(updatedOrders);
     });
 
   }, [listOfOrders,socket]);
@@ -121,7 +129,8 @@ function SellerHome(props) {
   const displayChat =
     statusOfSelectedOrder &&
     (statusOfSelectedOrder === "pending" ||
-      statusOfSelectedOrder === "in progress");
+      statusOfSelectedOrder === "in progress" ||
+      statusOfSelectedOrder === "accepted" );
   return (
     <>
       <SellerInfo userInfo={userInfo} />

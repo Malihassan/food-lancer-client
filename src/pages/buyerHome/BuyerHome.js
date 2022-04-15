@@ -15,24 +15,60 @@ import {
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import debounce from 'lodash.debounce';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+/* function valuetext(value) {
+  //console.log(value);
+  return `${value}°C`;
+} */
 function BuyerHome() {
-  
   const { sendRequest, hasError } = useFetch();
   const [products, setProducts] = useState([]);
   const [totalPages, setTotalPages] = useState("");
   const [page, setPage] = useState(1);
   const [allCategory, setAllCategory] = useState();
-  const [categoryId, setCategory] = useState([]);
-  //const [categoryIdArr,setCategoryArr] = useState()
+  const [categoryId, setCategory] = useState();
+  const loggedAs = useSelector((state) => state.auth.userType);
   const [favs, setFavs] = useState([]);
+  const navigate = useNavigate()
+  // useEffect(() => {
+  // 	function getAllProduct(res) {
+  // 		console.log(res?.data.docs);
+  // 		setProducts(res?.data.docs);
+  // 		setTotalPages(Math.ceil(res?.data.totalPages));
+  // 	}
+  // 	function getFavs(res) {
+  // 		setFavs(res.data);
+  // 	}
+
+  // 	sendRequest(
+  // 		{
+  // 			url: `buyer/product/allProducts`,
+  // 			method: "GET",
+  // 			params: { page },
+  // 		},
+  // 		getAllProduct
+  // 	);
+  // 	sendRequest(
+  // 		{
+  // 			url: `buyer/product/favs`,
+  // 			method: "GET",
+  // 		},
+  // 		getFavs
+  // 	);
+  // }, [page, sendRequest]);
+
   const handleFavClick = (product, favStatus) => {
     const addFav = (res) => {
       setFavs(res.data);
     };
     const removeFav = (res) => {
       setFavs(res.data);
-      console.log(res);
     };
+    if(loggedAs === "viewer"){
+      navigate('/', { replace: true })
+      return
+   }
     if (!favStatus) {
       sendRequest(
         {
@@ -82,8 +118,10 @@ function BuyerHome() {
 
     return list;
   };
-  const rateArr = [4.5, 4.0, 3.5, 3.0,2.5,0];
-  const [priceValue, setPriceValue] = useState([40, 1000]);
+
+  const rateArr = [4.5, 4.0, 3.5, 3.0, 2.5];
+  const [priceValue, setPriceValue] = useState([0, 100]);
+  const [debouncedValue, setDebouncedValue] = useState(priceValue);
   const [rateValue, setRateValue] = useState(0);
   ////********************************OFF CANVAS******************************************////
   const [toggleCanvas, setToggleCanvas] = useState(false);
@@ -128,6 +166,7 @@ function BuyerHome() {
     function getAllCategry(res) {
       if (res.status === 200) {
         setAllCategory(res.data);
+
         //console.log(allCategory);
       }
     }
@@ -141,14 +180,23 @@ function BuyerHome() {
   }, [sendRequest]);
   useEffect(() => {
     function getAllProduct(res) {
-      console.log(categoryId);
-      console.log(res);
       setProducts(res?.data.docs);
       setTotalPages(res.data.totalPages);
     }
+
     function getFavs(res) {
       setFavs(res.data);
     }
+    if (loggedAs !== "viewer") {
+      sendRequest(
+        {
+          url: `buyer/product/favs`,
+          method: "GET",
+        },
+        getFavs
+      );
+    }
+
     sendRequest(
       {
         url: `buyer/product/allProducts`,
@@ -158,6 +206,9 @@ function BuyerHome() {
           categoryId:categoryId?categoryId:[],
           min: priceValue[0],
           max: priceValue[1],
+        /*   categoryId,
+          min: debouncedValue[0],
+          max: debouncedValue[1], */
           rate: rateValue,
         },
       },
@@ -209,6 +260,7 @@ function BuyerHome() {
                   <label
                     className="list-group-item border-0"
                     style={{ backgroundColor: "#fff" }}
+                    key={category._id}
                   >
                     <input
                       key={category._id}
@@ -242,6 +294,12 @@ function BuyerHome() {
                     valueLabelDisplay="auto"
                     min={0}
                     max={1000}
+                   /*  onChange={(event, newValue) => {
+                      setPriceValue(newValue);
+                    }} */
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={300}
                     // color="secondary"
                     // getAriaValueText={valuetext}
                   />
@@ -298,7 +356,8 @@ function BuyerHome() {
         </OffCanvas>
         <div className={`${classes.container} container  my-0`}>
           {(hasError?.error === "Product not found !" ||
-            products === undefined) && <Empty />}
+           /*  products === undefined) && <Empty />} */
+            products.length === 0) && <Empty />}
           {!hasError && (
             <div>
               <div

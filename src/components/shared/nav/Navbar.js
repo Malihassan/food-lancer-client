@@ -7,11 +7,10 @@ import {
   faArrowRightFromBracket,
   faUser,
   faUtensils,
-  faCartShopping,
-  faThin,
 } from "@fortawesome/free-solid-svg-icons";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { BiDish } from "react-icons/bi";
 
 import { authActions } from "../../../store/AuthSlice";
 import React, { useEffect, useState } from "react";
@@ -24,7 +23,7 @@ const Navbar = (props) => {
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
   const loggedAs = useSelector((state) => state.auth.userType);
-  const cartItems = useSelector((state) => state.cartItems)
+  const cartItems = useSelector((state) => state.cartItems);
   const logout = async (type) => {
     sendRequest(
       {
@@ -44,42 +43,39 @@ const Navbar = (props) => {
         setNotification(true);
       }
     });
-    socket?.on("receiveNotification",(data)=>{
+    socket?.on("receiveNotification", (data) => {
       if (data) {
-        console.log(data ,"=<");
-        dispatch(authActions.setNotification(data))
+        console.log(data, "=<");
+        dispatch(authActions.setNotification(data));
         setNotification(true);
       }
-    })
+    });
     socket?.on("addOrder", (data) => {
       if (data) {
         setNotification(true);
-        console.log(data,"data from add order");
+        console.log(data, "data from add order");
       }
       // socket.off("addOrder");
     });
-
   }, [socket, notification]);
 
   useEffect(() => {
-    if (loggedAs !== 'viewer') {
+    if (loggedAs !== "viewer") {
       sendRequest(
         {
           url: `${loggedAs}/account/notification`,
           method: "GET",
         },
         (res) => {
-          console.log(res);
-          dispatch(authActions.setNotification(res.data))
-          res.data.map((item)=>{
+          dispatch(authActions.setNotification(res.data));
+          res.data.map((item) => {
             if (item.order.read === false) {
-              setNotification(true)
+              setNotification(true);
             }
-          })
+          });
         }
       );
     }
-    
   }, []);
 
   return (
@@ -185,11 +181,11 @@ const Navbar = (props) => {
               className="lead text-center  text-light mx-4 text-decoration-none"
             >
               <div className="d-lg-block d-none ">
-                <FontAwesomeIcon icon={faHome} />
-                <span className="mx-2 ">home</span>
+                <BiDish className="fs-2" />
+                <span className="mx-2 ">Products</span>
               </div>
               <div className="d-lg-none d-block ">
-                <FontAwesomeIcon icon={faHome} />
+                <BiDish className="fs-2" />
               </div>
             </Link>
 
@@ -228,10 +224,18 @@ const Navbar = (props) => {
             <Link to="/favs" type="button" className="btn btn-outline-light ">
               <MdOutlineFavoriteBorder className="fs-4" />
             </Link>
-            <button onClick={() => setShow(true)} type="button" className="btn btn-outline-light position-relative">
-              {cartItems.productCount? (
-                <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">{cartItems.productCount}</span>
-              ) : <></>}
+            <button
+              onClick={() => setShow(true)}
+              type="button"
+              className="btn btn-outline-light position-relative"
+            >
+              {cartItems.productCount ? (
+                <span className="position-absolute top-0 start-100 translate-middle px-2 text-small bg-danger rounded-3">
+                  {cartItems.productCount}
+                </span>
+              ) : (
+                <></>
+              )}
               <HiOutlineShoppingCart className="fs-4" />
             </button>
             <Link
@@ -242,7 +246,7 @@ const Navbar = (props) => {
             >
               <FontAwesomeIcon icon={faArrowRightFromBracket} />
             </Link>
-            <CartOffCanvas controlProps={{show, setShow}}/>
+            <CartOffCanvas controlProps={{ show, setShow }} />
           </div>
         )}
       </div>

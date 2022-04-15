@@ -2,7 +2,7 @@ import "./App.scss";
 import { io } from "socket.io-client";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import LoginPage from "./pages/login/loginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -39,12 +39,12 @@ function App() {
   const loggedAs = useSelector((state) => state.auth.userType);
   const _id = useSelector((state) => state.auth._id);
   const [socket, setSocket] = useState(null);
-// http://localhost:3000/
-//https://food-lancer.herokuapp.com/
+  // http://localhost:3000/
+  //https://food-lancer.herokuapp.com/
   useEffect(() => {
     if (loggedAs !== "viewer") {
       setSocket(
-        io("http://localhost:3300/", {
+        io("https://food-lancer.herokuapp.com/", {
           query: { type: loggedAs, id: _id },
         })
       );
@@ -58,7 +58,7 @@ function App() {
       <Routes>
         {loggedAs === "viewer" && !authenticated && (
           <>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/home" element={<LandingPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
@@ -77,6 +77,7 @@ function App() {
           <>
             <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/home" element={<SellerHome socket={socket} />} />
+            <Route path="/seller/home" element={<SellerHome socket={socket} />} />
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/myProducts" element={<ProductList />} />
             <Route path="/myProducts/:id" element={<ProductDetails />} />
@@ -98,8 +99,8 @@ function App() {
             <Route path="/" element={<Navigate replace to="/home" />} />
           </>
         )}
-
-        <Route path="*" element={<Navigate replace to="/" />} />
+        <Route path="*" element={<NotFound/>} />
+        {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
         {/* <Route path="/home" element={<BuyerHome />} /> */}
       </Routes>
       <Footer />

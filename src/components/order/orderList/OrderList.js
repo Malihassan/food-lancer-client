@@ -12,7 +12,7 @@ import { BsFillChatQuoteFill } from "react-icons/bs";
 
 function OrderList(props) {
   const dispatch = useDispatch();
-  const notification = useSelector((state) => state.auth.notification);
+  const notification = useSelector((state) => state.auth.sellerNotification);
   const selectedProductHandler = (order) => {
     props.toggleCanvasHandler();
     dispatch(
@@ -31,7 +31,7 @@ function OrderList(props) {
     return notification.map((item) => {
       if (
         order._id === item.order.orderId &&
-        order.status !== "cancel" &&
+        order.status !== "canceled" &&
         item.chatMessageCount !== 0
       ) {
         return (
@@ -102,6 +102,13 @@ function OrderList(props) {
                     className={`badge mt-1 py-2 bg-success ${classes.badge}`}
                   >
                     Delivered
+                  </span>
+                )}
+                {order.status == "accepted" && (
+                  <span
+                    className={`badge mt-1 py-2 bg-info text-dark ${classes.badge}`}
+                  >
+                    Accepted
                   </span>
                 )}
                 {order.status == "pending" && (

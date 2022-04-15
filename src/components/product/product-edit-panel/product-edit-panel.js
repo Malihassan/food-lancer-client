@@ -398,6 +398,7 @@ function ProductEditPanel(props) {
             <p className="productCategory">
               Category: {data.categoryId?.name}
             </p>
+            {data?.pendingMessage && <p className="productCategory">Pending Message: {data?.pendingMessage}</p>}
           </div>
           <div className="my-2">
             <h5>

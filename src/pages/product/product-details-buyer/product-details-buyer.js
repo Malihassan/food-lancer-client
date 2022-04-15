@@ -20,7 +20,12 @@ function ProductDetailsBuyer() {
 	const [sellerProducts, setSellerProducts] = useState([]);
 	const [sellerId, setSellerId] = useState();
 	const [favs, setFavs] = useState([]);
-	const navigate = useNavigate();
+	const [update, setUpdate] = useState(false);
+
+	const updatePage = () => {
+		setUpdate(!update);
+	};
+
 	const param = useParams();
 	async function prdoductDataHandler(res) {
 		if (res.status === 200) {
@@ -85,6 +90,7 @@ function ProductDetailsBuyer() {
 						handleFavClick={handleFavClick}
 						product={prd}
 						fav={fav}
+						updatePage={updatePage}
 					/>
 				</div>
 			);
@@ -112,7 +118,7 @@ function ProductDetailsBuyer() {
 			},
 			getFavs
 		);
-	}, []);
+	}, [update]);
 	useEffect(() => {
 		if (sellerId !== undefined) {
 			sendRequest(
@@ -131,7 +137,7 @@ function ProductDetailsBuyer() {
 				<div className="card border-0" style={{ width: "80rem" }}>
 					<ul className="list-group list-group-flush ">
 						<li className="list-group-item mx-5">
-							<ProductInfo data={productData} />
+							<ProductInfo data={productData} update={update} />
 						</li>
 						<li className="list-group-item mx-5 ">
 							<ProductTabs data={productData} />

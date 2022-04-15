@@ -70,17 +70,21 @@ function BuyerProductCard(props) {
 				})
 			);
 		} else if (finder && sellerFinder) {
-			await dispatch(
+			let products = JSON.parse(
+				JSON.stringify(cartItems.selectedOrderProducts)
+			);
+
+			products[product.sellerId._id].find((element) => {
+				if (element._id === product._id) {
+					element.serves = element.serves + 1;
+					return element;
+				}
+				return false;
+			});
+
+			dispatch(
 				cartItemsActions.setCartItem({
-					products: {
-						...cartItems.selectedOrderProducts,
-						[product.sellerId._id]: [
-							...cartItems.selectedOrderProducts[
-								product.sellerId._id
-							].filter((item) => item._id !== finder._id),
-							{ ...finder, serves: finder.serves + 1 },
-						],
-					},
+					products,
 					sellerOrderPrice: {
 						...cartItems.sellerOrderPrice,
 						[product.sellerId._id]:
@@ -154,9 +158,8 @@ function BuyerProductCard(props) {
 								{`${product.description.substring(0, MAX_LENGTH)}....`}
 								<Link
 									onClick={() => {
-										console.log(product._id);
 										navigate(`/product/${product?._id}`);
-										window.reload();
+										props.updatePage();
 									}}
 									to={`/product/${product?._id}`}
 								>
@@ -168,9 +171,8 @@ function BuyerProductCard(props) {
 								{product.description}....
 								<Link
 									onClick={() => {
-										console.log(product._id);
 										navigate(`/product/${product?._id}`);
-										window.reload();
+										props.updatePage();
 									}}
 									to={`/product/${product?._id}`}
 								>

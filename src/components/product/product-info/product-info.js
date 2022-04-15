@@ -12,6 +12,11 @@ function ProductInfo(props) {
 	const [extra, setExtra] = useState(false);
 	const [serves, setServes] = useState(0);
 	const [servesErr, setServesErr] = useState(false);
+	const [reRender, setReRender] = useState(false);
+
+	useEffect(() => {
+		setReRender(props.update);
+	}, reRender);
 
 	let cartItems = useSelector((state) => state.cartItems);
 	const dispatch = useDispatch();
@@ -54,80 +59,91 @@ function ProductInfo(props) {
 			case "extra":
 				setServes(parseInt(e.target.value));
 				break;
-        default:
-        break;
+			default:
+				break;
 		}
 	};
 
 	const showCanvas = async () => {
-		if(serves){
-			const finder = cartItems.selectedOrderProducts[data.sellerId._id]?.find((item) => item._id === data._id)
-			? cartItems.selectedOrderProducts[data.sellerId._id].find((item) => item._id === data._id)
-			: null;
+		if (serves) {
+			const finder = cartItems.selectedOrderProducts[
+				data.sellerId._id
+			]?.find((item) => item._id === data._id)
+				? cartItems.selectedOrderProducts[data.sellerId._id].find(
+						(item) => item._id === data._id
+				  )
+				: null;
 
-			const sellerFinder = Object.keys(cartItems.selectedOrderProducts).find((item) => {
-				console.log(item);
-				return item === data.sellerId._id
-			})?
-			Object.keys(cartItems.selectedOrderProducts).find((item) => item === data.sellerId._id)
-			: null;
-
+			const sellerFinder = Object.keys(cartItems.selectedOrderProducts).find(
+				(item) => {
+					console.log(item);
+					return item === data.sellerId._id;
+				}
+			)
+				? Object.keys(cartItems.selectedOrderProducts).find(
+						(item) => item === data.sellerId._id
+				  )
+				: null;
 
 			if (!sellerFinder && !finder) {
-
 				await dispatch(
 					cartItemsActions.setCartItem({
 						products: {
 							...cartItems.selectedOrderProducts,
-							[data.sellerId._id]: [{ ...data, serves }]
+							[data.sellerId._id]: [{ ...data, serves }],
 						},
 						sellerOrderPrice: {
 							...cartItems.sellerOrderPrice,
-							[data.sellerId._id]: data.price * serves
+							[data.sellerId._id]: data.price * serves,
 						},
 						totalPrice: cartItems.totalPrice + data.price * serves,
-						count: cartItems.productCount + 1
+						count: cartItems.productCount + 1,
 					})
 				);
 			} else if (!finder && sellerFinder) {
-
-				await dispatch(
-					cartItemsActions.setCartItem({
-						products: {
-							...cartItems.selectedOrderProducts,
-							[data.sellerId._id]: [...cartItems.selectedOrderProducts[data.sellerId._id], { ...data, serves }]
-						},
-						sellerOrderPrice: {
-							...cartItems.sellerOrderPrice,
-							[data.sellerId._id]: cartItems.sellerOrderPrice[data.sellerId._id] + data.price * serves
-						},
-						totalPrice: cartItems.totalPrice + data.price * serves,
-						count: cartItems.productCount + 1
-					})
-				)
-				
-			} else if (finder && sellerFinder) {
-				console.log("3")
 				await dispatch(
 					cartItemsActions.setCartItem({
 						products: {
 							...cartItems.selectedOrderProducts,
 							[data.sellerId._id]: [
-								...cartItems.selectedOrderProducts[data.sellerId._id].filter(
-									(item) => item._id !== finder._id
-								),
-								{ ...finder, serves },
-							]
+								...cartItems.selectedOrderProducts[data.sellerId._id],
+								{ ...data, serves },
+							],
 						},
 						sellerOrderPrice: {
 							...cartItems.sellerOrderPrice,
-							[data.sellerId._id]: cartItems.sellerOrderPrice[data.sellerId._id] - (finder.price * finder.serves) + (data.price * serves)
+							[data.sellerId._id]:
+								cartItems.sellerOrderPrice[data.sellerId._id] +
+								data.price * serves,
+						},
+						totalPrice: cartItems.totalPrice + data.price * serves,
+						count: cartItems.productCount + 1,
+					})
+				);
+			} else if (finder && sellerFinder) {
+				await dispatch(
+					cartItemsActions.setCartItem({
+						products: {
+							...cartItems.selectedOrderProducts,
+							[data.sellerId._id]: [
+								...cartItems.selectedOrderProducts[
+									data.sellerId._id
+								].filter((item) => item._id !== finder._id),
+								{ ...finder, serves },
+							],
+						},
+						sellerOrderPrice: {
+							...cartItems.sellerOrderPrice,
+							[data.sellerId._id]:
+								cartItems.sellerOrderPrice[data.sellerId._id] -
+								finder.price * finder.serves +
+								data.price * serves,
 						},
 						totalPrice:
 							cartItems.totalPrice -
-							(finder.price * finder.serves) +
-							(data.price * serves),
-						count: cartItems.productCount
+							finder.price * finder.serves +
+							data.price * serves,
+						count: cartItems.productCount,
 					})
 				);
 			}
@@ -137,13 +153,11 @@ function ProductInfo(props) {
 		} else {
 			setServesErr(true);
 		}
-
-		
 	};
 
 	return (
 		<>
-			<div className="row flex-xl-row flex-column justify-content-between  p-2" >
+			<div className="row flex-xl-row flex-column justify-content-between  p-2">
 				<div
 					id="carouselExampleIndicators"
 					className="carousel slide col-xl-6 col-12 pt-xl-2"
@@ -207,7 +221,10 @@ function ProductInfo(props) {
 						<span className="visually-hidden">Next</span>
 					</button>
 				</div>
-				<div className="col-xl-6 col-12 mt-4 mt-xl-0" style={{color:"#091b29"}}>
+				<div
+					className="col-xl-6 col-12 mt-4 mt-xl-0"
+					style={{ color: "#091b29" }}
+				>
 					<p className="display-5">{data.name}</p>
 					<div className="d-flex">
 						<StarRatings
@@ -359,7 +376,9 @@ function ProductInfo(props) {
 							Add To Cart
 						</button>
 						{servesErr && (
-							<p className=" col-12 text-danger text-center">You have to choose serves</p>
+							<p className=" col-12 text-danger text-center">
+								You have to choose serves
+							</p>
 						)}
 					</div>
 				</div>

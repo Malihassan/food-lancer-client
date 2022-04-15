@@ -13,8 +13,8 @@ function BuyerOrder() {
 	const [buyerData, setBuyerData] = useState({});
 	const [orderResponse, setOrderResponse] = useState(false);
 	const dispatch = useDispatch();
-	const [address, setAddress] = useState("");
-	const [addressErr, setAddressErr] = useState("");
+	const [address, setAddress] = useState({});
+	const [addressErr, setAddressErr] = useState({});
 	async function buyerDataHandler(res) {
 		if (res.status === 200) {
 			console.log(res);
@@ -32,17 +32,32 @@ function BuyerOrder() {
 		);
 	}, []);
 
-	const checkAddress = (e) => {
-		setAddress(e.target.value);
+	const checkAddress = (e, index) => {
+		setAddress({
+			...address,
+			[index]: e.target.value,
+		});
 
 		if (e.target.value.length === 0) {
-			setAddressErr("this field is required");
+			setAddressErr({
+				...addressErr,
+				[index]: "this field is required",
+			});
 		} else if (e.target.value.length < 5) {
-			setAddressErr("address can't be less than 5 characters");
+			setAddressErr({
+				...addressErr,
+				[index]: "address can't be less than 5 characters",
+			});
 		} else if (e.target.value.length > 40) {
-			setAddressErr("address can't be more than 40 characters");
+			setAddressErr({
+				...addressErr,
+				[index]: "address can't be more than 40 characters",
+			});
 		} else {
-			setAddressErr("");
+			setAddressErr({
+				...addressErr,
+				[index]: "",
+			});
 		}
 	};
 
@@ -74,8 +89,8 @@ function BuyerOrder() {
 		);
 	};
 
-	const postOrder = (orderProducts, sellerId) => {
-		if (!addressErr.length) {
+	const postOrder = (orderProducts, sellerId, index) => {
+		if (!addressErr[index]?.length && address[index]) {
 			let products = [];
 
 			orderProducts.forEach((product) => {
@@ -92,14 +107,13 @@ function BuyerOrder() {
 					body: {
 						sellerId,
 						buyerId: buyerData._id,
-						address,
+						address: address[index],
 						products,
 						totalPrice: orderCards.sellerOrderPrice[sellerId],
 					},
 				},
 				orderHandler
 			);
-
 			dispatch(
 				cartItemsActions.setCartItem({
 					products: {
@@ -166,8 +180,8 @@ function BuyerOrder() {
 								icon={faXmark}
 							/>
 						</button>
-						<div className="card-body d-flex justify-content-between">
-							<div className="card col-6">
+						<div className="card-body flex-md-row flex-column d-flex justify-content-center align-items-md-start align-items-center justify-content-md-between">
+							<div className="card col-md-6 col-10 m-2">
 								<ul className="list-group list-group-flush">
 									<li className="list-group-item">
 										<ul className="list-group list-group-flush">
@@ -203,17 +217,21 @@ function BuyerOrder() {
 																	/>
 																</div>
 															</div>
-															<div className="align-self-center col-2">
+															<div className="align-self-center col-3">
 																<div className="smaller mb-1">
-																	Price: {product.price}&#163;
+																	Price:{" "}
+																	{product.price.toFixed(2)}
+																	&#163;
 																</div>
 																<div className="smaller mb-2">
 																	x{product.serves}
 																</div>
 																<div className="fw-bold text-info">
 																	Total:{" "}
-																	{product.price *
-																		product.serves}
+																	{(
+																		product.price *
+																		product.serves
+																	).toFixed(2)}
 																	&#163;
 																</div>
 															</div>
@@ -236,7 +254,7 @@ function BuyerOrder() {
 									</li>
 								</ul>
 							</div>
-							<div className="card col-5">
+							<div className="card col-md-5 col-10">
 								<ul className="list-group list-group-flush p-1">
 									<li className="list-group-item my-2">
 										<p className="h4 mb-4">Products</p>
@@ -247,16 +265,18 @@ function BuyerOrder() {
 														className="d-flex fw-light justify-content-between"
 														key={idx}
 													>
-														<div className="col-6">
+														<div className="col-5">
 															<div className="me-2">
 																{product.name}
 															</div>
 														</div>
-														<div className="col-5">
+														<div className="col-4">
 															x{product.serves}
 														</div>
-														<div className="col-1 text-end">
-															{product.price * product.serves}
+														<div className="col-3 text-end">
+															{(
+																product.price * product.serves
+															).toFixed(2)}
 															&#163;
 														</div>
 													</div>
@@ -268,7 +288,10 @@ function BuyerOrder() {
 										<div className="d-flex justify-content-between">
 											<div>Price</div>
 											<div>
-												{orderCards.sellerOrderPrice[seller]}&#163;
+												{orderCards.sellerOrderPrice[
+													seller
+												].toFixed(2)}
+												&#163;
 											</div>
 										</div>
 										<div className="d-flex justify-content-between">
@@ -280,7 +303,10 @@ function BuyerOrder() {
 										<div className="text-success d-flex justify-content-between">
 											<div className="h5">Total</div>
 											<div className="display-6 mb-4">
-												{orderCards.sellerOrderPrice[seller]}&#163;
+												{orderCards.sellerOrderPrice[
+													seller
+												].toFixed(2)}
+												&#163;
 											</div>
 										</div>
 										<div className="mt-3 mb-5">
@@ -292,29 +318,42 @@ function BuyerOrder() {
 											</label>
 											<input
 												type="text"
-												onChange={(e) => checkAddress(e)}
+												onChange={(e) => checkAddress(e, idx)}
 												className="form-control"
 												id="exampleInputPassword1"
 											/>
-											{addressErr.length ? (
+											{addressErr[idx]?.length ? (
 												<small className="text-danger">
-													{addressErr}
+													{addressErr[idx]}
 												</small>
 											) : (
 												<></>
 											)}
 										</div>
 										<button
+											disabled={
+												address[idx] && !addressErr[idx]
+													? false
+													: true
+											}
 											onClick={() =>
 												postOrder(
 													orderCards.selectedOrderProducts[seller],
-													seller
+													seller,
+													idx
 												)
 											}
-											className="btn btn-dark w-100 rounded-0 align-self-bottom"
+											className={`btn btn-dark w-100 rounded-0 align-self-bottom `}
 										>
 											Place Order
 										</button>
+										{addressErr[idx]?.length ? (
+											<small className="text-danger mt-2">
+												You have to enter a valid address
+											</small>
+										) : (
+											<></>
+										)}
 									</li>
 								</ul>
 							</div>

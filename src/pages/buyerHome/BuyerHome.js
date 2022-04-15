@@ -1,5 +1,5 @@
 import classes from "./buyerHome.module.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { IoFilterOutline } from "react-icons/io5";
 import { Rating } from "react-simple-star-rating";
 import BuyerProductCard from "./../../components/shared/buyerProductCard/BuyerProductCard";
@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import debounce from "lodash.debounce";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 /* function valuetext(value) {
@@ -101,6 +102,7 @@ function BuyerHome() {
 		let list = products?.map((prd) => {
 			let fav = false;
 			if (lockup[prd._id]) fav = true;
+			console.log(prd, "prd home");
 			return (
 				<div
 					key={prd._id}

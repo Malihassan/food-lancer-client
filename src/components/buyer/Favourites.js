@@ -5,7 +5,6 @@ import Empty from "../shared/emptyData/Empty";
 import BuyerProductCard from "../shared/buyerProductCard/BuyerProductCard";
 //import classes from "../product/product-list/product-list.module.scss";
 import useFetch from "../../hooks/useFetch";
-import { axiosInstance } from "../../network/axiosConfig";
 
 function Favourites() {
 	const { sendRequest /* , hasError */ } = useFetch();
@@ -28,12 +27,6 @@ function Favourites() {
 	}, []);
 
 	const handleFavClick = (e) => {
-		// (async () => {
-		// 	const res = await axiosInstance.delete(`buyer/product/favs`, {
-		// 		data: { id: e._id },
-		// 	});
-		// 	setProductsArr(res.data);
-		// })();
 		sendRequest(
 			{
 				url: `buyer/product/favs`,
@@ -58,7 +51,6 @@ function Favourites() {
 					<BuyerProductCard
 						product={prd}
 						fav={true}
-						userType={"buyer"}
 						handleFavClick={handleFavClick}
 					/>
 				</div>

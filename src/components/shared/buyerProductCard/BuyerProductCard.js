@@ -60,27 +60,30 @@ function BuyerProductCard(props) {
 			)
 			
 		} else if (finder && sellerFinder) {
-			await dispatch(
+			let products = JSON.parse(JSON.stringify(cartItems.selectedOrderProducts));
+
+			products[product.sellerId._id].find((element) => {
+				if(element._id === product._id){
+					element.serves = element.serves + 1
+					return element
+				}
+				return false
+			});
+
+			dispatch(
 				cartItemsActions.setCartItem({
-					products: {
-						...cartItems.selectedOrderProducts,
-						[product.sellerId._id]: [
-							...cartItems.selectedOrderProducts[product.sellerId._id].filter(
-								(item) => item._id !== finder._id
-							),
-							{ ...finder, serves: finder.serves + 1 },
-						]
-					},
+					products,
 					sellerOrderPrice: {
 						...cartItems.sellerOrderPrice,
 						[product.sellerId._id]: cartItems.sellerOrderPrice[product.sellerId._id] + product.price
 					},
 					totalPrice:
-						cartItems.totalPrice +
-						product.price,
-					count: cartItems.productCount
+							cartItems.totalPrice +
+							product.price,
+						count: cartItems.productCount
 				})
 			);
+			
 		}
 
 		setShow(true);

@@ -83,7 +83,7 @@ const Navbar = (props) => {
       className={`sticky-top navbar p-0 m-0 ${classes.nav}  d-flex justify-content-between align-items-center`}
     >
       <Link
-        to="/seller/home"
+        to="/home"
         type="button"
         className={`navbar-brand my-3 ps-5 text-light col-sm-3 col-12 fs-3 ${classes.logo}`}
       >

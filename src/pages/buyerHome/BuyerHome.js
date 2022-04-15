@@ -289,7 +289,7 @@ function BuyerHome() {
 										}}
 										valueLabelDisplay="auto"
 										min={0}
-										max={500}
+										max={1000}
 										// color="secondary"
 										// getAriaValueText={valuetext}
 									/>
@@ -307,18 +307,18 @@ function BuyerHome() {
 									<label
 										className="list-group-item border-0 "
 										style={{ backgroundColor: "#fff" }}
-										key={rate._id}
 									>
 										<input
 											key={rate._id}
-											className="form-check-input me-1"
+											className={`form-check-input me-1 ${classes.squareRadio}`}
 											onChange={handleRatingsChange}
-											type="checkbox"
+											type="radio"
+											name="flexRadioDefault"
 											value={rate}
 										/>
 										{rate.toFixed(1)}&up
 										<Rating
-											className={`${classes.stars} mx-2  pb-1`}
+											className={`${classes.stars} mx-2 pb-1`}
 											transition
 											readonly
 											ratingValue={rate * 20}
@@ -340,12 +340,12 @@ function BuyerHome() {
 									</label>
 								);
 							})}
-							<div></div>
 						</div>
 					</div>
 				</OffCanvas>
 				<div className={`${classes.container} container  my-0`}>
 					{(hasError?.error === "Product not found !" ||
+						/*  products === undefined) && <Empty />} */
 						products.length === 0) && <Empty />}
 					{!hasError && (
 						<div>

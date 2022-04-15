@@ -159,7 +159,9 @@ function BuyerProductCard(props) {
 								<Link
 									onClick={() => {
 										navigate(`/product/${product?._id}`);
-										props.updatePage();
+										if (props.updatePage) {
+											props.updatePage();
+										}
 									}}
 									to={`/product/${product?._id}`}
 								>
@@ -172,7 +174,9 @@ function BuyerProductCard(props) {
 								<Link
 									onClick={() => {
 										navigate(`/product/${product?._id}`);
-										props.updatePage();
+										if (props.updatePage) {
+											props.updatePage();
+										}
 									}}
 									to={`/product/${product?._id}`}
 								>

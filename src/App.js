@@ -2,7 +2,7 @@ import "./App.scss";
 import { io } from "socket.io-client";
 import LandingPage from "./pages/landing/LandingPage";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import LoginPage from "./pages/login/loginPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProductList from "./components/product/product-list/ProductList";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
@@ -59,6 +59,7 @@ function App() {
         {loggedAs === "viewer" && !authenticated && (
           <>
             <Route path="/home" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
@@ -70,6 +71,7 @@ function App() {
               element={<ResetPassword />}
             />
             <Route path="/dishes" element={<BuyerHome />} />
+            <Route path="/placeOrder" element={<Navigate replace to="/home" />}/>
           </>
         )}
 

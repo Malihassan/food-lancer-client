@@ -214,13 +214,7 @@ function BuyerHome() {
       },
       getAllProduct
     );
-    sendRequest(
-      {
-        url: `buyer/product/favs`,
-        method: "GET",
-      },
-      getFavs
-    );
+    
   }, [page, sendRequest, categoryId, priceValue, rateValue]);
 
   return (

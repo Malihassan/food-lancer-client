@@ -130,12 +130,12 @@ function LoginSeller() {
                 <div className="form-text text-warning">{errResMes}</div>
               )}
             </div>
-            <div className="d-flex flex-row-reverse justify-content-between align-items-center pb-3 mt-4">
-              <button type="submit" className="btn btn-submit px-4  mb-3">
+            <div className="d-flex flex-row-reverse justify-content-between align-items-center pb-3 mt-5">
+              <button type="submit" className="btn btn-submit px-4  ">
                 Login
               </button>
               <div>
-                <Link className="forget-link " to="/forgetpassword">
+                <Link className="forget-link " to="/forgetpassword/seller">
                   forget password ?
                 </Link>
               </div>

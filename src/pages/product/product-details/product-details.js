@@ -17,7 +17,6 @@ function ProductDetails() {
 			setProductData(res.data);
 		}
 	}
-
 	useEffect(() => {
 		/* 	axiosInstance
 			.get(`seller/product/${param.id}`)

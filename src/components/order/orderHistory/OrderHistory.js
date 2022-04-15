@@ -657,7 +657,8 @@ export default function OrderHistory(props) {
 										<div
 											className="progress-bar"
 											role="progressbar"
-											style={{ width: 39.2 * order.sellerId.rate }}
+											
+											style={{ width:`${order.sellerId.rate*20}%` }}
 										></div>
 									</div>
 								</div>

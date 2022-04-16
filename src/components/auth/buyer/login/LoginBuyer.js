@@ -41,12 +41,11 @@ function LoginBuyer(props) {
   };
   const passwordValidator = (e) => {
     const value = e.target.value;
-    // const reg = new RegExp(
-    //   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g
-    // );
-    // const validpassword = reg.test(value);
+    const reg = new RegExp(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g
+    );
+    const validpassword = reg.test(value);
 
-    const validpassword = true;
     validpassword
       ? addToForm("password", value)
       : setInputErrorMessage({
@@ -120,7 +119,7 @@ function LoginBuyer(props) {
               <div className="form-text text-warning">{errResMes}</div>
             )}
           </div>
-          <div className="d-flex flex-row-reverse justify-content-between align-items-center pb-3 mt-4">
+          <div className="d-flex flex-row-reverse justify-content-between align-items-center pb-3 mt-5">
             <button
               type="submit"
               disabled={!formIsValid}

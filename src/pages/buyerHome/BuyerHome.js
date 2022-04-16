@@ -27,7 +27,7 @@ function BuyerHome() {
 	const [totalPages, setTotalPages] = useState("");
 	const [page, setPage] = useState(1);
 	const [allCategory, setAllCategory] = useState();
-	const [categoryId, setCategory] = useState();
+	const [categoryId, setCategory] = useState([]);
 	const loggedAs = useSelector((state) => state.auth.userType);
 	const [favs, setFavs] = useState([]);
 	const navigate = useNavigate();
@@ -121,7 +121,7 @@ function BuyerHome() {
 	};
 
 	const rateArr = [4.5, 4.0, 3.5, 3.0, 2.5];
-	const [priceValue, setPriceValue] = useState([0, 100]);
+	const [priceValue, setPriceValue] = useState([0, 1000]);
 	const [debouncedValue, setDebouncedValue] = useState(priceValue);
 	const [rateValue, setRateValue] = useState(0);
 	//const [favs, setFavs] = useState([]);
@@ -138,15 +138,17 @@ function BuyerHome() {
 	////********************************PRODUCT REQUEST******************************************////
 
 	////********************************FILTER******************************************////
-	const handleCategoryChange = (e) => {
-		if (e.target.checked) {
-			console.log(e.target.checked);
-			const target = e.target.value;
-			setCategory(target);
-			return;
-		}
-		setCategory();
-	};
+  const handleCategoryChange = (e) => {
+    console.log(e.target.value);
+    if (e.target.checked) {
+      const target = e.target.value;
+     console.log(typeof(target));
+      setCategory([...categoryId,target]);
+      return;
+    }
+    categoryId.pop(e.target.value)
+    setCategory([...categoryId]);
+  };
 
 	useEffect(() => {
 		const timerId = setTimeout(() => {

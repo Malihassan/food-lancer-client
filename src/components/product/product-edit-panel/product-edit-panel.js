@@ -23,9 +23,10 @@ function ProductEditPanel(props) {
   const { sendRequest } = useFetch();
   const navigate = useNavigate();
 
-  const deleteProduct = async () => {
+  const deleteProduct = () => {
+    console.log(data._id,'id in delete');
     function deleteProductHandler(res) {
-      console.log(res);
+      console.log(res,"resposne");
       if (res.status === 200) {
         dispatch(productActions.deleted());
         navigate("/myProducts");
@@ -35,6 +36,7 @@ function ProductEditPanel(props) {
       {
         method: "DELETE",
         url: `seller/product/${data._id}`,
+        body:{id:data._id}
       },
       deleteProductHandler
     );

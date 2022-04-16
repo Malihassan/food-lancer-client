@@ -210,7 +210,7 @@ export default function OrderHistory(props) {
 			(res) => {}
 		);
 	}, []);
-	const [update, setUpadate] = useState(false);
+	const [update, setUpdate] = useState(false);
 	useEffect(() => {
 		socket?.on("updateOrderStatus", (data) => {
 			let updatedOrders = [...orders];
@@ -220,6 +220,7 @@ export default function OrderHistory(props) {
 				}
 			});
 			setOrder(updatedOrders);
+			setUpdate(!update);
 			// socket.off("updateOrderStatus");
 		});
 		socket?.on("receiveNotification", (data) => {
@@ -233,6 +234,7 @@ export default function OrderHistory(props) {
 				}
 			});
 			setOrder(updatedOrders);
+			setUpdate(!update);
 			// setOrder(data);
 		});
 	}, [orders, socket, notifications]);
@@ -657,8 +659,9 @@ export default function OrderHistory(props) {
 										<div
 											className="progress-bar"
 											role="progressbar"
-											
-											style={{ width:`${order.sellerId.rate*20}%` }}
+											style={{
+												width: `${order.sellerId.rate * 20}%`,
+											}}
 										></div>
 									</div>
 								</div>

@@ -111,29 +111,29 @@ function UpdateProfile() {
 		fillData();
 	}, []);
 
-  return (
-    <div className={`${classes.backColor} py-3 container-fluid`}>
-        <div
-          className= {`col-lg-7 shadow mx-auto container-fluid ${classes.backColors} col-md-10 ${classes.borderLeft} d-flex flex-column `}
-        >
-          <div
-            className="fs-1 mt-2 ms-1 text-center"
-            style={{
-              fontFamily: " 'El Messiri', sans-serif",
-            }}
-          >
-            Update Information
-            <br />
-            <img
-              src={images?.url || img}
-              alt=".."
-              style={{
-                width: "130px",
-                height: "130px",
-                borderRadius: "50%",
-              }}
-            />
-          </div>
+	return (
+		<div className={`${classes.backColor} py-3 container-fluid`}>
+			<div
+				className={`col-lg-7 shadow mx-auto container-fluid ${classes.backColors} col-md-10 ${classes.borderLeft} d-flex flex-column `}
+			>
+				<div
+					className="fs-1 mt-2 ms-1 text-center"
+					style={{
+						fontFamily: " 'El Messiri', sans-serif",
+					}}
+				>
+					Update Information
+					<br />
+					<img
+						src={images?.url || img}
+						alt=".."
+						style={{
+							width: "130px",
+							height: "130px",
+							borderRadius: "50%",
+						}}
+					/>
+				</div>
 
 				<hr className="mb-2" />
 				<Formik
@@ -237,30 +237,28 @@ function UpdateProfile() {
 							<ErrorMessage name="image" />
 						</div>
 
-             <div className="d-flex justify-content-center mt-4 mb-4">
-             <button
-                type="submit"
-                style={{ height: "3rem" }}
-                className={`btn ${classes.btnSubmit} px-4 `}
-              >
-                Submit
-              </button>
-             </div>
-             <div
-            className="fs-3 mt-5 ms-1 "
-            style={{
-              fontFamily: " 'El Messiri', sans-serif",
-            }}
-          >
-            {updateRes}
-          </div>
-            </Form>
-          </Formik>
-        
-        </div>
-      
-    </div>
-  );
+						<div className="d-flex justify-content-center mt-4 mb-4">
+							<button
+								type="submit"
+								style={{ height: "3rem" }}
+								className={`btn ${classes.btnSubmit} px-4 `}
+							>
+								Submit
+							</button>
+						</div>
+						<div
+							className="fs-3 mt-5 ms-1 "
+							style={{
+								fontFamily: " 'El Messiri', sans-serif",
+							}}
+						>
+							{updateRes}
+						</div>
+					</Form>
+				</Formik>
+			</div>
+		</div>
+	);
 }
 
 export default UpdateProfile;

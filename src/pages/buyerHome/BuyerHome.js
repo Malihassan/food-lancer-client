@@ -138,17 +138,17 @@ function BuyerHome() {
 	////********************************PRODUCT REQUEST******************************************////
 
 	////********************************FILTER******************************************////
-  const handleCategoryChange = (e) => {
-    console.log(e.target.value);
-    if (e.target.checked) {
-      const target = e.target.value;
-     console.log(typeof(target));
-      setCategory([...categoryId,target]);
-      return;
-    }
-    categoryId.pop(e.target.value)
-    setCategory([...categoryId]);
-  };
+	const handleCategoryChange = (e) => {
+		console.log(e.target.value);
+		if (e.target.checked) {
+			const target = e.target.value;
+			console.log(typeof target);
+			setCategory([...categoryId, target]);
+			return;
+		}
+		categoryId.pop(e.target.value);
+		setCategory([...categoryId]);
+	};
 
 	useEffect(() => {
 		const timerId = setTimeout(() => {
@@ -348,7 +348,7 @@ function BuyerHome() {
 				<div className={`${classes.container} container  my-0`}>
 					{(hasError?.error === "Product not found !" ||
 						/*  products === undefined) && <Empty />} */
-						products.length === 0) && <Empty />}
+						products?.length === 0) && <Empty />}
 					{!hasError && (
 						<div>
 							<div

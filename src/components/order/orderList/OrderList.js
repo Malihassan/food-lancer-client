@@ -28,11 +28,11 @@ function OrderList(props) {
 		);
 	};
 	const setChatIcon = (order) => {
-		return notification.map((item) => {
+		return notification?.map((item) => {
 			if (
-				order._id === item.order.orderId &&
-				order.status !== "canceled" &&
-				item.chatMessageCount !== 0
+				order?._id === item?.order?.orderId &&
+				order?.status !== "canceled" &&
+				item?.chatMessageCount !== 0
 			) {
 				return (
 					<td
@@ -64,15 +64,15 @@ function OrderList(props) {
 					</tr>
 				</thead>
 				<tbody className="border-0 border-top">
-					{props.listOfOrders.map((order) => (
+					{props.listOfOrders?.map((order) => (
 						<tr
-							key={order._id}
+							key={order?._id}
 							onClick={() => selectedProductHandler(order)}
 						>
 							<td className="col d-flex">
 								<img
 									className={`me-2 h-100 w-h-even d-none d-sm-block rounded-circle`}
-									src={order.buyerId.image.url || img}
+									src={order?.buyerId?.image?.url || img}
 									alt="buyer pic"
 								/>
 								<label>
@@ -83,27 +83,27 @@ function OrderList(props) {
 								<label>{order.buyerId.address}</label>
 							</td>
 							<td className="col">
-								<label>x{order.products.length}</label>
+								<label>x{order?.products?.length}</label>
 							</td>
 							<td className="col">
 								<label>EGP {order.totalPrice}</label>
 							</td>
 							<td className="col">
-								{order.status == "in progress" && (
+								{order?.status == "in progress" && (
 									<span
 										className={`badge mt-1 py-2 bg-primary ${classes.badge}`}
 									>
 										In Progress
 									</span>
 								)}
-								{order.status == "canceled" && (
+								{order?.status == "canceled" && (
 									<span
 										className={`badge mt-1 py-2 bg-dark ${classes.badge}`}
 									>
 										Canceled
 									</span>
 								)}
-								{order.status == "delivered" && (
+								{order?.status == "delivered" && (
 									<span
 										className={`badge mt-1 py-2 bg-success ${classes.badge}`}
 									>

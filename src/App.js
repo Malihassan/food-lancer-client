@@ -102,7 +102,6 @@ function App() {
 						/>
 					</>
 				)}
-
 				{loggedAs === "buyer" && authenticated && (
 					<>
 						<Route path="/updateProfile" element={<BuyerProfile />} />

@@ -35,6 +35,7 @@ function ProductEditPanel(props) {
       {
         method: "DELETE",
         url: `seller/product/${data._id}`,
+        body:{id:data._id}
       },
       deleteProductHandler
     );

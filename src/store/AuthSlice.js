@@ -48,9 +48,10 @@ const authSlice = createSlice({
       state.userType = "viewer";
       state.authenticated = false;
       state._id = null;
+      console.log(state.authenticated);
     },
     setNotification: (state, {payload}) => {
-      // console.log(state.userType,"outside");
+      console.log(state.userType,"outside");
       if(state.userType === "seller"){
       // console.log(state.userType,"inside");
         state.sellerNotification = payload
@@ -58,6 +59,12 @@ const authSlice = createSlice({
       }
       state.buyerNotification = payload
     },
+    // setOrderAsReadInNotification(state,{payload}){
+    //   console.log(payload);
+    //   const setRead = state.sellerNotification.find((order)=>order.order.orderId == payload.id)
+    //   console.log( setRead);
+    //   // state.sellerNotification
+    // }
   },
   extraReducers: {
     [sellerLogin.pending]: (state) => {},

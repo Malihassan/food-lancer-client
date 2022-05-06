@@ -7,6 +7,7 @@ const initialState = {
   totalPrice: 0,
   createdAt: "",
   status: "",
+  address:""
 };
 const orderSlice = createSlice({
   name: "order",
@@ -20,6 +21,7 @@ const orderSlice = createSlice({
       state.totalPrice = payload.totalPrice;
       state.createdAt = payload.createdAt;
       state.status = payload.status;
+      state.address = payload.address
     },
     
   },

@@ -14,7 +14,7 @@ import { BiDish } from "react-icons/bi";
 
 import { authActions } from "../../../store/AuthSlice";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../../hooks/useFetch";
 import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
@@ -22,6 +22,7 @@ import CartOffCanvas from "../../cart/cart-offcanvas/cart-offcanvas";
 const Navbar = (props) => {
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const loggedAs = useSelector((state) => state.auth.userType);
   const cartItems = useSelector((state) => state.cartItems);
   const logout = async (type) => {
@@ -29,8 +30,10 @@ const Navbar = (props) => {
       {
         url: `${type}/account/logout`,
         method: "GET",
-      },
-      (res) => dispatch(authActions.logout())
+      },(res)=>{
+        dispatch(authActions.logout())
+        navigate('/')
+      }
     );
   };
   const socket = props.socket;
@@ -76,7 +79,7 @@ const Navbar = (props) => {
         }
       );
     }
-  }, []);
+  }, [loggedAs]);
 
   return (
     <nav
@@ -145,7 +148,7 @@ const Navbar = (props) => {
               </div>
             </Link>
             <Link
-              to="/"
+              to=""
               onClick={() => logout("seller")}
               type="button"
               className="btn btn-outline-warning "

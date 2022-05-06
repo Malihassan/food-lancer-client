@@ -14,6 +14,7 @@ function OrderList(props) {
 	const dispatch = useDispatch();
 	const notification = useSelector((state) => state.auth.sellerNotification);
 	const selectedProductHandler = (order) => {
+    console.log(order);
 		props.toggleCanvasHandler();
 		dispatch(
 			orderActions.toggleDetailsOrder({
@@ -24,6 +25,7 @@ function OrderList(props) {
 				totalPrice: order.totalPrice,
 				createdAt: order.createdAt,
 				status: order.status,
+        address:order.address
 			})
 		);
 	};

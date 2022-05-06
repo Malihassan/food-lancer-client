@@ -120,6 +120,7 @@ function App() {
 						<Route path="/" element={<Navigate replace to="/home" />} />
 					</>
 				)}
+				
 				<Route path="*" element={<NotFound />} />
 				{/* <Route path="*" element={<Navigate replace to="/" />} /> */}
 				{/* <Route path="/home" element={<BuyerHome />} /> */}

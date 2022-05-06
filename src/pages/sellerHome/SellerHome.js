@@ -29,7 +29,7 @@ function SellerHome(props) {
 		rate: "",
 		countDeliverOrder: 0,
 		inprogressDeliver: 0,
-    balance:0
+		balance: 0,
 	});
 	const [listOfOrders, setListOfOrders] = useState([]);
 	//for pagination
@@ -65,12 +65,12 @@ function SellerHome(props) {
 	const { sendRequest } = useFetch();
 
 	async function sellerInfoDataHandler(res) {
-    console.log(res);
+		console.log(res);
 		if (res.statusText === "OK") {
 			setUserInfo({
 				image: res.data.seller.image.url,
 				name: res.data.seller.firstName + " " + res.data.seller.lastName,
-        balance:(res.data.seller.balance / 100),
+				balance: res.data.seller.balance / 100,
 				coverageArea:
 					res.data.seller.coverageArea.governorateName +
 					"," +
@@ -117,11 +117,16 @@ function SellerHome(props) {
 	useEffect(() => {
 		socket?.on("addOrder", (data) => {
 			setListOfOrders([data, ...listOfOrders]);
-			socket.off("addOrder");
 		});
 		socket?.on("paymentDone", (data) => {
-			console.log(data, "test");
-			// setOrder(data);
+			console.log(data);
+			let updatedOrders = [...listOfOrders];
+			updatedOrders.find((order) => {
+				if (order._id === data._id) {
+					order.status = data.status;
+				}
+			});
+			setListOfOrders(updatedOrders);
 		});
 	}, [listOfOrders, socket]);
 

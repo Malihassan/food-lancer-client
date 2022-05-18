@@ -127,7 +127,7 @@ console.log(cardItems.selectedOrderProducts);
 
 												<div className="card mb-3" key={idx}>
 												<div className="row g-0">
-													<div className="col-md-4 p-2">
+													<div className="col-4 p-2">
 														<img
 															src={`${
 																item?.image ? item.image[0].url : img
@@ -136,7 +136,7 @@ console.log(cardItems.selectedOrderProducts);
 															alt="..."
 														/>
 													</div>
-													<div className="col-md-8">
+													<div className="col-8">
 														<p className="card-title ps-2 fw-bold">
 															{item?.name}
 														</p>

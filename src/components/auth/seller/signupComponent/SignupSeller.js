@@ -94,7 +94,7 @@ function SignupSeller() {
                   {...register("userName", {
                     required: "this field is required",
                     pattern: {
-                      value: /^([\w]{3,})+\s+([\w\s]{3,})+$/i,
+                      value: /^[a-zA-Z0-9]+$/,
                       message: `user input is invalid`,
                     },
                   })}

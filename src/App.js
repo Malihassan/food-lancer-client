@@ -77,7 +77,7 @@ function App() {
 						/>
 						<Route
 							path="/product/:id"
-							element={<Navigate replace to="/home" />}
+							element={<Navigate replace to="/login" />}
 						/>
 					</>
 				)}
@@ -102,6 +102,7 @@ function App() {
 						/>
 					</>
 				)}
+				
 				{loggedAs === "buyer" && authenticated && (
 					<>
 						<Route path="/updateProfile" element={<BuyerProfile />} />

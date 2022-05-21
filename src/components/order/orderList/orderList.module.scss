@@ -27,6 +27,14 @@
         }
       }
     }
+    .notification{
+      animation-name: example;
+      animation-duration: 2s;
+    }
+    @keyframes example {
+      from {background-color: rgba(244, 161, 161, 0.388);}
+      to {background-color: white;}
+    }
   }
 }
 .paginationContainer {

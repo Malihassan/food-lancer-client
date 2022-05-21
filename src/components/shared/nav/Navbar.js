@@ -25,6 +25,8 @@ const Navbar = (props) => {
   const navigate=useNavigate()
   const loggedAs = useSelector((state) => state.auth.userType);
   const cartItems = useSelector((state) => state.cartItems);
+  const sellernotifi =  useSelector((state)=> state.auth.sellerNotification)
+
   const logout = async (type) => {
     sendRequest(
       {
@@ -48,7 +50,7 @@ const Navbar = (props) => {
     });
     socket?.on("receiveNotification", (data) => {
       if (data) {
-        console.log(data, "=<");
+        // console.log(data, "=<");
         dispatch(authActions.setNotification(data));
         setNotification(true);
       }
@@ -61,7 +63,6 @@ const Navbar = (props) => {
       // socket.off("addOrder");
     });
   }, [socket, notification]);
-
   useEffect(() => {
     if (loggedAs !== "viewer") {
       sendRequest(
@@ -104,12 +105,12 @@ const Navbar = (props) => {
             <Link
               to="/home"
               type="button"
-              // onClick={() => setNotification(false)}
-              className="lead text-center text-light mx-4 text-decoration-none position-relative"
+              onClick={() => setNotification(false)}
+              className="lead text-center text-light mx-4 text-decoration-none" // position-relative
             >
-              {notification && (
+              {/* {notification && (
                 <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"></span>
-              )}
+              )} */}
               <div className="d-lg-block d-none ">
                 <FontAwesomeIcon icon={faHome} />
                 <span className="mx-2 ">home</span>
